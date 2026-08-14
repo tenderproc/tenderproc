@@ -40,8 +40,8 @@ export default async function WorkflowPage() {
             Workflow
           </h1>
           <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-            Track tenders you're pursuing from first screening through
-            submission. Add tenders from Opportunities or a tender's detail
+            Track tenders you&apos;re pursuing from first screening through
+            submission. Add tenders from Opportunities or a tender&apos;s detail
             page.
           </p>
         </div>

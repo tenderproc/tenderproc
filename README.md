@@ -1,8 +1,21 @@
 # Tender Copilot — Beta
 
-AI-assisted screening of Belgian public tenders for SMEs. Pulls live notices
-from the EU's official TED database and uses Claude to give a plain-language
-eligibility read on a given tender.
+An AI bid manager for Belgian SMEs, not just an "AI chatbot for tenders." The
+AI does the heavy reading, extraction, matching, and (in later phases)
+drafting and checking; the human stays responsible for the final bid and
+submission. See `docs/architecture.md` for the full picture, `docs/ai.md` for
+the AI provider abstraction, and `docs/database.md` for the schema.
+
+Two ways tenders enter the app, on purpose:
+
+- **Discovery** — Opportunities/Search/Market overview pull live notices from
+  the EU's official TED database; nothing here is persisted beyond a
+  lightweight match-score cache.
+- **Bid preparation** — Tenders (`/my-tenders`) is for a tender PDF you
+  upload: it's persisted, AI-analyzed into structured requirements and award
+  criteria, and scored against your Company knowledge base (`/company`) for a
+  Bid/No-Bid recommendation. This is Phase 1 of the bid-manager workflow —
+  the bid workspace, AI drafting, and compliance review are later phases.
 
 ## What's in this beta
 
@@ -12,9 +25,11 @@ Four pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (e
 - **Workflow** (`/workflow`) — a pipeline board (screening → reviewing → applying → submitted → won/lost) for tenders you're pursuing. Add a tender from Opportunities, Search, or its detail page; move/remove it from the board.
 - **Search** (`/search`) — ad-hoc lookups across all open Belgian tenders by keyword, CPV code, value range, or deadline range, independent of your saved sectors.
 - **Market overview** (`/market`) — recently-awarded Belgian contracts (winner, value, buyer) pulled from TED's own contract-award notices, with simple top-winners/top-buyers rollups. A 90-day snapshot, not a full historical archive.
-- Tender detail page with an AI eligibility check (paste tender text in, get a verdict + summary).
+- Tender detail page with an AI eligibility check (paste tender text in, get a verdict + summary) — this specific feature is still paste-only; real PDF extraction (below) is a separate, newer pipeline.
 - Match scores: every tender in Opportunities/Search (and the detail page) gets a `NN/100 — <label>` badge scored against your company profile (company name, address, size, sectors, and a free-text description — collected at signup, see below). Computed via one batched Claude call per page load (chunked to ~10 tenders per call so large result pages don't get truncated), cached per (user, tender, profile) in `tender_scores` so repeat views are free — see `lib/scoring.ts` and `lib/matchScoreCache.ts`.
 - Daily email notifications: a scheduled job checks each user's sectors and emails a digest of anything newly published since the last check.
+- **Company** (`/company`) — the knowledge base the AI is allowed to draw on: core profile, services, certifications (with an expiry-soon/expired badge), references, and supporting documents (uploaded to Supabase Storage). Nothing here is ever invented by the AI — see `docs/ai.md`'s hallucination-protection rules.
+- **Tenders** (`/my-tenders`) — upload a tender PDF; it's text-extracted (`lib/documents/`), AI-analyzed into a summary, contract details, award criteria, and categorized requirements (`lib/ai/`), and — if a company profile exists — scored with a Bid/No-Bid recommendation. Processing happens synchronously within the upload request (can take up to ~60s for a long document); by the time the detail page loads, status is already `READY` or `FAILED`.
 
 **Notice-type filtering**: TED's Belgian feed mixes genuinely open contract notices (`cn-*`) with already-awarded notices (`can-*`) and a few administrative types — about a third of an unfiltered feed turned out to be already-decided contracts in testing. Opportunities and Search filter to `cn-*`/`pin-cfc-*` (open calls) via `isOpenCallNotice()` in `lib/ted.ts`; Market overview deliberately targets the `can-*` notices that Opportunities excludes.
 
@@ -25,10 +40,11 @@ Four pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (e
 ## What's deliberately NOT in this beta (see the "next" list below)
 
 - Below-threshold Belgian tenders (regional/municipal notices outside TED)
-- Automatic PDF text extraction (you paste the tender text in for now)
 - Payments/billing
 - A way to turn notifications off (every user with saved sectors gets the daily digest)
 - Full historical market analytics (Market overview is a 90-day snapshot, not a paginated archive)
+- Bid workspace, AI response drafting, unsupported-claim detection, pre-submission compliance review, outcome tracking — Phase 2/3 of the bid-manager workflow, not built yet
+- Automatic tender scraping/submission, OCR for scanned PDFs, DOCX/XLSX upload, a background job queue, an OpenAI provider — all explicitly deferred; see `docs/architecture.md`'s "What's deliberately not built yet"
 
 ## Running it locally
 
@@ -91,12 +107,32 @@ The Supabase project needs:
 
 If testers hit an error saving preferences in the sidebar or adding a tender to Workflow, check the relevant table's RLS policy first.
 
+- The Company/Tenders knowledge-base tables (`companies`, `company_services`,
+  `company_locations`, `company_documents`, `company_certifications`,
+  `company_references`, `tenders`, `tender_documents`, `tender_requirements`,
+  `tender_award_criteria`) and two private Storage buckets
+  (`company-documents`, `tender-documents`) — full SQL is in
+  `supabase-phase1-migration.sql` at the repo root; see `docs/database.md`
+  for the column-by-column reference and RLS pattern.
+
+## Testing & linting
+
+```bash
+npm run lint    # eslint . — flat config (eslint.config.mjs), Next 16 removed `next lint`
+npm test        # vitest run — pure-function unit tests, no live API/DB calls
+npx tsc --noEmit
+```
+
+Only `lib/ai/`'s JSON-parsing/validation logic is unit tested so far
+(`tests/ai/parsers.test.ts`). Database-isolation and full end-to-end workflow
+tests aren't automated yet — see `docs/architecture.md`.
+
 ## Deploying so testers can reach it
 
 The easiest path is [Vercel](https://vercel.com), since this is a standard
 Next.js app:
 
-1. Push this folder to a GitHub repo.
+1. This folder is already a local git repo (`git init`, committed) — add a GitHub remote and push it: `git remote add origin <url> && git push -u origin master`.
 2. Import the repo in Vercel.
 3. Add the same environment variables from `.env.local` in the Vercel
    project settings.

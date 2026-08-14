@@ -8,6 +8,8 @@ const TABS = [
   { href: "/workflow", label: "Workflow" },
   { href: "/search", label: "Search" },
   { href: "/market", label: "Market overview" },
+  { href: "/my-tenders", label: "Tenders" },
+  { href: "/company", label: "Company" },
 ];
 
 export default function PrimaryNav() {

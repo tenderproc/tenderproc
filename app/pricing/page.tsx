@@ -104,7 +104,7 @@ export default async function PricingPage() {
             Simple, straightforward plans
           </h1>
           <p className="text-sm text-inkDim mt-3 max-w-xl mx-auto leading-relaxed">
-            Start free, upgrade when you're ready to bid seriously.
+            Start free, upgrade when you&apos;re ready to bid seriously.
           </p>
         </div>
 

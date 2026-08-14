@@ -45,7 +45,7 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
     <div className="border border-line rounded-2xl p-6 bg-white">
       <h2 className="font-display font-semibold text-xl text-ink mb-1">Check eligibility</h2>
       <p className="text-sm text-inkDim mb-4">
-        Paste the tender's requirements or ESPD text below — or just run the
+        Paste the tender&apos;s requirements or ESPD text below — or just run the
         check on the notice metadata alone.
       </p>
 

@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import Anthropic from "@anthropic-ai/sdk";
+import { getAnthropicClient } from "./ai/anthropic-provider";
 import { TenderNotice } from "./types";
 
 export interface CompanyProfile {
@@ -86,7 +86,7 @@ export async function scoreTenders(
   if (tenders.length === 0) return [];
   if (!process.env.ANTHROPIC_API_KEY) return [];
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = getAnthropicClient();
 
   const profileText = `Company profile:
 Sectors: ${profile.sectors.join(", ") || "not specified"}

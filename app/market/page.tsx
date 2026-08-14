@@ -71,7 +71,7 @@ export default async function MarketPage() {
 
         {loadError && (
           <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp mb-8">
-            Couldn't load award data right now ({loadError}). Try again in a
+            Couldn&apos;t load award data right now ({loadError}). Try again in a
             moment.
           </div>
         )}

@@ -143,7 +143,7 @@ export async function searchBelgianTenders(
   }
 
   const data = await res.json();
-  let rawNotices: any[] = data?.notices ?? data?.results ?? [];
+  let rawNotices: Record<string, unknown>[] = data?.notices ?? data?.results ?? [];
 
   if (params.onlyOpenCalls) {
     rawNotices = rawNotices.filter((n) => isOpenCallNotice(firstValue(n["notice-type"])));
@@ -212,7 +212,7 @@ export async function getTenderById(
     return null;
   }
   const data = await res.json();
-  const rawNotices: any[] = data?.notices ?? data?.results ?? [];
+  const rawNotices: Record<string, unknown>[] = data?.notices ?? data?.results ?? [];
   if (!rawNotices.length) {
     console.error(`[getTenderById] No notice found for id "${id}". Raw response: ${JSON.stringify(data).slice(0, 500)}`);
     return null;
@@ -287,7 +287,7 @@ export async function searchAwardedTenders(
   }
 
   const data = await res.json();
-  const rawNotices: any[] = data?.notices ?? data?.results ?? [];
+  const rawNotices: Record<string, unknown>[] = data?.notices ?? data?.results ?? [];
 
   let awards = rawNotices.map((n): AwardedTender => {
     const pubNumber = n["publication-number"] ?? "unknown";

@@ -86,7 +86,7 @@ export default async function SearchPage({
 
         {loadError && (
           <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-            Couldn't load tenders right now ({loadError}). Try again in a
+            Couldn&apos;t load tenders right now ({loadError}). Try again in a
             moment.
           </div>
         )}

@@ -98,7 +98,7 @@ export default async function OpportunitiesPage({
             <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
               Genuinely open tenders in Belgium, matched to your sectors —
               already-awarded and informational notices are filtered out.
-              Pulled from the EU's official TED database; this beta covers
+              Pulled from the EU&apos;s official TED database; this beta covers
               notices above the EU publication thresholds.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default async function OpportunitiesPage({
 
           {loadError && (
             <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-              Couldn't load tenders right now ({loadError}). Try again in a
+              Couldn&apos;t load tenders right now ({loadError}). Try again in a
               moment.
             </div>
           )}

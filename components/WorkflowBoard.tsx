@@ -139,7 +139,7 @@ function PipelineCard({
         </Link>
       ) : (
         <p className="text-sm text-inkDim italic">
-          Couldn't load this tender's details.
+          Couldn&apos;t load this tender&apos;s details.
         </p>
       )}
       {card.tender && (

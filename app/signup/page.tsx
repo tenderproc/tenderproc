@@ -108,7 +108,7 @@ export default function SignupPage() {
           </h1>
           <p className="text-sm text-inkDim mt-3 leading-relaxed">
             Tell us about your business — it powers the tenders you see and
-            each tender's match score.
+            each tender&apos;s match score.
           </p>
         </div>
 
