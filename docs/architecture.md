@@ -16,8 +16,8 @@ data model:
   someone explicitly tracks via **Workflow**.
 - **Tenders** (`app/my-tenders`) — a tender the user has uploaded as a PDF. This is
   persisted (`tenders`, `tender_documents`, `tender_requirements`,
-  `tender_award_criteria`), goes through the AI pipeline described below, and is the
-  foundation the Phase 2 bid workspace will build on.
+  `tender_award_criteria`), goes through the AI pipeline described below, and is what a
+  **Bid** (`app/bids`, Phase 2) is created from.
 
 They're routed separately on purpose: `/tenders/[id]` already means "look up this TED
 notice by publication number" and was not repurposed. The uploaded-tender feature lives at
@@ -63,11 +63,26 @@ Because the client `fetch()` awaits this whole request, by the time
 ## Document processing (`lib/documents/`)
 
 `DocumentExtractor` is a one-method interface (`extractText(buffer)`); `getExtractor(mimeType)`
-is the factory. Only PDF is implemented (`pdf-extractor.ts`, built on the existing
-`pdf-parse` dependency), with a custom `pagerender` callback that prefixes each page with a
-`--- PAGE n ---` marker so the AI can cite approximate source pages. A PDF whose extracted
-text is near-empty (e.g. a scanned document with no text layer) fails cleanly rather than
-being silently analyzed on nothing — OCR is out of scope for this phase.
+is the factory. Only PDF is implemented (`pdf-extractor.ts`), on top of `unpdf` — each page's
+text is prefixed with a `--- PAGE n ---` marker so the AI can cite approximate source pages.
+A PDF whose extracted text is near-empty (e.g. a scanned document with no text layer) fails
+cleanly rather than being silently analyzed on nothing — OCR is out of scope for this phase.
+
+**Library choice**: Phase 1 originally used `pdf-parse` (bundles a frozen ~2018 pdf.js
+build, dynamically `require()`d by path/version). It parsed test PDFs correctly in a
+standalone Node script and worked once during initial manual testing, but during Phase 2
+verification it became **consistently unreliable specifically when invoked from inside this
+app's Next.js server process** — the exact same, byte-verified-valid PDF (confirmed via
+SHA-256 across the whole request path) threw a different pdf.js internal error
+("bad XRef entry", "Command token too long") on nearly every attempt, reproducible across
+`next dev` and `next build && next start`, with `.next` cleared and every Node process
+killed between attempts, independent of the specific PDF used (tried a hand-built one and a
+`pdf-lib`-generated one — both failed the same way in-server, both parsed cleanly
+standalone). None of Node version, `serverExternalPackages` bundling exclusion, or a fresh
+`require.cache`-busted reload changed the outcome. Switching to `unpdf` (a maintained
+wrapper around Mozilla's current, actively-supported pdf.js, purpose-built for Node/
+serverless use) resolved it immediately and has been reliable since. `pdf-parse` and
+`@types/pdf-parse` are no longer a dependency.
 
 Adding DOCX/XLSX later means adding another `DocumentExtractor` implementation and a branch
 in `getExtractor()` — no other code changes.
@@ -76,33 +91,61 @@ in `getExtractor()` — no other code changes.
 
 See `docs/ai.md`.
 
+## Bid workspace (Phase 2)
+
+A **Bid** (`bids` table) is created from a `READY` tender via "Start Bid"
+(`components/tenders/StartBidButton.tsx` → `POST /api/bids`), which snapshots that tender's
+`tender_requirements` into `bid_requirements` — a per-bid copy, not a live reference, so the
+checklist doesn't shift if the tender were ever re-analyzed. One bid per tender
+(`bids.tender_id` is `unique`); starting again from the same tender just links back to the
+existing bid.
+
+The workspace (`app/bids/[bidId]/page.tsx`) shows progress bars computed per requirement
+category actually present in that bid (`lib/bids.ts`'s `computeProgress()`:
+`(COMPLETE + NOT_APPLICABLE) / total`), not a hardcoded category list — the spec's example
+categories are illustrative, and a real bid may not have requirements in all of them. Each
+requirement links to its own page (`app/bids/[bidId]/requirements/[reqId]/page.tsx`) where
+the evidence → draft → validate flow happens (see `docs/ai.md`).
+
+Status changes (bid status dropdown, marking a requirement `NOT_APPLICABLE`/`BLOCKED`,
+accepting a draft, dismissing a warning) are all plain Supabase client calls from Client
+Components followed by `router.refresh()` — the same pattern `WorkflowBoard.tsx` already
+used, reused rather than introducing API routes for state that doesn't touch the AI.
+
 ## Folder layout
 
 ```
 app/
-  api/{analyze,cron/notify,signup-profile,tenders/upload}/route.ts
-  {opportunities,search,market,workflow,pricing,my-tenders,company}/page.tsx
+  api/{analyze,cron/notify,signup-profile,tenders/upload,bids}/route.ts
+  api/bids/[bidId]/requirements/[reqId]/{find-evidence,generate-draft,recheck}/route.ts
+  {opportunities,search,market,workflow,pricing,my-tenders,company,bids}/page.tsx
   my-tenders/[tenderId]/page.tsx
+  bids/[bidId]/page.tsx
+  bids/[bidId]/requirements/[reqId]/page.tsx
   tenders/[id]/page.tsx        # TED lookup — unrelated to /my-tenders
 components/
-  {tenders,company}/           # new, feature-scoped
+  {tenders,company,bids}/      # feature-scoped
   ...                          # existing shared components
 lib/
   ai/                          # provider abstraction (types, prompts, provider, anthropic-provider, index)
   documents/                   # PDF extraction abstraction
-  company/                     # company-knowledge-base read helper
+  company/                     # knowledge.ts (AI-facing read) + evidence.ts (evidence lookup by id)
   supabase/                    # client/server/admin Supabase clients
+  bids.ts                      # bid status list, progress calculation
   ted.ts, scoring.ts, matchScoreCache.ts, sectors.ts, languages.ts, workflow.ts, email.ts, types.ts
 tests/
-  ai/parsers.test.ts           # pure-function unit tests (no network/DB)
+  ai/*.test.ts                 # pure-function unit tests (no network/DB)
 ```
 
 ## What's deliberately not built yet
 
-- Bid workspace / `bids`, `bid_requirements`, `bid_responses`, `bid_evidence`,
-  `bid_warnings`, `bid_reviews`, `bid_outcomes` tables — Phase 2.
-- Pre-submission compliance review — Phase 3.
-- A background job queue for upload processing (see above).
+- `bid_reviews`/`bid_outcomes` tables, pre-submission compliance review, outcome tracking —
+  Phase 3.
+- Automatic claim-text splicing — "unsupported claim" actions are Dismiss (mark it reviewed)
+  or manually edit the draft; the spec itself says never auto-delete a claim.
+- A granular "attach evidence to this specific claim" mechanism — use Find Evidence +
+  (Re)generate with more evidence selected instead.
+- A background job queue for upload/draft processing (see above).
 - OCR for scanned PDFs.
 - DOCX/XLSX extraction.
 - An OpenAI provider (the abstraction supports adding one; nothing calls for it yet).

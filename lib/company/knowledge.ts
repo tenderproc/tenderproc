@@ -24,14 +24,14 @@ export async function getCompanyKnowledge(
   if (!company) return null;
 
   const [{ data: services }, { data: certifications }, { data: references }] = await Promise.all([
-    supabase.from("company_services").select("name, description").eq("company_id", company.id),
+    supabase.from("company_services").select("id, name, description").eq("company_id", company.id),
     supabase
       .from("company_certifications")
-      .select("name, issuing_organization, expiry_date")
+      .select("id, name, issuing_organization, expiry_date")
       .eq("company_id", company.id),
     supabase
       .from("company_references")
-      .select("client, project_name, description, contract_value, is_public, services")
+      .select("id, client, project_name, description, contract_value, is_public, services")
       .eq("company_id", company.id),
   ]);
 
@@ -44,12 +44,19 @@ export async function getCompanyKnowledge(
     regionsServed: company.regions_served ?? [],
     languages: company.languages ?? [],
     industries: company.industries ?? [],
-    services: (services ?? []).map((s: { name: string; description: string | null }) => ({
+    services: (services ?? []).map((s: { id: string; name: string; description: string | null }) => ({
+      id: s.id,
       name: s.name,
       description: s.description,
     })),
     certifications: (certifications ?? []).map(
-      (c: { name: string; issuing_organization: string | null; expiry_date: string | null }) => ({
+      (c: {
+        id: string;
+        name: string;
+        issuing_organization: string | null;
+        expiry_date: string | null;
+      }) => ({
+        id: c.id,
         name: c.name,
         issuingOrganization: c.issuing_organization,
         expiryDate: c.expiry_date,
@@ -57,6 +64,7 @@ export async function getCompanyKnowledge(
     ),
     references: (references ?? []).map(
       (r: {
+        id: string;
         client: string;
         project_name: string | null;
         description: string | null;
@@ -64,6 +72,7 @@ export async function getCompanyKnowledge(
         is_public: boolean | null;
         services: string[] | null;
       }) => ({
+        id: r.id,
         client: r.client,
         projectName: r.project_name,
         description: r.description,

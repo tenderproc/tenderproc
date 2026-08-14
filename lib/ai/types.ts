@@ -86,13 +86,15 @@ export interface CompanyKnowledge {
   regionsServed: string[];
   languages: string[];
   industries: string[];
-  services: { name: string; description: string | null }[];
+  services: { id: string; name: string; description: string | null }[];
   certifications: {
+    id: string;
     name: string;
     issuingOrganization: string | null;
     expiryDate: string | null;
   }[];
   references: {
+    id: string;
     client: string;
     projectName: string | null;
     description: string | null;
@@ -121,4 +123,67 @@ export interface GenerateBidRecommendationInput {
   tenderAnalysis: TenderAnalysis;
   requirements: ExtractedRequirement[];
   company: CompanyKnowledge;
+}
+
+// --- Phase 2: bid workspace / evidence / drafting / claim validation ---
+
+export type EvidenceType = "service" | "certification" | "reference";
+export type EvidenceRelevance = "High" | "Medium" | "Low";
+
+/** A candidate piece of company evidence for a requirement. `id` always
+ * traces back to a real company_services/company_certifications/
+ * company_references row — parseEvidenceMatches() drops anything that
+ * doesn't, so this can never point at an invented source. */
+export interface EvidenceMatch {
+  type: EvidenceType;
+  id: string;
+  label: string;
+  relevance: EvidenceRelevance;
+  reason: string;
+}
+
+export interface RequirementRef {
+  title: string;
+  description: string | null;
+  category: RequirementCategory;
+  mandatory: boolean;
+}
+
+export interface FindCompanyEvidenceInput {
+  requirement: RequirementRef;
+  company: CompanyKnowledge;
+}
+
+/** Evidence the user has actually selected to draft with — full detail text,
+ * not just a label, so the draft can be specific rather than generic. */
+export interface SelectedEvidence {
+  type: EvidenceType;
+  id: string;
+  label: string;
+  detail: string;
+}
+
+export interface GenerateResponseDraftInput {
+  requirement: RequirementRef;
+  tenderTitle: string | null;
+  contractingAuthority: string | null;
+  awardCriterion: { criterion: string; description: string | null } | null;
+  evidence: SelectedEvidence[];
+  company: CompanyKnowledge;
+}
+
+export interface ResponseDraft {
+  draft: string;
+  confidence: BidConfidence;
+  warnings: string[];
+}
+
+export interface ValidateResponseInput {
+  draftText: string;
+  evidence: SelectedEvidence[];
+  company: CompanyKnowledge;
+}
+
+export interface ValidateResponseResult {
+  unsupportedClaims: string[];
 }

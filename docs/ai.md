@@ -6,6 +6,9 @@
 interface AIProvider {
   analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis>;
   generateBidRecommendation(input: GenerateBidRecommendationInput): Promise<BidRecommendation>;
+  findCompanyEvidence(input: FindCompanyEvidenceInput): Promise<EvidenceMatch[]>;
+  generateResponseDraft(input: GenerateResponseDraftInput): Promise<ResponseDraft>;
+  validateResponse(input: ValidateResponseInput): Promise<ValidateResponseResult>;
 }
 ```
 
@@ -16,11 +19,10 @@ is active — today, always `AnthropicProvider`. Nothing outside `lib/ai/` impor
 `getAnthropicClient()` helper this module exports, so there's exactly one place an Anthropic
 client gets constructed.
 
-Only the two methods Phase 1 needs are defined on the interface. The spec's fuller method
-list — `findCompanyEvidence()`, `generateResponseDraft()`, `validateResponse()`,
-`findTenderAmbiguities()` (ambiguity detection is currently folded into `analyzeTender`'s
-output), `runComplianceReview()` — are Phase 2/3 additions to this same interface, not
-stubbed out ahead of time.
+Phase 1 added `analyzeTender`/`generateBidRecommendation`; Phase 2 adds the three evidence/
+drafting/validation methods below. `findTenderAmbiguities()` (ambiguity detection is
+currently folded into `analyzeTender`'s output) and `runComplianceReview()` remain Phase 3
+additions to this same interface, not stubbed out ahead of time.
 
 Adding a second provider (e.g. OpenAI) means writing `lib/ai/openai-provider.ts`
 implementing `AIProvider` and switching what `getAIProvider()` returns (e.g. behind an
@@ -87,6 +89,47 @@ known, deliberate inconsistency — not unified with the Bid/No-Bid system in Ph
 they answer different questions (quick browse-time triage vs. a deep, requirements-grounded
 recommendation) and unifying them wasn't necessary for either to work correctly.
 
+## `findCompanyEvidence()`
+
+Input: one requirement (`RequirementRef`) + `CompanyKnowledge`. `CompanyKnowledge`'s
+services/certifications/references each now carry an `id` (added this phase, non-breaking —
+the Phase 1 formatters just ignore it) so the model can reference real rows.
+`formatFindEvidenceContext()` lists every service/certification/reference with its id
+inline; the prompt explicitly says only ids from that list may be returned.
+
+Output: `EvidenceMatch[]` — `{ type, id, label, relevance, reason }`. **The hallucination
+protection here isn't just prompt wording**: `parseEvidenceMatches(raw, validIds)`
+(`lib/ai/anthropic-provider.ts`) takes the actual set of real ids and drops any returned
+match whose id isn't in it, even if the model's prose looks confident. `label` is never
+taken from the model either — the route re-derives it from the real company row
+(`labelForEvidence()`) after parsing. Unit-tested in `tests/ai/phase2-parsers.test.ts`,
+including a case that asserts a fabricated id is dropped.
+
+## `generateResponseDraft()`
+
+Input: the requirement, light tender context (title/authority), an optional award
+criterion, and `SelectedEvidence[]` — the evidence the *user* picked from
+`findCompanyEvidence`'s results, re-resolved server-side to its full detail text
+(`lib/company/evidence.ts`'s `resolveEvidenceList()`) rather than trusted from the client.
+The prompt is explicit that it may not use any service/certification/reference outside the
+given evidence, even ones that would plausibly exist for a company like this.
+
+Output: `ResponseDraft` — `{ draft, confidence, warnings }`. `warnings` here are
+drafting-time coverage gaps ("this also asks for a signed declaration"), not fact-checking —
+that's a deliberately separate concern, per the spec's own separate method list.
+
+## `validateResponse()`
+
+Input: draft text + the same `SelectedEvidence[]` + `CompanyKnowledge`. Output:
+`{ unsupportedClaims: string[] }` — the exact phrases in the draft that aren't backed by the
+evidence/company knowledge given. Called twice in the UI flow: automatically right after
+`generateResponseDraft` (`POST /api/bids/[bidId]/requirements/[reqId]/generate-draft`), and
+again whenever the user manually edits the draft and clicks "Save & Re-check"
+(`POST .../recheck`) — the latter is what makes "insert an unsupported claim, see it
+flagged" work on a hand-edited draft, not just a freshly generated one. Each pass replaces
+that response's `OPEN unsupported_claim` rows in `bid_warnings` rather than accumulating
+stale ones.
+
 ## Cost control
 
 - Extracted PDF text is stored once (`tender_documents.extracted_text`) and reused, never
@@ -99,8 +142,7 @@ recommendation) and unifying them wasn't necessary for either to work correctly.
 - One model (`claude-sonnet-4-6`) is used everywhere in this phase — no multi-model routing
   yet, per "keep the first implementation simple."
 
-## What's NOT built yet (Phase 2/3)
+## What's NOT built yet (Phase 3)
 
-`findCompanyEvidence`, `generateResponseDraft`, `validateResponse`/unsupported-claim
-detection, a standalone "Find ambiguities" action, `runComplianceReview`. These extend the
-same `AIProvider` interface and reuse `BASE_RULES` when they land.
+A standalone "Find ambiguities" action and `runComplianceReview` (pre-submission review).
+These extend the same `AIProvider` interface and reuse `BASE_RULES` when they land.

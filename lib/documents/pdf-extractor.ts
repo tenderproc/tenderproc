@@ -1,4 +1,4 @@
-import pdfParse from "pdf-parse";
+import { extractText, getDocumentProxy } from "unpdf";
 import { DocumentExtractor, ExtractedDocument } from "./extractor";
 
 // Below this many non-whitespace characters per page, a PDF is treated as
@@ -8,47 +8,23 @@ const MIN_CHARS_PER_PAGE = 20;
 
 export class PdfExtractor implements DocumentExtractor {
   async extractText(buffer: Buffer): Promise<ExtractedDocument> {
-    let pageNumber = 0;
+    const pdf = await getDocumentProxy(new Uint8Array(buffer));
+    // mergePages: false gives one string per page, so page markers can be
+    // inserted precisely rather than guessed from a combined blob — used
+    // for source-page citations in the AI's requirement extraction.
+    const { totalPages, text: pages } = await extractText(pdf, { mergePages: false });
 
-    const result = await pdfParse(buffer, {
-      // Called once per page, in order; prefixing each page's text with a
-      // marker lets the AI (and future evidence UI) cite approximate page
-      // numbers even though pdf-parse doesn't expose per-page boundaries
-      // in its default `text` output.
-      pagerender: async (pageData: {
-        getTextContent: (opts: {
-          normalizeWhitespace: boolean;
-          disableCombineTextItems: boolean;
-        }) => Promise<{ items: { str: string; transform: number[] }[] }>;
-      }) => {
-        pageNumber += 1;
-        const content = await pageData.getTextContent({
-          normalizeWhitespace: false,
-          disableCombineTextItems: false,
-        });
-        let lastY: number | undefined;
-        let text = "";
-        for (const item of content.items) {
-          if (lastY === item.transform[5] || lastY === undefined) {
-            text += item.str;
-          } else {
-            text += `\n${item.str}`;
-          }
-          lastY = item.transform[5];
-        }
-        return `--- PAGE ${pageNumber} ---\n${text}`;
-      },
-    });
+    const text = pages
+      .map((pageText, i) => `--- PAGE ${i + 1} ---\n${pageText}`)
+      .join("\n\n")
+      .trim();
 
-    const text = result.text.trim();
-    const pageCount = result.numpages;
-
-    if (pageCount > 0 && text.length < pageCount * MIN_CHARS_PER_PAGE) {
+    if (totalPages > 0 && text.length < totalPages * MIN_CHARS_PER_PAGE) {
       throw new Error(
         "This PDF has little or no extractable text — it may be a scanned document without a text layer. OCR isn't supported yet."
       );
     }
 
-    return { text, pageCount };
+    return { text, pageCount: totalPages };
   }
 }

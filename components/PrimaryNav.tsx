@@ -9,6 +9,7 @@ const TABS = [
   { href: "/search", label: "Search" },
   { href: "/market", label: "Market overview" },
   { href: "/my-tenders", label: "Tenders" },
+  { href: "/bids", label: "Bids" },
   { href: "/company", label: "Company" },
 ];
 

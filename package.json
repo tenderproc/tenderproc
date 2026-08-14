@@ -15,17 +15,16 @@
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
     "next": "^16.3.0",
-    "pdf-parse": "^1.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "resend": "^6.19.0"
+    "resend": "^6.19.0",
+    "unpdf": "^1.8.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
-    "@types/pdf-parse": "^1.1.5",
     "eslint": "^9.17.0",
     "eslint-config-next": "^16.3.0",
     "postcss": "^8.4.39",

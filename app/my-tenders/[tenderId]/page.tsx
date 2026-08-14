@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import Header from "@/components/Header";
 import TenderStatusBadge from "@/components/tenders/TenderStatusBadge";
 import { MatchScorePill, RecommendationPill } from "@/components/tenders/BidMatchBadge";
+import StartBidButton from "@/components/tenders/StartBidButton";
 import { createClient } from "@/lib/supabase/server";
 import { REQUIREMENT_CATEGORIES } from "@/lib/ai/types";
 
@@ -77,6 +78,12 @@ export default async function TenderDetailPage({
       .createSignedUrl(documents[0].storage_path, 60 * 10);
     documentUrl = signed?.signedUrl ?? null;
   }
+
+  const { data: existingBid } = await supabase
+    .from("bids")
+    .select("id")
+    .eq("tender_id", tenderId)
+    .maybeSingle();
 
   const extras: AiAnalysisExtras = tender.ai_analysis ?? {};
   const requirementsByCategory = REQUIREMENT_CATEGORIES.map((cat) => ({
@@ -173,6 +180,19 @@ export default async function TenderDetailPage({
                     </Link>{" "}
                     to get a match score and Bid/No-Bid recommendation for this tender.
                   </div>
+                )}
+              </div>
+
+              <div className="mt-6">
+                {existingBid ? (
+                  <Link
+                    href={`/bids/${existingBid.id}`}
+                    className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors"
+                  >
+                    Go to Bid Workspace →
+                  </Link>
+                ) : (
+                  <StartBidButton tenderId={tender.id} />
                 )}
               </div>
             </>

@@ -37,6 +37,18 @@ row (`companies.user_id` is `unique`).
 | `tender_requirements` | `tender_id`, `title`, `description`, `category` (`eligibility/administrative/technical/experience/certification/personnel/financial/pricing/document/award_criterion/other`), `mandatory`, `source_document`, `source_page`, `source_section`, `status` (`NOT_STARTED/IN_PROGRESS/COMPLETE/BLOCKED/NOT_APPLICABLE` — column exists for schema completeness; Phase 1 UI only displays it, Phase 2 lets a user change it as they work a requirement) |
 | `tender_award_criteria` | `tender_id`, `criterion`, `weight` (text — weights aren't always numeric), `description` |
 
+### Bid workspace (Phase 2)
+
+| Table | Key columns |
+|---|---|
+| `bids` | `user_id`, `tender_id` (`unique` — one bid per tender), `company_id` (nullable), `status` (`EVALUATION/PREPARATION/REVIEW/READY_TO_SUBMIT/SUBMITTED/WON/LOST/WITHDRAWN`). Score/recommendation/deadline are read via join to `tenders`, not duplicated. |
+| `bid_requirements` | A per-bid *snapshot* of `tender_requirements` at bid-creation time (`tender_requirement_id` nullable fk back to the original, but the row itself is independent): `bid_id`, `title`, `description`, `category`, `mandatory`, `source_document`, `source_page`, `source_section`, `status` (same 5-value enum, now actually mutable from the requirement's own page) |
+| `bid_responses` | One per requirement (`bid_requirement_id unique`): `bid_id`, `bid_requirement_id`, `draft_text`, `confidence` (`HIGH/MEDIUM/LOW`), `accepted` |
+| `bid_evidence` | Which company facts backed a response: `bid_response_id`, `evidence_type` (`service/certification/reference`), `source_id` (the originating `company_*` row id — polymorphic, no enforced FK), `label` (snapshot, survives if the source row is later edited) |
+| `bid_warnings` | `bid_id` (direct, not just via `bid_response_id`, so RLS/queries don't need a 3-level join), `bid_response_id` (nullable), `type` (`unsupported_claim/other`), `message`, `status` (`OPEN/RESOLVED/DISMISSED`), `resolved_at` |
+
+`bid_reviews`/`bid_outcomes` are not created — Phase 3.
+
 All `category`/`status` values are enforced with `check` constraints, matching
 `REQUIREMENT_CATEGORIES` in `lib/ai/types.ts` — if that list ever changes, the SQL check
 constraint needs a migration to match.
@@ -66,11 +78,14 @@ create policy "manage own X" on public.X
 ```
 
 This is the same pattern `pipeline_items`/`tender_scores` already used before this
-expansion — no new authorization approach was introduced.
+expansion — no new authorization approach was introduced. The one 2-level join is
+`bid_evidence` (via `bid_responses` → `bids`) — `bid_responses` and `bid_warnings` were
+deliberately given a direct `bid_id` (not just their immediate parent) specifically to avoid
+needing deeper joins than that anywhere.
 
 ## Migration
 
 There's no migrations folder/tool in this project — SQL is delivered as a block, run once
 by hand in the Supabase SQL editor, and verified afterward via a read-only REST probe
-against each new table/bucket. The full Phase 1 migration is
-`supabase-phase1-migration.sql` at the repo root (kept for reference; not re-run).
+against each new table/bucket. `supabase-phase1-migration.sql` and
+`supabase-phase2-migration.sql` at the repo root are kept for reference; not re-run.

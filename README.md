@@ -14,12 +14,15 @@ Two ways tenders enter the app, on purpose:
 - **Bid preparation** — Tenders (`/my-tenders`) is for a tender PDF you
   upload: it's persisted, AI-analyzed into structured requirements and award
   criteria, and scored against your Company knowledge base (`/company`) for a
-  Bid/No-Bid recommendation. This is Phase 1 of the bid-manager workflow —
-  the bid workspace, AI drafting, and compliance review are later phases.
+  Bid/No-Bid recommendation. From a ready tender, **Start Bid** opens the Bid
+  workspace (`/bids`) — a requirement checklist where the AI finds relevant
+  company evidence, drafts a grounded response, and flags any claim in that
+  draft it can't verify against your evidence. Pre-submission compliance
+  review and outcome tracking are still Phase 3.
 
 ## What's in this beta
 
-Four pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (email/password, via Supabase Auth):
+Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (email/password, via Supabase Auth):
 
 - **Opportunities** (`/opportunities`) — tenders matched to your sectors/languages, via a live sidebar (`components/PreferencesSidebar.tsx`) for adjusting them after signup. Filtered to genuinely open calls for tender only — see the notice-type note below.
 - **Workflow** (`/workflow`) — a pipeline board (screening → reviewing → applying → submitted → won/lost) for tenders you're pursuing. Add a tender from Opportunities, Search, or its detail page; move/remove it from the board.
@@ -29,7 +32,8 @@ Four pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (e
 - Match scores: every tender in Opportunities/Search (and the detail page) gets a `NN/100 — <label>` badge scored against your company profile (company name, address, size, sectors, and a free-text description — collected at signup, see below). Computed via one batched Claude call per page load (chunked to ~10 tenders per call so large result pages don't get truncated), cached per (user, tender, profile) in `tender_scores` so repeat views are free — see `lib/scoring.ts` and `lib/matchScoreCache.ts`.
 - Daily email notifications: a scheduled job checks each user's sectors and emails a digest of anything newly published since the last check.
 - **Company** (`/company`) — the knowledge base the AI is allowed to draw on: core profile, services, certifications (with an expiry-soon/expired badge), references, and supporting documents (uploaded to Supabase Storage). Nothing here is ever invented by the AI — see `docs/ai.md`'s hallucination-protection rules.
-- **Tenders** (`/my-tenders`) — upload a tender PDF; it's text-extracted (`lib/documents/`), AI-analyzed into a summary, contract details, award criteria, and categorized requirements (`lib/ai/`), and — if a company profile exists — scored with a Bid/No-Bid recommendation. Processing happens synchronously within the upload request (can take up to ~60s for a long document); by the time the detail page loads, status is already `READY` or `FAILED`.
+- **Tenders** (`/my-tenders`) — upload a tender PDF; it's text-extracted (`lib/documents/`), AI-analyzed into a summary, contract details, award criteria, and categorized requirements (`lib/ai/`), and — if a company profile exists — scored with a Bid/No-Bid recommendation. Processing happens synchronously within the upload request (can take up to ~60s for a long document); by the time the detail page loads, status is already `READY` or `FAILED`. A ready tender gets a **Start Bid** button.
+- **Bids** (`/bids`) — the bid workspace. Starting a bid snapshots that tender's requirements into a per-bid checklist (`bid_requirements`) with progress bars per category. Each requirement has its own page: **Find Evidence** surfaces relevant company services/certifications/references (never a fabricated one — see `docs/ai.md`), pick which to use, **Generate Draft** writes a response grounded only in that evidence, then a second AI pass checks the draft for any claim it can't verify and flags it as an **Unsupported claim** — including on a draft you've hand-edited, via **Save & Re-check**. Accept a draft to mark its requirement complete; the bid's own status (Evaluation → … → Won/Lost/Withdrawn) is a separate dropdown in the workspace header.
 
 **Notice-type filtering**: TED's Belgian feed mixes genuinely open contract notices (`cn-*`) with already-awarded notices (`can-*`) and a few administrative types — about a third of an unfiltered feed turned out to be already-decided contracts in testing. Opportunities and Search filter to `cn-*`/`pin-cfc-*` (open calls) via `isOpenCallNotice()` in `lib/ted.ts`; Market overview deliberately targets the `can-*` notices that Opportunities excludes.
 
@@ -43,7 +47,8 @@ Four pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (e
 - Payments/billing
 - A way to turn notifications off (every user with saved sectors gets the daily digest)
 - Full historical market analytics (Market overview is a 90-day snapshot, not a paginated archive)
-- Bid workspace, AI response drafting, unsupported-claim detection, pre-submission compliance review, outcome tracking — Phase 2/3 of the bid-manager workflow, not built yet
+- Pre-submission compliance review, outcome tracking, `bid_reviews`/`bid_outcomes` — Phase 3 of the bid-manager workflow, not built yet
+- Automatic claim-text splicing (unsupported claims are Dismissed or hand-edited, never auto-deleted) and a granular per-claim "attach evidence" mechanism
 - Automatic tender scraping/submission, OCR for scanned PDFs, DOCX/XLSX upload, a background job queue, an OpenAI provider — all explicitly deferred; see `docs/architecture.md`'s "What's deliberately not built yet"
 
 ## Running it locally
@@ -114,6 +119,9 @@ If testers hit an error saving preferences in the sidebar or adding a tender to 
   (`company-documents`, `tender-documents`) — full SQL is in
   `supabase-phase1-migration.sql` at the repo root; see `docs/database.md`
   for the column-by-column reference and RLS pattern.
+- The bid workspace tables (`bids`, `bid_requirements`, `bid_responses`,
+  `bid_evidence`, `bid_warnings`) — full SQL is in
+  `supabase-phase2-migration.sql` at the repo root.
 
 ## Testing & linting
 
@@ -124,7 +132,7 @@ npx tsc --noEmit
 ```
 
 Only `lib/ai/`'s JSON-parsing/validation logic is unit tested so far
-(`tests/ai/parsers.test.ts`). Database-isolation and full end-to-end workflow
+(`tests/ai/*.test.ts`). Database-isolation and full end-to-end workflow
 tests aren't automated yet — see `docs/architecture.md`.
 
 ## Deploying so testers can reach it

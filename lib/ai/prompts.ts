@@ -1,4 +1,10 @@
-import { CompanyKnowledge, ExtractedRequirement, TenderAnalysis } from "./types";
+import {
+  CompanyKnowledge,
+  ExtractedRequirement,
+  RequirementRef,
+  SelectedEvidence,
+  TenderAnalysis,
+} from "./types";
 
 /**
  * Shared hallucination-protection rules (spec-mandated wording). Every
@@ -195,3 +201,168 @@ export function formatRequirementsForPrompt(requirements: ExtractedRequirement[]
 }
 
 export { formatCompanyKnowledge };
+
+// --- Phase 2: evidence finding / response drafting / claim validation ---
+
+function formatRequirementRef(requirement: RequirementRef): string {
+  return `[${requirement.category}${requirement.mandatory ? ", mandatory" : ""}] ${requirement.title}${
+    requirement.description ? `: ${requirement.description}` : ""
+  }`;
+}
+
+/** Same content as formatCompanyKnowledge but with each item's id inline,
+ * so findCompanyEvidence can reference specific real rows. */
+function formatCompanyKnowledgeWithIds(company: CompanyKnowledge): string {
+  const lines: string[] = [];
+
+  lines.push(
+    company.services.length > 0
+      ? `Services:\n${company.services
+          .map((s) => `- id=${s.id} name="${s.name}"${s.description ? ` description="${s.description}"` : ""}`)
+          .join("\n")}`
+      : "Services: none on file"
+  );
+
+  lines.push(
+    company.certifications.length > 0
+      ? `Certifications:\n${company.certifications
+          .map(
+            (c) =>
+              `- id=${c.id} name="${c.name}"${c.issuingOrganization ? ` issuer="${c.issuingOrganization}"` : ""}${c.expiryDate ? ` expires="${c.expiryDate}"` : ""}`
+          )
+          .join("\n")}`
+      : "Certifications: none on file"
+  );
+
+  lines.push(
+    company.references.length > 0
+      ? `References:\n${company.references
+          .map(
+            (r) =>
+              `- id=${r.id} client="${r.client}"${r.projectName ? ` project="${r.projectName}"` : ""}${r.description ? ` description="${r.description}"` : ""}${r.contractValue ? ` value=${r.contractValue}` : ""}${r.isPublic === true ? " sector=public" : r.isPublic === false ? " sector=private" : ""}`
+          )
+          .join("\n")}`
+      : "References: none on file"
+  );
+
+  return lines.join("\n");
+}
+
+export function buildFindEvidencePrompt(): string {
+  return `${BASE_RULES}
+
+You find company evidence relevant to a single tender requirement, so an SME
+can decide what to cite when drafting their response.
+
+You are given a requirement and a list of the company's services,
+certifications, and references, each with an "id". You may ONLY return ids
+that appear in that list — never invent an id, and never return an item that
+isn't genuinely relevant just to fill space. If nothing is relevant, return
+an empty array.
+
+Respond ONLY with a JSON array, no other text:
+[
+  {
+    "type": "service" | "certification" | "reference",
+    "id": "the exact id from the list given",
+    "relevance": "High" | "Medium" | "Low",
+    "reason": "one short sentence on why this is relevant to the requirement"
+  }
+]`;
+}
+
+export function formatFindEvidenceContext(requirement: RequirementRef, company: CompanyKnowledge): string {
+  return `Requirement:\n${formatRequirementRef(requirement)}\n\nCompany evidence available:\n${formatCompanyKnowledgeWithIds(company)}`;
+}
+
+function formatSelectedEvidenceForPrompt(evidence: SelectedEvidence[]): string {
+  if (evidence.length === 0) return "No evidence selected — draft must say so rather than assume any.";
+  return evidence.map((e) => `- [${e.type}] ${e.label}: ${e.detail}`).join("\n");
+}
+
+export function buildResponseDraftPrompt(): string {
+  return `${BASE_RULES}
+
+You draft a specific, concrete response to one tender requirement (or award
+criterion) for an SME's bid, using ONLY the evidence explicitly given to you
+plus general company profile facts also given to you. Do not use any
+service, certification, or reference that isn't in the evidence provided,
+even if it seems like it would exist for a company like this — if the given
+evidence doesn't cover part of the requirement, say so in the draft or in
+"warnings" rather than writing around the gap.
+
+Write the draft as the company would submit it (first person plural, "we"),
+specific to this requirement and citing the given evidence naturally — not
+generic filler that could apply to any tender.
+
+Respond ONLY with a JSON object, no other text:
+{
+  "draft": "the response text",
+  "confidence": "HIGH" | "MEDIUM" | "LOW",
+  "warnings": ["short drafting-time caveat, e.g. 'This requirement also asks for a signed declaration, which isn't covered by the draft text'", ...]
+}
+
+"warnings" are about coverage gaps in the draft itself, not fact-checking —
+a separate pass checks the draft for unsupported claims after this.`;
+}
+
+export function formatResponseDraftContext(
+  requirement: RequirementRef,
+  tenderTitle: string | null,
+  contractingAuthority: string | null,
+  awardCriterion: { criterion: string; description: string | null } | null,
+  evidence: SelectedEvidence[],
+  company: CompanyKnowledge
+): string {
+  return `Tender: ${tenderTitle ?? "unknown"} (${contractingAuthority ?? "unknown authority"})
+
+Requirement:
+${formatRequirementRef(requirement)}
+${awardCriterion ? `\nRelated award criterion: ${awardCriterion.criterion}${awardCriterion.description ? ` — ${awardCriterion.description}` : ""}` : ""}
+
+Selected evidence to draft from:
+${formatSelectedEvidenceForPrompt(evidence)}
+
+Company profile:
+${formatCompanyKnowledge(company)}`;
+}
+
+export function buildValidateResponsePrompt(): string {
+  return `${BASE_RULES}
+
+You review a drafted bid response for factual claims that aren't actually
+backed by the evidence/company knowledge it was supposed to be grounded in.
+This includes claims that go further than the evidence supports (e.g. the
+evidence shows 2 references but the draft says "numerous" or a specific
+higher number), named entities not present in the evidence, or figures/dates/
+qualifications not present anywhere in the given company knowledge.
+
+Do not flag claims that ARE supported by the evidence or company profile
+given, and do not flag stylistic/generic statements that make no verifiable
+factual claim (e.g. "we are committed to quality").
+
+Respond ONLY with a JSON object, no other text:
+{
+  "unsupportedClaims": ["the exact phrase or sentence from the draft that couldn't be verified", ...]
+}
+
+If every claim is supported, return an empty array — do not invent an issue
+to have something to report.`;
+}
+
+export function formatValidateResponseContext(
+  draftText: string,
+  evidence: SelectedEvidence[],
+  company: CompanyKnowledge
+): string {
+  return `Draft response to check:
+"""
+${draftText}
+"""
+
+Evidence it was supposed to be grounded in:
+${formatSelectedEvidenceForPrompt(evidence)}
+
+Full company profile (for cross-checking general facts like size/location):
+${formatCompanyKnowledge(company)}`;
+}
