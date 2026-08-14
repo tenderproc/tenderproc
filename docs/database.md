@@ -41,13 +41,19 @@ row (`companies.user_id` is `unique`).
 
 | Table | Key columns |
 |---|---|
-| `bids` | `user_id`, `tender_id` (`unique` — one bid per tender), `company_id` (nullable), `status` (`EVALUATION/PREPARATION/REVIEW/READY_TO_SUBMIT/SUBMITTED/WON/LOST/WITHDRAWN`). Score/recommendation/deadline are read via join to `tenders`, not duplicated. |
+| `bids` | `user_id`, `tender_id` (`unique` — one bid per tender), `company_id` (nullable), `status` (`EVALUATION/PREPARATION/REVIEW/READY_TO_SUBMIT/SUBMITTED/WON/LOST/WITHDRAWN/NO_RESULT` — `NO_RESULT` added in Phase 3). Score/recommendation/deadline are read via join to `tenders`, not duplicated. |
 | `bid_requirements` | A per-bid *snapshot* of `tender_requirements` at bid-creation time (`tender_requirement_id` nullable fk back to the original, but the row itself is independent): `bid_id`, `title`, `description`, `category`, `mandatory`, `source_document`, `source_page`, `source_section`, `status` (same 5-value enum, now actually mutable from the requirement's own page) |
 | `bid_responses` | One per requirement (`bid_requirement_id unique`): `bid_id`, `bid_requirement_id`, `draft_text`, `confidence` (`HIGH/MEDIUM/LOW`), `accepted` |
 | `bid_evidence` | Which company facts backed a response: `bid_response_id`, `evidence_type` (`service/certification/reference`), `source_id` (the originating `company_*` row id — polymorphic, no enforced FK), `label` (snapshot, survives if the source row is later edited) |
 | `bid_warnings` | `bid_id` (direct, not just via `bid_response_id`, so RLS/queries don't need a 3-level join), `bid_response_id` (nullable), `type` (`unsupported_claim/other`), `message`, `status` (`OPEN/RESOLVED/DISMISSED`), `resolved_at` |
 
-`bid_reviews`/`bid_outcomes` are not created — Phase 3.
+### Pre-submission review, submission, outcomes (Phase 3)
+
+| Table | Key columns |
+|---|---|
+| `bid_documents` | A per-bid *snapshot* of the tender's required documents — parsed out of `tenders.ai_analysis.requiredDocuments` (a plain jsonb string array; never normalized into its own table at tender level) at bid-creation time, same snapshot pattern as `bid_requirements`. `bid_id`, `name`, `status` (`MISSING/READY`), `storage_path`, `file_name`, `file_size_bytes`, `uploaded_at` — files live in the `bid-documents` Storage bucket, but `status` can also be toggled to `READY` without a file attached |
+| `bid_reviews` | One row per compliance-review run — a point-in-time snapshot, not a live view, so the review page has history and doesn't recompute on every load: `bid_id`, `compliance_score`, `ready_to_submit`, `critical_issues jsonb`, `warnings jsonb`, `requirements_total/complete`, `documents_total/ready`, `unsupported_claims_open`. `requirements_total/complete`, `documents_total/ready`, `critical_issues`, and most of `warnings` are computed directly from `bid_requirements`/`bid_documents`/`bid_warnings` rows in `app/api/bids/[bidId]/review/route.ts`; only the AI-sourced entries in `warnings` (cross-response contradictions) come from `AIProvider.runComplianceReview()` — see `docs/ai.md` |
+| `bid_outcomes` | One per bid (`bid_id unique`): `outcome` (`WON/LOST/WITHDRAWN/NO_RESULT`), WON fields (`contract_value`, `duration`, `notes`), LOST fields (`reason`, `winning_bidder`, `winning_price`, `competitor_score`, `feedback`). Stored for future win-rate analytics — not built yet, just captured now per the spec's "future learning" section |
 
 All `category`/`status` values are enforced with `check` constraints, matching
 `REQUIREMENT_CATEGORIES` in `lib/ai/types.ts` — if that list ever changes, the SQL check
@@ -55,8 +61,8 @@ constraint needs a migration to match.
 
 ## Storage
 
-Two private buckets, `company-documents` and `tender-documents`. Objects are stored under a
-`{user_id}/...` path prefix; the bucket policy checks
+Three private buckets: `company-documents`, `tender-documents`, and `bid-documents` (Phase
+3). Objects are stored under a `{user_id}/...` path prefix; the bucket policy checks
 `(storage.foldername(name))[1] = auth.uid()::text`, so a user can only read/write objects
 under their own prefix regardless of which table references them.
 
@@ -87,5 +93,8 @@ needing deeper joins than that anywhere.
 
 There's no migrations folder/tool in this project — SQL is delivered as a block, run once
 by hand in the Supabase SQL editor, and verified afterward via a read-only REST probe
-against each new table/bucket. `supabase-phase1-migration.sql` and
-`supabase-phase2-migration.sql` at the repo root are kept for reference; not re-run.
+against each new table/bucket. `supabase-phase1-migration.sql`, `supabase-phase2-migration.sql`,
+and `supabase-phase3-migration.sql` at the repo root are kept for reference; not re-run.
+The Phase 3 migration also widens the existing `bids.status` check constraint (drops and
+re-adds it with `NO_RESULT` included) — the one instance so far of altering rather than only
+adding.

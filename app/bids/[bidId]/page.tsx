@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import Header from "@/components/Header";
 import BidStatusSelect from "@/components/bids/BidStatusSelect";
+import DocumentsChecklist from "@/components/bids/DocumentsChecklist";
+import RecordOutcomeForm from "@/components/bids/RecordOutcomeForm";
 import { createClient } from "@/lib/supabase/server";
 import { REQUIREMENT_CATEGORIES } from "@/lib/ai/types";
 import { computeProgress } from "@/lib/bids";
@@ -47,22 +49,28 @@ export default async function BidWorkspacePage({
     .maybeSingle();
   if (!bid) notFound();
 
-  const [{ data: tender }, { data: requirements }, { data: openWarnings }] = await Promise.all([
-    supabase
-      .from("tenders")
-      .select("title, contracting_authority, submission_deadline, estimated_value, currency")
-      .eq("id", bid.tender_id)
-      .maybeSingle(),
-    supabase
-      .from("bid_requirements")
-      .select("id, title, category, mandatory, status")
-      .eq("bid_id", bidId),
-    supabase
-      .from("bid_warnings")
-      .select("id, message, type")
-      .eq("bid_id", bidId)
-      .eq("status", "OPEN"),
-  ]);
+  const [{ data: tender }, { data: requirements }, { data: openWarnings }, { data: documents }, { data: outcome }] =
+    await Promise.all([
+      supabase
+        .from("tenders")
+        .select("title, contracting_authority, submission_deadline, estimated_value, currency")
+        .eq("id", bid.tender_id)
+        .maybeSingle(),
+      supabase
+        .from("bid_requirements")
+        .select("id, title, category, mandatory, status")
+        .eq("bid_id", bidId),
+      supabase
+        .from("bid_warnings")
+        .select("id, message, type")
+        .eq("bid_id", bidId)
+        .eq("status", "OPEN"),
+      supabase
+        .from("bid_documents")
+        .select("id, name, status, storage_path, file_name, file_size_bytes")
+        .eq("bid_id", bidId),
+      supabase.from("bid_outcomes").select("*").eq("bid_id", bidId).maybeSingle(),
+    ]);
 
   const allRequirements = requirements ?? [];
   const overallProgress = computeProgress(allRequirements);
@@ -90,7 +98,15 @@ export default async function BidWorkspacePage({
               {tender?.title || "Untitled tender"}
             </h1>
           </div>
-          <BidStatusSelect bidId={bid.id} status={bid.status} />
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/bids/${bidId}/review`}
+              className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors"
+            >
+              Review Bid →
+            </Link>
+            <BidStatusSelect bidId={bid.id} status={bid.status} />
+          </div>
         </div>
 
         {openWarnings && openWarnings.length > 0 && (
@@ -169,6 +185,14 @@ export default async function BidWorkspacePage({
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="mt-8">
+          <DocumentsChecklist bidId={bidId} userId={user.id} initialDocuments={documents ?? []} />
+        </div>
+
+        <div className="mt-8">
+          <RecordOutcomeForm bidId={bidId} status={bid.status} initialOutcome={outcome ?? null} />
         </div>
       </main>
     </div>

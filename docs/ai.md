@@ -9,6 +9,7 @@ interface AIProvider {
   findCompanyEvidence(input: FindCompanyEvidenceInput): Promise<EvidenceMatch[]>;
   generateResponseDraft(input: GenerateResponseDraftInput): Promise<ResponseDraft>;
   validateResponse(input: ValidateResponseInput): Promise<ValidateResponseResult>;
+  runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult>;
 }
 ```
 
@@ -19,10 +20,10 @@ is active — today, always `AnthropicProvider`. Nothing outside `lib/ai/` impor
 `getAnthropicClient()` helper this module exports, so there's exactly one place an Anthropic
 client gets constructed.
 
-Phase 1 added `analyzeTender`/`generateBidRecommendation`; Phase 2 adds the three evidence/
-drafting/validation methods below. `findTenderAmbiguities()` (ambiguity detection is
-currently folded into `analyzeTender`'s output) and `runComplianceReview()` remain Phase 3
-additions to this same interface, not stubbed out ahead of time.
+Phase 1 added `analyzeTender`/`generateBidRecommendation`; Phase 2 added the three evidence/
+drafting/validation methods; Phase 3 adds `runComplianceReview()` below. `findTenderAmbiguities()`
+remains unbuilt — ambiguity detection is still folded into `analyzeTender`'s output and
+hasn't needed to be a standalone action.
 
 Adding a second provider (e.g. OpenAI) means writing `lib/ai/openai-provider.ts`
 implementing `AIProvider` and switching what `getAIProvider()` returns (e.g. behind an
@@ -130,6 +131,28 @@ flagged" work on a hand-edited draft, not just a freshly generated one. Each pas
 that response's `OPEN unsupported_claim` rows in `bid_warnings` rather than accumulating
 stale ones.
 
+## `runComplianceReview()`
+
+Deliberately the narrowest method in the interface. Everything the spec's pre-submission
+review asks for that's already sitting in the database as structured rows — unanswered
+mandatory requirements, missing documents, open unsupported-claim warnings, the compliance
+score itself — is computed directly in `app/api/bids/[bidId]/review/route.ts`, not asked of
+the model. Counting rows is exact and free; asking an LLM to also compute a percentage it
+isn't reliable at would just add noise and cost.
+
+The one thing that genuinely needs language understanding is cross-response consistency:
+did two different drafted responses state conflicting facts (5 staff vs. 8 staff), or does
+a response claim something the company profile doesn't support. Input: every drafted
+`bid_responses.draft_text` for the bid (title + category + text) plus `CompanyKnowledge`.
+Output: `{ inconsistencies: string[] }`, parsed by `parseComplianceReview()` the same
+defensive way as every other parser here. The prompt explicitly tells the model not to
+re-flag unsupported claims — that's `validateResponse`'s job, already run per-response at
+draft time — keeping the two AI checks non-overlapping.
+
+If there's no company profile yet, or no drafted responses to compare, the route skips the
+AI call entirely (not called with empty/meaningless input) — the deterministic parts of the
+review are still useful on their own.
+
 ## Cost control
 
 - Extracted PDF text is stored once (`tender_documents.extracted_text`) and reused, never
@@ -142,7 +165,7 @@ stale ones.
 - One model (`claude-sonnet-4-6`) is used everywhere in this phase — no multi-model routing
   yet, per "keep the first implementation simple."
 
-## What's NOT built yet (Phase 3)
+## What's NOT built yet
 
-A standalone "Find ambiguities" action and `runComplianceReview` (pre-submission review).
-These extend the same `AIProvider` interface and reuse `BASE_RULES` when they land.
+A standalone "Find ambiguities" action — ambiguity detection stays folded into
+`analyzeTender`'s output; nothing has needed it to be its own AI call.

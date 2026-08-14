@@ -2,11 +2,13 @@ import Anthropic from "@anthropic-ai/sdk";
 import { AIProvider } from "./provider";
 import {
   buildBidRecommendationPrompt,
+  buildComplianceReviewPrompt,
   buildFindEvidencePrompt,
   buildResponseDraftPrompt,
   buildTenderAnalysisPrompt,
   buildValidateResponsePrompt,
   formatCompanyKnowledge,
+  formatComplianceReviewContext,
   formatFindEvidenceContext,
   formatRequirementsForPrompt,
   formatResponseDraftContext,
@@ -21,6 +23,8 @@ import {
   BidRecommendation,
   BidRecommendationVerdict,
   CompanyKnowledge,
+  ComplianceReviewInput,
+  ComplianceReviewResult,
   EvidenceMatch,
   EvidenceRelevance,
   EvidenceType,
@@ -254,6 +258,12 @@ export function parseValidateResponse(raw: string): ValidateResponseResult {
   return { unsupportedClaims: asStringArray(parsed?.unsupportedClaims) };
 }
 
+/** Pure, network-free parser — exported so it can be unit tested directly. */
+export function parseComplianceReview(raw: string): ComplianceReviewResult {
+  const parsed = parseJsonLoosely(raw);
+  return { inconsistencies: asStringArray(parsed?.inconsistencies) };
+}
+
 export class AnthropicProvider implements AIProvider {
   async analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis> {
     const client = getAnthropicClient();
@@ -361,6 +371,25 @@ ${formatCompanyKnowledge(input.company)}`;
     const textBlock = message.content.find((b) => b.type === "text");
     const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
     return parseValidateResponse(raw);
+  }
+
+  async runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult> {
+    const client = getAnthropicClient();
+    const message = await client.messages.create({
+      model: MODEL,
+      max_tokens: 1500,
+      system: buildComplianceReviewPrompt(),
+      messages: [
+        {
+          role: "user",
+          content: formatComplianceReviewContext(input.responses, input.company),
+        },
+      ],
+    });
+
+    const textBlock = message.content.find((b) => b.type === "text");
+    const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
+    return parseComplianceReview(raw);
   }
 }
 

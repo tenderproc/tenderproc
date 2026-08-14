@@ -112,16 +112,53 @@ accepting a draft, dismissing a warning) are all plain Supabase client calls fro
 Components followed by `router.refresh()` — the same pattern `WorkflowBoard.tsx` already
 used, reused rather than introducing API routes for state that doesn't touch the AI.
 
+## Pre-submission review, submission, outcomes (Phase 3)
+
+`app/bids/[bidId]/review/page.tsx` is a new page, not a section of the workspace — running
+a review and acting on it (download/submit/mark-submitted) is a distinct step from working
+requirements, so it gets its own URL. Running the review (`RunReviewButton` →
+`POST /api/bids/[bidId]/review`) computes `requirements_total/complete`,
+`documents_total/ready`, and `critical_issues` deterministically from `bid_requirements`/
+`bid_documents`/`bid_warnings` rows, calls `AIProvider.runComplianceReview()` only for
+cross-response contradictions (see `docs/ai.md`), and persists the whole result as a new
+`bid_reviews` row — a point-in-time snapshot, not a live view, so the page always shows the
+*last run* result until the user explicitly re-runs it.
+
+`bid_documents` fills a gap the required-documents list had since Phase 1: `analyzeTender`
+already extracts `requiredDocuments: string[]`, but it only ever lived inside the
+`tenders.ai_analysis` jsonb blob, un-normalized. `POST /api/bids` now also snapshots that
+array into row-per-document `bid_documents` at bid-creation time (same snapshot pattern as
+`bid_requirements`), so each one can be tracked (`MISSING`/`READY`) and optionally have a
+real file attached (`bid-documents` Storage bucket, same `{user_id}/...`-prefixed RLS
+pattern as the other two buckets) — from the bid workspace page, not just at review time, so
+gaps can be closed incrementally rather than only discovered at the end.
+
+Submission itself is never automated — the review page's "Submission" section is
+**Download Bid Package** (signed-URL links to whatever's been uploaded to `bid_documents`,
+no zip bundling), **Open Official Submission Platform** (`tenders.source_url` if one was
+captured; plain text otherwise, since most manually-uploaded tenders won't have one), and
+**Mark as Submitted** (`bids.status = 'SUBMITTED'`). The button isn't technically blocked by
+open critical issues — the NOT READY TO SUBMIT banner is advisory, not a gate, matching the
+rest of the app's philosophy that the human makes the final call.
+
+Outcome tracking (`RecordOutcomeForm` on the bid workspace page) upserts `bid_outcomes` and
+sets `bids.status` to the matching value in the same client-side action — no API route,
+since it's a plain field write with no AI/secret involved, same as the existing
+`BidStatusSelect` pattern. `bids.status`'s check constraint was widened in the Phase 3
+migration to add `NO_RESULT` alongside the pre-existing `WON/LOST/WITHDRAWN`.
+
 ## Folder layout
 
 ```
 app/
   api/{analyze,cron/notify,signup-profile,tenders/upload,bids}/route.ts
   api/bids/[bidId]/requirements/[reqId]/{find-evidence,generate-draft,recheck}/route.ts
+  api/bids/[bidId]/review/route.ts
   {opportunities,search,market,workflow,pricing,my-tenders,company,bids}/page.tsx
   my-tenders/[tenderId]/page.tsx
   bids/[bidId]/page.tsx
   bids/[bidId]/requirements/[reqId]/page.tsx
+  bids/[bidId]/review/page.tsx
   tenders/[id]/page.tsx        # TED lookup — unrelated to /my-tenders
 components/
   {tenders,company,bids}/      # feature-scoped
@@ -139,8 +176,6 @@ tests/
 
 ## What's deliberately not built yet
 
-- `bid_reviews`/`bid_outcomes` tables, pre-submission compliance review, outcome tracking —
-  Phase 3.
 - Automatic claim-text splicing — "unsupported claim" actions are Dismiss (mark it reviewed)
   or manually edit the draft; the spec itself says never auto-delete a claim.
 - A granular "attach evidence to this specific claim" mechanism — use Find Evidence +

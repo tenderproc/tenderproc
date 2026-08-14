@@ -187,3 +187,27 @@ export interface ValidateResponseInput {
 export interface ValidateResponseResult {
   unsupportedClaims: string[];
 }
+
+// --- Phase 3: pre-submission compliance review ---
+
+/** One drafted response, reduced to what a cross-response consistency check
+ * needs — not the full requirement/evidence context those other passes use. */
+export interface ComplianceReviewResponse {
+  requirementTitle: string;
+  category: RequirementCategory;
+  draftText: string;
+}
+
+export interface ComplianceReviewInput {
+  responses: ComplianceReviewResponse[];
+  company: CompanyKnowledge;
+}
+
+/** Deliberately narrow: counts/scores/missing-requirement-or-document lists
+ * are all computed directly from bid_requirements/bid_documents/bid_warnings
+ * rows in the API route, not asked of the model. This is the one thing that
+ * genuinely needs language understanding — contradictions between different
+ * drafted responses, or between a response and the company profile. */
+export interface ComplianceReviewResult {
+  inconsistencies: string[];
+}

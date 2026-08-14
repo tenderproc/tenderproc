@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   const { data: tender } = await supabase
     .from("tenders")
-    .select("id, status")
+    .select("id, status, ai_analysis")
     .eq("id", tenderId)
     .eq("user_id", user.id)
     .maybeSingle();
@@ -70,6 +70,21 @@ export async function POST(req: NextRequest) {
         source_section: r.source_section,
       }))
     );
+  }
+
+  // requiredDocuments only lives in the tender's ai_analysis jsonb blob
+  // (never normalized into its own table) — snapshot it into row-per-item
+  // bid_documents here, the same way tender_requirements is snapshotted
+  // into bid_requirements above, so each can be tracked/uploaded individually.
+  const requiredDocuments: unknown = (tender.ai_analysis as { requiredDocuments?: unknown })
+    ?.requiredDocuments;
+  if (Array.isArray(requiredDocuments) && requiredDocuments.length > 0) {
+    const names = requiredDocuments.filter(
+      (d): d is string => typeof d === "string" && d.trim().length > 0
+    );
+    if (names.length > 0) {
+      await supabase.from("bid_documents").insert(names.map((name) => ({ bid_id: bid.id, name })));
+    }
   }
 
   return NextResponse.json({ id: bid.id });

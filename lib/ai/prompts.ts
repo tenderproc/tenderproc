@@ -1,5 +1,6 @@
 import {
   CompanyKnowledge,
+  ComplianceReviewResponse,
   ExtractedRequirement,
   RequirementRef,
   SelectedEvidence,
@@ -364,5 +365,51 @@ Evidence it was supposed to be grounded in:
 ${formatSelectedEvidenceForPrompt(evidence)}
 
 Full company profile (for cross-checking general facts like size/location):
+${formatCompanyKnowledge(company)}`;
+}
+
+// --- Phase 3: pre-submission compliance review ---
+
+export function buildComplianceReviewPrompt(): string {
+  return `${BASE_RULES}
+
+You review a set of already-drafted bid responses for the SAME bid, looking
+ONLY for factual contradictions — not for unsupported claims (a separate,
+per-response pass already checks each draft against its evidence
+individually; do not repeat that here).
+
+Two kinds of contradiction to look for:
+1. Between two or more of the drafted responses (e.g. one response states 5
+   dedicated staff, another states 8; one gives a start date that conflicts
+   with another).
+2. Between a drafted response and the company profile given (e.g. a response
+   claims a certification or capability that the company profile doesn't
+   list, or a number that doesn't match the profile).
+
+Be conservative: only flag a genuine, specific contradiction you can point
+to concretely. Do not flag stylistic variation, differing levels of detail
+between responses, or anything you're not confident is an actual conflict.
+
+Respond ONLY with a JSON object, no other text:
+{
+  "inconsistencies": ["short, specific description of the contradiction and which responses/facts conflict", ...]
+}
+
+If there are no genuine contradictions, return an empty array.`;
+}
+
+export function formatComplianceReviewContext(
+  responses: ComplianceReviewResponse[],
+  company: CompanyKnowledge
+): string {
+  const responseList =
+    responses
+      .map((r) => `- [${r.category}] ${r.requirementTitle}:\n  """${r.draftText}"""`)
+      .join("\n\n") || "No drafted responses yet.";
+
+  return `Drafted responses for this bid:
+${responseList}
+
+Company profile:
 ${formatCompanyKnowledge(company)}`;
 }

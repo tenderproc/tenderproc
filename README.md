@@ -17,8 +17,9 @@ Two ways tenders enter the app, on purpose:
   Bid/No-Bid recommendation. From a ready tender, **Start Bid** opens the Bid
   workspace (`/bids`) — a requirement checklist where the AI finds relevant
   company evidence, drafts a grounded response, and flags any claim in that
-  draft it can't verify against your evidence. Pre-submission compliance
-  review and outcome tracking are still Phase 3.
+  draft it can't verify against your evidence. From there, a pre-submission
+  review checks the whole bid for gaps before you submit, and the outcome
+  (won/lost/withdrawn) gets recorded for the record.
 
 ## What's in this beta
 
@@ -33,7 +34,8 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 - Daily email notifications: a scheduled job checks each user's sectors and emails a digest of anything newly published since the last check.
 - **Company** (`/company`) — the knowledge base the AI is allowed to draw on: core profile, services, certifications (with an expiry-soon/expired badge), references, and supporting documents (uploaded to Supabase Storage). Nothing here is ever invented by the AI — see `docs/ai.md`'s hallucination-protection rules.
 - **Tenders** (`/my-tenders`) — upload a tender PDF; it's text-extracted (`lib/documents/`), AI-analyzed into a summary, contract details, award criteria, and categorized requirements (`lib/ai/`), and — if a company profile exists — scored with a Bid/No-Bid recommendation. Processing happens synchronously within the upload request (can take up to ~60s for a long document); by the time the detail page loads, status is already `READY` or `FAILED`. A ready tender gets a **Start Bid** button.
-- **Bids** (`/bids`) — the bid workspace. Starting a bid snapshots that tender's requirements into a per-bid checklist (`bid_requirements`) with progress bars per category. Each requirement has its own page: **Find Evidence** surfaces relevant company services/certifications/references (never a fabricated one — see `docs/ai.md`), pick which to use, **Generate Draft** writes a response grounded only in that evidence, then a second AI pass checks the draft for any claim it can't verify and flags it as an **Unsupported claim** — including on a draft you've hand-edited, via **Save & Re-check**. Accept a draft to mark its requirement complete; the bid's own status (Evaluation → … → Won/Lost/Withdrawn) is a separate dropdown in the workspace header.
+- **Bids** (`/bids`) — the bid workspace. Starting a bid snapshots that tender's requirements into a per-bid checklist (`bid_requirements`) with progress bars per category, plus a **Documents** checklist snapshotted from the tender's extracted required-documents list — mark each ready manually or attach a real file. Each requirement has its own page: **Find Evidence** surfaces relevant company services/certifications/references (never a fabricated one — see `docs/ai.md`), pick which to use, **Generate Draft** writes a response grounded only in that evidence, then a second AI pass checks the draft for any claim it can't verify and flags it as an **Unsupported claim** — including on a draft you've hand-edited, via **Save & Re-check**. Accept a draft to mark its requirement complete; the bid's own status (Evaluation → … → Won/Lost/Withdrawn/No result) is a separate dropdown in the workspace header.
+- **Pre-submission review** (`/bids/[id]/review`) — a compliance check before you submit: unanswered mandatory requirements and missing documents are counted as critical issues, unresolved unsupported claims and any AI-detected contradiction between two drafted responses as warnings, rolled into a compliance score and a READY/NOT READY banner. From there: download whatever documents you've uploaded, a link to the tender's official submission platform if one was captured, and **Mark as Submitted**. Afterward, record the outcome (won/lost/withdrawn/no result) — contract value and duration for a win, reason/winning bidder/price for a loss — stored for future win-rate tracking, not analyzed yet.
 
 **Notice-type filtering**: TED's Belgian feed mixes genuinely open contract notices (`cn-*`) with already-awarded notices (`can-*`) and a few administrative types — about a third of an unfiltered feed turned out to be already-decided contracts in testing. Opportunities and Search filter to `cn-*`/`pin-cfc-*` (open calls) via `isOpenCallNotice()` in `lib/ted.ts`; Market overview deliberately targets the `can-*` notices that Opportunities excludes.
 
@@ -47,8 +49,8 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 - Payments/billing
 - A way to turn notifications off (every user with saved sectors gets the daily digest)
 - Full historical market analytics (Market overview is a 90-day snapshot, not a paginated archive)
-- Pre-submission compliance review, outcome tracking, `bid_reviews`/`bid_outcomes` — Phase 3 of the bid-manager workflow, not built yet
 - Automatic claim-text splicing (unsupported claims are Dismissed or hand-edited, never auto-deleted) and a granular per-claim "attach evidence" mechanism
+- Win-rate analytics/dashboards over recorded outcomes (the data's captured in `bid_outcomes`, nothing analyzes it yet) and bid-package ZIP bundling (Download Bid Package links to individually uploaded files)
 - Automatic tender scraping/submission, OCR for scanned PDFs, DOCX/XLSX upload, a background job queue, an OpenAI provider — all explicitly deferred; see `docs/architecture.md`'s "What's deliberately not built yet"
 
 ## Running it locally
@@ -122,6 +124,10 @@ If testers hit an error saving preferences in the sidebar or adding a tender to 
 - The bid workspace tables (`bids`, `bid_requirements`, `bid_responses`,
   `bid_evidence`, `bid_warnings`) — full SQL is in
   `supabase-phase2-migration.sql` at the repo root.
+- The pre-submission review/submission/outcome tables (`bid_documents`,
+  `bid_reviews`, `bid_outcomes`), a widened `bids.status` check constraint
+  (adds `NO_RESULT`), and a private `bid-documents` Storage bucket — full SQL
+  is in `supabase-phase3-migration.sql` at the repo root.
 
 ## Testing & linting
 
