@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* One typeface (Inter, loaded in layout.tsx) mapped to all three slots so
+     existing font-display/font-body/font-mono classes stay in sync. */
+  --font-body: var(--font-display);
+  --font-mono: var(--font-display);
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+::selection {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
