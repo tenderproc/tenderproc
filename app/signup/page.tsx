@@ -79,7 +79,7 @@ export default function SignupPage() {
       <main className="min-h-screen flex items-center justify-center px-6">
         <div className="w-full max-w-sm text-center">
           <p className="text-xs font-semibold tracking-[0.15em] text-inkDim uppercase">
-            Tender Copilot
+            TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
             Check your email
@@ -101,7 +101,7 @@ export default function SignupPage() {
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <p className="text-xs font-semibold tracking-[0.15em] text-inkDim uppercase">
-            Tender Copilot
+            TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
             Create your account

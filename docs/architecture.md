@@ -1,6 +1,6 @@
 # Architecture
 
-Tender Copilot is a Next.js 16 App Router app, TypeScript throughout, Tailwind for styling,
+TenderProc is a Next.js 16 App Router app, TypeScript throughout, Tailwind for styling,
 Supabase for Postgres + Auth + Storage. There is no separate backend — server-side logic
 lives in Server Components, Route Handlers (`app/api/**/route.ts`), and `lib/`.
 

@@ -1,4 +1,4 @@
-# Tender Copilot — Beta
+# TenderProc — Beta
 
 An AI bid manager for Belgian SMEs, not just an "AI chatbot for tenders." The
 AI does the heavy reading, extraction, matching, and (in later phases)

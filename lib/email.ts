@@ -48,7 +48,7 @@ export async function sendNewTendersEmail(to: string, tenders: TenderNotice[]) {
     subject,
     html: `
       <div style="font-family:sans-serif;max-width:560px;">
-        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">Tender Copilot</p>
+        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc</p>
         <h1 style="font-size:20px;margin:4px 0 20px;">New in your sectors</h1>
         <ul style="list-style:none;padding:0;margin:0;">${items}</ul>
         <p style="font-size:12px;color:#888;margin-top:24px;">You can change your sectors any time in Settings.</p>

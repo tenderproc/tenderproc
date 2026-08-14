@@ -67,7 +67,7 @@ export default async function PricingPage() {
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="font-display font-semibold text-xl text-ink tracking-tight">
-              Tender Copilot
+              TenderProc
             </span>
             <span className="text-[11px] font-medium uppercase tracking-wide text-accent bg-accent/10 border border-accent/25 rounded-full px-2 py-0.5">
               Beta

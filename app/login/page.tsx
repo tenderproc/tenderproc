@@ -41,7 +41,7 @@ function LoginForm() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <p className="text-xs font-semibold tracking-[0.15em] text-inkDim uppercase">
-            Tender Copilot
+            TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
             Log in

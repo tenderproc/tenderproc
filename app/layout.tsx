@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Tender Copilot — Beta",
+  title: "TenderProc — Beta",
   description: "AI-assisted public tender screening for Belgian SMEs.",
 };
 
