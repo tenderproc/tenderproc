@@ -227,6 +227,12 @@
     "remap": "Réassocier les preuves",
     "map": "Associer les preuves aux exigences"
   },
+  "TranslateTenderButton": {
+    "notice": "L'analyse IA de cet appel d'offres est affichée dans sa langue d'origine.",
+    "translate": "Traduire en {language}",
+    "translating": "Traduction en {language}…",
+    "couldNotTranslate": "Impossible de traduire cet appel d'offres."
+  },
   "RecordOutcomeForm": {
     "outcome": "Résultat",
     "edit": "Modifier",
@@ -439,7 +445,9 @@
       "couldNotRecheckDraft": "Impossible de revérifier le brouillon pour le moment. Réessayez dans un instant.",
       "requirementNotFound": "Exigence introuvable.",
       "couldNotFindEvidence": "Impossible de trouver des preuves pour le moment. Réessayez dans un instant.",
-      "couldNotGenerateDraft": "Impossible de générer un brouillon pour le moment. Réessayez dans un instant."
+      "couldNotGenerateDraft": "Impossible de générer un brouillon pour le moment. Réessayez dans un instant.",
+      "invalidLocale": "Langue invalide.",
+      "couldNotTranslate": "Impossible de traduire cet appel d'offres pour le moment. Réessayez dans un instant."
     },
     "auth": {
       "invalidCredentials": "E-mail ou mot de passe incorrect.",

@@ -503,6 +503,36 @@ requirement has no relevant evidence, still include it with status MISSING
 and an empty evidence array — do not omit it.`;
 }
 
+// --- Increment 2: on-demand AI content translation ---
+
+/** Deliberately does NOT reuse BASE_RULES — that block is an
+ * anti-hallucination rule set for generating new company-fact content, not
+ * for translating text that already exists. This prompt has a narrower,
+ * translation-only job. */
+export function buildTranslateFieldsPrompt(targetLanguage: string): string {
+  return `You translate structured content into ${targetLanguage} for a Belgian/EU
+public-procurement bidding tool.
+
+You are given a JSON object mapping field keys to English source text.
+Translate each value into ${targetLanguage}. Do not translate, add, or remove
+any keys.
+
+Rules:
+- Translate only — do not add, remove, reinterpret, or summarize meaning.
+- Preserve every number, date, percentage, and identifier exactly as given.
+- Preserve proper nouns (company names, place names, standard names like
+  "ISO 9001") untranslated, unless ${targetLanguage} has a standard localized
+  form for that specific term.
+- If a value is an empty string, return it unchanged.
+
+Respond ONLY with a JSON object, no other text, with exactly the same keys as
+the input, each value replaced by its ${targetLanguage} translation.`;
+}
+
+export function formatTranslateFieldsContext(fields: Record<string, string>): string {
+  return JSON.stringify(fields);
+}
+
 export function formatRequirementEvidenceMappingContext(
   requirements: RequirementForMapping[],
   company: CompanyKnowledge

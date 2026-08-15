@@ -227,6 +227,12 @@
     "remap": "Bewijs opnieuw koppelen",
     "map": "Bewijs koppelen aan vereisten"
   },
+  "TranslateTenderButton": {
+    "notice": "De AI-analyse van deze aanbesteding wordt in de oorspronkelijke taal getoond.",
+    "translate": "Vertalen naar {language}",
+    "translating": "Wordt vertaald naar {language}…",
+    "couldNotTranslate": "Kon deze aanbesteding niet vertalen."
+  },
   "RecordOutcomeForm": {
     "outcome": "Resultaat",
     "edit": "Bewerken",
@@ -439,7 +445,9 @@
       "couldNotRecheckDraft": "Kon het concept momenteel niet opnieuw controleren. Probeer het zo opnieuw.",
       "requirementNotFound": "Vereiste niet gevonden.",
       "couldNotFindEvidence": "Kon momenteel geen bewijs vinden. Probeer het zo opnieuw.",
-      "couldNotGenerateDraft": "Kon momenteel geen concept genereren. Probeer het zo opnieuw."
+      "couldNotGenerateDraft": "Kon momenteel geen concept genereren. Probeer het zo opnieuw.",
+      "invalidLocale": "Ongeldige taal.",
+      "couldNotTranslate": "Kon deze aanbesteding momenteel niet vertalen. Probeer het zo opnieuw."
     },
     "auth": {
       "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",

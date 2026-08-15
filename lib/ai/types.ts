@@ -312,3 +312,14 @@ export interface MapRequirementEvidenceInput {
 export interface MapRequirementEvidenceResult {
   mappings: RequirementEvidenceMapping[];
 }
+
+// --- Increment 2: on-demand AI content translation ---
+
+/** Generic, content-type-agnostic: a flat {fieldKey: sourceText} map. The
+ * caller is responsible for extracting only free-text fields (never
+ * enums/ids/numbers) and reassembling the response — this method never sees
+ * anything it shouldn't translate. */
+export interface TranslateFieldsInput {
+  fields: Record<string, string>;
+  targetLanguage: string;
+}

@@ -7,6 +7,7 @@ import {
   buildRequirementEvidenceMappingPrompt,
   buildResponseDraftPrompt,
   buildTenderAnalysisPrompt,
+  buildTranslateFieldsPrompt,
   buildValidateResponsePrompt,
   formatCompanyKnowledge,
   formatComplianceReviewContext,
@@ -15,6 +16,7 @@ import {
   formatRequirementsForPrompt,
   formatResponseDraftContext,
   formatTenderAnalysisForPrompt,
+  formatTranslateFieldsContext,
   formatValidateResponseContext,
 } from "./prompts";
 import {
@@ -48,6 +50,7 @@ import {
   ScoreDimension,
   ScoreDimensionKey,
   TenderAnalysis,
+  TranslateFieldsInput,
   ValidateResponseInput,
   ValidateResponseResult,
 } from "./types";
@@ -414,6 +417,81 @@ export function parseRequirementEvidenceMapping(
   return { mappings };
 }
 
+/** A large translation response can legitimately hit max_tokens mid-object
+ * (many fields, translated text often longer than the English source),
+ * which breaks strict JSON.parse entirely even though most of the object is
+ * well-formed. Salvages whatever complete "key": "value" pairs appear before
+ * the cutoff rather than discarding the whole response over one truncated
+ * trailing string. */
+function extractKeyValuePairsLoosely(raw: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  const pairRegex = /"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"/g;
+  let match: RegExpExecArray | null;
+  while ((match = pairRegex.exec(raw)) !== null) {
+    try {
+      const key = JSON.parse(`"${match[1]}"`);
+      const value = JSON.parse(`"${match[2]}"`);
+      if (typeof key === "string" && typeof value === "string") result[key] = value;
+    } catch {
+      // Malformed pair (e.g. the cut lands mid-escape) — skip it, its
+      // original-language fallback still applies below.
+    }
+  }
+  return result;
+}
+
+const TRANSLATE_CHUNK_CHAR_BUDGET = 4000;
+
+/** Groups {key: text} entries into chunks whose combined source text stays
+ * under a character budget, so each translateFields() call — and its
+ * max_tokens ceiling — stays small regardless of how many fields a tender
+ * has. Never splits a single field's value; only groups whole entries. */
+export function chunkFieldsByCharBudget(
+  fields: Record<string, string>,
+  budget: number
+): Record<string, string>[] {
+  const chunks: Record<string, string>[] = [];
+  let current: Record<string, string> = {};
+  let currentChars = 0;
+
+  for (const [key, value] of Object.entries(fields)) {
+    if (currentChars > 0 && currentChars + value.length > budget) {
+      chunks.push(current);
+      current = {};
+      currentChars = 0;
+    }
+    current[key] = value;
+    currentChars += value.length;
+  }
+  if (Object.keys(current).length > 0) chunks.push(current);
+  return chunks;
+}
+
+/** Pure, network-free parser — exported so it can be unit tested directly.
+ * Never trusts the model's key set: only keys present in `original` are ever
+ * returned, and any key the model dropped, mistranslated to a non-string, or
+ * never answered falls back to its original English text rather than going
+ * missing from the result. */
+export function parseTranslatedFields(
+  raw: string,
+  original: Record<string, string>
+): Record<string, string> {
+  let record: Record<string, unknown> = {};
+  try {
+    const parsed = parseJsonLoosely(raw);
+    if (parsed && typeof parsed === "object") record = parsed as Record<string, unknown>;
+  } catch {
+    record = extractKeyValuePairsLoosely(raw);
+  }
+
+  const result: Record<string, string> = {};
+  for (const [key, sourceText] of Object.entries(original)) {
+    const translated = record[key];
+    result[key] = typeof translated === "string" && translated.trim() ? translated : sourceText;
+  }
+  return result;
+}
+
 export class AnthropicProvider implements AIProvider {
   async analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis> {
     const client = getAnthropicClient();
@@ -569,6 +647,36 @@ ${formatCompanyKnowledge(input.company)}`;
         evidence: m.evidence.map((e) => ({ ...e, label: labelForEvidence(input.company, e.type, e.id) })),
       })),
     };
+  }
+
+  async translateFields(input: TranslateFieldsInput): Promise<Record<string, string>> {
+    if (Object.keys(input.fields).length === 0) return {};
+
+    // A whole tender's worth of fields translated in one call routinely ran
+    // 100+ seconds (measured against this app's real data) — well past the
+    // 60s maxDuration every other AI route here uses, so on a real deployment
+    // it would get killed mid-flight. Splitting into character-budgeted
+    // chunks translated in parallel keeps each call small (seconds, not
+    // minutes) and total wall time close to the slowest chunk instead of the
+    // sum of all of them.
+    const client = getAnthropicClient();
+    const chunks = chunkFieldsByCharBudget(input.fields, TRANSLATE_CHUNK_CHAR_BUDGET);
+
+    const chunkResults = await Promise.all(
+      chunks.map(async (chunk) => {
+        const message = await client.messages.create({
+          model: MODEL,
+          max_tokens: 4000,
+          system: buildTranslateFieldsPrompt(input.targetLanguage),
+          messages: [{ role: "user", content: formatTranslateFieldsContext(chunk) }],
+        });
+        const textBlock = message.content.find((b) => b.type === "text");
+        const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
+        return parseTranslatedFields(raw, chunk);
+      })
+    );
+
+    return Object.assign({}, ...chunkResults);
   }
 }
 

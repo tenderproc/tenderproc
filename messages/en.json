@@ -227,6 +227,12 @@
     "remap": "Re-map Evidence",
     "map": "Map Evidence to Requirements"
   },
+  "TranslateTenderButton": {
+    "notice": "This tender's AI analysis is shown in its original language.",
+    "translate": "Translate to {language}",
+    "translating": "Translating to {language}…",
+    "couldNotTranslate": "Could not translate this tender."
+  },
   "RecordOutcomeForm": {
     "outcome": "Outcome",
     "edit": "Edit",
@@ -439,7 +445,9 @@
       "couldNotRecheckDraft": "Could not re-check the draft right now. Try again in a moment.",
       "requirementNotFound": "Requirement not found.",
       "couldNotFindEvidence": "Could not find evidence right now. Try again in a moment.",
-      "couldNotGenerateDraft": "Could not generate a draft right now. Try again in a moment."
+      "couldNotGenerateDraft": "Could not generate a draft right now. Try again in a moment.",
+      "invalidLocale": "Invalid language.",
+      "couldNotTranslate": "Could not translate this tender right now. Try again in a moment."
     },
     "auth": {
       "invalidCredentials": "Incorrect email or password.",

@@ -24,6 +24,16 @@ export const INTL_LOCALE: Record<Locale, string> = {
   de: "de-BE",
 };
 
+/** English name of the language, for use in AI prompts (clearer to the model
+ * than the native LOCALE_META label). Only the three translatable target
+ * locales are meaningful here — "en" is never passed to translateFields(). */
+export const LOCALE_ENGLISH_NAME: Record<Locale, string> = {
+  en: "English",
+  nl: "Dutch",
+  fr: "French",
+  de: "German",
+};
+
 /** Picks the best-matching supported locale from an Accept-Language header value. */
 export function pickLocaleFromAcceptLanguage(header: string | null): Locale {
   if (!header) return DEFAULT_LOCALE;

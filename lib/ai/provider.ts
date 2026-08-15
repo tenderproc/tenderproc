@@ -11,6 +11,7 @@ import {
   MapRequirementEvidenceResult,
   ResponseDraft,
   TenderAnalysis,
+  TranslateFieldsInput,
   ValidateResponseInput,
   ValidateResponseResult,
 } from "./types";
@@ -22,6 +23,8 @@ import {
  * Increment 1 enriches generateBidRecommendation with score dimensions and
  * disqualifying factors (the "TenderProc Score" / "Why Not Bid"), and adds
  * mapRequirementsToEvidence for tender-level, pre-bid evidence coverage.
+ * Increment 2 adds translateFields for on-demand translation of AI-generated
+ * free text into the user's chosen UI language.
  */
 export interface AIProvider {
   analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis>;
@@ -31,4 +34,5 @@ export interface AIProvider {
   validateResponse(input: ValidateResponseInput): Promise<ValidateResponseResult>;
   runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult>;
   mapRequirementsToEvidence(input: MapRequirementEvidenceInput): Promise<MapRequirementEvidenceResult>;
+  translateFields(input: TranslateFieldsInput): Promise<Record<string, string>>;
 }

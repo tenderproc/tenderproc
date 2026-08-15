@@ -6,9 +6,12 @@ import TenderStatusBadge from "@/components/tenders/TenderStatusBadge";
 import { MatchScorePill, RecommendationPill } from "@/components/tenders/BidMatchBadge";
 import StartBidButton from "@/components/tenders/StartBidButton";
 import MapEvidenceButton from "@/components/tenders/MapEvidenceButton";
+import TranslateTenderButton from "@/components/tenders/TranslateTenderButton";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { requirementCategoryLabel } from "@/lib/requirementCategory";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";
+import { AiAnalysisExtras, trField } from "@/lib/tenders/translation";
 import {
   DisqualifierSeverity,
   DisqualifyingFactor,
@@ -18,16 +21,6 @@ import {
 } from "@/lib/ai/types";
 
 export const dynamic = "force-dynamic";
-
-interface AiAnalysisExtras {
-  requiredDocuments?: string[];
-  risks?: string[];
-  ambiguities?: string[];
-  positiveFactors?: string[];
-  recommendationRisks?: string[];
-  missingRequirements?: string[];
-  estimatedEffortHours?: { min: number; max: number } | null;
-}
 
 const SEVERITY_DOT: Record<DisqualifierSeverity, string> = {
   CRITICAL: "bg-stamp",
@@ -145,6 +138,22 @@ export default async function TenderDetailPage({
     items: (requirements ?? []).filter((r) => r.category === cat),
   })).filter((g) => g.items.length > 0);
 
+  // No RLS policy on content_translations (service-role only, see
+  // supabase-i18n-migration.sql) — read via the admin client after the
+  // ownership check above already scoped this whole page to this user's tender.
+  let translated: Record<string, string> | null = null;
+  if (locale !== "en") {
+    const { data: translationRow } = await createAdminClient()
+      .from("content_translations")
+      .select("fields")
+      .eq("source_table", "tenders")
+      .eq("source_id", tenderId)
+      .eq("locale", locale)
+      .maybeSingle();
+    translated = (translationRow?.fields as Record<string, string> | undefined) ?? null;
+  }
+  const tr = (key: string, fallback: string) => trField(translated, key, fallback);
+
   return (
     <div>
       <Header />
@@ -208,7 +217,13 @@ export default async function TenderDetailPage({
               )}
 
               {tender.ai_summary && (
-                <p className="text-ink leading-relaxed mt-4">{tender.ai_summary}</p>
+                <p className="text-ink leading-relaxed mt-4">{tr("summary", tender.ai_summary)}</p>
+              )}
+
+              {locale !== "en" && !translated && (
+                <div className="mt-4">
+                  <TranslateTenderButton tenderId={tender.id} />
+                </div>
               )}
 
               <div className="mt-6">
@@ -259,11 +274,11 @@ export default async function TenderDetailPage({
                   {t("tenderProcScore")}
                 </h2>
                 <div className="grid sm:grid-cols-3 gap-4">
-                  {scoreDimensions.map((d) => (
+                  {scoreDimensions.map((d, i) => (
                     <div key={d.key} className="border border-line rounded-doc p-3">
                       <div className="flex items-center justify-between mb-1">
                         <p className="text-xs font-semibold uppercase tracking-wide text-inkDim">
-                          {d.label}
+                          {tr(`dimensions.${i}.label`, d.label)}
                         </p>
                         <p className="text-sm font-semibold text-ink">
                           {d.score !== null ? `${d.score}/100` : "—"}
@@ -275,10 +290,14 @@ export default async function TenderDetailPage({
                         </div>
                       ) : (
                         <p className="text-xs text-inkDim italic mb-2">
-                          {d.unavailableReason ?? t("dataUnavailable")}
+                          {d.unavailableReason
+                            ? tr(`dimensions.${i}.unavailableReason`, d.unavailableReason)
+                            : t("dataUnavailable")}
                         </p>
                       )}
-                      {d.explanation && <p className="text-xs text-inkDim">{d.explanation}</p>}
+                      {d.explanation && (
+                        <p className="text-xs text-inkDim">{tr(`dimensions.${i}.explanation`, d.explanation)}</p>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -298,15 +317,19 @@ export default async function TenderDetailPage({
                         <span className="text-[10px] font-semibold uppercase tracking-wide text-inkDim">
                           {tSeverity(f.severity)}
                         </span>
-                        <span className="font-medium text-ink text-sm">{f.requirement}</span>
+                        <span className="font-medium text-ink text-sm">
+                          {tr(`disqualifiers.${i}.requirement`, f.requirement)}
+                        </span>
                       </div>
                       <p className="text-sm text-inkDim mt-1">
-                        {t("companyStatus")} <span className="text-ink">{f.companyStatus}</span>
+                        {t("companyStatus")}{" "}
+                        <span className="text-ink">{tr(`disqualifiers.${i}.companyStatus`, f.companyStatus)}</span>
                       </p>
-                      <p className="text-sm text-inkDim mt-1">{f.explanation}</p>
+                      <p className="text-sm text-inkDim mt-1">{tr(`disqualifiers.${i}.explanation`, f.explanation)}</p>
                       {f.possibleMitigation && (
                         <p className="text-xs text-moss mt-2">
-                          {t("possibleMitigation")} {f.possibleMitigation}
+                          {t("possibleMitigation")}{" "}
+                          {tr(`disqualifiers.${i}.possibleMitigation`, f.possibleMitigation)}
                         </p>
                       )}
                     </div>
@@ -345,7 +368,9 @@ export default async function TenderDetailPage({
                               <span
                                 className={`inline-block w-2 h-2 rounded-full ${EVIDENCE_STATUS_DOT[status]}`}
                               />
-                              <span className="font-medium text-ink text-sm">{r.title}</span>
+                              <span className="font-medium text-ink text-sm">
+                                {tr(`requirements.${r.id}.title`, r.title)}
+                              </span>
                             </span>
                             <span className="text-xs text-inkDim">{tEvidenceStatus(status)}</span>
                           </div>
@@ -359,7 +384,11 @@ export default async function TenderDetailPage({
                               ))}
                             </ul>
                           )}
-                          {mapping.notes && <p className="text-xs text-inkDim mt-1">{mapping.notes}</p>}
+                          {mapping.notes && (
+                            <p className="text-xs text-inkDim mt-1">
+                              {tr(`evidenceNotes.${r.id}`, mapping.notes)}
+                            </p>
+                          )}
                         </div>
                       );
                     })}
@@ -386,7 +415,7 @@ export default async function TenderDetailPage({
                         {extras.positiveFactors.map((f, i) => (
                           <li key={i} className="flex gap-2">
                             <span className="text-moss">✓</span>
-                            {f}
+                            {tr(`positiveFactors.${i}`, f)}
                           </li>
                         ))}
                       </ul>
@@ -398,16 +427,16 @@ export default async function TenderDetailPage({
                         {t("risks")}
                       </p>
                       <ul className="space-y-1.5 text-sm text-ink">
-                        {extras.recommendationRisks?.map((r, i) => (
+                        {extras.recommendationRisks?.map((rr, i) => (
                           <li key={`r${i}`} className="flex gap-2">
                             <span className="text-gold">⚠</span>
-                            {r}
+                            {tr(`recommendationRisks.${i}`, rr)}
                           </li>
                         ))}
-                        {extras.missingRequirements?.map((r, i) => (
+                        {extras.missingRequirements?.map((mr, i) => (
                           <li key={`m${i}`} className="flex gap-2">
                             <span className="text-gold">⚠</span>
-                            {t("missing", { requirement: r })}
+                            {t("missing", { requirement: tr(`missingRequirements.${i}`, mr) })}
                           </li>
                         ))}
                       </ul>
@@ -434,10 +463,14 @@ export default async function TenderDetailPage({
                   {awardCriteria.map((c) => (
                     <li key={c.id} className="border border-line rounded-doc p-3 text-sm">
                       <div className="flex items-center justify-between gap-3">
-                        <span className="font-medium text-ink">{c.criterion}</span>
+                        <span className="font-medium text-ink">
+                          {tr(`awardCriteria.${c.id}.criterion`, c.criterion)}
+                        </span>
                         {c.weight && <span className="text-inkDim">{c.weight}</span>}
                       </div>
-                      {c.description && <p className="text-inkDim mt-1">{c.description}</p>}
+                      {c.description && (
+                        <p className="text-inkDim mt-1">{tr(`awardCriteria.${c.id}.description`, c.description)}</p>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -459,14 +492,18 @@ export default async function TenderDetailPage({
                         {group.items.map((r) => (
                           <li key={r.id} className="border border-line rounded-doc p-3 text-sm">
                             <div className="flex items-center justify-between gap-3">
-                              <span className="font-medium text-ink">{r.title}</span>
+                              <span className="font-medium text-ink">
+                                {tr(`requirements.${r.id}.title`, r.title)}
+                              </span>
                               {r.mandatory && (
                                 <span className="text-[10px] font-semibold uppercase text-stamp">
                                   {t("mandatory")}
                                 </span>
                               )}
                             </div>
-                            {r.description && <p className="text-inkDim mt-1">{r.description}</p>}
+                            {r.description && (
+                              <p className="text-inkDim mt-1">{tr(`requirements.${r.id}.description`, r.description)}</p>
+                            )}
                             {(r.source_page || r.source_section) && (
                               <p className="text-xs text-inkDim mt-1">
                                 {t("source", {
@@ -494,7 +531,7 @@ export default async function TenderDetailPage({
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.requiredDocuments.map((d, i) => (
-                        <li key={i}>{d}</li>
+                        <li key={i}>{tr(`requiredDocuments.${i}`, d)}</li>
                       ))}
                     </ul>
                   </div>
@@ -506,7 +543,7 @@ export default async function TenderDetailPage({
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.risks.map((r, i) => (
-                        <li key={i}>{r}</li>
+                        <li key={i}>{tr(`risks.${i}`, r)}</li>
                       ))}
                     </ul>
                   </div>
@@ -518,7 +555,7 @@ export default async function TenderDetailPage({
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.ambiguities.map((a, i) => (
-                        <li key={i}>{a}</li>
+                        <li key={i}>{tr(`ambiguities.${i}`, a)}</li>
                       ))}
                     </ul>
                   </div>

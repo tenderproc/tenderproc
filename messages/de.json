@@ -227,6 +227,12 @@
     "remap": "Nachweise neu zuordnen",
     "map": "Nachweise den Anforderungen zuordnen"
   },
+  "TranslateTenderButton": {
+    "notice": "Die KI-Analyse dieser Ausschreibung wird in der Originalsprache angezeigt.",
+    "translate": "Ins {language} übersetzen",
+    "translating": "Wird ins {language} übersetzt…",
+    "couldNotTranslate": "Diese Ausschreibung konnte nicht übersetzt werden."
+  },
   "RecordOutcomeForm": {
     "outcome": "Ergebnis",
     "edit": "Bearbeiten",
@@ -439,7 +445,9 @@
       "couldNotRecheckDraft": "Entwurf konnte gerade nicht erneut geprüft werden. Versuche es gleich noch einmal.",
       "requirementNotFound": "Anforderung nicht gefunden.",
       "couldNotFindEvidence": "Nachweise konnten gerade nicht gefunden werden. Versuche es gleich noch einmal.",
-      "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuche es gleich noch einmal."
+      "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuche es gleich noch einmal.",
+      "invalidLocale": "Ungültige Sprache.",
+      "couldNotTranslate": "Diese Ausschreibung konnte gerade nicht übersetzt werden. Versuche es gleich noch einmal."
     },
     "auth": {
       "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",
