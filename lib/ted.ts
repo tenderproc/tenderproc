@@ -291,10 +291,7 @@ export async function searchAwardedTenders(
 
   let awards = rawNotices.map((n): AwardedTender => {
     const pubNumber = n["publication-number"] ?? "unknown";
-    const rawAmount = firstValue(n["result-value-lot"]);
-    const currency = firstValue(n["result-value-cur-lot"]) ?? "EUR";
-    const numeric = rawAmount != null ? Number(String(rawAmount).replace(/[^\d.]/g, "")) : NaN;
-    const hasNumeric = !isNaN(numeric) && numeric > 0;
+    const { numeric, currency, hasNumeric } = parseAwardValue(n);
     return {
       publicationNumber: String(pubNumber),
       title: stripTedTitleBoilerplate(firstValue(n["notice-title"]) ?? "Untitled notice"),
@@ -319,6 +316,137 @@ export async function searchAwardedTenders(
   }
 
   return awards.slice(0, displayLimit);
+}
+
+/** A single row's worth of data for the contract_awards table (source-agnostic shape). */
+export interface ContractAwardRecord {
+  sourceReference: string;
+  contractingAuthority: string;
+  cpvCodes: string[];
+  awardDate: string | null;
+  winnerName: string | null;
+  winnerCountry: string | null;
+  awardValue: number | null;
+  awardValueCurrency: string | null;
+  sourceUrl: string;
+  rawTitle: string | null;
+}
+
+/** Pure mapping from a raw TED notice to a contract_awards row — no network, unit-testable. */
+export function mapTedNoticeToContractAward(n: Record<string, unknown>): ContractAwardRecord {
+  const pubNumber = String(n["publication-number"] ?? "unknown");
+  const { numeric, currency, hasNumeric } = parseAwardValue(n);
+  return {
+    sourceReference: pubNumber,
+    contractingAuthority: firstValue(n["buyer-name"]) ?? "Unknown buyer",
+    cpvCodes: toArray(n["classification-cpv"]),
+    awardDate: firstValue(n["publication-date"]),
+    winnerName: firstValue(n["winner-name"]),
+    winnerCountry: firstValue(n["winner-country"]),
+    awardValue: hasNumeric ? numeric : null,
+    awardValueCurrency: hasNumeric ? currency : null,
+    sourceUrl: `https://ted.europa.eu/en/notice/-/detail/${pubNumber}`,
+    rawTitle: stripTedTitleBoilerplate(firstValue(n["notice-title"]) ?? "Untitled notice"),
+  };
+}
+
+export interface HistoricalAwardParams {
+  /** CPV division prefixes to restrict to (e.g. lib/sectors.ts's SECTORS flattened) — combined server-side via OR, not fetched-then-filtered. */
+  cpvPrefixes: string[];
+  /** YYYY-MM-DD, inclusive — the start of the backfill window. */
+  sinceDate: string;
+  pageSize?: number;
+  /** Pass the previous page's nextIterationToken to continue; omit for the first page. */
+  iterationToken?: string;
+}
+
+export interface HistoricalAwardPage {
+  awards: ContractAwardRecord[];
+  totalNoticeCount: number | null;
+  /**
+   * Present whenever this page came back full (== pageSize) — pass it back in
+   * as `iterationToken` to fetch the next page. A short page (or zero results)
+   * means the backfill has caught up; TED's iteration contract doesn't clearly
+   * document what the token looks like once exhausted, so page-length is used
+   * as the authoritative "done" signal rather than trusting token absence alone.
+   */
+  nextIterationToken: string | null;
+}
+
+/**
+ * Resume-window logic for the ingest-awards cron: resumes from the latest
+ * award_date already stored (re-fetching that one day is harmless thanks to
+ * the upsert), or falls back to a configured backfill window when starting
+ * from empty. Pure so it's testable without a database.
+ */
+export function resolveIngestionSinceDate(
+  latestStoredAwardDate: string | null,
+  backfillMonths: number
+): string {
+  if (latestStoredAwardDate) return latestStoredAwardDate;
+  const d = new Date();
+  d.setMonth(d.getMonth() - backfillMonths);
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Paginated historical Belgian award-notice fetch, for backfilling
+ * contract_awards. Unlike searchAwardedTenders (a bounded "recent awards"
+ * snapshot with scope: "ACTIVE"), this uses scope: "ALL" so older concluded
+ * notices aren't excluded, and pushes the CPV-prefix filter into the TED
+ * query itself via an OR group (confirmed to work server-side, despite the
+ * note on searchBelgianTenders about OR/prefix matching being unreliable —
+ * that note applies to combining CPV with other clause types, not to a pure
+ * CPV-only OR group) instead of overfetching and filtering client-side.
+ */
+export async function fetchHistoricalAwardsPage(
+  params: HistoricalAwardParams
+): Promise<HistoricalAwardPage> {
+  const pageSize = params.pageSize ?? 250;
+  const clauses = [
+    "buyer-country=BEL",
+    "notice-type=can-standard",
+    `publication-date>=${toYyyymmdd(params.sinceDate)}`,
+  ];
+  if (params.cpvPrefixes.length) {
+    const cpvClause = params.cpvPrefixes.map((p) => `classification-cpv=${p}*`).join(" OR ");
+    clauses.push(`(${cpvClause})`);
+  }
+
+  const body: Record<string, unknown> = {
+    query: clauses.join(" AND "),
+    fields: AWARD_FIELDS,
+    limit: pageSize,
+    scope: "ALL",
+    checkQuerySyntax: false,
+    paginationMode: "ITERATION",
+  };
+  if (params.iterationToken) {
+    body.iterationNextToken = params.iterationToken;
+  }
+
+  const res = await fetch(TED_SEARCH_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => "");
+    throw new Error(`TED API error ${res.status}: ${errBody.slice(0, 300)}`);
+  }
+
+  const data = await res.json();
+  const rawNotices: Record<string, unknown>[] = data?.notices ?? [];
+  const awards = rawNotices.map(mapTedNoticeToContractAward);
+
+  return {
+    awards,
+    totalNoticeCount: typeof data?.totalNoticeCount === "number" ? data.totalNoticeCount : null,
+    nextIterationToken:
+      rawNotices.length >= pageSize && typeof data?.iterationNextToken === "string"
+        ? data.iterationNextToken
+        : null,
+  };
 }
 
 // TED lists the tender's value under notice section 2.1.3 when the buyer
@@ -360,6 +488,21 @@ function extractValue(n: Record<string, unknown>): { text: string | null; raw: n
     console.error(`[extractValue] No known value field matched. Value-like keys on this notice: ${JSON.stringify(valueLikeKeys)}`);
   }
   return { text: null, raw: null };
+}
+
+// Award-specific value parsing (result-value-lot/-cur-lot) — used by both the
+// live awards search and the historical ingestion below. Pulled out of
+// searchAwardedTenders's .map() so it's independently unit-testable.
+export function parseAwardValue(
+  n: Record<string, unknown>
+): { numeric: number; currency: string; hasNumeric: true } | { numeric: null; currency: string; hasNumeric: false } {
+  const rawAmount = firstValue(n["result-value-lot"]);
+  const currency = firstValue(n["result-value-cur-lot"]) ?? "EUR";
+  const numeric = rawAmount != null ? Number(String(rawAmount).replace(/[^\d.]/g, "")) : NaN;
+  if (!isNaN(numeric) && numeric > 0) {
+    return { numeric, currency, hasNumeric: true };
+  }
+  return { numeric: null, currency, hasNumeric: false };
 }
 
 // eForms fields sometimes come back as multilingual objects ({en: "...", hu: "...", fr: "..."})

@@ -1,6 +1,10 @@
 {
   "crons": [
     {
+      "path": "/api/cron/ingest-awards",
+      "schedule": "0 5 * * *"
+    },
+    {
       "path": "/api/cron/notify",
       "schedule": "0 7 * * *"
     }

@@ -66,6 +66,12 @@ All `category`/`status` values are enforced with `check` constraints, matching
 `REQUIREMENT_CATEGORIES` in `lib/ai/types.ts` — if that list ever changes, the SQL check
 constraint needs a migration to match.
 
+### Contract awards ("Beyond Alerts" Feature 1)
+
+| Table | Key columns |
+|---|---|
+| `contract_awards` | Historical award notices, ingested (not live-fetched) — powers incumbent/winner screening. `source` (`ted`/`eprocurement` — only `ted` is actually ingested today; `eprocurement` blocked, see below), `source_reference` (TED publication-number), unique on `(source, source_reference)`. `contracting_authority`, `cpv_codes text[]`, `award_date`, `winner_name`, `winner_country`, `award_value`, `award_value_currency`, `ted_published`, `source_url`, `raw_title`. Service-role only, no user-facing RLS policy — same precedent as `notified_tenders`, since awards have no single owning user. Populated by `app/api/cron/ingest-awards/route.ts`. e-Procurement (`publicprocurement.be`) was evaluated as a second source but its search API enforces a server-side origin allowlist (403 for any non-`www.publicprocurement.be` caller) — not integrated. |
+
 ## Storage
 
 Three private buckets: `company-documents`, `tender-documents`, and `bid-documents` (Phase
