@@ -32,7 +32,7 @@ row (`companies.user_id` is `unique`).
 
 | Table | Key columns |
 |---|---|
-| `tenders` | `user_id`, `company_id` (nullable), `title`, `contracting_authority`, `reference_number`, `location`, `estimated_value`, `currency`, `publication_date`, `submission_deadline`, `contract_duration`, `description`, `source_url`, `status` (`PROCESSING/ANALYZING/READY/FAILED`), `ai_summary`, `ai_match_score`, `ai_match_label`, `ai_recommendation` (`BID/CONSIDER/NO-BID`), `ai_recommendation_confidence`, `ai_analysis jsonb` (risks/ambiguities/positiveFactors/estimatedEffortHours — anything not normalized into a child table) |
+| `tenders` | `user_id`, `company_id` (nullable), `title`, `contracting_authority`, `reference_number`, `location`, `estimated_value`, `currency`, `publication_date`, `submission_deadline`, `contract_duration`, `description`, `source_url`, `status` (`PROCESSING/ANALYZING/READY/FAILED`), `ai_summary`, `ai_match_score`, `ai_match_label`, `ai_recommendation` (`BID/CONSIDER/NO-BID`), `ai_recommendation_confidence`, `ai_analysis jsonb` (risks/ambiguities/positiveFactors/estimatedEffortHours — anything not normalized into a child table), `ai_scorecard_dimensions jsonb` (Increment 1 — the TenderProc Score breakdown), `ai_disqualifiers jsonb` (Increment 1 — the "Why Not Bid" list) |
 | `tender_documents` | `tender_id`, `file_name`, `storage_path`, `file_type`, `file_size_bytes`, `extracted_text`, `processing_status` (`PENDING/EXTRACTING/DONE/FAILED`) — files live in the `tender-documents` Storage bucket |
 | `tender_requirements` | `tender_id`, `title`, `description`, `category` (`eligibility/administrative/technical/experience/certification/personnel/financial/pricing/document/award_criterion/other`), `mandatory`, `source_document`, `source_page`, `source_section`, `status` (`NOT_STARTED/IN_PROGRESS/COMPLETE/BLOCKED/NOT_APPLICABLE` — column exists for schema completeness; Phase 1 UI only displays it, Phase 2 lets a user change it as they work a requirement) |
 | `tender_award_criteria` | `tender_id`, `criterion`, `weight` (text — weights aren't always numeric), `description` |
@@ -54,6 +54,13 @@ row (`companies.user_id` is `unique`).
 | `bid_documents` | A per-bid *snapshot* of the tender's required documents — parsed out of `tenders.ai_analysis.requiredDocuments` (a plain jsonb string array; never normalized into its own table at tender level) at bid-creation time, same snapshot pattern as `bid_requirements`. `bid_id`, `name`, `status` (`MISSING/READY`), `storage_path`, `file_name`, `file_size_bytes`, `uploaded_at` — files live in the `bid-documents` Storage bucket, but `status` can also be toggled to `READY` without a file attached |
 | `bid_reviews` | One row per compliance-review run — a point-in-time snapshot, not a live view, so the review page has history and doesn't recompute on every load: `bid_id`, `compliance_score`, `ready_to_submit`, `critical_issues jsonb`, `warnings jsonb`, `requirements_total/complete`, `documents_total/ready`, `unsupported_claims_open`. `requirements_total/complete`, `documents_total/ready`, `critical_issues`, and most of `warnings` are computed directly from `bid_requirements`/`bid_documents`/`bid_warnings` rows in `app/api/bids/[bidId]/review/route.ts`; only the AI-sourced entries in `warnings` (cross-response contradictions) come from `AIProvider.runComplianceReview()` — see `docs/ai.md` |
 | `bid_outcomes` | One per bid (`bid_id unique`): `outcome` (`WON/LOST/WITHDRAWN/NO_RESULT`), WON fields (`contract_value`, `duration`, `notes`), LOST fields (`reason`, `winning_bidder`, `winning_price`, `competitor_score`, `feedback`). Stored for future win-rate analytics — not built yet, just captured now per the spec's "future learning" section |
+
+### Requirement → evidence mapping (Increment 1)
+
+| Table | Key columns |
+|---|---|
+| `tender_requirement_evidence` | Tender-level, pre-bid evidence coverage — one row per requirement (`tender_requirement_id unique`): `status` (`VERIFIED/PARTIAL/MISSING/CONTRADICTED/NEEDS_REVIEW`), `confidence`, `notes`. Recomputed (delete-then-insert of its child rows) each time "Map Evidence to Requirements" is run — see `docs/ai.md`'s `mapRequirementsToEvidence()` |
+| `tender_requirement_evidence_items` | The specific company evidence cited for a requirement's mapping: `tender_requirement_evidence_id`, `evidence_type` (`service/certification/reference`), `evidence_id` (the originating `company_*` row id, polymorphic, no enforced FK), `label` (snapshot). Also carries a denormalized `tender_requirement_id` purely so its RLS stays a 2-level join instead of 3 — see the RLS pattern note below |
 
 All `category`/`status` values are enforced with `check` constraints, matching
 `REQUIREMENT_CATEGORIES` in `lib/ai/types.ts` — if that list ever changes, the SQL check
@@ -84,17 +91,19 @@ create policy "manage own X" on public.X
 ```
 
 This is the same pattern `pipeline_items`/`tender_scores` already used before this
-expansion — no new authorization approach was introduced. The one 2-level join is
-`bid_evidence` (via `bid_responses` → `bids`) — `bid_responses` and `bid_warnings` were
-deliberately given a direct `bid_id` (not just their immediate parent) specifically to avoid
-needing deeper joins than that anywhere.
+expansion — no new authorization approach was introduced. The 2-level joins are
+`bid_evidence` (via `bid_responses` → `bids`) and `tender_requirement_evidence` (via
+`tender_requirements` → `tenders`) — child tables one level further down
+(`bid_warnings`, `tender_requirement_evidence_items`) were deliberately given a direct
+reference to the grandparent (`bid_id`, `tender_requirement_id`) specifically to avoid
+needing deeper joins than 2 levels anywhere.
 
 ## Migration
 
 There's no migrations folder/tool in this project — SQL is delivered as a block, run once
 by hand in the Supabase SQL editor, and verified afterward via a read-only REST probe
 against each new table/bucket. `supabase-phase1-migration.sql`, `supabase-phase2-migration.sql`,
-and `supabase-phase3-migration.sql` at the repo root are kept for reference; not re-run.
-The Phase 3 migration also widens the existing `bids.status` check constraint (drops and
-re-adds it with `NO_RESULT` included) — the one instance so far of altering rather than only
-adding.
+`supabase-phase3-migration.sql`, and `supabase-phase4-migration.sql` at the repo root are
+kept for reference; not re-run. The Phase 3 migration also widens the existing
+`bids.status` check constraint (drops and re-adds it with `NO_RESULT` included) — the one
+instance so far of altering rather than only adding.

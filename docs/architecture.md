@@ -147,6 +147,39 @@ since it's a plain field write with no AI/secret involved, same as the existing
 `BidStatusSelect` pattern. `bids.status`'s check constraint was widened in the Phase 3
 migration to add `NO_RESULT` alongside the pre-existing `WON/LOST/WITHDRAWN`.
 
+## "AI tender employee" expansion — Increment 1: TenderProc Score, Why Not Bid, Evidence Mapping
+
+The product direction is evolving from a bid manager into a full AI tender employee (FIND →
+QUALIFY → DECIDE → PREPARE → REVIEW → SUBMIT → LEARN), specified as a large, multi-phase
+roadmap. Per that spec's own instructions ("do not implement everything as one huge
+unstructured change"), it's being built as scoped increments rather than one pass — this is
+**Increment 1**, covering the highest-value slice of the roadmap's own "hardening" +
+"core differentiation" phases.
+
+**TenderProc Score and Why Not Bid** are not new AI calls — they're an enrichment of the
+existing `generateBidRecommendation()` (unchanged input, richer output: `dimensions` and
+`disqualifyingFactors` alongside the existing score/label/recommendation). Deliberately not
+duplicated into a parallel scoring system. See `docs/ai.md` for the full shape and the
+`competition` dimension's hard-coded "no data source yet" handling.
+
+**Requirement → Evidence Mapping** is the one genuinely new AI method
+(`mapRequirementsToEvidence()`), extending the same hallucination-protected pattern
+`findCompanyEvidence` already established, but batched across every requirement in a
+tender at once and run *before* a bid exists — via a "Map Evidence to Requirements" button
+on the tender detail page (`components/tenders/MapEvidenceButton.tsx` →
+`POST /api/tenders/[tenderId]/map-evidence`). Results persist to
+`tender_requirement_evidence` (+ `_items`), so the page shows the last run's coverage
+without recomputing on every load, same caching discipline as the rest of the app's
+expensive AI passes.
+
+**Explicitly deferred to later increments** (see `docs/ai.md`'s "What's NOT built yet"):
+Compliance Matrix UI (owner/notes/export on `bid_requirements`), Bid Effort Estimator task
+breakdown, Tender Timeline, Clarification Questions — the rest of the roadmap's "core
+differentiation" phase — and everything requiring real external/historical data that this
+codebase doesn't have a source for yet: Buyer Intelligence, Historical Tender Intelligence,
+Competitor Intelligence, Tender Forecasting, Outcome-learning insights, Company "Bid DNA,"
+Consortium/subcontractor suggestions, and automated multi-source tender Discovery.
+
 ## Folder layout
 
 ```
@@ -154,6 +187,7 @@ app/
   api/{analyze,cron/notify,signup-profile,tenders/upload,bids}/route.ts
   api/bids/[bidId]/requirements/[reqId]/{find-evidence,generate-draft,recheck}/route.ts
   api/bids/[bidId]/review/route.ts
+  api/tenders/[tenderId]/map-evidence/route.ts
   {opportunities,search,market,workflow,pricing,my-tenders,company,bids}/page.tsx
   my-tenders/[tenderId]/page.tsx
   bids/[bidId]/page.tsx
@@ -175,6 +209,11 @@ tests/
 ```
 
 ## What's deliberately not built yet
+
+See the "AI tender employee expansion" section above for the larger roadmap items deferred
+past Increment 1 (Compliance Matrix UI, Effort Estimator, Timeline, Clarification
+Questions, Buyer/Historical/Competitor Intelligence, Forecasting, Outcome learning, Bid
+DNA, Consortium suggestions, automated Discovery). Smaller, longer-standing gaps:
 
 - Automatic claim-text splicing — "unsupported claim" actions are Dismiss (mark it reviewed)
   or manually edit the draft; the spec itself says never auto-delete a claim.

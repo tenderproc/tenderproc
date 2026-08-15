@@ -10,6 +10,7 @@ interface AIProvider {
   generateResponseDraft(input: GenerateResponseDraftInput): Promise<ResponseDraft>;
   validateResponse(input: ValidateResponseInput): Promise<ValidateResponseResult>;
   runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult>;
+  mapRequirementsToEvidence(input: MapRequirementEvidenceInput): Promise<MapRequirementEvidenceResult>;
 }
 ```
 
@@ -21,7 +22,9 @@ is active — today, always `AnthropicProvider`. Nothing outside `lib/ai/` impor
 client gets constructed.
 
 Phase 1 added `analyzeTender`/`generateBidRecommendation`; Phase 2 added the three evidence/
-drafting/validation methods; Phase 3 adds `runComplianceReview()` below. `findTenderAmbiguities()`
+drafting/validation methods; Phase 3 added `runComplianceReview()`; Increment 1 (the "AI
+tender employee" expansion) enriched `generateBidRecommendation` with score dimensions and
+disqualifying factors and added `mapRequirementsToEvidence()`. `findTenderAmbiguities()`
 remains unbuilt — ambiguity detection is still folded into `analyzeTender`'s output and
 hasn't needed to be a standalone action.
 
@@ -60,7 +63,7 @@ field falls back to `null`/`[]` rather than throwing on a malformed or partial r
 unrecognized requirement categories fall back to `"other"` instead of being dropped.
 Unit-tested in `tests/ai/parsers.test.ts`.
 
-## `generateBidRecommendation()`
+## `generateBidRecommendation()` — the "TenderProc Score" and "Why Not Bid"
 
 Input: the `TenderAnalysis` + extracted requirements + `CompanyKnowledge` (the distilled,
 read-only view of a company's `companies`/`company_services`/`company_certifications`/
@@ -68,13 +71,32 @@ read-only view of a company's `companies`/`company_services`/`company_certificat
 invented, so it's the only source of "company facts" this call may use). Output:
 `BidRecommendation` — score (0-100), qualitative label, `BID`/`CONSIDER`/`NO-BID`,
 confidence, positive factors, risks, missing requirements, an optional effort estimate
-(always to be displayed as "ESTIMATE — HUMAN VERIFICATION REQUIRED"). Parsed by
+(always to be displayed as "ESTIMATE — HUMAN VERIFICATION REQUIRED"), plus (Increment 1)
+`dimensions: ScoreDimension[]` and `disqualifyingFactors: DisqualifyingFactor[]`. Parsed by
 `parseBidRecommendation()`, clamps the score into range and falls back invalid
 label/recommendation/confidence values to safe defaults rather than propagating garbage.
 
 Per spec: **this is not a probability of winning.** Match labels use exactly
 `Strong match` / `Good match` / `Moderate match` / `Weak match` (85+/65+/40+/below), banded
 in code (`labelForScore()`), not left to the model's wording.
+
+**`dimensions`** breaks the single score into 9 named parts (`SCORE_DIMENSION_KEYS` in
+`lib/ai/types.ts`): capability fit, mandatory requirements, experience, geographic fit,
+financial eligibility, certification fit, competition, preparation effort, strategic value.
+`parseScoreDimensions()` always returns exactly these 9 keys in this order regardless of
+what the model sent — any it omitted are filled in as unavailable, any unrecognized key is
+dropped. **`competition` is a hard-coded exception, enforced in code not just prompt
+wording**: its score is always forced to `null` (see `parseScoreDimensions`'s
+`isCompetition` check), because this app has no competitor/historical-bidder data source —
+inventing a competition score would violate the same "never fabricate" rule that governs
+company facts. `strategic_value` is a genuine AI judgment call, not a fact — displayed like
+any other dimension but understood to be a qualitative inference.
+
+**`disqualifyingFactors`** are the "Why Not Bid?" list — concrete, evidence-grounded gaps
+between a requirement and the company's known profile, each with a `severity`
+(`CRITICAL`/`HIGH`/`MEDIUM`/`LOW`), what the company profile actually shows, and an optional
+`possibleMitigation`. The prompt explicitly says not to assume a gap is a legal disqualifier
+unless the tender document itself states it as a hard requirement.
 
 If no `companies` row exists yet, this step is skipped entirely (not called with empty
 data) — the tender detail page shows a prompt to complete the company profile instead of a
@@ -153,6 +175,29 @@ If there's no company profile yet, or no drafted responses to compare, the route
 AI call entirely (not called with empty/meaningless input) — the deterministic parts of the
 review are still useful on their own.
 
+## `mapRequirementsToEvidence()` — tender-level, pre-bid evidence coverage
+
+Input: every `tender_requirements` row for a tender (not just one, unlike
+`findCompanyEvidence`) + `CompanyKnowledge`. Output: `RequirementEvidenceMapping[]`, one per
+requirement, each with a coverage `status` (`VERIFIED`/`PARTIAL`/`MISSING`/`CONTRADICTED`/
+`NEEDS_REVIEW`), `confidence`, `notes`, and the specific evidence items cited.
+
+This is the tender-level counterpart to `findCompanyEvidence` — that method only runs
+per-requirement, on-demand, from inside an already-started bid; this one lets a user see
+their evidence gaps for a whole tender *before* deciding to start a bid at all, via a "Map
+Evidence to Requirements" button on the tender detail page (never automatic — this is a
+full pass over every requirement, so it's user-triggered and cached like the bid-level
+evidence/draft calls, not re-run on every page load).
+
+Hallucination protection is enforced in code on **both** axes, mirroring
+`parseEvidenceMatches`: `parseRequirementEvidenceMapping(raw, validEvidenceIds,
+validRequirementIds)` drops any evidence item citing an id that isn't a real company row,
+**and** drops the entire mapping if its `requirementId` isn't one of the requirement ids
+actually given as input — a model can't invent evidence, and it can't invent a requirement
+either. Persisted to `tender_requirement_evidence` (+ `tender_requirement_evidence_items`),
+delete-then-insert per requirement on each run, same pattern `generate-draft` uses for
+`bid_evidence`.
+
 ## Cost control
 
 - Extracted PDF text is stored once (`tender_documents.extracted_text`) and reused, never
@@ -169,3 +214,15 @@ review are still useful on their own.
 
 A standalone "Find ambiguities" action — ambiguity detection stays folded into
 `analyzeTender`'s output; nothing has needed it to be its own AI call.
+
+The wider "AI tender employee" roadmap (a 33-section spec covering FIND → QUALIFY → DECIDE
+→ PREPARE → REVIEW → SUBMIT → LEARN) is deliberately being built as a series of scoped
+increments rather than one pass — see `docs/architecture.md`'s "Increment 1" section for
+what's built so far and what's explicitly deferred (Compliance Matrix UI, Bid Effort
+Estimator breakdown, Tender Timeline, Clarification Questions, and everything requiring
+real external data: Buyer/Historical/Competitor Intelligence, Tender Forecasting, Outcome
+learning insights, Company "Bid DNA," Consortium/subcontractor suggestions, automated
+multi-source tender Discovery). None of these have an AI service yet, on purpose — several
+of them (historical/competitor/forecast data) have literally no data source in this
+codebase, and building UI for them now would either be non-functional or risk exactly the
+fabricated data this app's hallucination-protection rules exist to prevent.

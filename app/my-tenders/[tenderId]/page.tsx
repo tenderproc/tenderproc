@@ -4,8 +4,15 @@ import Header from "@/components/Header";
 import TenderStatusBadge from "@/components/tenders/TenderStatusBadge";
 import { MatchScorePill, RecommendationPill } from "@/components/tenders/BidMatchBadge";
 import StartBidButton from "@/components/tenders/StartBidButton";
+import MapEvidenceButton from "@/components/tenders/MapEvidenceButton";
 import { createClient } from "@/lib/supabase/server";
-import { REQUIREMENT_CATEGORIES } from "@/lib/ai/types";
+import {
+  DisqualifierSeverity,
+  DisqualifyingFactor,
+  EvidenceCoverageStatus,
+  REQUIREMENT_CATEGORIES,
+  ScoreDimension,
+} from "@/lib/ai/types";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +41,23 @@ interface AiAnalysisExtras {
   missingRequirements?: string[];
   estimatedEffortHours?: { min: number; max: number } | null;
 }
+
+const SEVERITY_DOT: Record<DisqualifierSeverity, string> = {
+  CRITICAL: "bg-stamp",
+  HIGH: "bg-stamp",
+  MEDIUM: "bg-gold",
+  LOW: "bg-inkDim",
+};
+
+const EVIDENCE_STATUS_DOT: Record<EvidenceCoverageStatus, string> = {
+  VERIFIED: "bg-moss",
+  PARTIAL: "bg-gold",
+  MISSING: "bg-stamp",
+  CONTRADICTED: "bg-stamp",
+  NEEDS_REVIEW: "bg-line",
+};
+
+const COVERED_STATUSES = new Set<EvidenceCoverageStatus>(["VERIFIED", "PARTIAL"]);
 
 export default async function TenderDetailPage({
   params,
@@ -85,7 +109,28 @@ export default async function TenderDetailPage({
     .eq("tender_id", tenderId)
     .maybeSingle();
 
+  const requirementIds = (requirements ?? []).map((r) => r.id);
+  const { data: evidenceMappings } =
+    requirementIds.length > 0
+      ? await supabase
+          .from("tender_requirement_evidence")
+          .select(
+            "tender_requirement_id, status, confidence, notes, tender_requirement_evidence_items(evidence_type, evidence_id, label)"
+          )
+          .in("tender_requirement_id", requirementIds)
+      : { data: [] as never[] };
+  const evidenceByRequirement = new Map(
+    (evidenceMappings ?? []).map((m) => [m.tender_requirement_id as string, m])
+  );
+  const coveredCount = (evidenceMappings ?? []).filter((m) =>
+    COVERED_STATUSES.has(m.status as EvidenceCoverageStatus)
+  ).length;
+  const evidenceCoveragePct =
+    requirementIds.length > 0 ? Math.round((coveredCount / requirementIds.length) * 100) : null;
+
   const extras: AiAnalysisExtras = tender.ai_analysis ?? {};
+  const scoreDimensions: ScoreDimension[] = tender.ai_scorecard_dimensions ?? [];
+  const disqualifyingFactors: DisqualifyingFactor[] = tender.ai_disqualifiers ?? [];
   const requirementsByCategory = REQUIREMENT_CATEGORIES.map((cat) => ({
     category: cat,
     items: (requirements ?? []).filter((r) => r.category === cat),
@@ -201,6 +246,120 @@ export default async function TenderDetailPage({
 
         {tender.status === "READY" && (
           <div className="space-y-8">
+            {scoreDimensions.length > 0 && (
+              <section>
+                <h2 className="font-display font-semibold text-lg text-ink mb-3">TenderProc Score</h2>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {scoreDimensions.map((d) => (
+                    <div key={d.key} className="border border-line rounded-doc p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-inkDim">
+                          {d.label}
+                        </p>
+                        <p className="text-sm font-semibold text-ink">
+                          {d.score !== null ? `${d.score}/100` : "—"}
+                        </p>
+                      </div>
+                      {d.score !== null ? (
+                        <div className="h-1.5 bg-paperDim rounded-full overflow-hidden mb-2">
+                          <div className="h-full bg-accent rounded-full" style={{ width: `${d.score}%` }} />
+                        </div>
+                      ) : (
+                        <p className="text-xs text-inkDim italic mb-2">
+                          {d.unavailableReason ?? "Data unavailable."}
+                        </p>
+                      )}
+                      {d.explanation && <p className="text-xs text-inkDim">{d.explanation}</p>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {disqualifyingFactors.length > 0 && (
+              <section>
+                <h2 className="font-display font-semibold text-lg text-stamp mb-3">Why Not Bid?</h2>
+                <div className="space-y-2">
+                  {disqualifyingFactors.map((f, i) => (
+                    <div key={i} className="border border-line rounded-doc p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`inline-block w-2 h-2 rounded-full ${SEVERITY_DOT[f.severity]}`} />
+                        <span className="text-[10px] font-semibold uppercase tracking-wide text-inkDim">
+                          {f.severity}
+                        </span>
+                        <span className="font-medium text-ink text-sm">{f.requirement}</span>
+                      </div>
+                      <p className="text-sm text-inkDim mt-1">
+                        Company status: <span className="text-ink">{f.companyStatus}</span>
+                      </p>
+                      <p className="text-sm text-inkDim mt-1">{f.explanation}</p>
+                      {f.possibleMitigation && (
+                        <p className="text-xs text-moss mt-2">
+                          Possible mitigation: {f.possibleMitigation}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {requirementIds.length > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+                  <h2 className="font-display font-semibold text-lg text-ink">
+                    Evidence coverage
+                    {evidenceCoveragePct !== null && (
+                      <span className="text-inkDim font-normal text-base"> · {evidenceCoveragePct}%</span>
+                    )}
+                  </h2>
+                  <MapEvidenceButton tenderId={tender.id} hasMapping={evidenceByRequirement.size > 0} />
+                </div>
+                {evidenceByRequirement.size === 0 ? (
+                  <p className="text-sm text-inkDim">
+                    Not mapped yet — click Map Evidence to Requirements to see which of your
+                    company&apos;s services, certifications, and references cover each requirement.
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {(requirements ?? []).map((r) => {
+                      const mapping = evidenceByRequirement.get(r.id);
+                      if (!mapping) return null;
+                      const status = mapping.status as EvidenceCoverageStatus;
+                      const items =
+                        (mapping.tender_requirement_evidence_items as
+                          | { evidence_type: string; evidence_id: string; label: string }[]
+                          | null) ?? [];
+                      return (
+                        <div key={r.id} className="border border-line rounded-doc p-3">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2">
+                              <span
+                                className={`inline-block w-2 h-2 rounded-full ${EVIDENCE_STATUS_DOT[status]}`}
+                              />
+                              <span className="font-medium text-ink text-sm">{r.title}</span>
+                            </span>
+                            <span className="text-xs text-inkDim">{status.replace(/_/g, " ")}</span>
+                          </div>
+                          {items.length > 0 && (
+                            <ul className="mt-2 space-y-1">
+                              {items.map((e, i) => (
+                                <li key={i} className="text-xs text-ink flex gap-2">
+                                  <span className="text-moss">✓</span>
+                                  {e.label}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {mapping.notes && <p className="text-xs text-inkDim mt-1">{mapping.notes}</p>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
+            )}
+
             {(extras.positiveFactors?.length ||
               extras.recommendationRisks?.length ||
               extras.missingRequirements?.length ||

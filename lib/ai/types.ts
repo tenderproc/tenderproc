@@ -108,6 +108,59 @@ export type BidMatchLabel = "Strong match" | "Good match" | "Moderate match" | "
 export type BidRecommendationVerdict = "BID" | "CONSIDER" | "NO-BID";
 export type BidConfidence = "HIGH" | "MEDIUM" | "LOW";
 
+/** The named dimensions of the TenderProc Score. `competition` has no real
+ * data source in this codebase yet (no competitor/historical intelligence
+ * built) — it is always returned with score: null rather than a guessed
+ * number; see ScoreDimension. */
+export type ScoreDimensionKey =
+  | "capability_fit"
+  | "mandatory_requirements"
+  | "experience"
+  | "geographic_fit"
+  | "financial_eligibility"
+  | "certification_fit"
+  | "competition"
+  | "preparation_effort"
+  | "strategic_value";
+
+export const SCORE_DIMENSION_KEYS: ScoreDimensionKey[] = [
+  "capability_fit",
+  "mandatory_requirements",
+  "experience",
+  "geographic_fit",
+  "financial_eligibility",
+  "certification_fit",
+  "competition",
+  "preparation_effort",
+  "strategic_value",
+];
+
+/** One line of the TenderProc Score breakdown. `score` is null when the
+ * dimension genuinely isn't assessable from data this app has (e.g.
+ * `competition` with no historical bidder data) — the model is instructed to
+ * never invent a number to fill the gap, and unavailableReason explains why. */
+export interface ScoreDimension {
+  key: ScoreDimensionKey;
+  label: string;
+  score: number | null;
+  explanation: string;
+  unavailableReason: string | null;
+}
+
+export type DisqualifierSeverity = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+
+/** A concrete reason NOT to bid, grounded in an actual gap between a tender
+ * requirement and the company's known profile — never an assumption that a
+ * gap is a legal disqualifier unless the tender text itself says so. */
+export interface DisqualifyingFactor {
+  severity: DisqualifierSeverity;
+  requirement: string;
+  companyStatus: string;
+  evidence: string | null;
+  explanation: string;
+  possibleMitigation: string | null;
+}
+
 export interface BidRecommendation {
   score: number;
   matchLabel: BidMatchLabel;
@@ -117,6 +170,8 @@ export interface BidRecommendation {
   risks: string[];
   missingRequirements: string[];
   estimatedEffortHours: { min: number; max: number } | null;
+  dimensions: ScoreDimension[];
+  disqualifyingFactors: DisqualifyingFactor[];
 }
 
 export interface GenerateBidRecommendationInput {
@@ -210,4 +265,50 @@ export interface ComplianceReviewInput {
  * drafted responses, or between a response and the company profile. */
 export interface ComplianceReviewResult {
   inconsistencies: string[];
+}
+
+// --- Increment 1: requirement -> evidence mapping (tender-level, pre-bid) ---
+
+export type EvidenceCoverageStatus =
+  | "VERIFIED"
+  | "PARTIAL"
+  | "MISSING"
+  | "CONTRADICTED"
+  | "NEEDS_REVIEW";
+
+export const EVIDENCE_COVERAGE_STATUSES: EvidenceCoverageStatus[] = [
+  "VERIFIED",
+  "PARTIAL",
+  "MISSING",
+  "CONTRADICTED",
+  "NEEDS_REVIEW",
+];
+
+/** One requirement's evidence coverage. `evidence` items always trace back to
+ * real company rows — parseRequirementEvidenceMapping() drops anything that
+ * doesn't, and drops the whole mapping if requirementId isn't one of the
+ * requirements actually given as input. */
+export interface RequirementEvidenceMapping {
+  requirementId: string;
+  status: EvidenceCoverageStatus;
+  confidence: BidConfidence;
+  notes: string;
+  evidence: { type: EvidenceType; id: string; label: string }[];
+}
+
+export interface RequirementForMapping {
+  id: string;
+  title: string;
+  description: string | null;
+  category: RequirementCategory;
+  mandatory: boolean;
+}
+
+export interface MapRequirementEvidenceInput {
+  requirements: RequirementForMapping[];
+  company: CompanyKnowledge;
+}
+
+export interface MapRequirementEvidenceResult {
+  mappings: RequirementEvidenceMapping[];
 }

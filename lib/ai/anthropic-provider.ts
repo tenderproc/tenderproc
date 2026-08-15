@@ -4,12 +4,14 @@ import {
   buildBidRecommendationPrompt,
   buildComplianceReviewPrompt,
   buildFindEvidencePrompt,
+  buildRequirementEvidenceMappingPrompt,
   buildResponseDraftPrompt,
   buildTenderAnalysisPrompt,
   buildValidateResponsePrompt,
   formatCompanyKnowledge,
   formatComplianceReviewContext,
   formatFindEvidenceContext,
+  formatRequirementEvidenceMappingContext,
   formatRequirementsForPrompt,
   formatResponseDraftContext,
   formatTenderAnalysisForPrompt,
@@ -25,6 +27,10 @@ import {
   CompanyKnowledge,
   ComplianceReviewInput,
   ComplianceReviewResult,
+  DisqualifierSeverity,
+  DisqualifyingFactor,
+  EVIDENCE_COVERAGE_STATUSES,
+  EvidenceCoverageStatus,
   EvidenceMatch,
   EvidenceRelevance,
   EvidenceType,
@@ -32,9 +38,15 @@ import {
   FindCompanyEvidenceInput,
   GenerateBidRecommendationInput,
   GenerateResponseDraftInput,
+  MapRequirementEvidenceInput,
+  MapRequirementEvidenceResult,
   REQUIREMENT_CATEGORIES,
   RequirementCategory,
+  RequirementEvidenceMapping,
   ResponseDraft,
+  SCORE_DIMENSION_KEYS,
+  ScoreDimension,
+  ScoreDimensionKey,
   TenderAnalysis,
   ValidateResponseInput,
   ValidateResponseResult,
@@ -173,6 +185,83 @@ function labelForScore(score: number): BidMatchLabel {
   return "Weak match";
 }
 
+const DISQUALIFIER_SEVERITIES: DisqualifierSeverity[] = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
+const SCORE_DIMENSION_KEY_SET = new Set<string>(SCORE_DIMENSION_KEYS);
+
+/** Dimension scores are defaulted per-item rather than dropping the whole
+ * array on one bad entry — a single malformed dimension shouldn't hide the
+ * rest of an otherwise-valid scorecard. Any dimension key the model didn't
+ * return is filled in as unavailable, so the UI can always render the same
+ * fixed set of dimensions in the same order. */
+function parseScoreDimensions(v: unknown): ScoreDimension[] {
+  const byKey = new Map<ScoreDimensionKey, ScoreDimension>();
+  if (Array.isArray(v)) {
+    for (const item of v as unknown[]) {
+      const d = item as {
+        key?: unknown;
+        label?: unknown;
+        score?: unknown;
+        explanation?: unknown;
+        unavailableReason?: unknown;
+      };
+      if (typeof d?.key !== "string" || !SCORE_DIMENSION_KEY_SET.has(d.key)) continue;
+      const key = d.key as ScoreDimensionKey;
+      // "competition" has no real data source in this app (no competitor/
+      // historical intelligence built yet) — enforced in code, not just
+      // prompt wording, so the model can never slip a guessed number through.
+      const isCompetition = key === "competition";
+      byKey.set(key, {
+        key,
+        label: asString(d.label) ?? key.replace(/_/g, " "),
+        score:
+          !isCompetition && asNumber(d.score) !== null
+            ? Math.max(0, Math.min(100, Math.round(asNumber(d.score)!)))
+            : null,
+        explanation: asString(d.explanation) ?? "",
+        unavailableReason: isCompetition
+          ? (asString(d.unavailableReason) ?? "No historical bidder data available.")
+          : asString(d.unavailableReason),
+      });
+    }
+  }
+
+  return SCORE_DIMENSION_KEYS.map(
+    (key) =>
+      byKey.get(key) ?? {
+        key,
+        label: key.replace(/_/g, " "),
+        score: null,
+        explanation: "",
+        unavailableReason: "Not assessed.",
+      }
+  );
+}
+
+function parseDisqualifyingFactors(v: unknown): DisqualifyingFactor[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .filter((item: unknown) => asString((item as { requirement?: unknown })?.requirement))
+    .map(
+      (item: {
+        severity?: unknown;
+        requirement: string;
+        companyStatus?: unknown;
+        evidence?: unknown;
+        explanation?: unknown;
+        possibleMitigation?: unknown;
+      }) => ({
+        severity: DISQUALIFIER_SEVERITIES.includes(item.severity as DisqualifierSeverity)
+          ? (item.severity as DisqualifierSeverity)
+          : "MEDIUM",
+        requirement: item.requirement,
+        companyStatus: asString(item.companyStatus) ?? "",
+        evidence: asString(item.evidence),
+        explanation: asString(item.explanation) ?? "",
+        possibleMitigation: asString(item.possibleMitigation),
+      })
+    );
+}
+
 /** Pure, network-free parser — exported so it can be unit tested directly. */
 export function parseBidRecommendation(raw: string): BidRecommendation {
   const parsed = parseJsonLoosely(raw);
@@ -199,6 +288,8 @@ export function parseBidRecommendation(raw: string): BidRecommendation {
     risks: asStringArray(parsed?.risks),
     missingRequirements: asStringArray(parsed?.missingRequirements),
     estimatedEffortHours,
+    dimensions: parseScoreDimensions(parsed?.dimensions),
+    disqualifyingFactors: parseDisqualifyingFactors(parsed?.disqualifyingFactors),
   };
 }
 
@@ -264,6 +355,65 @@ export function parseComplianceReview(raw: string): ComplianceReviewResult {
   return { inconsistencies: asStringArray(parsed?.inconsistencies) };
 }
 
+const EVIDENCE_COVERAGE_STATUS_SET = new Set<string>(EVIDENCE_COVERAGE_STATUSES);
+
+/** Pure, network-free parser — exported so it can be unit tested directly.
+ * `validEvidenceIds` and `validRequirementIds` enforce "never invent" in
+ * code on both axes: a mapping for a requirement id that wasn't in the
+ * input is dropped entirely, and any evidence item citing an id that isn't
+ * a real company row is dropped from that mapping's evidence list. */
+export function parseRequirementEvidenceMapping(
+  raw: string,
+  validEvidenceIds: Set<string>,
+  validRequirementIds: Set<string>
+): MapRequirementEvidenceResult {
+  const parsed = parseJsonLoosely(raw);
+  const rawMappings = Array.isArray(parsed?.mappings) ? parsed.mappings : [];
+
+  const mappings: RequirementEvidenceMapping[] = rawMappings
+    .filter(
+      (m: unknown) =>
+        typeof (m as { requirementId?: unknown })?.requirementId === "string" &&
+        validRequirementIds.has((m as { requirementId: string }).requirementId)
+    )
+    .map(
+      (m: {
+        requirementId: string;
+        status?: unknown;
+        confidence?: unknown;
+        notes?: unknown;
+        evidence?: unknown;
+      }) => ({
+        requirementId: m.requirementId,
+        status: EVIDENCE_COVERAGE_STATUS_SET.has(m.status as string)
+          ? (m.status as EvidenceCoverageStatus)
+          : "NEEDS_REVIEW",
+        confidence: CONFIDENCES.includes(m.confidence as BidConfidence)
+          ? (m.confidence as BidConfidence)
+          : "LOW",
+        notes: asString(m.notes) ?? "",
+        evidence: Array.isArray(m.evidence)
+          ? m.evidence
+              .filter((e: unknown) => {
+                const item = e as { type?: unknown; id?: unknown };
+                return (
+                  typeof item?.id === "string" &&
+                  validEvidenceIds.has(item.id) &&
+                  EVIDENCE_TYPES.includes(item.type as EvidenceType)
+                );
+              })
+              .map((e: { type: EvidenceType; id: string; label?: unknown }) => ({
+                type: e.type,
+                id: e.id,
+                label: asString(e.label) ?? "",
+              }))
+          : [],
+      })
+    );
+
+  return { mappings };
+}
+
 export class AnthropicProvider implements AIProvider {
   async analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis> {
     const client = getAnthropicClient();
@@ -301,7 +451,7 @@ ${formatCompanyKnowledge(input.company)}`;
 
     const message = await client.messages.create({
       model: MODEL,
-      max_tokens: 2000,
+      max_tokens: 4000,
       system: buildBidRecommendationPrompt(),
       messages: [{ role: "user", content: userContent }],
     });
@@ -390,6 +540,35 @@ ${formatCompanyKnowledge(input.company)}`;
     const textBlock = message.content.find((b) => b.type === "text");
     const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
     return parseComplianceReview(raw);
+  }
+
+  async mapRequirementsToEvidence(
+    input: MapRequirementEvidenceInput
+  ): Promise<MapRequirementEvidenceResult> {
+    const client = getAnthropicClient();
+    const message = await client.messages.create({
+      model: MODEL,
+      max_tokens: 4000,
+      system: buildRequirementEvidenceMappingPrompt(),
+      messages: [
+        {
+          role: "user",
+          content: formatRequirementEvidenceMappingContext(input.requirements, input.company),
+        },
+      ],
+    });
+
+    const textBlock = message.content.find((b) => b.type === "text");
+    const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
+    const validEvidenceIds = evidenceIdSet(input.company);
+    const validRequirementIds = new Set(input.requirements.map((r) => r.id));
+    const result = parseRequirementEvidenceMapping(raw, validEvidenceIds, validRequirementIds);
+    return {
+      mappings: result.mappings.map((m) => ({
+        ...m,
+        evidence: m.evidence.map((e) => ({ ...e, label: labelForEvidence(input.company, e.type, e.id) })),
+      })),
+    };
   }
 }
 

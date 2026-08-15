@@ -7,6 +7,8 @@ import {
   FindCompanyEvidenceInput,
   GenerateBidRecommendationInput,
   GenerateResponseDraftInput,
+  MapRequirementEvidenceInput,
+  MapRequirementEvidenceResult,
   ResponseDraft,
   TenderAnalysis,
   ValidateResponseInput,
@@ -16,7 +18,10 @@ import {
 /**
  * Provider-agnostic AI surface. Phase 1 added analyzeTender/
  * generateBidRecommendation; Phase 2 added evidence-finding, drafting, and
- * claim validation; Phase 3 adds pre-submission compliance review.
+ * claim validation; Phase 3 added pre-submission compliance review.
+ * Increment 1 enriches generateBidRecommendation with score dimensions and
+ * disqualifying factors (the "TenderProc Score" / "Why Not Bid"), and adds
+ * mapRequirementsToEvidence for tender-level, pre-bid evidence coverage.
  */
 export interface AIProvider {
   analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis>;
@@ -25,4 +30,5 @@ export interface AIProvider {
   generateResponseDraft(input: GenerateResponseDraftInput): Promise<ResponseDraft>;
   validateResponse(input: ValidateResponseInput): Promise<ValidateResponseResult>;
   runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult>;
+  mapRequirementsToEvidence(input: MapRequirementEvidenceInput): Promise<MapRequirementEvidenceResult>;
 }

@@ -2,6 +2,7 @@ import {
   CompanyKnowledge,
   ComplianceReviewResponse,
   ExtractedRequirement,
+  RequirementForMapping,
   RequirementRef,
   SelectedEvidence,
   TenderAnalysis,
@@ -143,13 +144,18 @@ function formatCompanyKnowledge(company: CompanyKnowledge): string {
   return lines.join("\n");
 }
 
+const SCORE_DIMENSION_LIST = `capability_fit, mandatory_requirements, experience,
+geographic_fit, financial_eligibility, certification_fit, competition,
+preparation_effort, strategic_value`;
+
 export function buildBidRecommendationPrompt(): string {
   return `${BASE_RULES}
 
-You produce a Bid/No-Bid recommendation for an SME considering a specific
-public tender. You are given the tender's structured analysis (requirements,
-award criteria, contract details) and the company's knowledge base (its
-services, certifications, references — nothing more, nothing invented).
+You produce a Bid/No-Bid recommendation — the "TenderProc Score" — for an
+SME considering a specific public tender. You are given the tender's
+structured analysis (requirements, award criteria, contract details) and the
+company's knowledge base (its services, certifications, references —
+nothing more, nothing invented).
 
 This is NOT a probability of winning. Score how well the company's profile
 fits what the tender is asking for, based only on the company knowledge
@@ -157,8 +163,31 @@ base given. If the knowledge base doesn't cover something the tender
 requires (e.g. a required certification the company doesn't list), that is
 a missing requirement or risk — do not assume the company has it anyway.
 
-Use exactly one of these match labels based on the score:
+Use exactly one of these match labels based on the overall score:
 85-100 "Strong match", 65-84 "Good match", 40-64 "Moderate match", 0-39 "Weak match".
+
+In addition to the overall score, break it into these named dimensions:
+${SCORE_DIMENSION_LIST}
+
+For each dimension, give a 0-100 score and a one-sentence explanation
+grounded in what you were actually given. The ONE exception is
+"competition": you have NO data about other bidders, historical winners, or
+competitive intensity for this tender — you MUST return null for its score
+and explain why in unavailableReason (e.g. "No historical bidder data
+available for this authority"). Never invent a competition score. For every
+other dimension, unavailableReason must be null.
+
+Also identify concrete reasons the company should NOT bid — a
+"disqualifyingFactor" for each specific, evidence-grounded gap between a
+requirement and the company's known profile (e.g. a mandatory certification
+not on file, insufficient turnover if the tender states a minimum, a
+geographic restriction the company's regions don't cover). Only mark
+something CRITICAL/legally disqualifying if the tender document itself
+states it as a hard requirement — do not assume a gap is disqualifying just
+because it's a gap. If there is a plausible way to address the gap (e.g. via
+subcontracting, or the requirement is ambiguous), say so in
+possibleMitigation; otherwise use null. Return an empty array if there are
+no genuine disqualifying factors.
 
 Respond ONLY with a JSON object, no other text, matching exactly this shape:
 {
@@ -169,9 +198,23 @@ Respond ONLY with a JSON object, no other text, matching exactly this shape:
   "positiveFactors": ["short factor grounded in the company knowledge base, e.g. 'Comparable reference found: Municipality A'", ...],
   "risks": ["short risk, e.g. 'Required ISO 14001 certification not found in company profile'", ...],
   "missingRequirements": ["requirement title the company profile doesn't yet cover", ...],
-  "estimatedEffortHours": { "min": 0, "max": 0 } | null
+  "estimatedEffortHours": { "min": 0, "max": 0 } | null,
+  "dimensions": [
+    { "key": "one of the dimension keys above", "label": "short human label, e.g. 'Capability fit'", "score": 0-100 or null, "explanation": "one sentence", "unavailableReason": null or a short reason (only for competition) }
+  ],
+  "disqualifyingFactors": [
+    {
+      "severity": "CRITICAL" | "HIGH" | "MEDIUM" | "LOW",
+      "requirement": "the specific requirement text",
+      "companyStatus": "what the company profile actually shows, e.g. 'No ISO 14001 certification on file'",
+      "evidence": "short pointer to where this comes from, or null",
+      "explanation": "why this matters",
+      "possibleMitigation": "a plausible way to address it, or null"
+    }
+  ]
 }
 
+Include exactly one entry per dimension key listed above, in that order.
 If estimatedEffortHours is included, it is a rough human-verification-required
 estimate, not a commitment — label it as such in how you phrase risks/factors
 if relevant. The recommendation is advisory; the user makes the final call.`;
@@ -412,4 +455,66 @@ ${responseList}
 
 Company profile:
 ${formatCompanyKnowledge(company)}`;
+}
+
+// --- Increment 1: requirement -> evidence mapping (tender-level, pre-bid) ---
+
+export function buildRequirementEvidenceMappingPrompt(): string {
+  return `${BASE_RULES}
+
+You assess, for EVERY tender requirement given, how well the company's
+existing evidence (services, certifications, references, each with an "id")
+covers it — so an SME can see its evidence gaps before starting to prepare a
+bid.
+
+You are given a list of requirements (each with a "requirementId") and the
+company's evidence list with real ids. You may ONLY cite ids that appear in
+the evidence list — never invent one. You may ONLY return a mapping whose
+requirementId is one of the ids given — never invent a requirement.
+
+For each requirement, choose exactly one status:
+- VERIFIED: strong, specific evidence clearly covers this requirement
+- PARTIAL: some evidence is relevant but doesn't fully cover the requirement
+  (e.g. 2 references when 3 are asked for)
+- MISSING: no relevant evidence exists in the company's profile
+- CONTRADICTED: the company's own evidence appears to conflict with this
+  requirement (e.g. a certification listed as expired when the tender
+  requires a currently valid one)
+- NEEDS_REVIEW: the requirement is ambiguous or evidence is inconclusive and
+  a human should look at it directly
+
+Respond ONLY with a JSON object, no other text:
+{
+  "mappings": [
+    {
+      "requirementId": "the exact requirementId from the input",
+      "status": "VERIFIED" | "PARTIAL" | "MISSING" | "CONTRADICTED" | "NEEDS_REVIEW",
+      "confidence": "HIGH" | "MEDIUM" | "LOW",
+      "notes": "one short sentence explaining the status",
+      "evidence": [
+        { "type": "service" | "certification" | "reference", "id": "the exact id from the evidence list", "label": "short label, e.g. the service/cert/reference name" }
+      ]
+    }
+  ]
+}
+
+Include exactly one mapping per requirement given, in the same order. If a
+requirement has no relevant evidence, still include it with status MISSING
+and an empty evidence array — do not omit it.`;
+}
+
+export function formatRequirementEvidenceMappingContext(
+  requirements: RequirementForMapping[],
+  company: CompanyKnowledge
+): string {
+  const requirementList = requirements
+    .map(
+      (r) =>
+        `- requirementId=${r.id} [${r.category}${r.mandatory ? ", mandatory" : ""}] ${r.title}${
+          r.description ? `: ${r.description}` : ""
+        }`
+    )
+    .join("\n");
+
+  return `Requirements:\n${requirementList}\n\nCompany evidence available:\n${formatCompanyKnowledgeWithIds(company)}`;
 }

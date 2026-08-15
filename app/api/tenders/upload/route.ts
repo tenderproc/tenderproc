@@ -177,6 +177,8 @@ export async function POST(req: NextRequest) {
           ai_match_label: recommendation.matchLabel,
           ai_recommendation: recommendation.recommendation,
           ai_recommendation_confidence: recommendation.confidence,
+          ai_scorecard_dimensions: recommendation.dimensions,
+          ai_disqualifiers: recommendation.disqualifyingFactors,
           ai_analysis: {
             requiredDocuments: analysis.requiredDocuments,
             risks: analysis.risks,
