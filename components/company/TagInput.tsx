@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function TagInput({
   label,
@@ -13,6 +14,7 @@ export default function TagInput({
   onChange: (values: string[]) => void;
   placeholder?: string;
 }) {
+  const t = useTranslations("TagInput");
   const [draft, setDraft] = useState("");
 
   function commit() {
@@ -43,7 +45,7 @@ export default function TagInput({
               type="button"
               onClick={() => remove(tag)}
               className="text-inkDim hover:text-stamp"
-              aria-label={`Remove ${tag}`}
+              aria-label={t("removeTag", { tag })}
             >
               ×
             </button>
@@ -60,7 +62,7 @@ export default function TagInput({
           }
         }}
         onBlur={commit}
-        placeholder={placeholder ?? "Type and press Enter"}
+        placeholder={placeholder ?? t("defaultPlaceholder")}
         className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
     </div>

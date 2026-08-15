@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 interface DocumentRow {
@@ -28,6 +29,7 @@ export default function DocumentsSection({
   companyId: string;
   initialDocuments: DocumentRow[];
 }) {
+  const t = useTranslations("DocumentsSection");
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,14 +77,11 @@ export default function DocumentsSection({
 
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
-      <h3 className="font-display font-semibold text-base text-ink mb-3">Documents</h3>
-      <p className="text-xs text-inkDim mb-4 -mt-2">
-        Supporting evidence (certificates, brochures, policies) you can link
-        to certifications and references above.
-      </p>
+      <h3 className="font-display font-semibold text-base text-ink mb-3">{t("heading")}</h3>
+      <p className="text-xs text-inkDim mb-4 -mt-2">{t("subheading")}</p>
 
       {initialDocuments.length === 0 ? (
-        <p className="text-sm text-inkDim mb-4">Nothing uploaded yet.</p>
+        <p className="text-sm text-inkDim mb-4">{t("nothingUploaded")}</p>
       ) : (
         <ul className="space-y-2 mb-4">
           {initialDocuments.map((d) => (
@@ -98,7 +97,7 @@ export default function DocumentsSection({
                 onClick={() => remove(d)}
                 className="text-xs text-stamp hover:underline shrink-0"
               >
-                Remove
+                {t("remove")}
               </button>
             </li>
           ))}
@@ -106,7 +105,7 @@ export default function DocumentsSection({
       )}
 
       <label className="inline-block text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors cursor-pointer">
-        {uploading ? "Uploading…" : "Upload document"}
+        {uploading ? t("uploading") : t("uploadDocument")}
         <input type="file" className="hidden" onChange={onFileChange} disabled={uploading} />
       </label>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}

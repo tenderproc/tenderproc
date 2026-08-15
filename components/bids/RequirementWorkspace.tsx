@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { apiErrorMessage } from "@/lib/apiErrors";
 
 interface EvidenceMatch {
   type: "service" | "certification" | "reference";
@@ -39,6 +41,11 @@ export default function RequirementWorkspace({
   initialEvidence: UsedEvidence[];
   initialWarnings: { id: string; message: string }[];
 }) {
+  const t = useTranslations("RequirementWorkspace");
+  const tStatus = useTranslations("Enums.requirementStatus");
+  const tConfidence = useTranslations("Enums.confidence");
+  const tEvidenceType = useTranslations("Enums.evidenceType");
+  const tApiError = useTranslations("Errors.api");
   const router = useRouter();
 
   const [status, setStatus] = useState(requirementStatus);
@@ -70,10 +77,10 @@ export default function RequirementWorkspace({
         method: "POST",
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not find evidence.");
+      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("couldNotFindEvidence")));
       setEvidenceMatches(data.matches);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not find evidence.");
+      setError(err instanceof Error ? err.message : t("couldNotFindEvidence"));
     } finally {
       setFindingEvidence(false);
     }
@@ -103,7 +110,7 @@ export default function RequirementWorkspace({
         body: JSON.stringify({ evidence }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not generate a draft.");
+      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("couldNotGenerateDraft")));
       setDraftText(data.draft);
       setConfidence(data.confidence);
       setDraftWarnings(data.warnings ?? []);
@@ -116,7 +123,7 @@ export default function RequirementWorkspace({
       if (status === "NOT_STARTED") setStatus("IN_PROGRESS");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not generate a draft.");
+      setError(err instanceof Error ? err.message : t("couldNotGenerateDraft"));
     } finally {
       setGenerating(false);
     }
@@ -132,14 +139,14 @@ export default function RequirementWorkspace({
         body: JSON.stringify({ draftText }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not re-check the draft.");
+      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("couldNotRecheckDraft")));
       setUnsupportedClaims(
         (data.unsupportedClaims ?? []).map((m: string, i: number) => ({ id: `recheck-${i}`, message: m }))
       );
       setAccepted(false);
       setEditing(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not re-check the draft.");
+      setError(err instanceof Error ? err.message : t("couldNotRecheckDraft"));
     } finally {
       setRechecking(false);
     }
@@ -189,7 +196,7 @@ export default function RequirementWorkspace({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <label className="text-xs font-medium uppercase tracking-wide text-inkDim">Status</label>
+        <label className="text-xs font-medium uppercase tracking-wide text-inkDim">{t("status")}</label>
         <select
           value={status}
           onChange={(e) => markStatus(e.target.value)}
@@ -197,7 +204,7 @@ export default function RequirementWorkspace({
         >
           {REQUIREMENT_STATUSES.map((s) => (
             <option key={s} value={s}>
-              {s.replace(/_/g, " ")}
+              {tStatus(s)}
             </option>
           ))}
         </select>
@@ -205,25 +212,22 @@ export default function RequirementWorkspace({
 
       <div className="border border-line bg-white rounded-2xl p-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-display font-semibold text-lg text-ink">Relevant evidence found</h2>
+          <h2 className="font-display font-semibold text-lg text-ink">{t("relevantEvidenceFound")}</h2>
           <button
             onClick={findEvidence}
             disabled={findingEvidence}
             className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors disabled:opacity-50"
           >
-            {findingEvidence ? "Finding evidence…" : "Find Evidence"}
+            {findingEvidence ? t("findingEvidence") : t("findEvidence")}
           </button>
         </div>
 
         {evidenceMatches === null && usedEvidence.length === 0 && (
-          <p className="text-sm text-inkDim">
-            Click Find Evidence to see which of your company&apos;s services, certifications, and
-            references are relevant to this requirement.
-          </p>
+          <p className="text-sm text-inkDim">{t("clickFindEvidenceHint")}</p>
         )}
 
         {evidenceMatches !== null && evidenceMatches.length === 0 && (
-          <p className="text-sm text-inkDim">No relevant company evidence found for this requirement.</p>
+          <p className="text-sm text-inkDim">{t("noRelevantEvidence")}</p>
         )}
 
         {evidenceMatches !== null && evidenceMatches.length > 0 && (
@@ -242,7 +246,10 @@ export default function RequirementWorkspace({
                     <p className="text-ink font-medium">
                       {m.label}{" "}
                       <span className="text-xs text-inkDim font-normal">
-                        ({m.type} · {m.relevance} similarity)
+                        {t("evidenceMeta", {
+                          type: tEvidenceType(m.type),
+                          relevance: m.relevance,
+                        })}
                       </span>
                     </p>
                     <p className="text-inkDim text-xs">{m.reason}</p>
@@ -256,7 +263,7 @@ export default function RequirementWorkspace({
         {usedEvidence.length > 0 && (
           <div className="mt-3 pt-3 border-t border-line">
             <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-1">
-              Evidence used in current draft
+              {t("evidenceUsedInDraft")}
             </p>
             <ul className="space-y-1">
               {usedEvidence.map((e) => (
@@ -274,7 +281,7 @@ export default function RequirementWorkspace({
           disabled={generating}
           className="mt-4 bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
         >
-          {generating ? "Generating…" : draftText ? "Regenerate Draft" : "Generate Draft"}
+          {generating ? t("generating") : draftText ? t("regenerateDraft") : t("generateDraft")}
         </button>
         {error && <p className="text-sm text-stamp mt-2">{error}</p>}
       </div>
@@ -282,12 +289,14 @@ export default function RequirementWorkspace({
       {draftText && (
         <div className="border border-line bg-white rounded-2xl p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display font-semibold text-lg text-ink">AI Draft</h2>
+            <h2 className="font-display font-semibold text-lg text-ink">{t("aiDraft")}</h2>
             <div className="flex items-center gap-2">
               {confidence && (
-                <span className="text-xs font-medium text-inkDim">Confidence: {confidence}</span>
+                <span className="text-xs font-medium text-inkDim">
+                  {t("confidence", { level: tConfidence(confidence) })}
+                </span>
               )}
-              {accepted && <span className="text-xs font-medium text-moss">Accepted ✓</span>}
+              {accepted && <span className="text-xs font-medium text-moss">{t("acceptedCheck")}</span>}
             </div>
           </div>
 
@@ -313,7 +322,7 @@ export default function RequirementWorkspace({
           {unsupportedClaims.length > 0 && (
             <div className="mt-4 border border-stamp/30 bg-stamp/5 rounded-doc p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-stamp mb-2">
-                Unsupported claim{unsupportedClaims.length === 1 ? "" : "s"}
+                {t("unsupportedClaims", { count: unsupportedClaims.length })}
               </p>
               <ul className="space-y-2">
                 {unsupportedClaims.map((w) => (
@@ -323,15 +332,12 @@ export default function RequirementWorkspace({
                       onClick={() => dismissWarning(w.id)}
                       className="text-xs text-inkDim hover:text-ink shrink-0"
                     >
-                      Dismiss
+                      {t("dismiss")}
                     </button>
                   </li>
                 ))}
               </ul>
-              <p className="text-xs text-inkDim mt-2">
-                This could not be verified against your company knowledge base. Edit the draft to
-                remove or rephrase it, or add supporting evidence above and regenerate.
-              </p>
+              <p className="text-xs text-inkDim mt-2">{t("unsupportedClaimsHint")}</p>
             </div>
           )}
 
@@ -341,7 +347,7 @@ export default function RequirementWorkspace({
                 onClick={accept}
                 className="text-sm font-medium text-white bg-moss rounded-doc px-4 py-2 hover:opacity-90 transition-opacity"
               >
-                Accept Draft
+                {t("acceptDraft")}
               </button>
             )}
             {!editing ? (
@@ -349,7 +355,7 @@ export default function RequirementWorkspace({
                 onClick={() => setEditing(true)}
                 className="text-sm font-medium text-ink border border-line rounded-doc px-4 py-2 hover:bg-paperDim transition-colors"
               >
-                Edit
+                {t("edit")}
               </button>
             ) : (
               <button
@@ -357,7 +363,7 @@ export default function RequirementWorkspace({
                 disabled={rechecking}
                 className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors disabled:opacity-50"
               >
-                {rechecking ? "Re-checking…" : "Save & Re-check"}
+                {rechecking ? t("rechecking") : t("saveAndRecheck")}
               </button>
             )}
           </div>

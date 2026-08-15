@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ bidId: str
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const { data: bid } = await supabase
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ bidId: str
     .eq("user_id", user.id)
     .maybeSingle();
   if (!bid) {
-    return NextResponse.json({ error: "Bid not found." }, { status: 404 });
+    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
   }
 
   const [{ data: requirements }, { data: documents }, { data: openClaims }, { data: responses }] =

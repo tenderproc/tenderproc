@@ -2,15 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { COMPANY_SIZES } from "@/lib/companySizes";
 import TagInput from "./TagInput";
-
-const COMPANY_SIZES = [
-  { key: "solo", label: "Solo / freelance" },
-  { key: "1-9", label: "1–9 employees" },
-  { key: "10-49", label: "10–49 employees" },
-  { key: "50-249", label: "50–249 employees" },
-];
 
 export default function CompanyCoreForm({
   userId,
@@ -30,6 +25,8 @@ export default function CompanyCoreForm({
     industries: string[];
   };
 }) {
+  const t = useTranslations("CompanyCoreForm");
+  const tCompanySize = useTranslations("Enums.companySize");
   const router = useRouter();
   const [name, setName] = useState(initial.name);
   const [description, setDescription] = useState(initial.description);
@@ -46,7 +43,7 @@ export default function CompanyCoreForm({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) {
-      setError("Company name is required.");
+      setError(t("nameRequired"));
       return;
     }
     setSaving(true);
@@ -83,18 +80,14 @@ export default function CompanyCoreForm({
       className="border border-line bg-white rounded-2xl p-6 space-y-4"
     >
       <div>
-        <h2 className="font-display font-semibold text-lg text-ink">Company profile</h2>
-        <p className="text-sm text-inkDim mt-1">
-          This is the knowledge base the AI uses when analyzing tenders and
-          drafting responses — it never uses information beyond what&apos;s
-          entered here.
-        </p>
+        <h2 className="font-display font-semibold text-lg text-ink">{t("heading")}</h2>
+        <p className="text-sm text-inkDim mt-1">{t("subheading")}</p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Company name
+            {t("companyName")}
           </label>
           <input
             value={name}
@@ -105,7 +98,7 @@ export default function CompanyCoreForm({
         </div>
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Website
+            {t("website")}
           </label>
           <input
             value={website}
@@ -118,13 +111,13 @@ export default function CompanyCoreForm({
 
       <div>
         <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-          Description
+          {t("description")}
         </label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
-          placeholder="What does the company do, and for whom?"
+          placeholder={t("descriptionPlaceholder")}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
@@ -132,24 +125,24 @@ export default function CompanyCoreForm({
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Company size
+            {t("companySize")}
           </label>
           <select
             value={companySize}
             onChange={(e) => setCompanySize(e.target.value)}
             className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           >
-            <option value="">Prefer not to say</option>
+            <option value="">{t("preferNotToSay")}</option>
             {COMPANY_SIZES.map((s) => (
               <option key={s.key} value={s.key}>
-                {s.label}
+                {tCompanySize(s.key)}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Employee count (exact, optional)
+            {t("employeeCount")}
           </label>
           <input
             type="number"
@@ -163,22 +156,22 @@ export default function CompanyCoreForm({
 
       <div className="grid sm:grid-cols-3 gap-4">
         <TagInput
-          label="Regions served"
+          label={t("regionsServed")}
           values={regionsServed}
           onChange={setRegionsServed}
-          placeholder="e.g. Antwerp"
+          placeholder={t("regionsServedPlaceholder")}
         />
         <TagInput
-          label="Languages"
+          label={t("languages")}
           values={languages}
           onChange={setLanguages}
-          placeholder="e.g. Dutch"
+          placeholder={t("languagesPlaceholder")}
         />
         <TagInput
-          label="Industries"
+          label={t("industries")}
           values={industries}
           onChange={setIndustries}
-          placeholder="e.g. Facility management"
+          placeholder={t("industriesPlaceholder")}
         />
       </div>
 
@@ -189,9 +182,9 @@ export default function CompanyCoreForm({
           disabled={saving}
           className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
         >
-          {saving ? "Saving…" : hasCompany ? "Save changes" : "Create company profile"}
+          {saving ? t("saving") : hasCompany ? t("saveChanges") : t("createProfile")}
         </button>
-        {saved && !saving && <span className="text-sm text-moss">Saved ✓</span>}
+        {saved && !saving && <span className="text-sm text-moss">{t("saved")}</span>}
       </div>
     </form>
   );

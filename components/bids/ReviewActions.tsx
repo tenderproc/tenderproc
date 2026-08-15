@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { apiErrorMessage } from "@/lib/apiErrors";
 
 export function RunReviewButton({ bidId, hasReview }: { bidId: string; hasReview: boolean }) {
+  const t = useTranslations("ReviewActions");
+  const tApiError = useTranslations("Errors.api");
   const router = useRouter();
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -15,10 +19,10 @@ export function RunReviewButton({ bidId, hasReview }: { bidId: string; hasReview
     try {
       const res = await fetch(`/api/bids/${bidId}/review`, { method: "POST" });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Could not run the review.");
+      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("couldNotRunReview")));
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not run the review.");
+      setError(err instanceof Error ? err.message : t("couldNotRunReview"));
     } finally {
       setRunning(false);
     }
@@ -31,7 +35,7 @@ export function RunReviewButton({ bidId, hasReview }: { bidId: string; hasReview
         disabled={running}
         className="text-sm font-medium text-white bg-accent rounded-doc px-5 py-2.5 hover:bg-accentDim transition-colors disabled:opacity-50"
       >
-        {running ? "Running review…" : hasReview ? "Re-run review" : "Run review"}
+        {running ? t("runningReview") : hasReview ? t("reRunReview") : t("runReview")}
       </button>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}
     </div>
@@ -39,6 +43,7 @@ export function RunReviewButton({ bidId, hasReview }: { bidId: string; hasReview
 }
 
 export function MarkSubmittedButton({ bidId, status }: { bidId: string; status: string }) {
+  const t = useTranslations("ReviewActions");
   const router = useRouter();
   const [saving, setSaving] = useState(false);
 
@@ -56,7 +61,7 @@ export function MarkSubmittedButton({ bidId, status }: { bidId: string; status: 
   if (status === "SUBMITTED" || status === "WON" || status === "LOST" || status === "WITHDRAWN" || status === "NO_RESULT") {
     return (
       <span className="text-sm font-medium text-moss border border-moss/30 bg-moss/5 rounded-doc px-4 py-2">
-        ✓ {status === "SUBMITTED" ? "Submitted" : "Bid closed"}
+        ✓ {status === "SUBMITTED" ? t("submitted") : t("bidClosed")}
       </span>
     );
   }
@@ -67,12 +72,13 @@ export function MarkSubmittedButton({ bidId, status }: { bidId: string; status: 
       disabled={saving}
       className="text-sm font-medium text-ink border border-line rounded-doc px-4 py-2 hover:bg-paperDim transition-colors disabled:opacity-50"
     >
-      {saving ? "Saving…" : "Mark as Submitted"}
+      {saving ? t("saving") : t("markAsSubmitted")}
     </button>
   );
 }
 
 export function DownloadDocumentLink({ storagePath, label }: { storagePath: string; label: string }) {
+  const t = useTranslations("ReviewActions");
   const [loading, setLoading] = useState(false);
 
   async function download() {
@@ -85,7 +91,7 @@ export function DownloadDocumentLink({ storagePath, label }: { storagePath: stri
 
   return (
     <button onClick={download} disabled={loading} className="text-sm text-accent hover:underline">
-      {loading ? "Opening…" : label}
+      {loading ? t("opening") : label}
     </button>
   );
 }

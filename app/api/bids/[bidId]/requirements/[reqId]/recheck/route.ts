@@ -15,12 +15,12 @@ export async function POST(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const { draftText } = await req.json();
   if (typeof draftText !== "string") {
-    return NextResponse.json({ error: "Missing draftText." }, { status: 400 });
+    return NextResponse.json({ error: "Missing draftText.", code: "missingDraftText" }, { status: 400 });
   }
 
   const { data: response } = await supabase
@@ -30,12 +30,12 @@ export async function POST(
     .eq("bid_id", bidId)
     .maybeSingle();
   if (!response) {
-    return NextResponse.json({ error: "No draft to re-check yet." }, { status: 404 });
+    return NextResponse.json({ error: "No draft to re-check yet.", code: "noDraftToRecheck" }, { status: 404 });
   }
 
   const company = await getCompanyKnowledge(supabase, user.id);
   if (!company) {
-    return NextResponse.json({ error: "Company profile not found." }, { status: 400 });
+    return NextResponse.json({ error: "Company profile not found.", code: "companyProfileNotFound" }, { status: 400 });
   }
 
   const { data: evidenceRows } = await supabase
@@ -54,7 +54,7 @@ export async function POST(
   } catch (err) {
     console.error("validateResponse failed", err);
     return NextResponse.json(
-      { error: "Could not re-check the draft right now. Try again in a moment." },
+      { error: "Could not re-check the draft right now. Try again in a moment.", code: "couldNotRecheckDraft" },
       { status: 500 }
     );
   }

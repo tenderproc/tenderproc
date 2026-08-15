@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 const STYLE: Record<string, string> = {
   PROCESSING: "bg-line/40 border-line text-inkDim",
   ANALYZING: "bg-line/40 border-line text-inkDim",
@@ -5,19 +7,13 @@ const STYLE: Record<string, string> = {
   FAILED: "bg-stamp/10 border-stamp/25 text-stamp",
 };
 
-const LABEL: Record<string, string> = {
-  PROCESSING: "Processing",
-  ANALYZING: "Analyzing",
-  READY: "Ready",
-  FAILED: "Failed",
-};
-
-export default function TenderStatusBadge({ status }: { status: string }) {
+export default async function TenderStatusBadge({ status }: { status: string }) {
+  const t = await getTranslations("Enums.tenderStatus");
   return (
     <span
       className={`inline-flex items-center text-xs font-semibold border rounded-full px-2.5 py-1 ${STYLE[status] ?? STYLE.FAILED}`}
     >
-      {LABEL[status] ?? status}
+      {status in STYLE ? t(status) : status}
     </span>
   );
 }

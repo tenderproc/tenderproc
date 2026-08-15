@@ -1,0 +1,599 @@
+{
+  "Header": {
+    "tagline": "Belgique · Marchés publics",
+    "pricing": "Tarifs",
+    "signOut": "Se déconnecter"
+  },
+  "Nav": {
+    "opportunities": "Opportunités",
+    "workflow": "Suivi",
+    "search": "Recherche",
+    "market": "Aperçu du marché",
+    "tenders": "Marchés",
+    "bids": "Offres",
+    "company": "Entreprise"
+  },
+  "LocaleSwitcher": {
+    "label": "Langue"
+  },
+  "Login": {
+    "heading": "Connexion",
+    "subheading": "Connectez-vous pour voir les marchés filtrés selon vos secteurs.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "loggingIn": "Connexion en cours…",
+    "logIn": "Se connecter",
+    "noAccount": "Pas encore de compte ?",
+    "signUp": "S'inscrire",
+    "viewPricing": "Voir les tarifs"
+  },
+  "Opportunities": {
+    "eyebrow": "Appels ouverts uniquement · Source : TED",
+    "heading": "Opportunités",
+    "description": "Marchés réellement ouverts en Belgique, correspondant à vos secteurs — les avis déjà attribués et informatifs sont filtrés. Extrait de la base de données officielle TED de l'UE ; cette bêta couvre les avis au-dessus des seuils de publication de l'UE.",
+    "couldNotReachTed": "Impossible de contacter TED.",
+    "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
+    "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale."
+  },
+  "Market": {
+    "eyebrow": "90 derniers jours · Source : avis d'attribution TED",
+    "heading": "Aperçu du marché",
+    "description": "Marchés publics belges récemment attribués — qui a gagné, pour quel montant, et de la part de qui. Il s'agit d'un instantané des attributions récentes, pas d'une archive historique complète.",
+    "couldNotReachTed": "Impossible de contacter TED.",
+    "loadError": "Impossible de charger les données d'attribution pour le moment ({loadError}). Réessayez dans un instant.",
+    "topWinners": "Meilleurs gagnants par valeur attribuée",
+    "topBuyers": "Principaux acheteurs par dépenses",
+    "recentAwards": "Attributions récentes",
+    "noAwards": "Aucun avis d'attribution trouvé sur cette période.",
+    "awarded": "Attribué le {date}",
+    "buyerLine": "{title} · acheteur : {buyer}",
+    "value": "Valeur",
+    "notEnoughData": "Pas encore assez de données.",
+    "awardCount": "{count, plural, one {# attribution} other {# attributions}}"
+  },
+  "Search": {
+    "eyebrow": "Recherche ponctuelle · Source : TED",
+    "heading": "Recherche",
+    "description": "Recherches ponctuelles parmi tous les marchés belges réellement ouverts, indépendamment de vos secteurs enregistrés — filtrez par mot-clé, code CPV, plage de valeur ou échéance.",
+    "couldNotReachTed": "Impossible de contacter TED.",
+    "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
+    "noResults": "Aucun avis ne correspond à ces filtres.",
+    "prompt": "Saisissez un mot-clé, un code CPV, une plage de valeur ou une échéance ci-dessus pour lancer une recherche."
+  },
+  "AdvancedSearchForm": {
+    "keyword": "Mot-clé",
+    "keywordPlaceholder": "p. ex. services de nettoyage",
+    "cpvCode": "Code CPV",
+    "cpvPlaceholder": "p. ex. 90910000",
+    "minValue": "Valeur min. (EUR)",
+    "maxValue": "Valeur max. (EUR)",
+    "noLimit": "Aucune limite",
+    "deadlineAfter": "Échéance après",
+    "deadlineBefore": "Échéance avant",
+    "search": "Rechercher"
+  },
+  "SearchFilters": {
+    "keywordPlaceholder": "Mot-clé — p. ex. services de nettoyage",
+    "cpvPlaceholder": "Code CPV — p. ex. 90910000",
+    "search": "Rechercher"
+  },
+  "TenderCard": {
+    "refPublished": "Réf. {ref} · Publié le {date}",
+    "deadline": "Échéance"
+  },
+  "MatchScoreBadge": {
+    "criteriaCount": "{met}/{total} critères"
+  },
+  "Pricing": {
+    "goToApp": "Accéder à l'application",
+    "logIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "eyebrow": "Tarifs",
+    "heading": "Des formules simples et claires",
+    "subheading": "Commencez gratuitement, passez à la vitesse supérieure quand vous êtes prêt à soumissionner sérieusement.",
+    "mostPopular": "Le plus populaire",
+    "perMonth": "/mois",
+    "getStarted": "Commencer",
+    "tiers": {
+      "free": {
+        "name": "Gratuit",
+        "blurb": "Essayez la découverte de marchés pour un secteur.",
+        "features": ["Flux d'opportunités pour 1 secteur", "Recherche manuelle", "Pages de détail des marchés"]
+      },
+      "pro": {
+        "name": "Pro",
+        "blurb": "Pour les PME qui soumissionnent activement sur des marchés publics.",
+        "features": [
+          "Flux d'opportunités, tous secteurs",
+          "Scores de correspondance IA sur chaque marché",
+          "Tableau de suivi",
+          "Notifications e-mail quotidiennes"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "blurb": "Pour les équipes qui veulent une vue complète du marché.",
+        "features": [
+          "Tout ce qui est inclus dans Pro",
+          "Aperçu du marché & analyses d'attribution",
+          "Vérifications d'éligibilité par IA",
+          "Support prioritaire"
+        ]
+      }
+    }
+  },
+  "WorkflowPage": {
+    "eyebrow": "Votre pipeline",
+    "heading": "Suivi",
+    "description": "Suivez les marchés que vous poursuivez, de la première sélection jusqu'à la soumission. Ajoutez des marchés depuis Opportunités ou la page de détail d'un marché."
+  },
+  "PublicTenderDetail": {
+    "backToOpenTenders": "Retour aux marchés ouverts",
+    "ref": "Réf. {ref}",
+    "buyer": "Acheteur",
+    "deadline": "Échéance",
+    "estValue": "Valeur estimée",
+    "published": "Publié",
+    "viewOnTed": "Voir l'avis officiel complet sur TED"
+  },
+  "AddToWorkflowButton": {
+    "added": "Ajouté au suivi ✓",
+    "adding": "Ajout en cours…",
+    "tryAgain": "Réessayer",
+    "addToWorkflow": "Ajouter au suivi"
+  },
+  "UploadAnalyzer": {
+    "analysisFailed": "L'analyse a échoué.",
+    "somethingWentWrong": "Une erreur s'est produite.",
+    "checkEligibility": "Vérifier l'éligibilité",
+    "intro": "Collez ci-dessous les exigences du marché ou le texte du DUME — ou lancez simplement la vérification sur les métadonnées de l'avis uniquement.",
+    "pasteTextPlaceholder": "Collez ici le texte du document du marché (optionnel)…",
+    "attachFileHint": "ou joignez un fichier pour référence (pas encore analysé en bêta)",
+    "readingTender": "Lecture du marché…",
+    "runCheck": "Lancer la vérification d'éligibilité",
+    "keyRequirements": "Exigences clés"
+  },
+  "RequirementWorkspace": {
+    "status": "Statut",
+    "couldNotFindEvidence": "Impossible de trouver des preuves.",
+    "couldNotGenerateDraft": "Impossible de générer un brouillon.",
+    "couldNotRecheckDraft": "Impossible de revérifier le brouillon.",
+    "relevantEvidenceFound": "Preuves pertinentes trouvées",
+    "findingEvidence": "Recherche de preuves…",
+    "findEvidence": "Rechercher des preuves",
+    "clickFindEvidenceHint": "Cliquez sur Rechercher des preuves pour voir quels services, certifications et références de votre entreprise sont pertinents pour cette exigence.",
+    "noRelevantEvidence": "Aucune preuve pertinente de l'entreprise trouvée pour cette exigence.",
+    "evidenceMeta": "({type} · similarité {relevance})",
+    "evidenceUsedInDraft": "Preuves utilisées dans le brouillon actuel",
+    "generating": "Génération…",
+    "regenerateDraft": "Régénérer le brouillon",
+    "generateDraft": "Générer un brouillon",
+    "aiDraft": "Brouillon IA",
+    "confidence": "Confiance : {level}",
+    "acceptedCheck": "Accepté ✓",
+    "unsupportedClaims": "{count, plural, one {Affirmation non étayée} other {Affirmations non étayées}}",
+    "dismiss": "Ignorer",
+    "unsupportedClaimsHint": "Cela n'a pas pu être vérifié par rapport à votre base de connaissances d'entreprise. Modifiez le brouillon pour le supprimer ou le reformuler, ou ajoutez des preuves à l'appui ci-dessus et régénérez.",
+    "acceptDraft": "Accepter le brouillon",
+    "edit": "Modifier",
+    "rechecking": "Nouvelle vérification…",
+    "saveAndRecheck": "Enregistrer et revérifier"
+  },
+  "RequirementPage": {
+    "backToBidWorkspace": "Retour à l'espace offre",
+    "mandatory": "Obligatoire",
+    "source": "Source : {parts}"
+  },
+  "ReviewActions": {
+    "couldNotRunReview": "Impossible d'exécuter le contrôle.",
+    "runningReview": "Contrôle en cours…",
+    "reRunReview": "Relancer le contrôle",
+    "runReview": "Lancer le contrôle",
+    "submitted": "Soumis",
+    "bidClosed": "Offre clôturée",
+    "saving": "Enregistrement…",
+    "markAsSubmitted": "Marquer comme soumis",
+    "opening": "Ouverture…"
+  },
+  "BidReview": {
+    "backToBid": "Retour à l'offre",
+    "heading": "Contrôle avant soumission",
+    "untitledTender": "Marché sans titre",
+    "noReviewYet": "Aucun contrôle n'a encore été exécuté. Son exécution vérifie votre liste d'exigences, votre liste de documents et les réponses rédigées à la recherche de tout ce qui pourrait bloquer la soumission.",
+    "readyToSubmit": "Prêt à soumettre",
+    "notReadyToSubmit": "Pas encore prêt à soumettre",
+    "compliantPercent": "{score} % conforme",
+    "criticalIssues": "Problèmes critiques",
+    "warnings": "Avertissements",
+    "requirements": "Exigences",
+    "documents": "Documents",
+    "lastRun": "Dernière exécution {when} · {claims}",
+    "unresolvedClaims": "{count, plural, one {# affirmation non étayée non résolue} other {# affirmations non étayées non résolues}}",
+    "submission": "Soumission",
+    "downloadBidPackage": "Télécharger le dossier d'offre",
+    "noDocumentsUploaded": "Aucun document téléversé pour l'instant — ajoutez-les depuis la liste de documents de l'espace offre.",
+    "officialSubmission": "Soumission officielle",
+    "openOfficialPlatform": "Ouvrir la plateforme de soumission officielle",
+    "noSubmissionPlatform": "Aucun lien de plateforme de soumission n'est enregistré pour ce marché — soumissionnez directement via le canal officiel du pouvoir adjudicateur."
+  },
+  "StartBidButton": {
+    "couldNotStart": "Impossible de démarrer l'offre.",
+    "starting": "Démarrage…",
+    "startBid": "Démarrer l'offre"
+  },
+  "MapEvidenceButton": {
+    "couldNotMap": "Impossible d'associer les preuves.",
+    "mapping": "Association des preuves…",
+    "remap": "Réassocier les preuves",
+    "map": "Associer les preuves aux exigences"
+  },
+  "RecordOutcomeForm": {
+    "outcome": "Résultat",
+    "edit": "Modifier",
+    "wonBy": "Remporté par {bidder}",
+    "recordOutcome": "Enregistrer le résultat",
+    "storedHint": "Enregistré pour le suivi futur du taux de réussite. Statut actuel de l'offre : {status}.",
+    "contractValuePlaceholder": "Valeur du contrat (EUR)",
+    "durationPlaceholder": "Durée, p. ex. « 4 ans »",
+    "reasonPlaceholder": "Raison (si connue)",
+    "winningBidderPlaceholder": "Soumissionnaire retenu (si connu)",
+    "winningPricePlaceholder": "Prix retenu (si connu)",
+    "ourScorePlaceholder": "Notre score (si connu)",
+    "feedbackPlaceholder": "Retour du pouvoir adjudicateur (le cas échéant)",
+    "notesPlaceholder": "Notes",
+    "saving": "Enregistrement…",
+    "saveOutcome": "Enregistrer le résultat",
+    "cancel": "Annuler"
+  },
+  "DocumentsChecklist": {
+    "heading": "Documents",
+    "noneExtracted": "Aucun document requis n'a été extrait de ce marché — consultez plutôt la liste des exigences pour les éléments de catégorie document.",
+    "readyCount": "{ready}/{total} prêts",
+    "download": "Télécharger",
+    "uploading": "Téléversement…",
+    "upload": "Téléverser",
+    "markMissing": "Marquer comme manquant",
+    "markReady": "Marquer comme prêt",
+    "couldNotOpenFile": "Impossible d'ouvrir le fichier."
+  },
+  "BidWorkspace": {
+    "backToBids": "Retour aux offres",
+    "authorityDeadline": "{authority} · Échéance {date}",
+    "untitledTender": "Marché sans titre",
+    "reviewBid": "Contrôler l'offre",
+    "openWarnings": "{count, plural, one {# avertissement ouvert} other {# avertissements ouverts}}",
+    "overallProgress": "Progression globale",
+    "requirements": "Exigences",
+    "mandatory": "Obligatoire"
+  },
+  "TenderDetail": {
+    "backToTenders": "Retour aux marchés",
+    "analyzingTender": "Analyse du marché en cours…",
+    "failedMessage": "Ce marché n'a pas pu être traité. Causes courantes : le PDF ne contient pas de texte extractible (un document scanné sans OCR) ou l'analyse IA a échoué. Essayez de le retélécharger, ou un autre fichier.",
+    "stillProcessing": "Encore en traitement — actualisez dans un instant.",
+    "authority": "Pouvoir adjudicateur",
+    "deadline": "Échéance",
+    "estValue": "Valeur estimée",
+    "duration": "Durée",
+    "viewOriginalPdf": "Voir le PDF original",
+    "confidence": "Confiance : {level}",
+    "addCompanyProfileBefore": "Ajoutez votre",
+    "companyProfile": "profil d'entreprise",
+    "addCompanyProfileAfter": "pour obtenir un score de correspondance et une recommandation Soumissionner/Ne pas soumissionner pour ce marché.",
+    "goToBidWorkspace": "Accéder à l'espace offre",
+    "tenderProcScore": "Score TenderProc",
+    "dataUnavailable": "Données non disponibles.",
+    "whyNotBid": "Pourquoi ne pas soumissionner ?",
+    "companyStatus": "Statut de l'entreprise :",
+    "possibleMitigation": "Solution possible :",
+    "evidenceCoverage": "Couverture des preuves",
+    "notMappedYet": "Pas encore établi — cliquez sur Associer les preuves aux exigences pour voir quels services, certifications et références de votre entreprise couvrent chaque exigence.",
+    "whyThisMatches": "Pourquoi cette correspondance",
+    "positiveFactors": "Facteurs positifs",
+    "risks": "Risques",
+    "missing": "Manquant : {requirement}",
+    "effortEstimate": "ESTIMATION — VÉRIFICATION HUMAINE REQUISE : {min} à {max} heures de préparation de l'offre.",
+    "awardCriteria": "Critères d'attribution",
+    "requirements": "Exigences",
+    "mandatory": "Obligatoire",
+    "source": "Source : {parts}",
+    "requiredDocuments": "Documents requis",
+    "ambiguities": "Ambiguïtés"
+  },
+  "UploadTenderButton": {
+    "uploadFailed": "Échec du téléversement.",
+    "uploadingAndAnalyzing": "Téléversement et analyse… (jusqu'à une minute)",
+    "uploadTender": "Téléverser un marché"
+  },
+  "MyTendersList": {
+    "eyebrow": "Marchés téléchargés · Analyse IA",
+    "heading": "Marchés",
+    "description": "Téléchargez un PDF de marché pour obtenir une analyse structurée : critères d'attribution, exigences, et une recommandation Soumissionner/Ne pas soumissionner basée sur le profil de votre entreprise.",
+    "empty": "Aucun marché téléchargé pour l'instant. Téléchargez un PDF pour commencer.",
+    "analyzing": "Analyse en cours…",
+    "deadline": "Échéance",
+    "value": "Valeur"
+  },
+  "TagInput": {
+    "removeTag": "Supprimer {tag}",
+    "defaultPlaceholder": "Tapez et appuyez sur Entrée"
+  },
+  "ServicesSection": {
+    "heading": "Services",
+    "nothingAdded": "Rien d'ajouté pour l'instant.",
+    "remove": "Supprimer",
+    "namePlaceholder": "Nom du service, p. ex. Nettoyage de bureaux",
+    "descriptionPlaceholder": "Brève description (optionnel)",
+    "add": "Ajouter"
+  },
+  "CertificationsSection": {
+    "heading": "Certifications",
+    "nothingAdded": "Rien d'ajouté pour l'instant.",
+    "expired": "Expirée",
+    "expiresSoon": "Expire bientôt",
+    "valid": "Valide",
+    "expiresOn": "expire le {date}",
+    "noFurtherDetails": "Aucun détail supplémentaire",
+    "remove": "Supprimer",
+    "namePlaceholder": "Nom de la certification, p. ex. ISO 9001",
+    "issuingOrgPlaceholder": "Organisme émetteur (optionnel)",
+    "certificateNumberPlaceholder": "Numéro de certificat (optionnel)",
+    "add": "Ajouter"
+  },
+  "ReferencesSection": {
+    "heading": "Références",
+    "subheading": "Projets antérieurs que l'IA peut citer comme expérience comparable — elle ne prétendra jamais à une expérience au-delà de ce qui est listé ici.",
+    "nothingAdded": "Rien d'ajouté pour l'instant.",
+    "publicSector": "secteur public",
+    "privateSector": "secteur privé",
+    "value": "Valeur : {value} €",
+    "remove": "Supprimer",
+    "clientPlaceholder": "Client, p. ex. Ville d'Anvers",
+    "projectNamePlaceholder": "Nom du projet (optionnel)",
+    "descriptionPlaceholder": "Brève description (optionnel)",
+    "contractValuePlaceholder": "Valeur du contrat en EUR (optionnel)",
+    "sectorOptional": "Secteur public ou privé ? (optionnel)",
+    "servicesLabel": "Services fournis dans le cadre de ce projet",
+    "servicesPlaceholder": "p. ex. Nettoyage quotidien",
+    "addReference": "Ajouter une référence"
+  },
+  "DocumentsSection": {
+    "heading": "Documents",
+    "subheading": "Pièces justificatives (certificats, brochures, politiques) que vous pouvez lier aux certifications et références ci-dessus.",
+    "nothingUploaded": "Rien de téléversé pour l'instant.",
+    "remove": "Supprimer",
+    "uploading": "Téléversement…",
+    "uploadDocument": "Téléverser un document"
+  },
+  "CompanyPage": {
+    "eyebrow": "Base de connaissances",
+    "heading": "Entreprise",
+    "description": "Ce que Bidara sait réellement de votre entreprise — services, certifications et références. Utilisé pour faire correspondre les marchés téléchargés et, plus tard, pour rédiger des réponses d'offres basées uniquement sur ce qui est saisi ici.",
+    "unlockHint": "Enregistrez le profil de votre entreprise ci-dessus pour débloquer les services, certifications, références et documents."
+  },
+  "CompanyCoreForm": {
+    "nameRequired": "Le nom de l'entreprise est requis.",
+    "heading": "Profil de l'entreprise",
+    "subheading": "Il s'agit de la base de connaissances que l'IA utilise pour analyser les marchés et rédiger les réponses — elle n'utilise jamais d'informations au-delà de ce qui est saisi ici.",
+    "companyName": "Nom de l'entreprise",
+    "website": "Site web",
+    "description": "Description",
+    "descriptionPlaceholder": "Que fait l'entreprise, et pour qui ?",
+    "companySize": "Taille de l'entreprise",
+    "preferNotToSay": "Préfère ne pas dire",
+    "employeeCount": "Nombre d'employés (exact, optionnel)",
+    "regionsServed": "Régions desservies",
+    "regionsServedPlaceholder": "p. ex. Anvers",
+    "languages": "Langues",
+    "languagesPlaceholder": "p. ex. Néerlandais",
+    "industries": "Secteurs",
+    "industriesPlaceholder": "p. ex. Gestion des installations",
+    "saving": "Enregistrement…",
+    "saveChanges": "Enregistrer les modifications",
+    "createProfile": "Créer le profil de l'entreprise",
+    "saved": "Enregistré ✓"
+  },
+  "Signup": {
+    "pickSector": "Choisissez au moins un secteur.",
+    "checkEmailHeading": "Vérifiez votre e-mail",
+    "checkEmailBody": "Nous avons envoyé un lien de confirmation à {email}. Cliquez dessus, puis connectez-vous — le profil de votre entreprise est déjà enregistré.",
+    "backToLogin": "Retour à la connexion",
+    "heading": "Créez votre compte",
+    "subheading": "Parlez-nous de votre entreprise — cela détermine les marchés que vous voyez et le score de correspondance de chacun.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Au moins 6 caractères",
+    "companyName": "Nom de l'entreprise",
+    "companyNamePlaceholder": "p. ex. Van Damme Cleaning bv",
+    "address": "Adresse",
+    "addressPlaceholder": "p. ex. Anvers",
+    "companySize": "Taille de l'entreprise",
+    "preferNotToSay": "Préfère ne pas dire",
+    "descriptionLabel": "Que fait votre entreprise ?",
+    "descriptionPlaceholder": "Quelques phrases suffisent — cela alimente le score de correspondance de chaque marché.",
+    "sectors": "Secteurs",
+    "creatingAccount": "Création du compte…",
+    "signUp": "S'inscrire",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "logIn": "Se connecter",
+    "viewPricing": "Voir les tarifs"
+  },
+  "Errors": {
+    "api": {
+      "notAuthenticated": "Non authentifié.",
+      "noFileProvided": "Aucun fichier fourni.",
+      "onlyPdfSupported": "Seuls les fichiers PDF sont pris en charge dans cette bêta.",
+      "fileTooLarge": "Le fichier dépasse 20 Mo.",
+      "aiAnalysisFailed": "L'analyse IA a échoué. Réessayez dans un instant.",
+      "tenderNotFound": "Marché introuvable.",
+      "needCompanyProfile": "Ajoutez le profil de votre entreprise pour continuer.",
+      "couldNotMapEvidence": "Impossible d'associer les preuves pour le moment. Réessayez dans un instant.",
+      "bidNotFound": "Offre introuvable.",
+      "missingTenderId": "Marché manquant.",
+      "serverMisconfigured": "Le serveur n'est pas configuré correctement. Réessayez plus tard.",
+      "missingTenderInfo": "Informations sur le marché manquantes.",
+      "analysisFailed": "L'analyse a échoué. Réessayez dans un instant.",
+      "missingDraftText": "Texte du brouillon manquant.",
+      "noDraftToRecheck": "Aucun brouillon à revérifier pour l'instant.",
+      "companyProfileNotFound": "Profil de l'entreprise introuvable.",
+      "couldNotRecheckDraft": "Impossible de revérifier le brouillon pour le moment. Réessayez dans un instant.",
+      "requirementNotFound": "Exigence introuvable.",
+      "couldNotFindEvidence": "Impossible de trouver des preuves pour le moment. Réessayez dans un instant.",
+      "couldNotGenerateDraft": "Impossible de générer un brouillon pour le moment. Réessayez dans un instant."
+    },
+    "auth": {
+      "invalidCredentials": "E-mail ou mot de passe incorrect.",
+      "emailNotConfirmed": "Veuillez confirmer votre e-mail avant de vous connecter.",
+      "userAlreadyRegistered": "Un compte existe déjà avec cette adresse e-mail.",
+      "passwordTooShort": "Le mot de passe est trop court.",
+      "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
+      "rateLimited": "Trop de tentatives. Veuillez réessayer dans un instant."
+    }
+  },
+  "BidsList": {
+    "eyebrow": "Espace offres",
+    "title": "Offres",
+    "description": "Marchés pour lesquels vous préparez activement une soumission. Démarrez-en une depuis la page d'un marché prêt.",
+    "emptyBefore": "Aucune offre pour l'instant. Ouvrez un marché sous",
+    "tenders": "Marchés",
+    "emptyAfter": "et cliquez sur Démarrer une offre.",
+    "untitledTender": "Marché sans titre",
+    "deadline": "Échéance"
+  },
+  "Workflow": {
+    "emptyBefore": "Rien dans votre suivi pour l'instant. Ajoutez un marché depuis",
+    "opportunities": "Opportunités",
+    "emptyAfter": "pour commencer à le suivre ici.",
+    "nothingHere": "Rien ici.",
+    "closed": "Clôturés",
+    "couldNotLoad": "Impossible de charger les détails de ce marché.",
+    "remove": "Supprimer"
+  },
+  "PreferencesSidebar": {
+    "sectors": "Secteurs",
+    "languages": "Langues",
+    "languagesHint": "Détermine dans quelle langue les titres traduits sont affichés — chaque marché reste visible dans tous les cas.",
+    "saving": "Enregistrement…"
+  },
+  "Enums": {
+    "matchLabel": {
+      "strong": "Correspondance forte",
+      "good": "Bonne correspondance",
+      "moderate": "Correspondance modérée",
+      "weak": "Correspondance faible"
+    },
+    "recommendation": {
+      "bid": "SOUMISSIONNER",
+      "consider": "À ÉVALUER",
+      "noBid": "NE PAS SOUMISSIONNER"
+    },
+    "requirementCategory": {
+      "eligibility": "Éligibilité",
+      "administrative": "Administratif",
+      "technical": "Technique",
+      "experience": "Expérience",
+      "certification": "Certification",
+      "personnel": "Personnel",
+      "financial": "Financier",
+      "pricing": "Tarification",
+      "document": "Document",
+      "award_criterion": "Critère d'attribution",
+      "other": "Autre"
+    },
+    "sector": {
+      "construction": "Construction & travaux",
+      "it-telecom": "Informatique, logiciels & télécom",
+      "consulting": "Conseil & services professionnels",
+      "engineering": "Ingénierie & architecture",
+      "cleaning-facilities": "Nettoyage & services d'installations",
+      "transport-logistics": "Transport & logistique",
+      "catering": "Restauration & alimentation",
+      "healthcare": "Santé & services sociaux",
+      "education": "Éducation & formation",
+      "supplies-equipment": "Fournitures & équipements de bureau"
+    },
+    "language": {
+      "nl": "Néerlandais",
+      "fr": "Français",
+      "de": "Allemand",
+      "en": "Anglais"
+    },
+    "bidStatus": {
+      "EVALUATION": "Évaluation",
+      "PREPARATION": "Préparation",
+      "REVIEW": "Contrôle",
+      "READY_TO_SUBMIT": "Prêt à soumettre",
+      "SUBMITTED": "Soumis",
+      "WON": "Gagné",
+      "LOST": "Perdu",
+      "WITHDRAWN": "Retiré"
+    },
+    "workflowStage": {
+      "screening": "Sélection",
+      "reviewing": "Examen",
+      "applying": "Soumission",
+      "submitted": "Soumis",
+      "won": "Gagné",
+      "lost": "Perdu"
+    },
+    "tenderStatus": {
+      "PROCESSING": "En traitement",
+      "ANALYZING": "En analyse",
+      "READY": "Prêt",
+      "FAILED": "Échoué"
+    },
+    "companySize": {
+      "solo": "Indépendant / freelance",
+      "1-9": "1 à 9 employés",
+      "10-49": "10 à 49 employés",
+      "50-249": "50 à 249 employés"
+    },
+    "tedMatchLabel": {
+      "strong": "Forte correspondance",
+      "good": "Bonne correspondance",
+      "possible": "Correspondance possible",
+      "weak": "Faible correspondance"
+    },
+    "disqualifierSeverity": {
+      "CRITICAL": "Critique",
+      "HIGH": "Élevé",
+      "MEDIUM": "Moyen",
+      "LOW": "Faible"
+    },
+    "evidenceCoverageStatus": {
+      "VERIFIED": "Vérifié",
+      "PARTIAL": "Partiel",
+      "MISSING": "Manquant",
+      "CONTRADICTED": "Contredit",
+      "NEEDS_REVIEW": "À vérifier"
+    },
+    "confidence": {
+      "HIGH": "Élevée",
+      "MEDIUM": "Moyenne",
+      "LOW": "Faible"
+    },
+    "requirementStatus": {
+      "NOT_STARTED": "Non commencé",
+      "IN_PROGRESS": "En cours",
+      "COMPLETE": "Terminé",
+      "BLOCKED": "Bloqué",
+      "NOT_APPLICABLE": "Non applicable"
+    },
+    "evidenceType": {
+      "service": "service",
+      "certification": "certification",
+      "reference": "référence"
+    },
+    "eligibilityVerdict": {
+      "eligible": "Éligible",
+      "reviewNeeded": "Vérification nécessaire",
+      "notEligible": "Non éligible"
+    },
+    "bidOutcome": {
+      "WON": "Gagné",
+      "LOST": "Perdu",
+      "WITHDRAWN": "Retiré",
+      "NO_RESULT": "Aucun résultat"
+    }
+  }
+}

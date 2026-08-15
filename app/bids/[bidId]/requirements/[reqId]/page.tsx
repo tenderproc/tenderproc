@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import RequirementWorkspace from "@/components/bids/RequirementWorkspace";
 import { createClient } from "@/lib/supabase/server";
+import { requirementCategoryLabel } from "@/lib/requirementCategory";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,8 @@ export default async function RequirementPage({
   params: Promise<{ bidId: string; reqId: string }>;
 }) {
   const { bidId, reqId } = await params;
+  const t = await getTranslations("RequirementPage");
+  const tCategory = await getTranslations("Enums.requirementCategory");
   const supabase = await createClient();
   const {
     data: { user },
@@ -64,13 +68,13 @@ export default async function RequirementPage({
       <Header />
       <main className="max-w-3xl mx-auto px-6 py-10">
         <Link href={`/bids/${bidId}`} className="text-sm text-inkDim hover:text-ink">
-          ← Back to bid workspace
+          ← {t("backToBidWorkspace")}
         </Link>
 
         <div className="mt-6 mb-8">
           <p className="text-xs font-medium uppercase tracking-wide text-inkDim">
-            {requirement.category.replace(/_/g, " ")}
-            {requirement.mandatory ? " · Mandatory" : ""}
+            {requirementCategoryLabel(requirement.category, tCategory)}
+            {requirement.mandatory ? ` · ${t("mandatory")}` : ""}
           </p>
           <h1 className="font-display font-bold text-2xl text-ink mt-1 leading-tight tracking-tight">
             {requirement.title}
@@ -80,10 +84,11 @@ export default async function RequirementPage({
           )}
           {(requirement.source_document || requirement.source_page) && (
             <p className="text-xs text-inkDim mt-2">
-              Source:{" "}
-              {[requirement.source_section, requirement.source_page && `p. ${requirement.source_page}`]
-                .filter(Boolean)
-                .join(", ")}
+              {t("source", {
+                parts: [requirement.source_section, requirement.source_page && `p. ${requirement.source_page}`]
+                  .filter(Boolean)
+                  .join(", "),
+              })}
             </p>
           )}
         </div>

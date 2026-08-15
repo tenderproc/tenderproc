@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export interface BidOutcomeRow {
@@ -16,12 +17,7 @@ export interface BidOutcomeRow {
   feedback: string | null;
 }
 
-const OUTCOMES = [
-  { key: "WON", label: "Won" },
-  { key: "LOST", label: "Lost" },
-  { key: "WITHDRAWN", label: "Withdrawn" },
-  { key: "NO_RESULT", label: "No result" },
-];
+const OUTCOME_KEYS = ["WON", "LOST", "WITHDRAWN", "NO_RESULT"] as const;
 
 function toNumberOrNull(v: string): number | null {
   if (!v.trim()) return null;
@@ -38,6 +34,9 @@ export default function RecordOutcomeForm({
   status: string;
   initialOutcome: BidOutcomeRow | null;
 }) {
+  const t = useTranslations("RecordOutcomeForm");
+  const tOutcome = useTranslations("Enums.bidOutcome");
+  const tBidStatus = useTranslations("Enums.bidStatus");
   const router = useRouter();
   const [editing, setEditing] = useState(!initialOutcome);
   const [outcome, setOutcome] = useState<string>(initialOutcome?.outcome ?? "WON");
@@ -95,14 +94,12 @@ export default function RecordOutcomeForm({
     return (
       <div className="border border-line bg-white rounded-2xl p-6">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="font-display font-semibold text-lg text-ink">Outcome</h2>
+          <h2 className="font-display font-semibold text-lg text-ink">{t("outcome")}</h2>
           <button onClick={() => setEditing(true)} className="text-sm text-accent hover:underline">
-            Edit
+            {t("edit")}
           </button>
         </div>
-        <p className="text-sm text-ink font-medium">
-          {OUTCOMES.find((o) => o.key === initialOutcome.outcome)?.label ?? initialOutcome.outcome}
-        </p>
+        <p className="text-sm text-ink font-medium">{tOutcome(initialOutcome.outcome)}</p>
         {initialOutcome.outcome === "WON" && (
           <p className="text-sm text-inkDim mt-1">
             {initialOutcome.contract_value ? `€${initialOutcome.contract_value.toLocaleString()}` : ""}
@@ -112,7 +109,9 @@ export default function RecordOutcomeForm({
         {initialOutcome.outcome === "LOST" && (
           <p className="text-sm text-inkDim mt-1">
             {initialOutcome.reason}
-            {initialOutcome.winning_bidder ? ` · Won by ${initialOutcome.winning_bidder}` : ""}
+            {initialOutcome.winning_bidder
+              ? ` · ${t("wonBy", { bidder: initialOutcome.winning_bidder })}`
+              : ""}
           </p>
         )}
       </div>
@@ -121,23 +120,23 @@ export default function RecordOutcomeForm({
 
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
-      <h2 className="font-display font-semibold text-lg text-ink mb-1">Record outcome</h2>
+      <h2 className="font-display font-semibold text-lg text-ink mb-1">{t("recordOutcome")}</h2>
       <p className="text-xs text-inkDim mb-4">
-        Stored for future win-rate tracking. Current bid status: {status.replace(/_/g, " ")}.
+        {t("storedHint", { status: tBidStatus(status) })}
       </p>
 
       <div className="flex flex-wrap gap-2 mb-4">
-        {OUTCOMES.map((o) => (
+        {OUTCOME_KEYS.map((key) => (
           <button
-            key={o.key}
-            onClick={() => setOutcome(o.key)}
+            key={key}
+            onClick={() => setOutcome(key)}
             className={`text-sm font-medium rounded-doc px-4 py-2 border transition-colors ${
-              outcome === o.key
+              outcome === key
                 ? "bg-accent text-white border-accent"
                 : "text-ink border-line hover:bg-paperDim"
             }`}
           >
-            {o.label}
+            {tOutcome(key)}
           </button>
         ))}
       </div>
@@ -147,14 +146,14 @@ export default function RecordOutcomeForm({
           <input
             value={contractValue}
             onChange={(e) => setContractValue(e.target.value)}
-            placeholder="Contract value (EUR)"
+            placeholder={t("contractValuePlaceholder")}
             type="number"
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
           <input
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
-            placeholder="Duration, e.g. '4 years'"
+            placeholder={t("durationPlaceholder")}
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
         </div>
@@ -165,33 +164,33 @@ export default function RecordOutcomeForm({
           <input
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="Reason (if known)"
+            placeholder={t("reasonPlaceholder")}
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
           <input
             value={winningBidder}
             onChange={(e) => setWinningBidder(e.target.value)}
-            placeholder="Winning bidder (if known)"
+            placeholder={t("winningBidderPlaceholder")}
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
           <input
             value={winningPrice}
             onChange={(e) => setWinningPrice(e.target.value)}
-            placeholder="Winning price (if known)"
+            placeholder={t("winningPricePlaceholder")}
             type="number"
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
           <input
             value={competitorScore}
             onChange={(e) => setCompetitorScore(e.target.value)}
-            placeholder="Our score (if known)"
+            placeholder={t("ourScorePlaceholder")}
             type="number"
             className="border border-line rounded-doc px-3 py-2 text-sm"
           />
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Feedback from the contracting authority (if any)"
+            placeholder={t("feedbackPlaceholder")}
             rows={2}
             className="border border-line rounded-doc px-3 py-2 text-sm sm:col-span-2"
           />
@@ -201,7 +200,7 @@ export default function RecordOutcomeForm({
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
-        placeholder="Notes"
+        placeholder={t("notesPlaceholder")}
         rows={2}
         className="w-full border border-line rounded-doc px-3 py-2 text-sm mb-3"
       />
@@ -212,14 +211,14 @@ export default function RecordOutcomeForm({
           disabled={saving}
           className="text-sm font-medium text-white bg-moss rounded-doc px-4 py-2 hover:opacity-90 transition-opacity disabled:opacity-50"
         >
-          {saving ? "Saving…" : "Save outcome"}
+          {saving ? t("saving") : t("saveOutcome")}
         </button>
         {initialOutcome && (
           <button
             onClick={() => setEditing(false)}
             className="text-sm text-inkDim hover:text-ink"
           >
-            Cancel
+            {t("cancel")}
           </button>
         )}
       </div>

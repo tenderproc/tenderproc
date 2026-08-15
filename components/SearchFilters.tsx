@@ -2,8 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function SearchFilters() {
+  const t = useTranslations("SearchFilters");
   const router = useRouter();
   const params = useSearchParams();
   const [keyword, setKeyword] = useState(params.get("q") ?? "");
@@ -22,17 +24,17 @@ export default function SearchFilters() {
       <input
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
-        placeholder="Keyword — e.g. cleaning services"
+        placeholder={t("keywordPlaceholder")}
         className="flex-1 min-w-[220px] border border-line rounded-doc px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
       <input
         value={cpv}
         onChange={(e) => setCpv(e.target.value)}
-        placeholder="CPV code — e.g. 90910000"
+        placeholder={t("cpvPlaceholder")}
         className="w-48 border border-line rounded-doc px-3 py-2 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
       <button className="bg-accent text-white px-5 py-2 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors">
-        Search
+        {t("search")}
       </button>
     </form>
   );

@@ -7,12 +7,12 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const { tenderId } = await req.json();
   if (typeof tenderId !== "string" || !tenderId) {
-    return NextResponse.json({ error: "Missing tenderId." }, { status: 400 });
+    return NextResponse.json({ error: "Missing tenderId.", code: "missingTenderId" }, { status: 400 });
   }
 
   const { data: tender } = await supabase
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     .eq("user_id", user.id)
     .maybeSingle();
   if (!tender) {
-    return NextResponse.json({ error: "Tender not found." }, { status: 404 });
+    return NextResponse.json({ error: "Tender not found.", code: "tenderNotFound" }, { status: 404 });
   }
 
   // Idempotent: if a bid already exists for this tender, just return it

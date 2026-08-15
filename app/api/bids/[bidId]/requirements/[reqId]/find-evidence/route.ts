@@ -13,7 +13,7 @@ export async function POST(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const { data: requirement } = await supabase
@@ -23,7 +23,7 @@ export async function POST(
     .eq("bid_id", bidId)
     .maybeSingle();
   if (!requirement) {
-    return NextResponse.json({ error: "Requirement not found." }, { status: 404 });
+    return NextResponse.json({ error: "Requirement not found.", code: "requirementNotFound" }, { status: 404 });
   }
 
   const company = await getCompanyKnowledge(supabase, user.id);
@@ -46,7 +46,7 @@ export async function POST(
   } catch (err) {
     console.error("findCompanyEvidence failed", err);
     return NextResponse.json(
-      { error: "Could not find evidence right now. Try again in a moment." },
+      { error: "Could not find evidence right now. Try again in a moment.", code: "couldNotFindEvidence" },
       { status: 500 }
     );
   }

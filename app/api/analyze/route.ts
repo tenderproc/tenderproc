@@ -22,14 +22,14 @@ this is a screening aid, not a legal determination.`;
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
-      { error: "Server is missing ANTHROPIC_API_KEY." },
+      { error: "Server is missing ANTHROPIC_API_KEY.", code: "serverMisconfigured" },
       { status: 500 }
     );
   }
 
   const { tender, documentText } = await req.json();
   if (!tender?.title) {
-    return NextResponse.json({ error: "Missing tender info." }, { status: 400 });
+    return NextResponse.json({ error: "Missing tender info.", code: "missingTenderInfo" }, { status: 400 });
   }
 
   const client = getAnthropicClient();
@@ -65,7 +65,7 @@ ${documentText ? documentText.slice(0, 15000) : "(no document provided — base 
   } catch (err) {
     console.error(err);
     return NextResponse.json(
-      { error: "Analysis failed. Try again in a moment." },
+      { error: "Analysis failed. Try again in a moment.", code: "analysisFailed" },
       { status: 500 }
     );
   }

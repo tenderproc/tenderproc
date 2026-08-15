@@ -20,6 +20,13 @@ export const TERMINAL_STAGES: Stage[] = [
 
 export const ALL_STAGES: Stage[] = [...ACTIVE_STAGES, ...TERMINAL_STAGES];
 
-export function stageLabel(key: string): string {
+export function stageLabel(key: string, t?: (key: string) => string): string {
+  if (t) {
+    try {
+      return t(key);
+    } catch {
+      // fall through to the English default below
+    }
+  }
   return ALL_STAGES.find((s) => s.key === key)?.label ?? key;
 }

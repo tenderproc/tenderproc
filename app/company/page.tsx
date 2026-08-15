@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import CompanyCoreForm from "@/components/company/CompanyCoreForm";
 import ServicesSection from "@/components/company/ServicesSection";
@@ -10,6 +11,7 @@ import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 export default async function CompanyPage() {
+  const t = await getTranslations("CompanyPage");
   const supabase = await createClient();
   const {
     data: { user },
@@ -87,16 +89,13 @@ export default async function CompanyPage() {
       <main className="max-w-4xl mx-auto px-6 py-10">
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-            Knowledge base
+            {t("eyebrow")}
           </p>
           <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
-            Company
+            {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-            What Bidara actually knows about your business — services,
-            certifications, and references. Used to match uploaded tenders
-            and, later, to draft bid responses grounded only in what&apos;s
-            entered here.
+            {t("description")}
           </p>
         </div>
 
@@ -129,8 +128,7 @@ export default async function CompanyPage() {
             </>
           ) : (
             <div className="border border-line rounded-2xl p-6 text-center text-sm text-inkDim">
-              Save your company profile above to unlock services,
-              certifications, references, and documents.
+              {t("unlockHint")}
             </div>
           )}
         </div>

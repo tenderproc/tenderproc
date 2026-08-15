@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { SECTORS } from "@/lib/sectors";
 import { LANGUAGES } from "@/lib/languages";
@@ -15,6 +16,9 @@ export default function PreferencesSidebar({
   initialSectors: string[];
   initialLanguages: string[];
 }) {
+  const t = useTranslations("PreferencesSidebar");
+  const tSector = useTranslations("Enums.sector");
+  const tLanguage = useTranslations("Enums.language");
   const router = useRouter();
   const [sectors, setSectors] = useState(initialSectors);
   const [languages, setLanguages] = useState(initialLanguages);
@@ -63,7 +67,7 @@ export default function PreferencesSidebar({
     <aside className="w-full md:w-60 shrink-0 md:sticky md:top-24 md:self-start border border-line rounded-2xl bg-white p-5">
       <div className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-          Sectors
+          {t("sectors")}
         </p>
         <div className="space-y-2">
           {SECTORS.map((sector) => (
@@ -77,7 +81,7 @@ export default function PreferencesSidebar({
                 checked={sectors.includes(sector.key)}
                 onChange={() => toggleSector(sector.key)}
               />
-              {sector.label}
+              {tSector(sector.key)}
             </label>
           ))}
         </div>
@@ -85,12 +89,9 @@ export default function PreferencesSidebar({
 
       <div>
         <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-          Languages
+          {t("languages")}
         </p>
-        <p className="text-xs text-inkDim mb-3 -mt-2">
-          Controls which translation titles are shown in — every tender stays
-          visible either way.
-        </p>
+        <p className="text-xs text-inkDim mb-3 -mt-2">{t("languagesHint")}</p>
         <div className="space-y-2">
           {LANGUAGES.map((language) => (
             <label
@@ -103,14 +104,14 @@ export default function PreferencesSidebar({
                 checked={languages.includes(language.key)}
                 onChange={() => toggleLanguage(language.key)}
               />
-              {language.label}
+              {tLanguage(language.key)}
             </label>
           ))}
         </div>
       </div>
 
       <p className="text-xs text-inkDim mt-5 h-4">
-        {saving ? "Saving…" : error ? <span className="text-stamp">{error}</span> : " "}
+        {saving ? t("saving") : error ? <span className="text-stamp">{error}</span> : " "}
       </p>
     </aside>
   );

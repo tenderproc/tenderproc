@@ -17,7 +17,7 @@ export async function POST(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const body = await req.json();
@@ -36,7 +36,7 @@ export async function POST(
     .eq("bid_id", bidId)
     .maybeSingle();
   if (!requirement) {
-    return NextResponse.json({ error: "Requirement not found." }, { status: 404 });
+    return NextResponse.json({ error: "Requirement not found.", code: "requirementNotFound" }, { status: 404 });
   }
 
   const { data: bid } = await supabase
@@ -45,7 +45,7 @@ export async function POST(
     .eq("id", bidId)
     .maybeSingle();
   if (!bid) {
-    return NextResponse.json({ error: "Bid not found." }, { status: 404 });
+    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
   }
 
   const { data: tender } = await supabase
@@ -57,7 +57,7 @@ export async function POST(
   const company = await getCompanyKnowledge(supabase, user.id);
   if (!company) {
     return NextResponse.json(
-      { error: "Add your company profile before generating a draft." },
+      { error: "Add your company profile before generating a draft.", code: "needCompanyProfile" },
       { status: 400 }
     );
   }
@@ -89,7 +89,7 @@ export async function POST(
   } catch (err) {
     console.error("generateResponseDraft/validateResponse failed", err);
     return NextResponse.json(
-      { error: "Could not generate a draft right now. Try again in a moment." },
+      { error: "Could not generate a draft right now. Try again in a moment.", code: "couldNotGenerateDraft" },
       { status: 500 }
     );
   }

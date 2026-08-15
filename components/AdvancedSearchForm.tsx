@@ -2,8 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function AdvancedSearchForm() {
+  const t = useTranslations("AdvancedSearchForm");
   const router = useRouter();
   const params = useSearchParams();
   const [keyword, setKeyword] = useState(params.get("q") ?? "");
@@ -32,31 +34,31 @@ export default function AdvancedSearchForm() {
     >
       <div className="sm:col-span-2">
         <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-          Keyword
+          {t("keyword")}
         </label>
         <input
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder="e.g. cleaning services"
+          placeholder={t("keywordPlaceholder")}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
 
       <div>
         <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-          CPV code
+          {t("cpvCode")}
         </label>
         <input
           value={cpv}
           onChange={(e) => setCpv(e.target.value)}
-          placeholder="e.g. 90910000"
+          placeholder={t("cpvPlaceholder")}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Min value (EUR)
+            {t("minValue")}
           </label>
           <input
             type="number"
@@ -69,14 +71,14 @@ export default function AdvancedSearchForm() {
         </div>
         <div>
           <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-            Max value (EUR)
+            {t("maxValue")}
           </label>
           <input
             type="number"
             min={0}
             value={valueMax}
             onChange={(e) => setValueMax(e.target.value)}
-            placeholder="No limit"
+            placeholder={t("noLimit")}
             className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
@@ -84,7 +86,7 @@ export default function AdvancedSearchForm() {
 
       <div>
         <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-          Deadline after
+          {t("deadlineAfter")}
         </label>
         <input
           type="date"
@@ -95,7 +97,7 @@ export default function AdvancedSearchForm() {
       </div>
       <div>
         <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-          Deadline before
+          {t("deadlineBefore")}
         </label>
         <input
           type="date"
@@ -107,7 +109,7 @@ export default function AdvancedSearchForm() {
 
       <div className="sm:col-span-2">
         <button className="bg-accent text-white px-5 py-2 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors">
-          Search
+          {t("search")}
         </button>
       </div>
     </form>

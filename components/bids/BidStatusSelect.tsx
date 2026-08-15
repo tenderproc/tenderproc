@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { BID_STATUSES } from "@/lib/bids";
 
 export default function BidStatusSelect({ bidId, status }: { bidId: string; status: string }) {
+  const t = useTranslations("Enums.bidStatus");
   const router = useRouter();
   const [saving, setSaving] = useState(false);
 
@@ -29,7 +31,7 @@ export default function BidStatusSelect({ bidId, status }: { bidId: string; stat
     >
       {BID_STATUSES.map((s) => (
         <option key={s.key} value={s.key}>
-          {s.label}
+          {t(s.key)}
         </option>
       ))}
     </select>

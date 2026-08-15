@@ -1,19 +1,10 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import { searchAwardedTenders } from "@/lib/ted";
 import { AwardedTender } from "@/lib/types";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 interface Rollup {
   name: string;
@@ -35,17 +26,31 @@ function topBy(awards: AwardedTender[], keyFn: (a: AwardedTender) => string, n =
     .slice(0, n);
 }
 
-function formatEur(n: number) {
-  return `EUR ${new Intl.NumberFormat("en-BE").format(Math.round(n))}`;
-}
-
 export default async function MarketPage() {
+  const t = await getTranslations("Market");
+  const locale = (await getLocale()) as Locale;
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  function formatEur(n: number) {
+    return `EUR ${new Intl.NumberFormat(INTL_LOCALE[locale]).format(Math.round(n))}`;
+  }
+
   let awards: AwardedTender[] = [];
   let loadError: string | null = null;
   try {
     awards = await searchAwardedTenders({ limit: 100, daysBack: 90 });
   } catch (err) {
-    loadError = err instanceof Error ? err.message : "Couldn't reach TED.";
+    loadError = err instanceof Error ? err.message : t("couldNotReachTed");
   }
 
   const topWinners = topBy(awards, (a) => a.winnerName);
@@ -57,39 +62,36 @@ export default async function MarketPage() {
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-            Last 90 days · Source: TED contract award notices
+            {t("eyebrow")}
           </p>
           <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
-            Market overview
+            {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-            Recently-awarded Belgian public contracts — who won, for how
-            much, and from whom. This is a snapshot of recent awards, not a
-            full historical archive.
+            {t("description")}
           </p>
         </div>
 
         {loadError && (
           <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp mb-8">
-            Couldn&apos;t load award data right now ({loadError}). Try again in a
-            moment.
+            {t("loadError", { loadError })}
           </div>
         )}
 
         {!loadError && (
           <>
             <div className="grid sm:grid-cols-2 gap-4 mb-10">
-              <RollupPanel title="Top winners by awarded value" rows={topWinners} />
-              <RollupPanel title="Top buyers by spend" rows={topBuyers} />
+              <RollupPanel title={t("topWinners")} rows={topWinners} formatEur={formatEur} t={t} />
+              <RollupPanel title={t("topBuyers")} rows={topBuyers} formatEur={formatEur} t={t} />
             </div>
 
             <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-              Recent awards · {awards.length}
+              {t("recentAwards")} · {awards.length}
             </p>
 
             {awards.length === 0 && (
               <div className="border border-line rounded-2xl p-8 text-center">
-                <p className="text-inkDim">No award notices found in this window.</p>
+                <p className="text-inkDim">{t("noAwards")}</p>
               </div>
             )}
 
@@ -105,17 +107,17 @@ export default async function MarketPage() {
                   <div className="flex items-start justify-between gap-6">
                     <div className="min-w-0">
                       <p className="text-[11px] font-medium uppercase tracking-wide text-inkDim mb-1">
-                        Awarded {formatDate(a.publicationDate)}
+                        {t("awarded", { date: formatDate(a.publicationDate) })}
                       </p>
                       <h3 className="font-display font-semibold text-base text-ink leading-snug">
                         {a.winnerName}
                       </h3>
                       <p className="text-sm text-inkDim mt-1">
-                        {a.title} · buyer: {a.buyerName}
+                        {t("buyerLine", { title: a.title, buyer: a.buyerName })}
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-xs text-inkDim uppercase tracking-wide">Value</p>
+                      <p className="text-xs text-inkDim uppercase tracking-wide">{t("value")}</p>
                       <p className="text-sm text-ink font-medium">{a.value ?? "—"}</p>
                     </div>
                   </div>
@@ -129,14 +131,22 @@ export default async function MarketPage() {
   );
 }
 
-function RollupPanel({ title, rows }: { title: string; rows: Rollup[] }) {
+function RollupPanel({
+  title,
+  rows,
+  formatEur,
+  t,
+}: {
+  title: string;
+  rows: Rollup[];
+  formatEur: (n: number) => string;
+  t: (key: string, values?: Record<string, string | number | Date>) => string;
+}) {
   return (
     <div className="border border-line rounded-2xl bg-white p-5">
-      <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-        {title}
-      </p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">{title}</p>
       {rows.length === 0 ? (
-        <p className="text-sm text-inkDim">Not enough data yet.</p>
+        <p className="text-sm text-inkDim">{t("notEnoughData")}</p>
       ) : (
         <ol className="space-y-2">
           {rows.map((r, i) => (
@@ -145,8 +155,7 @@ function RollupPanel({ title, rows }: { title: string; rows: Rollup[] }) {
                 {i + 1}. {r.name}
               </span>
               <span className="text-inkDim shrink-0">
-                {r.total > 0 ? formatEur(r.total) : "—"} · {r.count} award
-                {r.count === 1 ? "" : "s"}
+                {r.total > 0 ? formatEur(r.total) : "—"} · {t("awardCount", { count: r.count })}
               </span>
             </li>
           ))}

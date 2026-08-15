@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { ACTIVE_STAGES, ALL_STAGES, TERMINAL_STAGES } from "@/lib/workflow";
 import { TenderNotice } from "@/lib/types";
@@ -14,6 +15,8 @@ interface Card {
 }
 
 export default function WorkflowBoard({ cards }: { cards: Card[] }) {
+  const t = useTranslations("Workflow");
+  const tStage = useTranslations("Enums.workflowStage");
   const router = useRouter();
   const [pendingId, setPendingId] = useState<string | null>(null);
 
@@ -40,11 +43,11 @@ export default function WorkflowBoard({ cards }: { cards: Card[] }) {
     return (
       <div className="border border-line rounded-2xl p-8 text-center">
         <p className="text-inkDim">
-          Nothing in your workflow yet. Add a tender from{" "}
+          {t("emptyBefore")}{" "}
           <Link href="/opportunities" className="underline text-accent">
-            Opportunities
+            {t("opportunities")}
           </Link>{" "}
-          to start tracking it here.
+          {t("emptyAfter")}
         </p>
       </div>
     );
@@ -62,7 +65,7 @@ export default function WorkflowBoard({ cards }: { cards: Card[] }) {
           return (
             <div key={stage.key} className="border border-line rounded-2xl bg-white p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-                {stage.label} · {stageCards.length}
+                {tStage(stage.key)} · {stageCards.length}
               </p>
               <div className="space-y-3">
                 {stageCards.map((card) => (
@@ -75,7 +78,7 @@ export default function WorkflowBoard({ cards }: { cards: Card[] }) {
                   />
                 ))}
                 {stageCards.length === 0 && (
-                  <p className="text-xs text-inkDim">Nothing here.</p>
+                  <p className="text-xs text-inkDim">{t("nothingHere")}</p>
                 )}
               </div>
             </div>
@@ -86,7 +89,7 @@ export default function WorkflowBoard({ cards }: { cards: Card[] }) {
       {closedStages.length > 0 && (
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-            Closed
+            {t("closed")}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {closedStages.map((stage) => {
@@ -94,7 +97,7 @@ export default function WorkflowBoard({ cards }: { cards: Card[] }) {
               return (
                 <div key={stage.key} className="border border-line rounded-2xl bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
-                    {stage.label} · {stageCards.length}
+                    {tStage(stage.key)} · {stageCards.length}
                   </p>
                   <div className="space-y-3">
                     {stageCards.map((card) => (
@@ -128,6 +131,9 @@ function PipelineCard({
   onStageChange: (stage: string) => void;
   onRemove: () => void;
 }) {
+  const t = useTranslations("Workflow");
+  const tStage = useTranslations("Enums.workflowStage");
+
   return (
     <div className="border border-line rounded-doc p-3">
       {card.tender ? (
@@ -138,9 +144,7 @@ function PipelineCard({
           {card.tender.title}
         </Link>
       ) : (
-        <p className="text-sm text-inkDim italic">
-          Couldn&apos;t load this tender&apos;s details.
-        </p>
+        <p className="text-sm text-inkDim italic">{t("couldNotLoad")}</p>
       )}
       {card.tender && (
         <p className="text-xs text-inkDim mt-1">{card.tender.buyerName}</p>
@@ -154,7 +158,7 @@ function PipelineCard({
         >
           {ALL_STAGES.map((s) => (
             <option key={s.key} value={s.key}>
-              {s.label}
+              {tStage(s.key)}
             </option>
           ))}
         </select>
@@ -163,7 +167,7 @@ function PipelineCard({
           disabled={disabled}
           className="text-xs text-stamp hover:underline disabled:opacity-50"
         >
-          Remove
+          {t("remove")}
         </button>
       </div>
     </div>

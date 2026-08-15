@@ -24,6 +24,15 @@ export function sectorsToCpvPrefixes(keys: string[]): string[] {
   return Array.from(new Set(prefixes));
 }
 
-export function sectorLabels(keys: string[]): string[] {
-  return SECTORS.filter((s) => keys.includes(s.key)).map((s) => s.label);
+export function sectorLabels(keys: string[], t?: (key: string) => string): string[] {
+  return SECTORS.filter((s) => keys.includes(s.key)).map((s) => {
+    if (t) {
+      try {
+        return t(s.key);
+      } catch {
+        // fall through to the English default below
+      }
+    }
+    return s.label;
+  });
 }

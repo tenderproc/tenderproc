@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 interface CertificationRow {
@@ -14,16 +15,16 @@ interface CertificationRow {
   notes: string | null;
 }
 
-function expiryBadge(expiryDate: string | null) {
+function expiryBadge(expiryDate: string | null, t: (key: string) => string) {
   if (!expiryDate) return null;
   const daysLeft = (new Date(expiryDate).getTime() - Date.now()) / 86400000;
   if (daysLeft < 0) {
-    return <span className="text-xs font-medium text-stamp">Expired</span>;
+    return <span className="text-xs font-medium text-stamp">{t("expired")}</span>;
   }
   if (daysLeft <= 60) {
-    return <span className="text-xs font-medium text-gold">Expires soon</span>;
+    return <span className="text-xs font-medium text-gold">{t("expiresSoon")}</span>;
   }
-  return <span className="text-xs font-medium text-moss">Valid</span>;
+  return <span className="text-xs font-medium text-moss">{t("valid")}</span>;
 }
 
 export default function CertificationsSection({
@@ -33,6 +34,7 @@ export default function CertificationsSection({
   companyId: string;
   initialCertifications: CertificationRow[];
 }) {
+  const t = useTranslations("CertificationsSection");
   const router = useRouter();
   const [name, setName] = useState("");
   const [issuingOrganization, setIssuingOrganization] = useState("");
@@ -74,10 +76,10 @@ export default function CertificationsSection({
 
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
-      <h3 className="font-display font-semibold text-base text-ink mb-3">Certifications</h3>
+      <h3 className="font-display font-semibold text-base text-ink mb-3">{t("heading")}</h3>
 
       {initialCertifications.length === 0 ? (
-        <p className="text-sm text-inkDim mb-4">Nothing added yet.</p>
+        <p className="text-sm text-inkDim mb-4">{t("nothingAdded")}</p>
       ) : (
         <ul className="space-y-2 mb-4">
           {initialCertifications.map((c) => (
@@ -87,19 +89,23 @@ export default function CertificationsSection({
             >
               <div>
                 <p className="text-ink font-medium flex items-center gap-2">
-                  {c.name} {expiryBadge(c.expiry_date)}
+                  {c.name} {expiryBadge(c.expiry_date, t)}
                 </p>
                 <p className="text-inkDim mt-0.5">
-                  {[c.issuing_organization, c.certificate_number, c.expiry_date && `expires ${c.expiry_date}`]
+                  {[
+                    c.issuing_organization,
+                    c.certificate_number,
+                    c.expiry_date && t("expiresOn", { date: c.expiry_date }),
+                  ]
                     .filter(Boolean)
-                    .join(" · ") || "No further details"}
+                    .join(" · ") || t("noFurtherDetails")}
                 </p>
               </div>
               <button
                 onClick={() => remove(c.id)}
                 className="text-xs text-stamp hover:underline shrink-0"
               >
-                Remove
+                {t("remove")}
               </button>
             </li>
           ))}
@@ -110,19 +116,19 @@ export default function CertificationsSection({
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Certification name, e.g. ISO 9001"
+          placeholder={t("namePlaceholder")}
           className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <input
           value={issuingOrganization}
           onChange={(e) => setIssuingOrganization(e.target.value)}
-          placeholder="Issuing organization (optional)"
+          placeholder={t("issuingOrgPlaceholder")}
           className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <input
           value={certificateNumber}
           onChange={(e) => setCertificateNumber(e.target.value)}
-          placeholder="Certificate number (optional)"
+          placeholder={t("certificateNumberPlaceholder")}
           className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <input
@@ -135,7 +141,7 @@ export default function CertificationsSection({
           disabled={saving}
           className="sm:col-span-2 text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors disabled:opacity-50"
         >
-          Add
+          {t("add")}
         </button>
       </form>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}

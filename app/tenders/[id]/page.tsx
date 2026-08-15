@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import UploadAnalyzer from "@/components/UploadAnalyzer";
 import AddToWorkflowButton from "@/components/AddToWorkflowButton";
@@ -7,19 +8,9 @@ import MatchScoreBadge from "@/components/MatchScoreBadge";
 import { getTenderById } from "@/lib/ted";
 import { createClient } from "@/lib/supabase/server";
 import { getMatchScores } from "@/lib/matchScoreCache";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 export default async function TenderDetailPage({
   params,
@@ -27,6 +18,19 @@ export default async function TenderDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const t = await getTranslations("PublicTenderDetail");
+  const locale = (await getLocale()) as Locale;
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
 
   const supabase = await createClient();
   const {
@@ -70,12 +74,12 @@ export default async function TenderDetailPage({
       <Header />
       <main className="max-w-4xl mx-auto px-6 py-10">
         <Link href="/opportunities" className="text-sm text-inkDim hover:text-ink">
-          ← Back to open tenders
+          ← {t("backToOpenTenders")}
         </Link>
 
         <div className="mt-6 mb-8">
           <p className="text-xs font-medium uppercase tracking-wide text-inkDim">
-            Ref. {tender.publicationNumber}
+            {t("ref", { ref: tender.publicationNumber })}
           </p>
           <h1 className="font-display font-bold text-3xl text-ink mt-1 leading-tight tracking-tight">
             {tender.title}
@@ -85,19 +89,19 @@ export default async function TenderDetailPage({
 
           <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 border-y border-line py-4">
             <div>
-              <dt className="text-[10px] font-medium uppercase text-inkDim">Buyer</dt>
+              <dt className="text-[10px] font-medium uppercase text-inkDim">{t("buyer")}</dt>
               <dd className="text-sm text-ink mt-0.5">{tender.buyerName}</dd>
             </div>
             <div>
-              <dt className="text-[10px] font-medium uppercase text-inkDim">Deadline</dt>
+              <dt className="text-[10px] font-medium uppercase text-inkDim">{t("deadline")}</dt>
               <dd className="text-sm text-ink mt-0.5">{formatDate(tender.deadline)}</dd>
             </div>
             <div>
-              <dt className="text-[10px] font-medium uppercase text-inkDim">Est. value</dt>
+              <dt className="text-[10px] font-medium uppercase text-inkDim">{t("estValue")}</dt>
               <dd className="text-sm text-ink mt-0.5">{tender.totalValue ?? "—"}</dd>
             </div>
             <div>
-              <dt className="text-[10px] font-medium uppercase text-inkDim">Published</dt>
+              <dt className="text-[10px] font-medium uppercase text-inkDim">{t("published")}</dt>
               <dd className="text-sm text-ink mt-0.5">{formatDate(tender.publicationDate)}</dd>
             </div>
           </dl>
@@ -109,7 +113,7 @@ export default async function TenderDetailPage({
               rel="noopener noreferrer"
               className="text-sm text-accent underline"
             >
-              View full official notice on TED →
+              {t("viewOnTed")} →
             </a>
             <AddToWorkflowButton publicationNumber={tender.publicationNumber} />
           </div>

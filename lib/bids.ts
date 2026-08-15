@@ -14,7 +14,14 @@ export const BID_STATUSES: BidStatus[] = [
   { key: "WITHDRAWN", label: "Withdrawn" },
 ];
 
-export function bidStatusLabel(key: string): string {
+export function bidStatusLabel(key: string, t?: (key: string) => string): string {
+  if (t) {
+    try {
+      return t(key);
+    } catch {
+      // fall through to the English default below
+    }
+  }
   return BID_STATUSES.find((s) => s.key === key)?.label ?? key;
 }
 

@@ -39,11 +39,30 @@ export function profileHash(profile: CompanyProfile): string {
   return createHash("sha256").update(stable).digest("hex").slice(0, 16);
 }
 
-export function matchLabel(score: number): string {
-  if (score >= 85) return "Strong match";
-  if (score >= 65) return "Good match";
-  if (score >= 40) return "Possible match";
-  return "Weak match";
+function matchBand(score: number): "strong" | "good" | "possible" | "weak" {
+  if (score >= 85) return "strong";
+  if (score >= 65) return "good";
+  if (score >= 40) return "possible";
+  return "weak";
+}
+
+const ENGLISH_MATCH_LABEL: Record<ReturnType<typeof matchBand>, string> = {
+  strong: "Strong match",
+  good: "Good match",
+  possible: "Possible match",
+  weak: "Weak match",
+};
+
+export function matchLabel(score: number, t?: (key: string) => string): string {
+  const band = matchBand(score);
+  if (t) {
+    try {
+      return t(band);
+    } catch {
+      // fall through to the English default below
+    }
+  }
+  return ENGLISH_MATCH_LABEL[band];
 }
 
 const SYSTEM_PROMPT = `You help a Belgian SME quickly triage a list of public tender notices

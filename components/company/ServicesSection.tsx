@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 interface ServiceRow {
@@ -17,6 +18,7 @@ export default function ServicesSection({
   companyId: string;
   initialServices: ServiceRow[];
 }) {
+  const t = useTranslations("ServicesSection");
   const router = useRouter();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -52,10 +54,10 @@ export default function ServicesSection({
 
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
-      <h3 className="font-display font-semibold text-base text-ink mb-3">Services</h3>
+      <h3 className="font-display font-semibold text-base text-ink mb-3">{t("heading")}</h3>
 
       {initialServices.length === 0 ? (
-        <p className="text-sm text-inkDim mb-4">Nothing added yet.</p>
+        <p className="text-sm text-inkDim mb-4">{t("nothingAdded")}</p>
       ) : (
         <ul className="space-y-2 mb-4">
           {initialServices.map((s) => (
@@ -71,7 +73,7 @@ export default function ServicesSection({
                 onClick={() => remove(s.id)}
                 className="text-xs text-stamp hover:underline shrink-0"
               >
-                Remove
+                {t("remove")}
               </button>
             </li>
           ))}
@@ -82,20 +84,20 @@ export default function ServicesSection({
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Service name, e.g. Office cleaning"
+          placeholder={t("namePlaceholder")}
           className="flex-1 border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Short description (optional)"
+          placeholder={t("descriptionPlaceholder")}
           className="flex-1 border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <button
           disabled={saving}
           className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors disabled:opacity-50 shrink-0"
         >
-          Add
+          {t("add")}
         </button>
       </form>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}

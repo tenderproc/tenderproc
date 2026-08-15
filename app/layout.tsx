@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
 // One typeface for everything (headings, body, labels) — matches the clean,
@@ -16,14 +18,19 @@ export const metadata: Metadata = {
   description: "AI-assisted public tender screening for Belgian SMEs.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-body min-h-screen">{children}</body>
+    <html lang={locale} className={inter.variable}>
+      <body className="font-body min-h-screen">
+        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+      </body>
     </html>
   );
 }

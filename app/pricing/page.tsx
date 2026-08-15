@@ -1,61 +1,25 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 export const dynamic = "force-dynamic";
 
 interface Tier {
   key: string;
-  name: string;
   price: string;
-  period: string;
-  blurb: string;
-  features: string[];
+  hasPeriod: boolean;
   highlighted?: boolean;
 }
 
 const TIERS: Tier[] = [
-  {
-    key: "free",
-    name: "Free",
-    price: "€0",
-    period: "",
-    blurb: "Try out tender discovery for one sector.",
-    features: [
-      "Opportunities feed for 1 sector",
-      "Manual search",
-      "Tender detail pages",
-    ],
-  },
-  {
-    key: "pro",
-    name: "Pro",
-    price: "€49",
-    period: "/maand",
-    blurb: "For SMEs actively bidding on public tenders.",
-    features: [
-      "Opportunities feed, all sectors",
-      "AI match scores on every tender",
-      "Workflow pipeline board",
-      "Daily email notifications",
-    ],
-    highlighted: true,
-  },
-  {
-    key: "premium",
-    name: "Premium",
-    price: "€79",
-    period: "/maand",
-    blurb: "For teams that want the full market picture.",
-    features: [
-      "Everything in Pro",
-      "Market overview & award analytics",
-      "AI eligibility checks",
-      "Priority support",
-    ],
-  },
+  { key: "free", price: "€0", hasPeriod: false },
+  { key: "pro", price: "€49", hasPeriod: true, highlighted: true },
+  { key: "premium", price: "€79", hasPeriod: true },
 ];
 
 export default async function PricingPage() {
+  const t = await getTranslations("Pricing");
   const supabase = await createClient();
   const {
     data: { user },
@@ -74,20 +38,21 @@ export default async function PricingPage() {
             </span>
           </Link>
           <nav className="text-sm text-inkDim flex items-center gap-5">
+            <LocaleSwitcher />
             {user ? (
               <Link href="/opportunities" className="hover:text-ink transition-colors">
-                Go to app →
+                {t("goToApp")} →
               </Link>
             ) : (
               <>
                 <Link href="/login" className="hover:text-ink transition-colors">
-                  Log in
+                  {t("logIn")}
                 </Link>
                 <Link
                   href="/signup"
                   className="bg-accent text-white px-3 py-1.5 rounded-doc font-medium hover:bg-accentDim transition-colors"
                 >
-                  Sign up
+                  {t("signUp")}
                 </Link>
               </>
             )}
@@ -98,13 +63,13 @@ export default async function PricingPage() {
       <main className="max-w-6xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-            Pricing
+            {t("eyebrow")}
           </p>
           <h1 className="font-display font-bold text-4xl text-ink mt-2 tracking-tight">
-            Simple, straightforward plans
+            {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-3 max-w-xl mx-auto leading-relaxed">
-            Start free, upgrade when you&apos;re ready to bid seriously.
+            {t("subheading")}
           </p>
         </div>
 
@@ -120,19 +85,21 @@ export default async function PricingPage() {
             >
               {tier.highlighted && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-wide text-white bg-accent rounded-full px-3 py-1">
-                  Most popular
+                  {t("mostPopular")}
                 </span>
               )}
-              <h2 className="font-display font-semibold text-xl text-ink">{tier.name}</h2>
-              <p className="text-sm text-inkDim mt-1">{tier.blurb}</p>
+              <h2 className="font-display font-semibold text-xl text-ink">
+                {t(`tiers.${tier.key}.name`)}
+              </h2>
+              <p className="text-sm text-inkDim mt-1">{t(`tiers.${tier.key}.blurb`)}</p>
               <p className="mt-5">
                 <span className="font-display font-bold text-3xl text-ink">{tier.price}</span>
-                <span className="text-sm text-inkDim">{tier.period}</span>
+                <span className="text-sm text-inkDim">{tier.hasPeriod ? t("perMonth") : ""}</span>
               </p>
 
               <ul className="mt-6 space-y-2 flex-1">
-                {tier.features.map((f) => (
-                  <li key={f} className="text-sm text-ink flex gap-2">
+                {(t.raw(`tiers.${tier.key}.features`) as string[]).map((f, i) => (
+                  <li key={i} className="text-sm text-ink flex gap-2">
                     <span className="text-accent">—</span>
                     {f}
                   </li>
@@ -147,7 +114,7 @@ export default async function PricingPage() {
                     : "border border-line text-ink hover:bg-paperDim"
                 }`}
               >
-                {user ? "Go to app" : "Get started"}
+                {user ? t("goToApp") : t("getStarted")}
               </Link>
             </div>
           ))}

@@ -1,0 +1,599 @@
+{
+  "Header": {
+    "tagline": "Belgium · Public tenders",
+    "pricing": "Pricing",
+    "signOut": "Sign out"
+  },
+  "Nav": {
+    "opportunities": "Opportunities",
+    "workflow": "Workflow",
+    "search": "Search",
+    "market": "Market overview",
+    "tenders": "Tenders",
+    "bids": "Bids",
+    "company": "Company"
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Login": {
+    "heading": "Log in",
+    "subheading": "Log in to see tenders filtered to your sectors.",
+    "email": "Email",
+    "password": "Password",
+    "loggingIn": "Logging in…",
+    "logIn": "Log in",
+    "noAccount": "No account yet?",
+    "signUp": "Sign up",
+    "viewPricing": "View pricing"
+  },
+  "Opportunities": {
+    "eyebrow": "Open calls only · Source: TED",
+    "heading": "Opportunities",
+    "description": "Genuinely open tenders in Belgium, matched to your sectors — already-awarded and informational notices are filtered out. Pulled from the EU's official TED database; this beta covers notices above the EU publication thresholds.",
+    "couldNotReachTed": "Couldn't reach TED.",
+    "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
+    "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar."
+  },
+  "Market": {
+    "eyebrow": "Last 90 days · Source: TED contract award notices",
+    "heading": "Market overview",
+    "description": "Recently-awarded Belgian public contracts — who won, for how much, and from whom. This is a snapshot of recent awards, not a full historical archive.",
+    "couldNotReachTed": "Couldn't reach TED.",
+    "loadError": "Couldn't load award data right now ({loadError}). Try again in a moment.",
+    "topWinners": "Top winners by awarded value",
+    "topBuyers": "Top buyers by spend",
+    "recentAwards": "Recent awards",
+    "noAwards": "No award notices found in this window.",
+    "awarded": "Awarded {date}",
+    "buyerLine": "{title} · buyer: {buyer}",
+    "value": "Value",
+    "notEnoughData": "Not enough data yet.",
+    "awardCount": "{count, plural, one {# award} other {# awards}}"
+  },
+  "Search": {
+    "eyebrow": "Ad-hoc lookup · Source: TED",
+    "heading": "Search",
+    "description": "One-off searches across all genuinely open Belgian tenders, independent of your saved sectors — filter by keyword, CPV code, value range, or deadline.",
+    "couldNotReachTed": "Couldn't reach TED.",
+    "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
+    "noResults": "No notices matched those filters.",
+    "prompt": "Enter a keyword, CPV code, value range, or deadline above to search."
+  },
+  "AdvancedSearchForm": {
+    "keyword": "Keyword",
+    "keywordPlaceholder": "e.g. cleaning services",
+    "cpvCode": "CPV code",
+    "cpvPlaceholder": "e.g. 90910000",
+    "minValue": "Min value (EUR)",
+    "maxValue": "Max value (EUR)",
+    "noLimit": "No limit",
+    "deadlineAfter": "Deadline after",
+    "deadlineBefore": "Deadline before",
+    "search": "Search"
+  },
+  "SearchFilters": {
+    "keywordPlaceholder": "Keyword — e.g. cleaning services",
+    "cpvPlaceholder": "CPV code — e.g. 90910000",
+    "search": "Search"
+  },
+  "TenderCard": {
+    "refPublished": "Ref. {ref} · Published {date}",
+    "deadline": "Deadline"
+  },
+  "MatchScoreBadge": {
+    "criteriaCount": "{met}/{total} criteria"
+  },
+  "Pricing": {
+    "goToApp": "Go to app",
+    "logIn": "Log in",
+    "signUp": "Sign up",
+    "eyebrow": "Pricing",
+    "heading": "Simple, straightforward plans",
+    "subheading": "Start free, upgrade when you're ready to bid seriously.",
+    "mostPopular": "Most popular",
+    "perMonth": "/month",
+    "getStarted": "Get started",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "blurb": "Try out tender discovery for one sector.",
+        "features": ["Opportunities feed for 1 sector", "Manual search", "Tender detail pages"]
+      },
+      "pro": {
+        "name": "Pro",
+        "blurb": "For SMEs actively bidding on public tenders.",
+        "features": [
+          "Opportunities feed, all sectors",
+          "AI match scores on every tender",
+          "Workflow pipeline board",
+          "Daily email notifications"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "blurb": "For teams that want the full market picture.",
+        "features": [
+          "Everything in Pro",
+          "Market overview & award analytics",
+          "AI eligibility checks",
+          "Priority support"
+        ]
+      }
+    }
+  },
+  "WorkflowPage": {
+    "eyebrow": "Your pipeline",
+    "heading": "Workflow",
+    "description": "Track tenders you're pursuing from first screening through submission. Add tenders from Opportunities or a tender's detail page."
+  },
+  "PublicTenderDetail": {
+    "backToOpenTenders": "Back to open tenders",
+    "ref": "Ref. {ref}",
+    "buyer": "Buyer",
+    "deadline": "Deadline",
+    "estValue": "Est. value",
+    "published": "Published",
+    "viewOnTed": "View full official notice on TED"
+  },
+  "AddToWorkflowButton": {
+    "added": "Added to workflow ✓",
+    "adding": "Adding…",
+    "tryAgain": "Try again",
+    "addToWorkflow": "Add to workflow"
+  },
+  "UploadAnalyzer": {
+    "analysisFailed": "Analysis failed.",
+    "somethingWentWrong": "Something went wrong.",
+    "checkEligibility": "Check eligibility",
+    "intro": "Paste the tender's requirements or ESPD text below — or just run the check on the notice metadata alone.",
+    "pasteTextPlaceholder": "Paste the tender document text here (optional)…",
+    "attachFileHint": "or attach a file for reference (not parsed yet in beta)",
+    "readingTender": "Reading the tender…",
+    "runCheck": "Run eligibility check",
+    "keyRequirements": "Key requirements"
+  },
+  "RequirementWorkspace": {
+    "status": "Status",
+    "couldNotFindEvidence": "Could not find evidence.",
+    "couldNotGenerateDraft": "Could not generate a draft.",
+    "couldNotRecheckDraft": "Could not re-check the draft.",
+    "relevantEvidenceFound": "Relevant evidence found",
+    "findingEvidence": "Finding evidence…",
+    "findEvidence": "Find Evidence",
+    "clickFindEvidenceHint": "Click Find Evidence to see which of your company's services, certifications, and references are relevant to this requirement.",
+    "noRelevantEvidence": "No relevant company evidence found for this requirement.",
+    "evidenceMeta": "({type} · {relevance} similarity)",
+    "evidenceUsedInDraft": "Evidence used in current draft",
+    "generating": "Generating…",
+    "regenerateDraft": "Regenerate Draft",
+    "generateDraft": "Generate Draft",
+    "aiDraft": "AI Draft",
+    "confidence": "Confidence: {level}",
+    "acceptedCheck": "Accepted ✓",
+    "unsupportedClaims": "{count, plural, one {Unsupported claim} other {Unsupported claims}}",
+    "dismiss": "Dismiss",
+    "unsupportedClaimsHint": "This could not be verified against your company knowledge base. Edit the draft to remove or rephrase it, or add supporting evidence above and regenerate.",
+    "acceptDraft": "Accept Draft",
+    "edit": "Edit",
+    "rechecking": "Re-checking…",
+    "saveAndRecheck": "Save & Re-check"
+  },
+  "RequirementPage": {
+    "backToBidWorkspace": "Back to bid workspace",
+    "mandatory": "Mandatory",
+    "source": "Source: {parts}"
+  },
+  "ReviewActions": {
+    "couldNotRunReview": "Could not run the review.",
+    "runningReview": "Running review…",
+    "reRunReview": "Re-run review",
+    "runReview": "Run review",
+    "submitted": "Submitted",
+    "bidClosed": "Bid closed",
+    "saving": "Saving…",
+    "markAsSubmitted": "Mark as Submitted",
+    "opening": "Opening…"
+  },
+  "BidReview": {
+    "backToBid": "Back to bid",
+    "heading": "Pre-submission review",
+    "untitledTender": "Untitled tender",
+    "noReviewYet": "No review has been run yet. Running it checks your requirement checklist, document checklist, and drafted responses for anything that would block submission.",
+    "readyToSubmit": "Ready to submit",
+    "notReadyToSubmit": "Not ready to submit",
+    "compliantPercent": "{score}% compliant",
+    "criticalIssues": "Critical issues",
+    "warnings": "Warnings",
+    "requirements": "Requirements",
+    "documents": "Documents",
+    "lastRun": "Last run {when} · {claims}",
+    "unresolvedClaims": "{count, plural, one {# unresolved unsupported claim} other {# unresolved unsupported claims}}",
+    "submission": "Submission",
+    "downloadBidPackage": "Download Bid Package",
+    "noDocumentsUploaded": "No documents uploaded yet — attach them from the Documents checklist on the bid workspace page.",
+    "officialSubmission": "Official submission",
+    "openOfficialPlatform": "Open Official Submission Platform",
+    "noSubmissionPlatform": "No submission platform link is on file for this tender — submit directly through the contracting authority's official channel."
+  },
+  "StartBidButton": {
+    "couldNotStart": "Could not start the bid.",
+    "starting": "Starting…",
+    "startBid": "Start Bid"
+  },
+  "MapEvidenceButton": {
+    "couldNotMap": "Could not map evidence.",
+    "mapping": "Mapping evidence…",
+    "remap": "Re-map Evidence",
+    "map": "Map Evidence to Requirements"
+  },
+  "RecordOutcomeForm": {
+    "outcome": "Outcome",
+    "edit": "Edit",
+    "wonBy": "Won by {bidder}",
+    "recordOutcome": "Record outcome",
+    "storedHint": "Stored for future win-rate tracking. Current bid status: {status}.",
+    "contractValuePlaceholder": "Contract value (EUR)",
+    "durationPlaceholder": "Duration, e.g. '4 years'",
+    "reasonPlaceholder": "Reason (if known)",
+    "winningBidderPlaceholder": "Winning bidder (if known)",
+    "winningPricePlaceholder": "Winning price (if known)",
+    "ourScorePlaceholder": "Our score (if known)",
+    "feedbackPlaceholder": "Feedback from the contracting authority (if any)",
+    "notesPlaceholder": "Notes",
+    "saving": "Saving…",
+    "saveOutcome": "Save outcome",
+    "cancel": "Cancel"
+  },
+  "DocumentsChecklist": {
+    "heading": "Documents",
+    "noneExtracted": "No required documents were extracted from this tender — check the requirements checklist for any document-category items instead.",
+    "readyCount": "{ready}/{total} ready",
+    "download": "Download",
+    "uploading": "Uploading…",
+    "upload": "Upload",
+    "markMissing": "Mark missing",
+    "markReady": "Mark ready",
+    "couldNotOpenFile": "Could not open the file."
+  },
+  "BidWorkspace": {
+    "backToBids": "Back to bids",
+    "authorityDeadline": "{authority} · Deadline {date}",
+    "untitledTender": "Untitled tender",
+    "reviewBid": "Review Bid",
+    "openWarnings": "{count, plural, one {# open warning} other {# open warnings}}",
+    "overallProgress": "Overall progress",
+    "requirements": "Requirements",
+    "mandatory": "Mandatory"
+  },
+  "TenderDetail": {
+    "backToTenders": "Back to tenders",
+    "analyzingTender": "Analyzing tender…",
+    "failedMessage": "This tender couldn't be processed. Common causes: the PDF has no extractable text (a scanned document without OCR) or the AI analysis failed. Try re-uploading, or a different file.",
+    "stillProcessing": "Still processing — refresh in a moment.",
+    "authority": "Authority",
+    "deadline": "Deadline",
+    "estValue": "Est. value",
+    "duration": "Duration",
+    "viewOriginalPdf": "View original PDF",
+    "confidence": "Confidence: {level}",
+    "addCompanyProfileBefore": "Add your",
+    "companyProfile": "company profile",
+    "addCompanyProfileAfter": "to get a match score and Bid/No-Bid recommendation for this tender.",
+    "goToBidWorkspace": "Go to Bid Workspace",
+    "tenderProcScore": "TenderProc Score",
+    "dataUnavailable": "Data unavailable.",
+    "whyNotBid": "Why Not Bid?",
+    "companyStatus": "Company status:",
+    "possibleMitigation": "Possible mitigation:",
+    "evidenceCoverage": "Evidence coverage",
+    "notMappedYet": "Not mapped yet — click Map Evidence to Requirements to see which of your company's services, certifications, and references cover each requirement.",
+    "whyThisMatches": "Why this matches",
+    "positiveFactors": "Positive factors",
+    "risks": "Risks",
+    "missing": "Missing: {requirement}",
+    "effortEstimate": "ESTIMATE — HUMAN VERIFICATION REQUIRED: {min}–{max} hours of bid preparation effort.",
+    "awardCriteria": "Award criteria",
+    "requirements": "Requirements",
+    "mandatory": "Mandatory",
+    "source": "Source: {parts}",
+    "requiredDocuments": "Required documents",
+    "ambiguities": "Ambiguities"
+  },
+  "UploadTenderButton": {
+    "uploadFailed": "Upload failed.",
+    "uploadingAndAnalyzing": "Uploading & analyzing… (up to a minute)",
+    "uploadTender": "Upload tender"
+  },
+  "MyTendersList": {
+    "eyebrow": "Uploaded tenders · AI analysis",
+    "heading": "Tenders",
+    "description": "Upload a tender PDF to get a structured breakdown: award criteria, requirements, and a Bid/No-Bid recommendation grounded in your company profile.",
+    "empty": "No tenders uploaded yet. Upload a PDF to get started.",
+    "analyzing": "Analyzing…",
+    "deadline": "Deadline",
+    "value": "Value"
+  },
+  "TagInput": {
+    "removeTag": "Remove {tag}",
+    "defaultPlaceholder": "Type and press Enter"
+  },
+  "ServicesSection": {
+    "heading": "Services",
+    "nothingAdded": "Nothing added yet.",
+    "remove": "Remove",
+    "namePlaceholder": "Service name, e.g. Office cleaning",
+    "descriptionPlaceholder": "Short description (optional)",
+    "add": "Add"
+  },
+  "CertificationsSection": {
+    "heading": "Certifications",
+    "nothingAdded": "Nothing added yet.",
+    "expired": "Expired",
+    "expiresSoon": "Expires soon",
+    "valid": "Valid",
+    "expiresOn": "expires {date}",
+    "noFurtherDetails": "No further details",
+    "remove": "Remove",
+    "namePlaceholder": "Certification name, e.g. ISO 9001",
+    "issuingOrgPlaceholder": "Issuing organization (optional)",
+    "certificateNumberPlaceholder": "Certificate number (optional)",
+    "add": "Add"
+  },
+  "ReferencesSection": {
+    "heading": "References",
+    "subheading": "Past projects the AI can cite as comparable experience — it will never claim experience beyond what's listed here.",
+    "nothingAdded": "Nothing added yet.",
+    "publicSector": "public sector",
+    "privateSector": "private sector",
+    "value": "Value: €{value}",
+    "remove": "Remove",
+    "clientPlaceholder": "Client, e.g. Municipality of Antwerp",
+    "projectNamePlaceholder": "Project name (optional)",
+    "descriptionPlaceholder": "Short description (optional)",
+    "contractValuePlaceholder": "Contract value in EUR (optional)",
+    "sectorOptional": "Public or private sector? (optional)",
+    "servicesLabel": "Services delivered on this project",
+    "servicesPlaceholder": "e.g. Daily cleaning",
+    "addReference": "Add reference"
+  },
+  "DocumentsSection": {
+    "heading": "Documents",
+    "subheading": "Supporting evidence (certificates, brochures, policies) you can link to certifications and references above.",
+    "nothingUploaded": "Nothing uploaded yet.",
+    "remove": "Remove",
+    "uploading": "Uploading…",
+    "uploadDocument": "Upload document"
+  },
+  "CompanyPage": {
+    "eyebrow": "Knowledge base",
+    "heading": "Company",
+    "description": "What Bidara actually knows about your business — services, certifications, and references. Used to match uploaded tenders and, later, to draft bid responses grounded only in what's entered here.",
+    "unlockHint": "Save your company profile above to unlock services, certifications, references, and documents."
+  },
+  "CompanyCoreForm": {
+    "nameRequired": "Company name is required.",
+    "heading": "Company profile",
+    "subheading": "This is the knowledge base the AI uses when analyzing tenders and drafting responses — it never uses information beyond what's entered here.",
+    "companyName": "Company name",
+    "website": "Website",
+    "description": "Description",
+    "descriptionPlaceholder": "What does the company do, and for whom?",
+    "companySize": "Company size",
+    "preferNotToSay": "Prefer not to say",
+    "employeeCount": "Employee count (exact, optional)",
+    "regionsServed": "Regions served",
+    "regionsServedPlaceholder": "e.g. Antwerp",
+    "languages": "Languages",
+    "languagesPlaceholder": "e.g. Dutch",
+    "industries": "Industries",
+    "industriesPlaceholder": "e.g. Facility management",
+    "saving": "Saving…",
+    "saveChanges": "Save changes",
+    "createProfile": "Create company profile",
+    "saved": "Saved ✓"
+  },
+  "Signup": {
+    "pickSector": "Pick at least one sector.",
+    "checkEmailHeading": "Check your email",
+    "checkEmailBody": "We sent a confirmation link to {email}. Click it, then log in — your company profile is already saved.",
+    "backToLogin": "Back to login",
+    "heading": "Create your account",
+    "subheading": "Tell us about your business — it powers the tenders you see and each tender's match score.",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "At least 6 characters",
+    "companyName": "Company name",
+    "companyNamePlaceholder": "e.g. Van Damme Cleaning bv",
+    "address": "Address",
+    "addressPlaceholder": "e.g. Antwerp",
+    "companySize": "Company size",
+    "preferNotToSay": "Prefer not to say",
+    "descriptionLabel": "What does your business do?",
+    "descriptionPlaceholder": "A couple sentences is enough — this is what powers each tender's match score.",
+    "sectors": "Sectors",
+    "creatingAccount": "Creating account…",
+    "signUp": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "logIn": "Log in",
+    "viewPricing": "View pricing"
+  },
+  "Errors": {
+    "api": {
+      "notAuthenticated": "Not authenticated.",
+      "noFileProvided": "No file provided.",
+      "onlyPdfSupported": "Only PDF files are supported in this beta.",
+      "fileTooLarge": "File is larger than 20MB.",
+      "aiAnalysisFailed": "AI analysis failed. Try again in a moment.",
+      "tenderNotFound": "Tender not found.",
+      "needCompanyProfile": "Add your company profile before continuing.",
+      "couldNotMapEvidence": "Could not map evidence right now. Try again in a moment.",
+      "bidNotFound": "Bid not found.",
+      "missingTenderId": "Missing tender.",
+      "serverMisconfigured": "The server isn't configured correctly. Please try again later.",
+      "missingTenderInfo": "Missing tender info.",
+      "analysisFailed": "Analysis failed. Try again in a moment.",
+      "missingDraftText": "Missing draft text.",
+      "noDraftToRecheck": "No draft to re-check yet.",
+      "companyProfileNotFound": "Company profile not found.",
+      "couldNotRecheckDraft": "Could not re-check the draft right now. Try again in a moment.",
+      "requirementNotFound": "Requirement not found.",
+      "couldNotFindEvidence": "Could not find evidence right now. Try again in a moment.",
+      "couldNotGenerateDraft": "Could not generate a draft right now. Try again in a moment."
+    },
+    "auth": {
+      "invalidCredentials": "Incorrect email or password.",
+      "emailNotConfirmed": "Please confirm your email before logging in.",
+      "userAlreadyRegistered": "An account with this email already exists.",
+      "passwordTooShort": "Password is too short.",
+      "invalidEmail": "Please enter a valid email address.",
+      "rateLimited": "Too many attempts. Please try again in a moment."
+    }
+  },
+  "BidsList": {
+    "eyebrow": "Bid workspace",
+    "title": "Bids",
+    "description": "Tenders you're actively preparing a submission for. Start one from a ready tender's page.",
+    "emptyBefore": "No bids yet. Open a tender under",
+    "tenders": "Tenders",
+    "emptyAfter": "and click Start Bid.",
+    "untitledTender": "Untitled tender",
+    "deadline": "Deadline"
+  },
+  "Workflow": {
+    "emptyBefore": "Nothing in your workflow yet. Add a tender from",
+    "opportunities": "Opportunities",
+    "emptyAfter": "to start tracking it here.",
+    "nothingHere": "Nothing here.",
+    "closed": "Closed",
+    "couldNotLoad": "Couldn't load this tender's details.",
+    "remove": "Remove"
+  },
+  "PreferencesSidebar": {
+    "sectors": "Sectors",
+    "languages": "Languages",
+    "languagesHint": "Controls which translation titles are shown in — every tender stays visible either way.",
+    "saving": "Saving…"
+  },
+  "Enums": {
+    "matchLabel": {
+      "strong": "Strong match",
+      "good": "Good match",
+      "moderate": "Moderate match",
+      "weak": "Weak match"
+    },
+    "recommendation": {
+      "bid": "BID",
+      "consider": "CONSIDER",
+      "noBid": "NO-BID"
+    },
+    "requirementCategory": {
+      "eligibility": "Eligibility",
+      "administrative": "Administrative",
+      "technical": "Technical",
+      "experience": "Experience",
+      "certification": "Certification",
+      "personnel": "Personnel",
+      "financial": "Financial",
+      "pricing": "Pricing",
+      "document": "Document",
+      "award_criterion": "Award criterion",
+      "other": "Other"
+    },
+    "sector": {
+      "construction": "Construction & works",
+      "it-telecom": "IT, software & telecom",
+      "consulting": "Consulting & professional services",
+      "engineering": "Engineering & architecture",
+      "cleaning-facilities": "Cleaning & facility services",
+      "transport-logistics": "Transport & logistics",
+      "catering": "Catering & food services",
+      "healthcare": "Healthcare & social services",
+      "education": "Education & training",
+      "supplies-equipment": "Office supplies & equipment"
+    },
+    "language": {
+      "nl": "Dutch",
+      "fr": "French",
+      "de": "German",
+      "en": "English"
+    },
+    "bidStatus": {
+      "EVALUATION": "Evaluation",
+      "PREPARATION": "Preparation",
+      "REVIEW": "Review",
+      "READY_TO_SUBMIT": "Ready to submit",
+      "SUBMITTED": "Submitted",
+      "WON": "Won",
+      "LOST": "Lost",
+      "WITHDRAWN": "Withdrawn"
+    },
+    "workflowStage": {
+      "screening": "Screening",
+      "reviewing": "Reviewing",
+      "applying": "Applying",
+      "submitted": "Submitted",
+      "won": "Won",
+      "lost": "Lost"
+    },
+    "tenderStatus": {
+      "PROCESSING": "Processing",
+      "ANALYZING": "Analyzing",
+      "READY": "Ready",
+      "FAILED": "Failed"
+    },
+    "companySize": {
+      "solo": "Solo / freelance",
+      "1-9": "1–9 employees",
+      "10-49": "10–49 employees",
+      "50-249": "50–249 employees"
+    },
+    "tedMatchLabel": {
+      "strong": "Strong match",
+      "good": "Good match",
+      "possible": "Possible match",
+      "weak": "Weak match"
+    },
+    "disqualifierSeverity": {
+      "CRITICAL": "Critical",
+      "HIGH": "High",
+      "MEDIUM": "Medium",
+      "LOW": "Low"
+    },
+    "evidenceCoverageStatus": {
+      "VERIFIED": "Verified",
+      "PARTIAL": "Partial",
+      "MISSING": "Missing",
+      "CONTRADICTED": "Contradicted",
+      "NEEDS_REVIEW": "Needs review"
+    },
+    "confidence": {
+      "HIGH": "High",
+      "MEDIUM": "Medium",
+      "LOW": "Low"
+    },
+    "requirementStatus": {
+      "NOT_STARTED": "Not started",
+      "IN_PROGRESS": "In progress",
+      "COMPLETE": "Complete",
+      "BLOCKED": "Blocked",
+      "NOT_APPLICABLE": "Not applicable"
+    },
+    "evidenceType": {
+      "service": "service",
+      "certification": "certification",
+      "reference": "reference"
+    },
+    "eligibilityVerdict": {
+      "eligible": "Eligible",
+      "reviewNeeded": "Review needed",
+      "notEligible": "Not eligible"
+    },
+    "bidOutcome": {
+      "WON": "Won",
+      "LOST": "Lost",
+      "WITHDRAWN": "Withdrawn",
+      "NO_RESULT": "No result"
+    }
+  }
+}

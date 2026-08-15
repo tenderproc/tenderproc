@@ -1,17 +1,12 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import { createClient } from "@/lib/supabase/server";
 import { bidStatusLabel, computeProgress } from "@/lib/bids";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-}
 
 interface BidRow {
   id: string;
@@ -24,7 +19,30 @@ interface BidRow {
   } | null;
 }
 
+function matchBand(score: number): "strong" | "good" | "moderate" | "weak" {
+  if (score >= 85) return "strong";
+  if (score >= 65) return "good";
+  if (score >= 40) return "moderate";
+  return "weak";
+}
+
 export default async function BidsPage() {
+  const t = await getTranslations("BidsList");
+  const tBidStatus = await getTranslations("Enums.bidStatus");
+  const tMatchLabel = await getTranslations("Enums.matchLabel");
+  const locale = await getLocale();
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale as Locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -60,25 +78,22 @@ export default async function BidsPage() {
       <main className="max-w-5xl mx-auto px-6 py-10">
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-            Bid workspace
+            {t("eyebrow")}
           </p>
           <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
-            Bids
+            {t("title")}
           </h1>
-          <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-            Tenders you&apos;re actively preparing a submission for. Start one from a
-            ready tender&apos;s page.
-          </p>
+          <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">{t("description")}</p>
         </div>
 
         {(!bids || bids.length === 0) && (
           <div className="border border-line rounded-2xl p-8 text-center">
             <p className="text-inkDim">
-              No bids yet. Open a tender under{" "}
+              {t("emptyBefore")}{" "}
               <Link href="/my-tenders" className="underline text-accent">
-                Tenders
+                {t("tenders")}
               </Link>{" "}
-              and click Start Bid.
+              {t("emptyAfter")}
             </p>
           </div>
         )}
@@ -93,19 +108,19 @@ export default async function BidsPage() {
               <div className="flex items-start justify-between gap-6">
                 <div className="min-w-0">
                   <p className="text-[11px] font-medium uppercase tracking-wide text-inkDim mb-1">
-                    {bidStatusLabel(bid.status)}
+                    {bidStatusLabel(bid.status, tBidStatus)}
                   </p>
                   <h3 className="font-display font-semibold text-lg text-ink leading-snug">
-                    {bid.tenders?.title || "Untitled tender"}
+                    {bid.tenders?.title || t("untitledTender")}
                   </h3>
                   {bid.tenders?.ai_match_score !== null && bid.tenders?.ai_match_score !== undefined && (
                     <p className="text-sm text-inkDim mt-1">
-                      {bid.tenders.ai_match_score}/100 — {bid.tenders.ai_match_label}
+                      {bid.tenders.ai_match_score}/100 — {tMatchLabel(matchBand(bid.tenders.ai_match_score))}
                     </p>
                   )}
                 </div>
                 <div className="text-right shrink-0 w-40">
-                  <p className="text-xs text-inkDim uppercase tracking-wide">Deadline</p>
+                  <p className="text-xs text-inkDim uppercase tracking-wide">{t("deadline")}</p>
                   <p className="text-sm text-ink font-medium mb-2">
                     {formatDate(bid.tenders?.submission_deadline ?? null)}
                   </p>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export interface BidDocumentRow {
@@ -28,6 +29,7 @@ export default function DocumentsChecklist({
   userId: string;
   initialDocuments: BidDocumentRow[];
 }) {
+  const t = useTranslations("DocumentsChecklist");
   const router = useRouter();
   const [documents, setDocuments] = useState(initialDocuments);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -92,7 +94,7 @@ export default function DocumentsChecklist({
       .from("bid-documents")
       .createSignedUrl(doc.storage_path, 60);
     if (signError || !data) {
-      setError(signError?.message ?? "Could not open the file.");
+      setError(signError?.message ?? t("couldNotOpenFile"));
       return;
     }
     window.open(data.signedUrl, "_blank", "noopener,noreferrer");
@@ -101,11 +103,8 @@ export default function DocumentsChecklist({
   if (documents.length === 0) {
     return (
       <div className="border border-line bg-white rounded-2xl p-6">
-        <h2 className="font-display font-semibold text-lg text-ink mb-1">Documents</h2>
-        <p className="text-sm text-inkDim">
-          No required documents were extracted from this tender — check the requirements
-          checklist for any document-category items instead.
-        </p>
+        <h2 className="font-display font-semibold text-lg text-ink mb-1">{t("heading")}</h2>
+        <p className="text-sm text-inkDim">{t("noneExtracted")}</p>
       </div>
     );
   }
@@ -115,9 +114,9 @@ export default function DocumentsChecklist({
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="font-display font-semibold text-lg text-ink">Documents</h2>
+        <h2 className="font-display font-semibold text-lg text-ink">{t("heading")}</h2>
         <span className="text-sm text-inkDim">
-          {readyCount}/{documents.length} ready
+          {t("readyCount", { ready: readyCount, total: documents.length })}
         </span>
       </div>
       <ul className="space-y-2">
@@ -145,11 +144,11 @@ export default function DocumentsChecklist({
                   onClick={() => download(d)}
                   className="text-xs font-medium text-accent hover:underline"
                 >
-                  Download
+                  {t("download")}
                 </button>
               )}
               <label className="text-xs font-medium text-ink border border-line rounded-doc px-2 py-1.5 hover:bg-paperDim transition-colors cursor-pointer">
-                {busyId === d.id ? "Uploading…" : "Upload"}
+                {busyId === d.id ? t("uploading") : t("upload")}
                 <input
                   type="file"
                   className="hidden"
@@ -162,7 +161,7 @@ export default function DocumentsChecklist({
                 disabled={busyId === d.id}
                 className="text-xs font-medium text-inkDim border border-line rounded-doc px-2 py-1.5 hover:bg-paperDim transition-colors disabled:opacity-50"
               >
-                {d.status === "READY" ? "Mark missing" : "Mark ready"}
+                {d.status === "READY" ? t("markMissing") : t("markReady")}
               </button>
             </div>
           </li>

@@ -2,19 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const TABS = [
-  { href: "/opportunities", label: "Opportunities" },
-  { href: "/workflow", label: "Workflow" },
-  { href: "/search", label: "Search" },
-  { href: "/market", label: "Market overview" },
-  { href: "/my-tenders", label: "Tenders" },
-  { href: "/bids", label: "Bids" },
-  { href: "/company", label: "Company" },
-];
+  { href: "/opportunities", key: "opportunities" },
+  { href: "/workflow", key: "workflow" },
+  { href: "/search", key: "search" },
+  { href: "/market", key: "market" },
+  { href: "/my-tenders", key: "tenders" },
+  { href: "/bids", key: "bids" },
+  { href: "/company", key: "company" },
+] as const;
 
 export default function PrimaryNav() {
   const pathname = usePathname();
+  const t = useTranslations("Nav");
 
   return (
     <nav className="max-w-6xl mx-auto px-6 flex items-center gap-1 border-t border-line -mb-px overflow-x-auto">
@@ -30,7 +32,7 @@ export default function PrimaryNav() {
                 : "border-transparent text-inkDim hover:text-ink"
             }`}
           >
-            {tab.label}
+            {t(tab.key)}
           </Link>
         );
       })}

@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import TenderStatusBadge from "@/components/tenders/TenderStatusBadge";
 import { MatchScorePill, RecommendationPill } from "@/components/tenders/BidMatchBadge";
 import StartBidButton from "@/components/tenders/StartBidButton";
 import MapEvidenceButton from "@/components/tenders/MapEvidenceButton";
 import { createClient } from "@/lib/supabase/server";
+import { requirementCategoryLabel } from "@/lib/requirementCategory";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 import {
   DisqualifierSeverity,
   DisqualifyingFactor,
@@ -15,22 +18,6 @@ import {
 } from "@/lib/ai/types";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-}
-
-function formatValue(value: number | null, currency: string | null) {
-  if (value === null) return "—";
-  return `${currency ?? "EUR"} ${new Intl.NumberFormat("en-BE").format(value)}`;
-}
-
-function categoryLabel(category: string) {
-  return category.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-}
 
 interface AiAnalysisExtras {
   requiredDocuments?: string[];
@@ -65,6 +52,28 @@ export default async function TenderDetailPage({
   params: Promise<{ tenderId: string }>;
 }) {
   const { tenderId } = await params;
+  const t = await getTranslations("TenderDetail");
+  const tCategory = await getTranslations("Enums.requirementCategory");
+  const tSeverity = await getTranslations("Enums.disqualifierSeverity");
+  const tEvidenceStatus = await getTranslations("Enums.evidenceCoverageStatus");
+  const tConfidence = await getTranslations("Enums.confidence");
+  const locale = (await getLocale()) as Locale;
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
+  function formatValue(value: number | null, currency: string | null) {
+    if (value === null) return "—";
+    return `${currency ?? "EUR"} ${new Intl.NumberFormat(INTL_LOCALE[locale]).format(value)}`;
+  }
 
   const supabase = await createClient();
   const {
@@ -141,7 +150,7 @@ export default async function TenderDetailPage({
       <Header />
       <main className="max-w-4xl mx-auto px-6 py-10">
         <Link href="/my-tenders" className="text-sm text-inkDim hover:text-ink">
-          ← Back to tenders
+          ← {t("backToTenders")}
         </Link>
 
         <div className="mt-6 mb-8">
@@ -149,20 +158,18 @@ export default async function TenderDetailPage({
             <TenderStatusBadge status={tender.status} />
           </div>
           <h1 className="font-display font-bold text-3xl text-ink leading-tight tracking-tight">
-            {tender.title || "Analyzing tender…"}
+            {tender.title || t("analyzingTender")}
           </h1>
 
           {tender.status === "FAILED" && (
             <div className="mt-4 border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-              This tender couldn&apos;t be processed. Common causes: the PDF
-              has no extractable text (a scanned document without OCR) or
-              the AI analysis failed. Try re-uploading, or a different file.
+              {t("failedMessage")}
             </div>
           )}
 
           {(tender.status === "PROCESSING" || tender.status === "ANALYZING") && (
             <div className="mt-4 border border-line bg-paperDim rounded-doc p-4 text-sm text-inkDim">
-              Still processing — refresh in a moment.
+              {t("stillProcessing")}
             </div>
           )}
 
@@ -170,21 +177,21 @@ export default async function TenderDetailPage({
             <>
               <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 border-y border-line py-4">
                 <div>
-                  <dt className="text-[10px] font-medium uppercase text-inkDim">Authority</dt>
+                  <dt className="text-[10px] font-medium uppercase text-inkDim">{t("authority")}</dt>
                   <dd className="text-sm text-ink mt-0.5">{tender.contracting_authority ?? "—"}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] font-medium uppercase text-inkDim">Deadline</dt>
+                  <dt className="text-[10px] font-medium uppercase text-inkDim">{t("deadline")}</dt>
                   <dd className="text-sm text-ink mt-0.5">{formatDate(tender.submission_deadline)}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] font-medium uppercase text-inkDim">Est. value</dt>
+                  <dt className="text-[10px] font-medium uppercase text-inkDim">{t("estValue")}</dt>
                   <dd className="text-sm text-ink mt-0.5">
                     {formatValue(tender.estimated_value, tender.currency)}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] font-medium uppercase text-inkDim">Duration</dt>
+                  <dt className="text-[10px] font-medium uppercase text-inkDim">{t("duration")}</dt>
                   <dd className="text-sm text-ink mt-0.5">{tender.contract_duration ?? "—"}</dd>
                 </div>
               </dl>
@@ -196,7 +203,7 @@ export default async function TenderDetailPage({
                   rel="noopener noreferrer"
                   className="inline-block mt-4 text-sm text-accent underline"
                 >
-                  View original PDF →
+                  {t("viewOriginalPdf")} →
                 </a>
               )}
 
@@ -207,23 +214,23 @@ export default async function TenderDetailPage({
               <div className="mt-6">
                 {tender.ai_match_score !== null ? (
                   <div className="flex items-center gap-3 flex-wrap">
-                    <MatchScorePill score={tender.ai_match_score} matchLabel={tender.ai_match_label} />
+                    <MatchScorePill score={tender.ai_match_score} />
                     {tender.ai_recommendation && (
                       <RecommendationPill recommendation={tender.ai_recommendation} />
                     )}
                     {tender.ai_recommendation_confidence && (
                       <span className="text-xs text-inkDim">
-                        Confidence: {tender.ai_recommendation_confidence}
+                        {t("confidence", { level: tConfidence(tender.ai_recommendation_confidence) })}
                       </span>
                     )}
                   </div>
                 ) : (
                   <div className="border border-line rounded-doc p-4 text-sm text-inkDim">
-                    Add your{" "}
+                    {t("addCompanyProfileBefore")}{" "}
                     <Link href="/company" className="text-accent underline">
-                      company profile
+                      {t("companyProfile")}
                     </Link>{" "}
-                    to get a match score and Bid/No-Bid recommendation for this tender.
+                    {t("addCompanyProfileAfter")}
                   </div>
                 )}
               </div>
@@ -234,7 +241,7 @@ export default async function TenderDetailPage({
                     href={`/bids/${existingBid.id}`}
                     className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors"
                   >
-                    Go to Bid Workspace →
+                    {t("goToBidWorkspace")} →
                   </Link>
                 ) : (
                   <StartBidButton tenderId={tender.id} />
@@ -248,7 +255,9 @@ export default async function TenderDetailPage({
           <div className="space-y-8">
             {scoreDimensions.length > 0 && (
               <section>
-                <h2 className="font-display font-semibold text-lg text-ink mb-3">TenderProc Score</h2>
+                <h2 className="font-display font-semibold text-lg text-ink mb-3">
+                  {t("tenderProcScore")}
+                </h2>
                 <div className="grid sm:grid-cols-3 gap-4">
                   {scoreDimensions.map((d) => (
                     <div key={d.key} className="border border-line rounded-doc p-3">
@@ -266,7 +275,7 @@ export default async function TenderDetailPage({
                         </div>
                       ) : (
                         <p className="text-xs text-inkDim italic mb-2">
-                          {d.unavailableReason ?? "Data unavailable."}
+                          {d.unavailableReason ?? t("dataUnavailable")}
                         </p>
                       )}
                       {d.explanation && <p className="text-xs text-inkDim">{d.explanation}</p>}
@@ -278,24 +287,26 @@ export default async function TenderDetailPage({
 
             {disqualifyingFactors.length > 0 && (
               <section>
-                <h2 className="font-display font-semibold text-lg text-stamp mb-3">Why Not Bid?</h2>
+                <h2 className="font-display font-semibold text-lg text-stamp mb-3">
+                  {t("whyNotBid")}
+                </h2>
                 <div className="space-y-2">
                   {disqualifyingFactors.map((f, i) => (
                     <div key={i} className="border border-line rounded-doc p-4">
                       <div className="flex items-center gap-2 mb-1">
                         <span className={`inline-block w-2 h-2 rounded-full ${SEVERITY_DOT[f.severity]}`} />
                         <span className="text-[10px] font-semibold uppercase tracking-wide text-inkDim">
-                          {f.severity}
+                          {tSeverity(f.severity)}
                         </span>
                         <span className="font-medium text-ink text-sm">{f.requirement}</span>
                       </div>
                       <p className="text-sm text-inkDim mt-1">
-                        Company status: <span className="text-ink">{f.companyStatus}</span>
+                        {t("companyStatus")} <span className="text-ink">{f.companyStatus}</span>
                       </p>
                       <p className="text-sm text-inkDim mt-1">{f.explanation}</p>
                       {f.possibleMitigation && (
                         <p className="text-xs text-moss mt-2">
-                          Possible mitigation: {f.possibleMitigation}
+                          {t("possibleMitigation")} {f.possibleMitigation}
                         </p>
                       )}
                     </div>
@@ -308,7 +319,7 @@ export default async function TenderDetailPage({
               <section>
                 <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
                   <h2 className="font-display font-semibold text-lg text-ink">
-                    Evidence coverage
+                    {t("evidenceCoverage")}
                     {evidenceCoveragePct !== null && (
                       <span className="text-inkDim font-normal text-base"> · {evidenceCoveragePct}%</span>
                     )}
@@ -316,10 +327,7 @@ export default async function TenderDetailPage({
                   <MapEvidenceButton tenderId={tender.id} hasMapping={evidenceByRequirement.size > 0} />
                 </div>
                 {evidenceByRequirement.size === 0 ? (
-                  <p className="text-sm text-inkDim">
-                    Not mapped yet — click Map Evidence to Requirements to see which of your
-                    company&apos;s services, certifications, and references cover each requirement.
-                  </p>
+                  <p className="text-sm text-inkDim">{t("notMappedYet")}</p>
                 ) : (
                   <div className="space-y-2">
                     {(requirements ?? []).map((r) => {
@@ -339,7 +347,7 @@ export default async function TenderDetailPage({
                               />
                               <span className="font-medium text-ink text-sm">{r.title}</span>
                             </span>
-                            <span className="text-xs text-inkDim">{status.replace(/_/g, " ")}</span>
+                            <span className="text-xs text-inkDim">{tEvidenceStatus(status)}</span>
                           </div>
                           {items.length > 0 && (
                             <ul className="mt-2 space-y-1">
@@ -365,12 +373,14 @@ export default async function TenderDetailPage({
               extras.missingRequirements?.length ||
               extras.estimatedEffortHours) && (
               <section>
-                <h2 className="font-display font-semibold text-lg text-ink mb-3">Why this matches</h2>
+                <h2 className="font-display font-semibold text-lg text-ink mb-3">
+                  {t("whyThisMatches")}
+                </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {extras.positiveFactors && extras.positiveFactors.length > 0 && (
                     <div className="border border-line rounded-2xl p-4">
                       <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                        Positive factors
+                        {t("positiveFactors")}
                       </p>
                       <ul className="space-y-1.5 text-sm text-ink">
                         {extras.positiveFactors.map((f, i) => (
@@ -385,7 +395,7 @@ export default async function TenderDetailPage({
                   {(extras.recommendationRisks?.length || extras.missingRequirements?.length) && (
                     <div className="border border-line rounded-2xl p-4">
                       <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                        Risks
+                        {t("risks")}
                       </p>
                       <ul className="space-y-1.5 text-sm text-ink">
                         {extras.recommendationRisks?.map((r, i) => (
@@ -397,7 +407,7 @@ export default async function TenderDetailPage({
                         {extras.missingRequirements?.map((r, i) => (
                           <li key={`m${i}`} className="flex gap-2">
                             <span className="text-gold">⚠</span>
-                            Missing: {r}
+                            {t("missing", { requirement: r })}
                           </li>
                         ))}
                       </ul>
@@ -406,8 +416,10 @@ export default async function TenderDetailPage({
                 </div>
                 {extras.estimatedEffortHours && (
                   <p className="text-xs text-inkDim mt-3">
-                    ESTIMATE — HUMAN VERIFICATION REQUIRED: {extras.estimatedEffortHours.min}–
-                    {extras.estimatedEffortHours.max} hours of bid preparation effort.
+                    {t("effortEstimate", {
+                      min: extras.estimatedEffortHours.min,
+                      max: extras.estimatedEffortHours.max,
+                    })}
                   </p>
                 )}
               </section>
@@ -415,7 +427,9 @@ export default async function TenderDetailPage({
 
             {awardCriteria && awardCriteria.length > 0 && (
               <section>
-                <h2 className="font-display font-semibold text-lg text-ink mb-3">Award criteria</h2>
+                <h2 className="font-display font-semibold text-lg text-ink mb-3">
+                  {t("awardCriteria")}
+                </h2>
                 <ul className="space-y-2">
                   {awardCriteria.map((c) => (
                     <li key={c.id} className="border border-line rounded-doc p-3 text-sm">
@@ -432,12 +446,14 @@ export default async function TenderDetailPage({
 
             {requirementsByCategory.length > 0 && (
               <section>
-                <h2 className="font-display font-semibold text-lg text-ink mb-3">Requirements</h2>
+                <h2 className="font-display font-semibold text-lg text-ink mb-3">
+                  {t("requirements")}
+                </h2>
                 <div className="space-y-5">
                   {requirementsByCategory.map((group) => (
                     <div key={group.category}>
                       <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                        {categoryLabel(group.category)} · {group.items.length}
+                        {requirementCategoryLabel(group.category, tCategory)} · {group.items.length}
                       </p>
                       <ul className="space-y-2">
                         {group.items.map((r) => (
@@ -446,16 +462,18 @@ export default async function TenderDetailPage({
                               <span className="font-medium text-ink">{r.title}</span>
                               {r.mandatory && (
                                 <span className="text-[10px] font-semibold uppercase text-stamp">
-                                  Mandatory
+                                  {t("mandatory")}
                                 </span>
                               )}
                             </div>
                             {r.description && <p className="text-inkDim mt-1">{r.description}</p>}
                             {(r.source_page || r.source_section) && (
                               <p className="text-xs text-inkDim mt-1">
-                                Source: {[r.source_section, r.source_page && `p. ${r.source_page}`]
-                                  .filter(Boolean)
-                                  .join(", ")}
+                                {t("source", {
+                                  parts: [r.source_section, r.source_page && `p. ${r.source_page}`]
+                                    .filter(Boolean)
+                                    .join(", "),
+                                })}
                               </p>
                             )}
                           </li>
@@ -472,7 +490,7 @@ export default async function TenderDetailPage({
                 {extras.requiredDocuments && extras.requiredDocuments.length > 0 && (
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                      Required documents
+                      {t("requiredDocuments")}
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.requiredDocuments.map((d, i) => (
@@ -484,7 +502,7 @@ export default async function TenderDetailPage({
                 {extras.risks && extras.risks.length > 0 && (
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                      Risks
+                      {t("risks")}
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.risks.map((r, i) => (
@@ -496,7 +514,7 @@ export default async function TenderDetailPage({
                 {extras.ambiguities && extras.ambiguities.length > 0 && (
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                      Ambiguities
+                      {t("ambiguities")}
                     </p>
                     <ul className="space-y-1 text-sm text-ink">
                       {extras.ambiguities.map((a, i) => (

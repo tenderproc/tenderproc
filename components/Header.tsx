@@ -1,8 +1,12 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import SignOutButton from "./SignOutButton";
 import PrimaryNav from "./PrimaryNav";
+import LocaleSwitcher from "./LocaleSwitcher";
 
-export default function Header() {
+export default async function Header() {
+  const t = await getTranslations("Header");
+
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper/90 backdrop-blur">
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
@@ -15,9 +19,10 @@ export default function Header() {
           </span>
         </Link>
         <nav className="text-sm text-inkDim flex items-center gap-5">
-          <span className="hidden sm:inline">Belgium · Public tenders</span>
+          <span className="hidden sm:inline">{t("tagline")}</span>
+          <LocaleSwitcher />
           <Link href="/pricing" className="hover:text-ink transition-colors">
-            Pricing
+            {t("pricing")}
           </Link>
           <SignOutButton />
         </nav>

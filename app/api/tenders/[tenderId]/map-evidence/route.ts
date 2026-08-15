@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ tenderId: 
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const { data: tender } = await supabase
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ tenderId: 
     .eq("user_id", user.id)
     .maybeSingle();
   if (!tender) {
-    return NextResponse.json({ error: "Tender not found." }, { status: 404 });
+    return NextResponse.json({ error: "Tender not found.", code: "tenderNotFound" }, { status: 404 });
   }
 
   const { data: requirements } = await supabase
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ tenderId: 
   const company = await getCompanyKnowledge(supabase, user.id);
   if (!company) {
     return NextResponse.json(
-      { error: "Add your company profile before mapping evidence." },
+      { error: "Add your company profile before mapping evidence.", code: "needCompanyProfile" },
       { status: 400 }
     );
   }
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ tenderId: 
   } catch (err) {
     console.error("mapRequirementsToEvidence failed", err);
     return NextResponse.json(
-      { error: "Could not map evidence right now. Try again in a moment." },
+      { error: "Could not map evidence right now. Try again in a moment.", code: "couldNotMapEvidence" },
       { status: 500 }
     );
   }

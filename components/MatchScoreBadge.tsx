@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { MatchScore, matchLabel } from "@/lib/scoring";
 
 const BAND_STYLE = [
@@ -11,8 +12,10 @@ function bandClassName(score: number): string {
   return BAND_STYLE.find((b) => score >= b.min)!.className;
 }
 
-export default function MatchScoreBadge({ score }: { score: MatchScore }) {
-  const label = matchLabel(score.score);
+export default async function MatchScoreBadge({ score }: { score: MatchScore }) {
+  const t = await getTranslations("Enums.tedMatchLabel");
+  const label = matchLabel(score.score, t);
+  const tCard = await getTranslations("MatchScoreBadge");
   const metCount = score.criteria.filter((c) => c.met).length;
 
   return (
@@ -26,7 +29,7 @@ export default function MatchScoreBadge({ score }: { score: MatchScore }) {
         </span>
         {score.criteria.length > 0 && (
           <span className="text-[11px] opacity-80">
-            · {metCount}/{score.criteria.length} criteria
+            · {tCard("criteriaCount", { met: metCount, total: score.criteria.length })}
           </span>
         )}
       </div>

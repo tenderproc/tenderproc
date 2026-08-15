@@ -3,7 +3,9 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { authErrorMessage } from "@/lib/authErrors";
 
 export default function LoginPage() {
   return (
@@ -14,6 +16,8 @@ export default function LoginPage() {
 }
 
 function LoginForm() {
+  const t = useTranslations("Login");
+  const tAuthError = useTranslations("Errors.auth");
   const router = useRouter();
   const params = useSearchParams();
   const [email, setEmail] = useState("");
@@ -29,7 +33,7 @@ function LoginForm() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(authErrorMessage(error.message, tAuthError));
       return;
     }
     router.push(params.get("next") || "/opportunities");
@@ -44,11 +48,9 @@ function LoginForm() {
             TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
-            Log in
+            {t("heading")}
           </h1>
-          <p className="text-sm text-inkDim mt-3 leading-relaxed">
-            Log in to see tenders filtered to your sectors.
-          </p>
+          <p className="text-sm text-inkDim mt-3 leading-relaxed">{t("subheading")}</p>
         </div>
 
         <form
@@ -57,7 +59,7 @@ function LoginForm() {
         >
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-              Email
+              {t("email")}
             </label>
             <input
               type="email"
@@ -71,7 +73,7 @@ function LoginForm() {
           </div>
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-              Password
+              {t("password")}
             </label>
             <input
               type="password"
@@ -89,18 +91,18 @@ function LoginForm() {
             disabled={loading}
             className="w-full bg-accent text-white py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
           >
-            {loading ? "Logging in…" : "Log in"}
+            {loading ? t("loggingIn") : t("logIn")}
           </button>
         </form>
 
         <p className="text-xs text-inkDim text-center mt-6">
-          No account yet?{" "}
+          {t("noAccount")}{" "}
           <Link href="/signup" className="underline">
-            Sign up
+            {t("signUp")}
           </Link>
           . ·{" "}
           <Link href="/pricing" className="underline">
-            View pricing
+            {t("viewPricing")}
           </Link>
         </p>
       </div>

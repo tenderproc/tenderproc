@@ -1,0 +1,599 @@
+{
+  "Header": {
+    "tagline": "Belgien · Öffentliche Ausschreibungen",
+    "pricing": "Preise",
+    "signOut": "Abmelden"
+  },
+  "Nav": {
+    "opportunities": "Chancen",
+    "workflow": "Workflow",
+    "search": "Suche",
+    "market": "Marktübersicht",
+    "tenders": "Ausschreibungen",
+    "bids": "Angebote",
+    "company": "Unternehmen"
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache"
+  },
+  "Login": {
+    "heading": "Anmelden",
+    "subheading": "Melde dich an, um Ausschreibungen nach deinen Branchen gefiltert zu sehen.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "loggingIn": "Anmeldung läuft…",
+    "logIn": "Anmelden",
+    "noAccount": "Noch kein Konto?",
+    "signUp": "Registrieren",
+    "viewPricing": "Preise ansehen"
+  },
+  "Opportunities": {
+    "eyebrow": "Nur offene Ausschreibungen · Quelle: TED",
+    "heading": "Chancen",
+    "description": "Tatsächlich offene Ausschreibungen in Belgien, passend zu deinen Branchen — bereits vergebene und informative Bekanntmachungen werden herausgefiltert. Aus der offiziellen TED-Datenbank der EU; diese Beta deckt Bekanntmachungen oberhalb der EU-Veröffentlichungsschwellen ab.",
+    "couldNotReachTed": "TED konnte nicht erreicht werden.",
+    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste."
+  },
+  "Market": {
+    "eyebrow": "Letzte 90 Tage · Quelle: TED-Zuschlagsbekanntmachungen",
+    "heading": "Marktübersicht",
+    "description": "Kürzlich vergebene belgische öffentliche Aufträge — wer hat gewonnen, für wie viel, und von wem. Dies ist eine Momentaufnahme aktueller Zuschläge, kein vollständiges historisches Archiv.",
+    "couldNotReachTed": "TED konnte nicht erreicht werden.",
+    "loadError": "Zuschlagsdaten konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "topWinners": "Top-Gewinner nach vergebenem Wert",
+    "topBuyers": "Top-Käufer nach Ausgaben",
+    "recentAwards": "Aktuelle Zuschläge",
+    "noAwards": "Keine Zuschlagsbekanntmachungen in diesem Zeitraum gefunden.",
+    "awarded": "Vergeben am {date}",
+    "buyerLine": "{title} · Käufer: {buyer}",
+    "value": "Wert",
+    "notEnoughData": "Noch nicht genug Daten.",
+    "awardCount": "{count, plural, one {# Zuschlag} other {# Zuschläge}}"
+  },
+  "Search": {
+    "eyebrow": "Ad-hoc-Suche · Quelle: TED",
+    "heading": "Suche",
+    "description": "Einmalige Suchen über alle tatsächlich offenen belgischen Ausschreibungen, unabhängig von deinen gespeicherten Branchen — filtere nach Stichwort, CPV-Code, Wertebereich oder Frist.",
+    "couldNotReachTed": "TED konnte nicht erreicht werden.",
+    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "noResults": "Keine Bekanntmachungen passten zu diesen Filtern.",
+    "prompt": "Gib oben ein Stichwort, einen CPV-Code, einen Wertebereich oder eine Frist ein, um zu suchen."
+  },
+  "AdvancedSearchForm": {
+    "keyword": "Stichwort",
+    "keywordPlaceholder": "z. B. Reinigungsdienste",
+    "cpvCode": "CPV-Code",
+    "cpvPlaceholder": "z. B. 90910000",
+    "minValue": "Mindestwert (EUR)",
+    "maxValue": "Höchstwert (EUR)",
+    "noLimit": "Kein Limit",
+    "deadlineAfter": "Frist nach",
+    "deadlineBefore": "Frist vor",
+    "search": "Suchen"
+  },
+  "SearchFilters": {
+    "keywordPlaceholder": "Stichwort — z. B. Reinigungsdienste",
+    "cpvPlaceholder": "CPV-Code — z. B. 90910000",
+    "search": "Suchen"
+  },
+  "TenderCard": {
+    "refPublished": "Ref. {ref} · Veröffentlicht {date}",
+    "deadline": "Frist"
+  },
+  "MatchScoreBadge": {
+    "criteriaCount": "{met}/{total} Kriterien"
+  },
+  "Pricing": {
+    "goToApp": "Zur App",
+    "logIn": "Anmelden",
+    "signUp": "Registrieren",
+    "eyebrow": "Preise",
+    "heading": "Einfache, klare Pläne",
+    "subheading": "Starte kostenlos, upgrade, sobald du ernsthaft bieten willst.",
+    "mostPopular": "Am beliebtesten",
+    "perMonth": "/Monat",
+    "getStarted": "Loslegen",
+    "tiers": {
+      "free": {
+        "name": "Kostenlos",
+        "blurb": "Teste die Ausschreibungssuche für eine Branche.",
+        "features": ["Chancen-Feed für 1 Branche", "Manuelle Suche", "Ausschreibungs-Detailseiten"]
+      },
+      "pro": {
+        "name": "Pro",
+        "blurb": "Für KMU, die aktiv auf öffentliche Ausschreibungen bieten.",
+        "features": [
+          "Chancen-Feed, alle Branchen",
+          "KI-Übereinstimmungsbewertungen für jede Ausschreibung",
+          "Workflow-Pipeline-Board",
+          "Tägliche E-Mail-Benachrichtigungen"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "blurb": "Für Teams, die das vollständige Marktbild wollen.",
+        "features": [
+          "Alles aus Pro",
+          "Marktübersicht & Zuschlagsanalysen",
+          "KI-Eignungsprüfungen",
+          "Priorisierter Support"
+        ]
+      }
+    }
+  },
+  "WorkflowPage": {
+    "eyebrow": "Deine Pipeline",
+    "heading": "Workflow",
+    "description": "Verfolge Ausschreibungen, die du verfolgst, von der ersten Sichtung bis zur Einreichung. Füge Ausschreibungen über Chancen oder die Detailseite einer Ausschreibung hinzu."
+  },
+  "PublicTenderDetail": {
+    "backToOpenTenders": "Zurück zu offenen Ausschreibungen",
+    "ref": "Ref. {ref}",
+    "buyer": "Käufer",
+    "deadline": "Frist",
+    "estValue": "Geschätzter Wert",
+    "published": "Veröffentlicht",
+    "viewOnTed": "Vollständige offizielle Bekanntmachung auf TED ansehen"
+  },
+  "AddToWorkflowButton": {
+    "added": "Zum Workflow hinzugefügt ✓",
+    "adding": "Wird hinzugefügt…",
+    "tryAgain": "Erneut versuchen",
+    "addToWorkflow": "Zum Workflow hinzufügen"
+  },
+  "UploadAnalyzer": {
+    "analysisFailed": "Analyse fehlgeschlagen.",
+    "somethingWentWrong": "Etwas ist schiefgelaufen.",
+    "checkEligibility": "Eignung prüfen",
+    "intro": "Füge unten die Anforderungen der Ausschreibung oder den ESPD-Text ein — oder führe die Prüfung nur anhand der Bekanntmachungs-Metadaten aus.",
+    "pasteTextPlaceholder": "Füge hier den Text des Ausschreibungsdokuments ein (optional)…",
+    "attachFileHint": "oder füge eine Datei als Referenz hinzu (in der Beta noch nicht ausgewertet)",
+    "readingTender": "Ausschreibung wird gelesen…",
+    "runCheck": "Eignungsprüfung ausführen",
+    "keyRequirements": "Wichtigste Anforderungen"
+  },
+  "RequirementWorkspace": {
+    "status": "Status",
+    "couldNotFindEvidence": "Nachweise konnten nicht gefunden werden.",
+    "couldNotGenerateDraft": "Entwurf konnte nicht erstellt werden.",
+    "couldNotRecheckDraft": "Entwurf konnte nicht erneut geprüft werden.",
+    "relevantEvidenceFound": "Relevante Nachweise gefunden",
+    "findingEvidence": "Nachweise werden gesucht…",
+    "findEvidence": "Nachweise suchen",
+    "clickFindEvidenceHint": "Klicke auf Nachweise suchen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen deines Unternehmens für diese Anforderung relevant sind.",
+    "noRelevantEvidence": "Keine relevanten Unternehmensnachweise für diese Anforderung gefunden.",
+    "evidenceMeta": "({type} · {relevance} Ähnlichkeit)",
+    "evidenceUsedInDraft": "Im aktuellen Entwurf verwendete Nachweise",
+    "generating": "Wird erstellt…",
+    "regenerateDraft": "Entwurf neu erstellen",
+    "generateDraft": "Entwurf erstellen",
+    "aiDraft": "KI-Entwurf",
+    "confidence": "Vertrauen: {level}",
+    "acceptedCheck": "Akzeptiert ✓",
+    "unsupportedClaims": "{count, plural, one {Unbelegte Behauptung} other {Unbelegte Behauptungen}}",
+    "dismiss": "Verwerfen",
+    "unsupportedClaimsHint": "Dies konnte nicht anhand deiner Unternehmenswissensbasis verifiziert werden. Bearbeite den Entwurf, um es zu entfernen oder umzuformulieren, oder füge oben unterstützende Nachweise hinzu und erstelle den Entwurf neu.",
+    "acceptDraft": "Entwurf akzeptieren",
+    "edit": "Bearbeiten",
+    "rechecking": "Wird erneut geprüft…",
+    "saveAndRecheck": "Speichern & erneut prüfen"
+  },
+  "RequirementPage": {
+    "backToBidWorkspace": "Zurück zum Angebotsbereich",
+    "mandatory": "Verpflichtend",
+    "source": "Quelle: {parts}"
+  },
+  "ReviewActions": {
+    "couldNotRunReview": "Prüfung konnte nicht ausgeführt werden.",
+    "runningReview": "Prüfung läuft…",
+    "reRunReview": "Prüfung erneut ausführen",
+    "runReview": "Prüfung ausführen",
+    "submitted": "Eingereicht",
+    "bidClosed": "Angebot abgeschlossen",
+    "saving": "Wird gespeichert…",
+    "markAsSubmitted": "Als eingereicht markieren",
+    "opening": "Wird geöffnet…"
+  },
+  "BidReview": {
+    "backToBid": "Zurück zum Angebot",
+    "heading": "Prüfung vor Einreichung",
+    "untitledTender": "Unbenannte Ausschreibung",
+    "noReviewYet": "Es wurde noch keine Prüfung durchgeführt. Sie prüft deine Anforderungsliste, Dokumentenliste und verfassten Antworten auf alles, was die Einreichung blockieren könnte.",
+    "readyToSubmit": "Einreichbereit",
+    "notReadyToSubmit": "Noch nicht einreichbereit",
+    "compliantPercent": "{score} % konform",
+    "criticalIssues": "Kritische Probleme",
+    "warnings": "Warnungen",
+    "requirements": "Anforderungen",
+    "documents": "Dokumente",
+    "lastRun": "Zuletzt ausgeführt {when} · {claims}",
+    "unresolvedClaims": "{count, plural, one {# ungelöste unbelegte Behauptung} other {# ungelöste unbelegte Behauptungen}}",
+    "submission": "Einreichung",
+    "downloadBidPackage": "Angebotspaket herunterladen",
+    "noDocumentsUploaded": "Noch keine Dokumente hochgeladen — füge sie über die Dokumentenliste im Angebotsbereich hinzu.",
+    "officialSubmission": "Offizielle Einreichung",
+    "openOfficialPlatform": "Offizielle Einreichungsplattform öffnen",
+    "noSubmissionPlatform": "Für diese Ausschreibung ist kein Link zu einer Einreichungsplattform hinterlegt — reiche direkt über den offiziellen Kanal der Vergabestelle ein."
+  },
+  "StartBidButton": {
+    "couldNotStart": "Angebot konnte nicht gestartet werden.",
+    "starting": "Wird gestartet…",
+    "startBid": "Angebot starten"
+  },
+  "MapEvidenceButton": {
+    "couldNotMap": "Nachweise konnten nicht zugeordnet werden.",
+    "mapping": "Nachweise werden zugeordnet…",
+    "remap": "Nachweise neu zuordnen",
+    "map": "Nachweise den Anforderungen zuordnen"
+  },
+  "RecordOutcomeForm": {
+    "outcome": "Ergebnis",
+    "edit": "Bearbeiten",
+    "wonBy": "Gewonnen von {bidder}",
+    "recordOutcome": "Ergebnis erfassen",
+    "storedHint": "Gespeichert für zukünftiges Gewinnquoten-Tracking. Aktueller Angebotsstatus: {status}.",
+    "contractValuePlaceholder": "Vertragswert (EUR)",
+    "durationPlaceholder": "Laufzeit, z. B. „4 Jahre“",
+    "reasonPlaceholder": "Grund (falls bekannt)",
+    "winningBidderPlaceholder": "Gewinnender Bieter (falls bekannt)",
+    "winningPricePlaceholder": "Gewinnender Preis (falls bekannt)",
+    "ourScorePlaceholder": "Unsere Bewertung (falls bekannt)",
+    "feedbackPlaceholder": "Rückmeldung der Vergabestelle (falls vorhanden)",
+    "notesPlaceholder": "Notizen",
+    "saving": "Wird gespeichert…",
+    "saveOutcome": "Ergebnis speichern",
+    "cancel": "Abbrechen"
+  },
+  "DocumentsChecklist": {
+    "heading": "Dokumente",
+    "noneExtracted": "Aus dieser Ausschreibung wurden keine erforderlichen Dokumente extrahiert — prüfe stattdessen die Anforderungsliste auf Dokument-Kategorien.",
+    "readyCount": "{ready}/{total} bereit",
+    "download": "Herunterladen",
+    "uploading": "Wird hochgeladen…",
+    "upload": "Hochladen",
+    "markMissing": "Als fehlend markieren",
+    "markReady": "Als bereit markieren",
+    "couldNotOpenFile": "Datei konnte nicht geöffnet werden."
+  },
+  "BidWorkspace": {
+    "backToBids": "Zurück zu Angeboten",
+    "authorityDeadline": "{authority} · Frist {date}",
+    "untitledTender": "Unbenannte Ausschreibung",
+    "reviewBid": "Angebot prüfen",
+    "openWarnings": "{count, plural, one {# offene Warnung} other {# offene Warnungen}}",
+    "overallProgress": "Gesamtfortschritt",
+    "requirements": "Anforderungen",
+    "mandatory": "Verpflichtend"
+  },
+  "TenderDetail": {
+    "backToTenders": "Zurück zu Ausschreibungen",
+    "analyzingTender": "Ausschreibung wird analysiert…",
+    "failedMessage": "Diese Ausschreibung konnte nicht verarbeitet werden. Häufige Ursachen: Die PDF enthält keinen extrahierbaren Text (ein gescanntes Dokument ohne OCR) oder die KI-Analyse ist fehlgeschlagen. Versuche es erneut hochzuladen oder mit einer anderen Datei.",
+    "stillProcessing": "Wird noch verarbeitet — bitte gleich aktualisieren.",
+    "authority": "Vergabestelle",
+    "deadline": "Frist",
+    "estValue": "Geschätzter Wert",
+    "duration": "Laufzeit",
+    "viewOriginalPdf": "Original-PDF ansehen",
+    "confidence": "Vertrauen: {level}",
+    "addCompanyProfileBefore": "Füge dein",
+    "companyProfile": "Unternehmensprofil",
+    "addCompanyProfileAfter": "hinzu, um eine Übereinstimmungsbewertung und eine Bieten/Nicht-bieten-Empfehlung für diese Ausschreibung zu erhalten.",
+    "goToBidWorkspace": "Zum Angebotsbereich",
+    "tenderProcScore": "TenderProc-Score",
+    "dataUnavailable": "Daten nicht verfügbar.",
+    "whyNotBid": "Warum nicht bieten?",
+    "companyStatus": "Status des Unternehmens:",
+    "possibleMitigation": "Mögliche Lösung:",
+    "evidenceCoverage": "Nachweisabdeckung",
+    "notMappedYet": "Noch nicht zugeordnet — klicke auf Nachweise den Anforderungen zuordnen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen deines Unternehmens jede Anforderung abdecken.",
+    "whyThisMatches": "Warum das passt",
+    "positiveFactors": "Positive Faktoren",
+    "risks": "Risiken",
+    "missing": "Fehlt: {requirement}",
+    "effortEstimate": "SCHÄTZUNG — MENSCHLICHE ÜBERPRÜFUNG ERFORDERLICH: {min}–{max} Stunden Angebotsvorbereitung.",
+    "awardCriteria": "Zuschlagskriterien",
+    "requirements": "Anforderungen",
+    "mandatory": "Verpflichtend",
+    "source": "Quelle: {parts}",
+    "requiredDocuments": "Erforderliche Dokumente",
+    "ambiguities": "Unklarheiten"
+  },
+  "UploadTenderButton": {
+    "uploadFailed": "Upload fehlgeschlagen.",
+    "uploadingAndAnalyzing": "Wird hochgeladen & analysiert… (bis zu einer Minute)",
+    "uploadTender": "Ausschreibung hochladen"
+  },
+  "MyTendersList": {
+    "eyebrow": "Hochgeladene Ausschreibungen · KI-Analyse",
+    "heading": "Ausschreibungen",
+    "description": "Lade eine Ausschreibungs-PDF hoch, um eine strukturierte Aufschlüsselung zu erhalten: Zuschlagskriterien, Anforderungen und eine Bieten/Nicht-bieten-Empfehlung auf Basis deines Unternehmensprofils.",
+    "empty": "Noch keine Ausschreibungen hochgeladen. Lade eine PDF hoch, um loszulegen.",
+    "analyzing": "Wird analysiert…",
+    "deadline": "Frist",
+    "value": "Wert"
+  },
+  "TagInput": {
+    "removeTag": "{tag} entfernen",
+    "defaultPlaceholder": "Eingeben und Enter drücken"
+  },
+  "ServicesSection": {
+    "heading": "Dienstleistungen",
+    "nothingAdded": "Noch nichts hinzugefügt.",
+    "remove": "Entfernen",
+    "namePlaceholder": "Name der Dienstleistung, z. B. Büroreinigung",
+    "descriptionPlaceholder": "Kurzbeschreibung (optional)",
+    "add": "Hinzufügen"
+  },
+  "CertificationsSection": {
+    "heading": "Zertifizierungen",
+    "nothingAdded": "Noch nichts hinzugefügt.",
+    "expired": "Abgelaufen",
+    "expiresSoon": "Läuft bald ab",
+    "valid": "Gültig",
+    "expiresOn": "läuft ab am {date}",
+    "noFurtherDetails": "Keine weiteren Angaben",
+    "remove": "Entfernen",
+    "namePlaceholder": "Name der Zertifizierung, z. B. ISO 9001",
+    "issuingOrgPlaceholder": "Ausstellende Organisation (optional)",
+    "certificateNumberPlaceholder": "Zertifikatsnummer (optional)",
+    "add": "Hinzufügen"
+  },
+  "ReferencesSection": {
+    "heading": "Referenzen",
+    "subheading": "Frühere Projekte, die die KI als vergleichbare Erfahrung anführen kann — sie wird niemals Erfahrung über das hier Aufgeführte hinaus behaupten.",
+    "nothingAdded": "Noch nichts hinzugefügt.",
+    "publicSector": "öffentlicher Sektor",
+    "privateSector": "privater Sektor",
+    "value": "Wert: {value} €",
+    "remove": "Entfernen",
+    "clientPlaceholder": "Kunde, z. B. Stadt Antwerpen",
+    "projectNamePlaceholder": "Projektname (optional)",
+    "descriptionPlaceholder": "Kurzbeschreibung (optional)",
+    "contractValuePlaceholder": "Vertragswert in EUR (optional)",
+    "sectorOptional": "Öffentlicher oder privater Sektor? (optional)",
+    "servicesLabel": "Im Rahmen dieses Projekts erbrachte Leistungen",
+    "servicesPlaceholder": "z. B. Tägliche Reinigung",
+    "addReference": "Referenz hinzufügen"
+  },
+  "DocumentsSection": {
+    "heading": "Dokumente",
+    "subheading": "Belege (Zertifikate, Broschüren, Richtlinien), die du mit Zertifizierungen und Referenzen oben verknüpfen kannst.",
+    "nothingUploaded": "Noch nichts hochgeladen.",
+    "remove": "Entfernen",
+    "uploading": "Wird hochgeladen…",
+    "uploadDocument": "Dokument hochladen"
+  },
+  "CompanyPage": {
+    "eyebrow": "Wissensbasis",
+    "heading": "Unternehmen",
+    "description": "Was Bidara wirklich über dein Unternehmen weiß — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
+    "unlockHint": "Speichere dein Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten."
+  },
+  "CompanyCoreForm": {
+    "nameRequired": "Firmenname ist erforderlich.",
+    "heading": "Unternehmensprofil",
+    "subheading": "Dies ist die Wissensbasis, die die KI bei der Analyse von Ausschreibungen und beim Verfassen von Antworten verwendet — sie nutzt niemals Informationen über das hier Eingegebene hinaus.",
+    "companyName": "Firmenname",
+    "website": "Website",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Was macht das Unternehmen, und für wen?",
+    "companySize": "Unternehmensgröße",
+    "preferNotToSay": "Keine Angabe",
+    "employeeCount": "Mitarbeiterzahl (genau, optional)",
+    "regionsServed": "Bediente Regionen",
+    "regionsServedPlaceholder": "z. B. Antwerpen",
+    "languages": "Sprachen",
+    "languagesPlaceholder": "z. B. Niederländisch",
+    "industries": "Branchen",
+    "industriesPlaceholder": "z. B. Facility Management",
+    "saving": "Wird gespeichert…",
+    "saveChanges": "Änderungen speichern",
+    "createProfile": "Unternehmensprofil erstellen",
+    "saved": "Gespeichert ✓"
+  },
+  "Signup": {
+    "pickSector": "Wähle mindestens eine Branche.",
+    "checkEmailHeading": "Überprüfe deine E-Mail",
+    "checkEmailBody": "Wir haben einen Bestätigungslink an {email} gesendet. Klicke darauf und melde dich dann an — dein Unternehmensprofil ist bereits gespeichert.",
+    "backToLogin": "Zurück zur Anmeldung",
+    "heading": "Konto erstellen",
+    "subheading": "Erzähl uns von deinem Unternehmen — das bestimmt, welche Ausschreibungen du siehst, und die Übereinstimmungsbewertung jeder Ausschreibung.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "passwordPlaceholder": "Mindestens 6 Zeichen",
+    "companyName": "Firmenname",
+    "companyNamePlaceholder": "z. B. Van Damme Cleaning bv",
+    "address": "Adresse",
+    "addressPlaceholder": "z. B. Antwerpen",
+    "companySize": "Unternehmensgröße",
+    "preferNotToSay": "Keine Angabe",
+    "descriptionLabel": "Was macht dein Unternehmen?",
+    "descriptionPlaceholder": "Ein paar Sätze reichen — das bestimmt die Übereinstimmungsbewertung jeder Ausschreibung.",
+    "sectors": "Branchen",
+    "creatingAccount": "Konto wird erstellt…",
+    "signUp": "Registrieren",
+    "alreadyHaveAccount": "Hast du bereits ein Konto?",
+    "logIn": "Anmelden",
+    "viewPricing": "Preise ansehen"
+  },
+  "Errors": {
+    "api": {
+      "notAuthenticated": "Nicht angemeldet.",
+      "noFileProvided": "Keine Datei angegeben.",
+      "onlyPdfSupported": "In dieser Beta werden nur PDF-Dateien unterstützt.",
+      "fileTooLarge": "Datei ist größer als 20 MB.",
+      "aiAnalysisFailed": "KI-Analyse fehlgeschlagen. Versuche es gleich noch einmal.",
+      "tenderNotFound": "Ausschreibung nicht gefunden.",
+      "needCompanyProfile": "Füge dein Unternehmensprofil hinzu, um fortzufahren.",
+      "couldNotMapEvidence": "Nachweise konnten gerade nicht zugeordnet werden. Versuche es gleich noch einmal.",
+      "bidNotFound": "Angebot nicht gefunden.",
+      "missingTenderId": "Ausschreibung fehlt.",
+      "serverMisconfigured": "Der Server ist nicht richtig konfiguriert. Bitte versuche es später erneut.",
+      "missingTenderInfo": "Ausschreibungsinformationen fehlen.",
+      "analysisFailed": "Analyse fehlgeschlagen. Versuche es gleich noch einmal.",
+      "missingDraftText": "Entwurfstext fehlt.",
+      "noDraftToRecheck": "Noch kein Entwurf zum erneuten Prüfen.",
+      "companyProfileNotFound": "Unternehmensprofil nicht gefunden.",
+      "couldNotRecheckDraft": "Entwurf konnte gerade nicht erneut geprüft werden. Versuche es gleich noch einmal.",
+      "requirementNotFound": "Anforderung nicht gefunden.",
+      "couldNotFindEvidence": "Nachweise konnten gerade nicht gefunden werden. Versuche es gleich noch einmal.",
+      "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuche es gleich noch einmal."
+    },
+    "auth": {
+      "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",
+      "emailNotConfirmed": "Bitte bestätige deine E-Mail-Adresse, bevor du dich anmeldest.",
+      "userAlreadyRegistered": "Es existiert bereits ein Konto mit dieser E-Mail-Adresse.",
+      "passwordTooShort": "Das Passwort ist zu kurz.",
+      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "rateLimited": "Zu viele Versuche. Bitte versuche es gleich noch einmal."
+    }
+  },
+  "BidsList": {
+    "eyebrow": "Angebotsbereich",
+    "title": "Angebote",
+    "description": "Ausschreibungen, für die du aktiv ein Angebot vorbereitest. Starte eines über die Seite einer fertigen Ausschreibung.",
+    "emptyBefore": "Noch keine Angebote. Öffne eine Ausschreibung unter",
+    "tenders": "Ausschreibungen",
+    "emptyAfter": "und klicke auf Angebot starten.",
+    "untitledTender": "Unbenannte Ausschreibung",
+    "deadline": "Frist"
+  },
+  "Workflow": {
+    "emptyBefore": "Noch nichts in deinem Workflow. Füge eine Ausschreibung hinzu über",
+    "opportunities": "Chancen",
+    "emptyAfter": "um sie hier zu verfolgen.",
+    "nothingHere": "Nichts hier.",
+    "closed": "Abgeschlossen",
+    "couldNotLoad": "Details zu dieser Ausschreibung konnten nicht geladen werden.",
+    "remove": "Entfernen"
+  },
+  "PreferencesSidebar": {
+    "sectors": "Branchen",
+    "languages": "Sprachen",
+    "languagesHint": "Bestimmt, in welcher Sprache übersetzte Titel angezeigt werden — jede Ausschreibung bleibt trotzdem sichtbar.",
+    "saving": "Wird gespeichert…"
+  },
+  "Enums": {
+    "matchLabel": {
+      "strong": "Starke Übereinstimmung",
+      "good": "Gute Übereinstimmung",
+      "moderate": "Mäßige Übereinstimmung",
+      "weak": "Schwache Übereinstimmung"
+    },
+    "recommendation": {
+      "bid": "BIETEN",
+      "consider": "PRÜFEN",
+      "noBid": "NICHT BIETEN"
+    },
+    "requirementCategory": {
+      "eligibility": "Eignung",
+      "administrative": "Verwaltung",
+      "technical": "Technisch",
+      "experience": "Erfahrung",
+      "certification": "Zertifizierung",
+      "personnel": "Personal",
+      "financial": "Finanziell",
+      "pricing": "Preisgestaltung",
+      "document": "Dokument",
+      "award_criterion": "Zuschlagskriterium",
+      "other": "Sonstiges"
+    },
+    "sector": {
+      "construction": "Bauwesen",
+      "it-telecom": "IT, Software & Telekommunikation",
+      "consulting": "Beratung & professionelle Dienstleistungen",
+      "engineering": "Ingenieurwesen & Architektur",
+      "cleaning-facilities": "Reinigung & Gebäudedienste",
+      "transport-logistics": "Transport & Logistik",
+      "catering": "Catering & Verpflegung",
+      "healthcare": "Gesundheit & Sozialdienste",
+      "education": "Bildung & Ausbildung",
+      "supplies-equipment": "Bürobedarf & Ausstattung"
+    },
+    "language": {
+      "nl": "Niederländisch",
+      "fr": "Französisch",
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "bidStatus": {
+      "EVALUATION": "Bewertung",
+      "PREPARATION": "Vorbereitung",
+      "REVIEW": "Prüfung",
+      "READY_TO_SUBMIT": "Einreichbereit",
+      "SUBMITTED": "Eingereicht",
+      "WON": "Gewonnen",
+      "LOST": "Verloren",
+      "WITHDRAWN": "Zurückgezogen"
+    },
+    "workflowStage": {
+      "screening": "Sichtung",
+      "reviewing": "Prüfung",
+      "applying": "In Bearbeitung",
+      "submitted": "Eingereicht",
+      "won": "Gewonnen",
+      "lost": "Verloren"
+    },
+    "tenderStatus": {
+      "PROCESSING": "In Bearbeitung",
+      "ANALYZING": "Wird analysiert",
+      "READY": "Bereit",
+      "FAILED": "Fehlgeschlagen"
+    },
+    "companySize": {
+      "solo": "Einzelunternehmen / freiberuflich",
+      "1-9": "1–9 Mitarbeitende",
+      "10-49": "10–49 Mitarbeitende",
+      "50-249": "50–249 Mitarbeitende"
+    },
+    "tedMatchLabel": {
+      "strong": "Starke Übereinstimmung",
+      "good": "Gute Übereinstimmung",
+      "possible": "Mögliche Übereinstimmung",
+      "weak": "Schwache Übereinstimmung"
+    },
+    "disqualifierSeverity": {
+      "CRITICAL": "Kritisch",
+      "HIGH": "Hoch",
+      "MEDIUM": "Mittel",
+      "LOW": "Niedrig"
+    },
+    "evidenceCoverageStatus": {
+      "VERIFIED": "Bestätigt",
+      "PARTIAL": "Teilweise",
+      "MISSING": "Fehlend",
+      "CONTRADICTED": "Widersprüchlich",
+      "NEEDS_REVIEW": "Prüfung erforderlich"
+    },
+    "confidence": {
+      "HIGH": "Hoch",
+      "MEDIUM": "Mittel",
+      "LOW": "Niedrig"
+    },
+    "requirementStatus": {
+      "NOT_STARTED": "Nicht begonnen",
+      "IN_PROGRESS": "In Bearbeitung",
+      "COMPLETE": "Abgeschlossen",
+      "BLOCKED": "Blockiert",
+      "NOT_APPLICABLE": "Nicht zutreffend"
+    },
+    "evidenceType": {
+      "service": "Dienstleistung",
+      "certification": "Zertifizierung",
+      "reference": "Referenz"
+    },
+    "eligibilityVerdict": {
+      "eligible": "Geeignet",
+      "reviewNeeded": "Prüfung erforderlich",
+      "notEligible": "Nicht geeignet"
+    },
+    "bidOutcome": {
+      "WON": "Gewonnen",
+      "LOST": "Verloren",
+      "WITHDRAWN": "Zurückgezogen",
+      "NO_RESULT": "Kein Ergebnis"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AddToWorkflowButton({
@@ -8,6 +9,7 @@ export default function AddToWorkflowButton({
 }: {
   publicationNumber: string;
 }) {
+  const t = useTranslations("AddToWorkflowButton");
   const [state, setState] = useState<"idle" | "saving" | "added" | "error">("idle");
 
   async function add(e: React.MouseEvent) {
@@ -32,7 +34,7 @@ export default function AddToWorkflowButton({
   }
 
   if (state === "added") {
-    return <span className="text-xs font-medium text-moss">Added to workflow ✓</span>;
+    return <span className="text-xs font-medium text-moss">{t("added")}</span>;
   }
 
   return (
@@ -41,7 +43,7 @@ export default function AddToWorkflowButton({
       disabled={state === "saving"}
       className="text-xs font-medium text-accent border border-accent/30 bg-accent/5 rounded-full px-3 py-1 hover:bg-accent/10 transition-colors disabled:opacity-50"
     >
-      {state === "saving" ? "Adding…" : state === "error" ? "Try again" : "Add to workflow"}
+      {state === "saving" ? t("adding") : state === "error" ? t("tryAgain") : t("addToWorkflow")}
     </button>
   );
 }

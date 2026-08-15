@@ -1,0 +1,599 @@
+{
+  "Header": {
+    "tagline": "België · Overheidsopdrachten",
+    "pricing": "Prijzen",
+    "signOut": "Afmelden"
+  },
+  "Nav": {
+    "opportunities": "Opportuniteiten",
+    "workflow": "Workflow",
+    "search": "Zoeken",
+    "market": "Marktoverzicht",
+    "tenders": "Opdrachten",
+    "bids": "Offertes",
+    "company": "Bedrijf"
+  },
+  "LocaleSwitcher": {
+    "label": "Taal"
+  },
+  "Login": {
+    "heading": "Inloggen",
+    "subheading": "Log in om opdrachten te zien, gefilterd op jouw sectoren.",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "loggingIn": "Bezig met inloggen…",
+    "logIn": "Inloggen",
+    "noAccount": "Nog geen account?",
+    "signUp": "Registreren",
+    "viewPricing": "Bekijk prijzen"
+  },
+  "Opportunities": {
+    "eyebrow": "Enkel open oproepen · Bron: TED",
+    "heading": "Opportuniteiten",
+    "description": "Werkelijk open opdrachten in België, gematcht aan jouw sectoren — reeds gegunde en informatieve berichten worden weggefilterd. Opgehaald uit de officiële TED-databank van de EU; deze bèta dekt berichten boven de EU-publicatiedrempels.",
+    "couldNotReachTed": "Kon TED niet bereiken.",
+    "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
+    "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk."
+  },
+  "Market": {
+    "eyebrow": "Laatste 90 dagen · Bron: TED-gunningsberichten",
+    "heading": "Marktoverzicht",
+    "description": "Recent gegunde Belgische overheidsopdrachten — wie won, voor hoeveel, en van wie. Dit is een momentopname van recente gunningen, geen volledig historisch archief.",
+    "couldNotReachTed": "Kon TED niet bereiken.",
+    "loadError": "Kon momenteel geen gunningsgegevens laden ({loadError}). Probeer het zo opnieuw.",
+    "topWinners": "Topwinnaars naar gegunde waarde",
+    "topBuyers": "Topkopers naar uitgaven",
+    "recentAwards": "Recente gunningen",
+    "noAwards": "Geen gunningsberichten gevonden in deze periode.",
+    "awarded": "Gegund op {date}",
+    "buyerLine": "{title} · koper: {buyer}",
+    "value": "Waarde",
+    "notEnoughData": "Nog niet genoeg gegevens.",
+    "awardCount": "{count, plural, one {# gunning} other {# gunningen}}"
+  },
+  "Search": {
+    "eyebrow": "Ad-hoc opzoeking · Bron: TED",
+    "heading": "Zoeken",
+    "description": "Eenmalige zoekopdrachten over alle werkelijk open Belgische opdrachten, los van je opgeslagen sectoren — filter op trefwoord, CPV-code, waardebereik of deadline.",
+    "couldNotReachTed": "Kon TED niet bereiken.",
+    "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
+    "noResults": "Geen berichten kwamen overeen met die filters.",
+    "prompt": "Voer hierboven een trefwoord, CPV-code, waardebereik of deadline in om te zoeken."
+  },
+  "AdvancedSearchForm": {
+    "keyword": "Trefwoord",
+    "keywordPlaceholder": "bv. schoonmaakdiensten",
+    "cpvCode": "CPV-code",
+    "cpvPlaceholder": "bv. 90910000",
+    "minValue": "Min. waarde (EUR)",
+    "maxValue": "Max. waarde (EUR)",
+    "noLimit": "Geen limiet",
+    "deadlineAfter": "Deadline na",
+    "deadlineBefore": "Deadline voor",
+    "search": "Zoeken"
+  },
+  "SearchFilters": {
+    "keywordPlaceholder": "Trefwoord — bv. schoonmaakdiensten",
+    "cpvPlaceholder": "CPV-code — bv. 90910000",
+    "search": "Zoeken"
+  },
+  "TenderCard": {
+    "refPublished": "Ref. {ref} · Gepubliceerd {date}",
+    "deadline": "Deadline"
+  },
+  "MatchScoreBadge": {
+    "criteriaCount": "{met}/{total} criteria"
+  },
+  "Pricing": {
+    "goToApp": "Naar de app",
+    "logIn": "Inloggen",
+    "signUp": "Registreren",
+    "eyebrow": "Prijzen",
+    "heading": "Eenvoudige, duidelijke plannen",
+    "subheading": "Begin gratis, upgrade wanneer je serieus wilt gaan bieden.",
+    "mostPopular": "Meest gekozen",
+    "perMonth": "/maand",
+    "getStarted": "Aan de slag",
+    "tiers": {
+      "free": {
+        "name": "Gratis",
+        "blurb": "Ontdek het opsporen van opdrachten voor één sector.",
+        "features": ["Opportuniteiten-feed voor 1 sector", "Handmatig zoeken", "Detailpagina's van opdrachten"]
+      },
+      "pro": {
+        "name": "Pro",
+        "blurb": "Voor kmo's die actief bieden op overheidsopdrachten.",
+        "features": [
+          "Opportuniteiten-feed, alle sectoren",
+          "AI-matchscores op elke opdracht",
+          "Workflow-pipelinebord",
+          "Dagelijkse e-mailmeldingen"
+        ]
+      },
+      "premium": {
+        "name": "Premium",
+        "blurb": "Voor teams die het volledige marktbeeld willen.",
+        "features": [
+          "Alles van Pro",
+          "Marktoverzicht & gunningsanalyses",
+          "AI-geschiktheidscontroles",
+          "Prioritaire ondersteuning"
+        ]
+      }
+    }
+  },
+  "WorkflowPage": {
+    "eyebrow": "Jouw pipeline",
+    "heading": "Workflow",
+    "description": "Volg opdrachten waar je achteraan zit, van eerste screening tot indiening. Voeg opdrachten toe vanuit Opportuniteiten of de detailpagina van een opdracht."
+  },
+  "PublicTenderDetail": {
+    "backToOpenTenders": "Terug naar open opdrachten",
+    "ref": "Ref. {ref}",
+    "buyer": "Koper",
+    "deadline": "Deadline",
+    "estValue": "Geraamde waarde",
+    "published": "Gepubliceerd",
+    "viewOnTed": "Bekijk volledig officieel bericht op TED"
+  },
+  "AddToWorkflowButton": {
+    "added": "Toegevoegd aan workflow ✓",
+    "adding": "Bezig met toevoegen…",
+    "tryAgain": "Opnieuw proberen",
+    "addToWorkflow": "Toevoegen aan workflow"
+  },
+  "UploadAnalyzer": {
+    "analysisFailed": "Analyse mislukt.",
+    "somethingWentWrong": "Er is iets misgegaan.",
+    "checkEligibility": "Geschiktheid controleren",
+    "intro": "Plak hieronder de vereisten of ESPD-tekst van de opdracht — of voer de controle uit op enkel de metadata van het bericht.",
+    "pasteTextPlaceholder": "Plak hier de tekst van het opdrachtdocument (optioneel)…",
+    "attachFileHint": "of voeg een bestand toe ter referentie (nog niet verwerkt in bèta)",
+    "readingTender": "Opdracht wordt gelezen…",
+    "runCheck": "Geschiktheidscontrole uitvoeren",
+    "keyRequirements": "Belangrijkste vereisten"
+  },
+  "RequirementWorkspace": {
+    "status": "Status",
+    "couldNotFindEvidence": "Kon geen bewijs vinden.",
+    "couldNotGenerateDraft": "Kon geen concept genereren.",
+    "couldNotRecheckDraft": "Kon het concept niet opnieuw controleren.",
+    "relevantEvidenceFound": "Relevant bewijs gevonden",
+    "findingEvidence": "Bewijs zoeken…",
+    "findEvidence": "Bewijs zoeken",
+    "clickFindEvidenceHint": "Klik op Bewijs zoeken om te zien welke diensten, certificeringen en referenties van je bedrijf relevant zijn voor deze vereiste.",
+    "noRelevantEvidence": "Geen relevant bedrijfsbewijs gevonden voor deze vereiste.",
+    "evidenceMeta": "({type} · {relevance} gelijkenis)",
+    "evidenceUsedInDraft": "Bewijs gebruikt in huidig concept",
+    "generating": "Bezig met genereren…",
+    "regenerateDraft": "Concept opnieuw genereren",
+    "generateDraft": "Concept genereren",
+    "aiDraft": "AI-concept",
+    "confidence": "Betrouwbaarheid: {level}",
+    "acceptedCheck": "Geaccepteerd ✓",
+    "unsupportedClaims": "{count, plural, one {Onderbouwde claim} other {Onderbouwde claims}}",
+    "dismiss": "Negeren",
+    "unsupportedClaimsHint": "Dit kon niet worden geverifieerd aan de hand van je bedrijfskennisbank. Bewerk het concept om het te verwijderen of te herformuleren, of voeg hierboven ondersteunend bewijs toe en genereer opnieuw.",
+    "acceptDraft": "Concept accepteren",
+    "edit": "Bewerken",
+    "rechecking": "Opnieuw aan het controleren…",
+    "saveAndRecheck": "Opslaan & opnieuw controleren"
+  },
+  "RequirementPage": {
+    "backToBidWorkspace": "Terug naar offerteruimte",
+    "mandatory": "Verplicht",
+    "source": "Bron: {parts}"
+  },
+  "ReviewActions": {
+    "couldNotRunReview": "Kon de controle niet uitvoeren.",
+    "runningReview": "Controle wordt uitgevoerd…",
+    "reRunReview": "Controle opnieuw uitvoeren",
+    "runReview": "Controle uitvoeren",
+    "submitted": "Ingediend",
+    "bidClosed": "Offerte afgesloten",
+    "saving": "Bezig met opslaan…",
+    "markAsSubmitted": "Markeer als ingediend",
+    "opening": "Bezig met openen…"
+  },
+  "BidReview": {
+    "backToBid": "Terug naar offerte",
+    "heading": "Controle voor indiening",
+    "untitledTender": "Naamloze opdracht",
+    "noReviewYet": "Er is nog geen controle uitgevoerd. Deze controleert je vereistenlijst, documentenlijst en opgestelde antwoorden op alles wat indiening zou kunnen blokkeren.",
+    "readyToSubmit": "Klaar om in te dienen",
+    "notReadyToSubmit": "Nog niet klaar om in te dienen",
+    "compliantPercent": "{score}% conform",
+    "criticalIssues": "Kritieke problemen",
+    "warnings": "Waarschuwingen",
+    "requirements": "Vereisten",
+    "documents": "Documenten",
+    "lastRun": "Laatst uitgevoerd {when} · {claims}",
+    "unresolvedClaims": "{count, plural, one {# onopgeloste onderbouwde claim} other {# onopgeloste onderbouwde claims}}",
+    "submission": "Indiening",
+    "downloadBidPackage": "Offertepakket downloaden",
+    "noDocumentsUploaded": "Nog geen documenten geüpload — voeg ze toe via de documentenlijst op de offerteruimte-pagina.",
+    "officialSubmission": "Officiële indiening",
+    "openOfficialPlatform": "Officieel indieningsplatform openen",
+    "noSubmissionPlatform": "Er is geen link naar een indieningsplatform bekend voor deze opdracht — dien rechtstreeks in via het officiële kanaal van de aanbestedende overheid."
+  },
+  "StartBidButton": {
+    "couldNotStart": "Kon de offerte niet starten.",
+    "starting": "Bezig met starten…",
+    "startBid": "Offerte starten"
+  },
+  "MapEvidenceButton": {
+    "couldNotMap": "Kon bewijs niet koppelen.",
+    "mapping": "Bewijs wordt gekoppeld…",
+    "remap": "Bewijs opnieuw koppelen",
+    "map": "Bewijs koppelen aan vereisten"
+  },
+  "RecordOutcomeForm": {
+    "outcome": "Resultaat",
+    "edit": "Bewerken",
+    "wonBy": "Gewonnen door {bidder}",
+    "recordOutcome": "Resultaat registreren",
+    "storedHint": "Opgeslagen voor toekomstige winratio-tracking. Huidige offertestatus: {status}.",
+    "contractValuePlaceholder": "Contractwaarde (EUR)",
+    "durationPlaceholder": "Duur, bv. '4 jaar'",
+    "reasonPlaceholder": "Reden (indien bekend)",
+    "winningBidderPlaceholder": "Winnende inschrijver (indien bekend)",
+    "winningPricePlaceholder": "Winnende prijs (indien bekend)",
+    "ourScorePlaceholder": "Onze score (indien bekend)",
+    "feedbackPlaceholder": "Feedback van de aanbestedende overheid (indien aanwezig)",
+    "notesPlaceholder": "Notities",
+    "saving": "Bezig met opslaan…",
+    "saveOutcome": "Resultaat opslaan",
+    "cancel": "Annuleren"
+  },
+  "DocumentsChecklist": {
+    "heading": "Documenten",
+    "noneExtracted": "Er zijn geen vereiste documenten uit deze opdracht gehaald — controleer in plaats daarvan de vereistenlijst op documentgerelateerde items.",
+    "readyCount": "{ready}/{total} klaar",
+    "download": "Downloaden",
+    "uploading": "Bezig met uploaden…",
+    "upload": "Uploaden",
+    "markMissing": "Markeer als ontbrekend",
+    "markReady": "Markeer als klaar",
+    "couldNotOpenFile": "Kon het bestand niet openen."
+  },
+  "BidWorkspace": {
+    "backToBids": "Terug naar offertes",
+    "authorityDeadline": "{authority} · Deadline {date}",
+    "untitledTender": "Naamloze opdracht",
+    "reviewBid": "Offerte controleren",
+    "openWarnings": "{count, plural, one {# openstaande waarschuwing} other {# openstaande waarschuwingen}}",
+    "overallProgress": "Totale voortgang",
+    "requirements": "Vereisten",
+    "mandatory": "Verplicht"
+  },
+  "TenderDetail": {
+    "backToTenders": "Terug naar opdrachten",
+    "analyzingTender": "Opdracht wordt geanalyseerd…",
+    "failedMessage": "Deze opdracht kon niet worden verwerkt. Veelvoorkomende oorzaken: de pdf bevat geen extraheerbare tekst (een gescand document zonder OCR) of de AI-analyse is mislukt. Probeer opnieuw te uploaden, of een ander bestand.",
+    "stillProcessing": "Nog bezig met verwerken — ververs zo dadelijk.",
+    "authority": "Aanbestedende overheid",
+    "deadline": "Deadline",
+    "estValue": "Geraamde waarde",
+    "duration": "Duur",
+    "viewOriginalPdf": "Bekijk origineel pdf",
+    "confidence": "Betrouwbaarheid: {level}",
+    "addCompanyProfileBefore": "Voeg je",
+    "companyProfile": "bedrijfsprofiel",
+    "addCompanyProfileAfter": "toe om een matchscore en bied/niet-bieden-aanbeveling voor deze opdracht te krijgen.",
+    "goToBidWorkspace": "Naar offerteruimte",
+    "tenderProcScore": "TenderProc-score",
+    "dataUnavailable": "Gegevens niet beschikbaar.",
+    "whyNotBid": "Waarom niet bieden?",
+    "companyStatus": "Status bedrijf:",
+    "possibleMitigation": "Mogelijke oplossing:",
+    "evidenceCoverage": "Bewijsdekking",
+    "notMappedYet": "Nog niet in kaart gebracht — klik op Bewijs koppelen aan vereisten om te zien welke diensten, certificeringen en referenties van je bedrijf elke vereiste dekken.",
+    "whyThisMatches": "Waarom dit matcht",
+    "positiveFactors": "Positieve factoren",
+    "risks": "Risico's",
+    "missing": "Ontbreekt: {requirement}",
+    "effortEstimate": "SCHATTING — MENSELIJKE VERIFICATIE VEREIST: {min}–{max} uur voorbereidingswerk voor de offerte.",
+    "awardCriteria": "Gunningscriteria",
+    "requirements": "Vereisten",
+    "mandatory": "Verplicht",
+    "source": "Bron: {parts}",
+    "requiredDocuments": "Vereiste documenten",
+    "ambiguities": "Onduidelijkheden"
+  },
+  "UploadTenderButton": {
+    "uploadFailed": "Upload mislukt.",
+    "uploadingAndAnalyzing": "Bezig met uploaden & analyseren… (tot een minuut)",
+    "uploadTender": "Opdracht uploaden"
+  },
+  "MyTendersList": {
+    "eyebrow": "Geüploade opdrachten · AI-analyse",
+    "heading": "Opdrachten",
+    "description": "Upload een opdracht-pdf voor een gestructureerd overzicht: gunningscriteria, vereisten en een bied/niet-bieden-aanbeveling gebaseerd op je bedrijfsprofiel.",
+    "empty": "Nog geen opdrachten geüpload. Upload een pdf om te beginnen.",
+    "analyzing": "Bezig met analyseren…",
+    "deadline": "Deadline",
+    "value": "Waarde"
+  },
+  "TagInput": {
+    "removeTag": "{tag} verwijderen",
+    "defaultPlaceholder": "Typ en druk op Enter"
+  },
+  "ServicesSection": {
+    "heading": "Diensten",
+    "nothingAdded": "Nog niets toegevoegd.",
+    "remove": "Verwijderen",
+    "namePlaceholder": "Naam van de dienst, bv. Kantoorschoonmaak",
+    "descriptionPlaceholder": "Korte beschrijving (optioneel)",
+    "add": "Toevoegen"
+  },
+  "CertificationsSection": {
+    "heading": "Certificeringen",
+    "nothingAdded": "Nog niets toegevoegd.",
+    "expired": "Verlopen",
+    "expiresSoon": "Verloopt binnenkort",
+    "valid": "Geldig",
+    "expiresOn": "verloopt op {date}",
+    "noFurtherDetails": "Geen verdere details",
+    "remove": "Verwijderen",
+    "namePlaceholder": "Naam van de certificering, bv. ISO 9001",
+    "issuingOrgPlaceholder": "Uitgevende organisatie (optioneel)",
+    "certificateNumberPlaceholder": "Certificaatnummer (optioneel)",
+    "add": "Toevoegen"
+  },
+  "ReferencesSection": {
+    "heading": "Referenties",
+    "subheading": "Eerdere projecten die de AI kan aanhalen als vergelijkbare ervaring — ze zal nooit ervaring claimen die verder gaat dan wat hier vermeld staat.",
+    "nothingAdded": "Nog niets toegevoegd.",
+    "publicSector": "publieke sector",
+    "privateSector": "private sector",
+    "value": "Waarde: €{value}",
+    "remove": "Verwijderen",
+    "clientPlaceholder": "Klant, bv. Stad Antwerpen",
+    "projectNamePlaceholder": "Projectnaam (optioneel)",
+    "descriptionPlaceholder": "Korte beschrijving (optioneel)",
+    "contractValuePlaceholder": "Contractwaarde in EUR (optioneel)",
+    "sectorOptional": "Publieke of private sector? (optioneel)",
+    "servicesLabel": "Geleverde diensten voor dit project",
+    "servicesPlaceholder": "bv. Dagelijkse schoonmaak",
+    "addReference": "Referentie toevoegen"
+  },
+  "DocumentsSection": {
+    "heading": "Documenten",
+    "subheading": "Ondersteunend bewijs (certificaten, brochures, beleidsdocumenten) dat je kan koppelen aan certificeringen en referenties hierboven.",
+    "nothingUploaded": "Nog niets geüpload.",
+    "remove": "Verwijderen",
+    "uploading": "Bezig met uploaden…",
+    "uploadDocument": "Document uploaden"
+  },
+  "CompanyPage": {
+    "eyebrow": "Kennisbank",
+    "heading": "Bedrijf",
+    "description": "Wat Bidara echt weet over jouw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
+    "unlockHint": "Sla je bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen."
+  },
+  "CompanyCoreForm": {
+    "nameRequired": "Bedrijfsnaam is verplicht.",
+    "heading": "Bedrijfsprofiel",
+    "subheading": "Dit is de kennisbank die de AI gebruikt bij het analyseren van opdrachten en het opstellen van antwoorden — ze gebruikt nooit informatie buiten wat hier is ingevuld.",
+    "companyName": "Bedrijfsnaam",
+    "website": "Website",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "Wat doet het bedrijf, en voor wie?",
+    "companySize": "Bedrijfsgrootte",
+    "preferNotToSay": "Liever niet zeggen",
+    "employeeCount": "Aantal werknemers (exact, optioneel)",
+    "regionsServed": "Bediende regio's",
+    "regionsServedPlaceholder": "bv. Antwerpen",
+    "languages": "Talen",
+    "languagesPlaceholder": "bv. Nederlands",
+    "industries": "Sectoren",
+    "industriesPlaceholder": "bv. Facilitair beheer",
+    "saving": "Bezig met opslaan…",
+    "saveChanges": "Wijzigingen opslaan",
+    "createProfile": "Bedrijfsprofiel aanmaken",
+    "saved": "Opgeslagen ✓"
+  },
+  "Signup": {
+    "pickSector": "Kies minstens één sector.",
+    "checkEmailHeading": "Controleer je e-mail",
+    "checkEmailBody": "We hebben een bevestigingslink gestuurd naar {email}. Klik erop en log dan in — je bedrijfsprofiel is al opgeslagen.",
+    "backToLogin": "Terug naar inloggen",
+    "heading": "Maak je account aan",
+    "subheading": "Vertel ons over je bedrijf — dit bepaalt welke opdrachten je ziet en de matchscore van elke opdracht.",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "passwordPlaceholder": "Minstens 6 tekens",
+    "companyName": "Bedrijfsnaam",
+    "companyNamePlaceholder": "bv. Van Damme Cleaning bv",
+    "address": "Adres",
+    "addressPlaceholder": "bv. Antwerpen",
+    "companySize": "Bedrijfsgrootte",
+    "preferNotToSay": "Liever niet zeggen",
+    "descriptionLabel": "Wat doet je bedrijf?",
+    "descriptionPlaceholder": "Een paar zinnen volstaan — dit bepaalt de matchscore van elke opdracht.",
+    "sectors": "Sectoren",
+    "creatingAccount": "Account wordt aangemaakt…",
+    "signUp": "Registreren",
+    "alreadyHaveAccount": "Heb je al een account?",
+    "logIn": "Inloggen",
+    "viewPricing": "Bekijk prijzen"
+  },
+  "Errors": {
+    "api": {
+      "notAuthenticated": "Niet ingelogd.",
+      "noFileProvided": "Geen bestand opgegeven.",
+      "onlyPdfSupported": "Alleen pdf-bestanden worden ondersteund in deze bèta.",
+      "fileTooLarge": "Bestand is groter dan 20 MB.",
+      "aiAnalysisFailed": "AI-analyse mislukt. Probeer het zo opnieuw.",
+      "tenderNotFound": "Opdracht niet gevonden.",
+      "needCompanyProfile": "Voeg je bedrijfsprofiel toe om verder te gaan.",
+      "couldNotMapEvidence": "Kon bewijs momenteel niet koppelen. Probeer het zo opnieuw.",
+      "bidNotFound": "Offerte niet gevonden.",
+      "missingTenderId": "Opdracht ontbreekt.",
+      "serverMisconfigured": "De server is niet correct geconfigureerd. Probeer het later opnieuw.",
+      "missingTenderInfo": "Opdrachtinformatie ontbreekt.",
+      "analysisFailed": "Analyse mislukt. Probeer het zo opnieuw.",
+      "missingDraftText": "Concepttekst ontbreekt.",
+      "noDraftToRecheck": "Nog geen concept om opnieuw te controleren.",
+      "companyProfileNotFound": "Bedrijfsprofiel niet gevonden.",
+      "couldNotRecheckDraft": "Kon het concept momenteel niet opnieuw controleren. Probeer het zo opnieuw.",
+      "requirementNotFound": "Vereiste niet gevonden.",
+      "couldNotFindEvidence": "Kon momenteel geen bewijs vinden. Probeer het zo opnieuw.",
+      "couldNotGenerateDraft": "Kon momenteel geen concept genereren. Probeer het zo opnieuw."
+    },
+    "auth": {
+      "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",
+      "emailNotConfirmed": "Bevestig je e-mailadres voordat je inlogt.",
+      "userAlreadyRegistered": "Er bestaat al een account met dit e-mailadres.",
+      "passwordTooShort": "Wachtwoord is te kort.",
+      "invalidEmail": "Vul een geldig e-mailadres in.",
+      "rateLimited": "Te veel pogingen. Probeer het straks opnieuw."
+    }
+  },
+  "BidsList": {
+    "eyebrow": "Offerteruimte",
+    "title": "Offertes",
+    "description": "Opdrachten waarvoor je actief een offerte voorbereidt. Start er een vanaf de pagina van een klaarstaande opdracht.",
+    "emptyBefore": "Nog geen offertes. Open een opdracht onder",
+    "tenders": "Opdrachten",
+    "emptyAfter": "en klik op Start offerte.",
+    "untitledTender": "Naamloze opdracht",
+    "deadline": "Deadline"
+  },
+  "Workflow": {
+    "emptyBefore": "Nog niets in je workflow. Voeg een opdracht toe vanuit",
+    "opportunities": "Opportuniteiten",
+    "emptyAfter": "om ze hier te volgen.",
+    "nothingHere": "Niets hier.",
+    "closed": "Afgesloten",
+    "couldNotLoad": "Kon de details van deze opdracht niet laden.",
+    "remove": "Verwijderen"
+  },
+  "PreferencesSidebar": {
+    "sectors": "Sectoren",
+    "languages": "Talen",
+    "languagesHint": "Bepaalt in welke taal vertaalde titels worden getoond — elke opdracht blijft in elk geval zichtbaar.",
+    "saving": "Bezig met opslaan…"
+  },
+  "Enums": {
+    "matchLabel": {
+      "strong": "Sterke match",
+      "good": "Goede match",
+      "moderate": "Matige match",
+      "weak": "Zwakke match"
+    },
+    "recommendation": {
+      "bid": "BIEDEN",
+      "consider": "OVERWEGEN",
+      "noBid": "NIET BIEDEN"
+    },
+    "requirementCategory": {
+      "eligibility": "Toelaatbaarheid",
+      "administrative": "Administratief",
+      "technical": "Technisch",
+      "experience": "Ervaring",
+      "certification": "Certificering",
+      "personnel": "Personeel",
+      "financial": "Financieel",
+      "pricing": "Prijszetting",
+      "document": "Document",
+      "award_criterion": "Gunningscriterium",
+      "other": "Overig"
+    },
+    "sector": {
+      "construction": "Bouw & werken",
+      "it-telecom": "IT, software & telecom",
+      "consulting": "Consulting & professionele diensten",
+      "engineering": "Engineering & architectuur",
+      "cleaning-facilities": "Schoonmaak & facilitaire diensten",
+      "transport-logistics": "Transport & logistiek",
+      "catering": "Catering & voeding",
+      "healthcare": "Zorg & sociale diensten",
+      "education": "Onderwijs & opleiding",
+      "supplies-equipment": "Kantoorbenodigdheden & uitrusting"
+    },
+    "language": {
+      "nl": "Nederlands",
+      "fr": "Frans",
+      "de": "Duits",
+      "en": "Engels"
+    },
+    "bidStatus": {
+      "EVALUATION": "Evaluatie",
+      "PREPARATION": "Voorbereiding",
+      "REVIEW": "Controle",
+      "READY_TO_SUBMIT": "Klaar om in te dienen",
+      "SUBMITTED": "Ingediend",
+      "WON": "Gewonnen",
+      "LOST": "Verloren",
+      "WITHDRAWN": "Ingetrokken"
+    },
+    "workflowStage": {
+      "screening": "Screening",
+      "reviewing": "Beoordeling",
+      "applying": "Aan het indienen",
+      "submitted": "Ingediend",
+      "won": "Gewonnen",
+      "lost": "Verloren"
+    },
+    "tenderStatus": {
+      "PROCESSING": "Bezig met verwerken",
+      "ANALYZING": "Bezig met analyseren",
+      "READY": "Klaar",
+      "FAILED": "Mislukt"
+    },
+    "companySize": {
+      "solo": "Zelfstandig / freelance",
+      "1-9": "1–9 werknemers",
+      "10-49": "10–49 werknemers",
+      "50-249": "50–249 werknemers"
+    },
+    "tedMatchLabel": {
+      "strong": "Sterke match",
+      "good": "Goede match",
+      "possible": "Mogelijke match",
+      "weak": "Zwakke match"
+    },
+    "disqualifierSeverity": {
+      "CRITICAL": "Kritiek",
+      "HIGH": "Hoog",
+      "MEDIUM": "Middel",
+      "LOW": "Laag"
+    },
+    "evidenceCoverageStatus": {
+      "VERIFIED": "Geverifieerd",
+      "PARTIAL": "Gedeeltelijk",
+      "MISSING": "Ontbreekt",
+      "CONTRADICTED": "Tegenstrijdig",
+      "NEEDS_REVIEW": "Controle nodig"
+    },
+    "confidence": {
+      "HIGH": "Hoog",
+      "MEDIUM": "Middel",
+      "LOW": "Laag"
+    },
+    "requirementStatus": {
+      "NOT_STARTED": "Nog niet gestart",
+      "IN_PROGRESS": "Bezig",
+      "COMPLETE": "Voltooid",
+      "BLOCKED": "Geblokkeerd",
+      "NOT_APPLICABLE": "Niet van toepassing"
+    },
+    "evidenceType": {
+      "service": "dienst",
+      "certification": "certificering",
+      "reference": "referentie"
+    },
+    "eligibilityVerdict": {
+      "eligible": "Geschikt",
+      "reviewNeeded": "Controle nodig",
+      "notEligible": "Niet geschikt"
+    },
+    "bidOutcome": {
+      "WON": "Gewonnen",
+      "LOST": "Verloren",
+      "WITHDRAWN": "Ingetrokken",
+      "NO_RESULT": "Geen resultaat"
+    }
+  }
+}

@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { EligibilityResult, TenderNotice } from "@/lib/types";
+import { apiErrorMessage } from "@/lib/apiErrors";
 import StampBadge from "./StampBadge";
 
 export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
+  const t = useTranslations("UploadAnalyzer");
+  const tApiError = useTranslations("Errors.api");
   const [pastedText, setPastedText] = useState("");
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -32,10 +36,10 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
         body: JSON.stringify({ tender, documentText: pastedText }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Analysis failed.");
+      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("analysisFailed")));
       setResult(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : t("somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -43,23 +47,20 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
 
   return (
     <div className="border border-line rounded-2xl p-6 bg-white">
-      <h2 className="font-display font-semibold text-xl text-ink mb-1">Check eligibility</h2>
-      <p className="text-sm text-inkDim mb-4">
-        Paste the tender&apos;s requirements or ESPD text below — or just run the
-        check on the notice metadata alone.
-      </p>
+      <h2 className="font-display font-semibold text-xl text-ink mb-1">{t("checkEligibility")}</h2>
+      <p className="text-sm text-inkDim mb-4">{t("intro")}</p>
 
       <textarea
         value={pastedText}
         onChange={(e) => setPastedText(e.target.value)}
         rows={6}
-        placeholder="Paste the tender document text here (optional)…"
+        placeholder={t("pasteTextPlaceholder")}
         className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent mb-3"
       />
 
       <div className="flex items-center justify-between mb-4">
         <label className="text-xs text-inkDim cursor-pointer underline">
-          or attach a file for reference (not parsed yet in beta)
+          {t("attachFileHint")}
           <input type="file" accept=".pdf" className="hidden" onChange={onFileChange} />
         </label>
         {fileName && <span className="text-xs text-inkDim">{fileName}</span>}
@@ -70,7 +71,7 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
         disabled={loading}
         className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
       >
-        {loading ? "Reading the tender…" : "Run eligibility check"}
+        {loading ? t("readingTender") : t("runCheck")}
       </button>
 
       {error && <p className="text-sm text-stamp mt-4">{error}</p>}
@@ -83,7 +84,7 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
             {result.keyRequirements?.length > 0 && (
               <div className="mb-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                  Key requirements
+                  {t("keyRequirements")}
                 </p>
                 <ul className="space-y-1.5">
                   {result.keyRequirements.map((r, i) => (

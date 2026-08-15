@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import AdvancedSearchForm from "@/components/AdvancedSearchForm";
 import TenderCard from "@/components/TenderCard";
@@ -23,6 +24,7 @@ export default async function SearchPage({
 }) {
   const params = await searchParams;
   const hasQuery = Object.values(params).some(Boolean);
+  const t = await getTranslations("Search");
 
   const supabase = await createClient();
   const {
@@ -44,7 +46,7 @@ export default async function SearchPage({
         limit: 50,
       });
     } catch (err) {
-      loadError = err instanceof Error ? err.message : "Couldn't reach TED.";
+      loadError = err instanceof Error ? err.message : t("couldNotReachTed");
     }
   }
 
@@ -70,15 +72,13 @@ export default async function SearchPage({
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-            Ad-hoc lookup · Source: TED
+            {t("eyebrow")}
           </p>
           <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
-            Search
+            {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-            One-off searches across all genuinely open Belgian tenders,
-            independent of your saved sectors — filter by keyword, CPV code,
-            value range, or deadline.
+            {t("description")}
           </p>
         </div>
 
@@ -86,29 +86,29 @@ export default async function SearchPage({
 
         {loadError && (
           <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-            Couldn&apos;t load tenders right now ({loadError}). Try again in a
-            moment.
+            {t("loadError", { loadError })}
           </div>
         )}
 
         {hasQuery && !loadError && tenders.length === 0 && (
           <div className="border border-line rounded-2xl p-8 text-center">
-            <p className="text-inkDim">No notices matched those filters.</p>
+            <p className="text-inkDim">{t("noResults")}</p>
           </div>
         )}
 
         {!hasQuery && (
           <div className="border border-line rounded-2xl p-8 text-center">
-            <p className="text-inkDim">
-              Enter a keyword, CPV code, value range, or deadline above to
-              search.
-            </p>
+            <p className="text-inkDim">{t("prompt")}</p>
           </div>
         )}
 
         <div>
-          {tenders.map((t) => (
-            <TenderCard key={t.publicationNumber} tender={t} score={scores[t.publicationNumber]} />
+          {tenders.map((tender) => (
+            <TenderCard
+              key={tender.publicationNumber}
+              tender={tender}
+              score={scores[tender.publicationNumber]}
+            />
           ))}
         </div>
       </main>

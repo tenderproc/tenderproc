@@ -1,27 +1,32 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { TenderNotice } from "@/lib/types";
 import { MatchScore } from "@/lib/scoring";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 import AddToWorkflowButton from "./AddToWorkflowButton";
 import MatchScoreBadge from "./MatchScoreBadge";
 
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
-
-export default function TenderCard({
+export default async function TenderCard({
   tender,
   score,
 }: {
   tender: TenderNotice;
   score?: MatchScore;
 }) {
+  const t = await getTranslations("TenderCard");
+  const locale = (await getLocale()) as Locale;
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
   return (
     <div className="relative border-b border-line py-5 hover:bg-paperDim transition-colors -mx-4 px-4 rounded-doc">
       {/* Stretched link: covers the whole card so it's still click-anywhere,
@@ -36,7 +41,10 @@ export default function TenderCard({
       <div className="flex items-start justify-between gap-6">
         <div className="min-w-0">
           <p className="text-[11px] font-medium uppercase tracking-wide text-inkDim mb-1">
-            Ref. {tender.publicationNumber} · Published {formatDate(tender.publicationDate)}
+            {t("refPublished", {
+              ref: tender.publicationNumber,
+              date: formatDate(tender.publicationDate),
+            })}
           </p>
           <h3 className="font-display font-semibold text-lg text-ink leading-snug">
             {tender.title}
@@ -49,9 +57,7 @@ export default function TenderCard({
           )}
         </div>
         <div className="text-right shrink-0">
-          <p className="text-xs text-inkDim uppercase tracking-wide">
-            Deadline
-          </p>
+          <p className="text-xs text-inkDim uppercase tracking-wide">{t("deadline")}</p>
           <p className="text-sm text-ink font-medium">{formatDate(tender.deadline)}</p>
         </div>
       </div>

@@ -13,6 +13,15 @@ export const LANGUAGES: Language[] = [
   { key: "en", label: "English", aliases: ["en", "eng"] },
 ];
 
-export function languageLabels(keys: string[]): string[] {
-  return LANGUAGES.filter((l) => keys.includes(l.key)).map((l) => l.label);
+export function languageLabels(keys: string[], t?: (key: string) => string): string[] {
+  return LANGUAGES.filter((l) => keys.includes(l.key)).map((l) => {
+    if (t) {
+      try {
+        return t(l.key);
+      } catch {
+        // fall through to the English default below
+      }
+    }
+    return l.label;
+  });
 }

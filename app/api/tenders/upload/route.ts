@@ -15,22 +15,22 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
   }
 
   const formData = await req.formData();
   const file = formData.get("file");
   if (!(file instanceof File)) {
-    return NextResponse.json({ error: "No file provided." }, { status: 400 });
+    return NextResponse.json({ error: "No file provided.", code: "noFileProvided" }, { status: 400 });
   }
   if (!isSupportedMimeType(file.type)) {
     return NextResponse.json(
-      { error: "Only PDF files are supported in this beta." },
+      { error: "Only PDF files are supported in this beta.", code: "onlyPdfSupported" },
       { status: 400 }
     );
   }
   if (file.size > MAX_FILE_BYTES) {
-    return NextResponse.json({ error: "File is larger than 20MB." }, { status: 400 });
+    return NextResponse.json({ error: "File is larger than 20MB.", code: "fileTooLarge" }, { status: 400 });
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
     console.error("analyzeTender failed", err);
     await supabase.from("tenders").update({ status: "FAILED" }).eq("id", tenderId);
     return NextResponse.json(
-      { id: tenderId, error: "AI analysis failed. Try again in a moment." },
+      { id: tenderId, error: "AI analysis failed. Try again in a moment.", code: "aiAnalysisFailed" },
       { status: 200 }
     );
   }

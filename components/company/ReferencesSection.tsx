@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import TagInput from "./TagInput";
 
@@ -22,6 +23,7 @@ export default function ReferencesSection({
   companyId: string;
   initialReferences: ReferenceRow[];
 }) {
+  const t = useTranslations("ReferencesSection");
   const router = useRouter();
   const [client, setClient] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -69,14 +71,11 @@ export default function ReferencesSection({
 
   return (
     <div className="border border-line bg-white rounded-2xl p-6">
-      <h3 className="font-display font-semibold text-base text-ink mb-3">References</h3>
-      <p className="text-xs text-inkDim mb-4 -mt-2">
-        Past projects the AI can cite as comparable experience — it will
-        never claim experience beyond what&apos;s listed here.
-      </p>
+      <h3 className="font-display font-semibold text-base text-ink mb-3">{t("heading")}</h3>
+      <p className="text-xs text-inkDim mb-4 -mt-2">{t("subheading")}</p>
 
       {initialReferences.length === 0 ? (
-        <p className="text-sm text-inkDim mb-4">Nothing added yet.</p>
+        <p className="text-sm text-inkDim mb-4">{t("nothingAdded")}</p>
       ) : (
         <ul className="space-y-2 mb-4">
           {initialReferences.map((r) => (
@@ -90,20 +89,22 @@ export default function ReferencesSection({
                   {r.project_name ? ` — ${r.project_name}` : ""}
                   {r.is_public !== null && (
                     <span className="ml-2 text-xs text-inkDim">
-                      ({r.is_public ? "public sector" : "private sector"})
+                      ({r.is_public ? t("publicSector") : t("privateSector")})
                     </span>
                   )}
                 </p>
                 {r.description && <p className="text-inkDim mt-0.5">{r.description}</p>}
                 {r.contract_value && (
-                  <p className="text-inkDim mt-0.5">Value: €{r.contract_value.toLocaleString()}</p>
+                  <p className="text-inkDim mt-0.5">
+                    {t("value", { value: r.contract_value.toLocaleString() })}
+                  </p>
                 )}
               </div>
               <button
                 onClick={() => remove(r.id)}
                 className="text-xs text-stamp hover:underline shrink-0"
               >
-                Remove
+                {t("remove")}
               </button>
             </li>
           ))}
@@ -115,20 +116,20 @@ export default function ReferencesSection({
           <input
             value={client}
             onChange={(e) => setClient(e.target.value)}
-            placeholder="Client, e.g. Municipality of Antwerp"
+            placeholder={t("clientPlaceholder")}
             className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
           <input
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
-            placeholder="Project name (optional)"
+            placeholder={t("projectNamePlaceholder")}
             className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Short description (optional)"
+          placeholder={t("descriptionPlaceholder")}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <div className="grid sm:grid-cols-2 gap-2">
@@ -137,7 +138,7 @@ export default function ReferencesSection({
             min={0}
             value={contractValue}
             onChange={(e) => setContractValue(e.target.value)}
-            placeholder="Contract value in EUR (optional)"
+            placeholder={t("contractValuePlaceholder")}
             className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
           <select
@@ -145,22 +146,22 @@ export default function ReferencesSection({
             onChange={(e) => setIsPublic(e.target.value as "" | "public" | "private")}
             className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
           >
-            <option value="">Public or private sector? (optional)</option>
-            <option value="public">Public sector</option>
-            <option value="private">Private sector</option>
+            <option value="">{t("sectorOptional")}</option>
+            <option value="public">{t("publicSector")}</option>
+            <option value="private">{t("privateSector")}</option>
           </select>
         </div>
         <TagInput
-          label="Services delivered on this project"
+          label={t("servicesLabel")}
           values={services}
           onChange={setServices}
-          placeholder="e.g. Daily cleaning"
+          placeholder={t("servicesPlaceholder")}
         />
         <button
           disabled={saving}
           className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors disabled:opacity-50"
         >
-          Add reference
+          {t("addReference")}
         </button>
       </form>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}

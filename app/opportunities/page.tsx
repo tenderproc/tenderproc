@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import SearchFilters from "@/components/SearchFilters";
 import TenderCard from "@/components/TenderCard";
@@ -17,6 +18,7 @@ export default async function OpportunitiesPage({
   searchParams: Promise<{ q?: string; cpv?: string }>;
 }) {
   const params = await searchParams;
+  const t = await getTranslations("Opportunities");
 
   const supabase = await createClient();
   const {
@@ -61,7 +63,7 @@ export default async function OpportunitiesPage({
       limit: 25,
     });
   } catch (err) {
-    loadError = err instanceof Error ? err.message : "Couldn't reach TED.";
+    loadError = err instanceof Error ? err.message : t("couldNotReachTed");
   }
 
   let scores: Record<string, MatchScore> = {};
@@ -90,16 +92,13 @@ export default async function OpportunitiesPage({
         <div className="flex-1 min-w-0">
           <div className="mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-              Open calls only · Source: TED
+              {t("eyebrow")}
             </p>
             <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
-              Opportunities
+              {t("heading")}
             </h1>
             <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
-              Genuinely open tenders in Belgium, matched to your sectors —
-              already-awarded and informational notices are filtered out.
-              Pulled from the EU&apos;s official TED database; this beta covers
-              notices above the EU publication thresholds.
+              {t("description")}
             </p>
           </div>
 
@@ -107,23 +106,23 @@ export default async function OpportunitiesPage({
 
           {loadError && (
             <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-              Couldn&apos;t load tenders right now ({loadError}). Try again in a
-              moment.
+              {t("loadError", { loadError })}
             </div>
           )}
 
           {!loadError && tenders.length === 0 && (
             <div className="border border-line rounded-2xl p-8 text-center">
-              <p className="text-inkDim">
-                No notices matched your sectors or search. Try widening your
-                sector selection in the sidebar.
-              </p>
+              <p className="text-inkDim">{t("noResults")}</p>
             </div>
           )}
 
           <div>
-            {tenders.map((t) => (
-              <TenderCard key={t.publicationNumber} tender={t} score={scores[t.publicationNumber]} />
+            {tenders.map((tender) => (
+              <TenderCard
+                key={tender.publicationNumber}
+                tender={tender}
+                score={scores[tender.publicationNumber]}
+              />
             ))}
           </div>
         </div>

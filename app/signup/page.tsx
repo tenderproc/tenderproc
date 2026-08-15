@@ -3,17 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { SECTORS } from "@/lib/sectors";
-
-const COMPANY_SIZES = [
-  { key: "solo", label: "Solo / freelance" },
-  { key: "1-9", label: "1–9 employees" },
-  { key: "10-49", label: "10–49 employees" },
-  { key: "50-249", label: "50–249 employees" },
-];
+import { COMPANY_SIZES } from "@/lib/companySizes";
+import { authErrorMessage } from "@/lib/authErrors";
 
 export default function SignupPage() {
+  const t = useTranslations("Signup");
+  const tSector = useTranslations("Enums.sector");
+  const tCompanySize = useTranslations("Enums.companySize");
+  const tAuthError = useTranslations("Errors.auth");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +33,7 @@ export default function SignupPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (sectors.length === 0) {
-      setError("Pick at least one sector.");
+      setError(t("pickSector"));
       return;
     }
     setLoading(true);
@@ -42,7 +42,7 @@ export default function SignupPage() {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
       setLoading(false);
-      setError(error.message);
+      setError(authErrorMessage(error.message, tAuthError));
       return;
     }
 
@@ -82,14 +82,13 @@ export default function SignupPage() {
             TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
-            Check your email
+            {t("checkEmailHeading")}
           </h1>
           <p className="text-sm text-inkDim mt-3 leading-relaxed">
-            We sent a confirmation link to {email}. Click it, then log in —
-            your company profile is already saved.
+            {t("checkEmailBody", { email })}
           </p>
           <Link href="/login" className="inline-block mt-6 underline text-sm text-ink">
-            Back to login
+            {t("backToLogin")}
           </Link>
         </div>
       </main>
@@ -104,12 +103,9 @@ export default function SignupPage() {
             TenderProc
           </p>
           <h1 className="font-display font-bold text-3xl mt-2 text-ink tracking-tight">
-            Create your account
+            {t("heading")}
           </h1>
-          <p className="text-sm text-inkDim mt-3 leading-relaxed">
-            Tell us about your business — it powers the tenders you see and
-            each tender&apos;s match score.
-          </p>
+          <p className="text-sm text-inkDim mt-3 leading-relaxed">{t("subheading")}</p>
         </div>
 
         <form
@@ -119,7 +115,7 @@ export default function SignupPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-                Email
+                {t("email")}
               </label>
               <input
                 type="email"
@@ -133,14 +129,14 @@ export default function SignupPage() {
             </div>
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-                Password
+                {t("password")}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
-                placeholder="At least 6 characters"
+                placeholder={t("passwordPlaceholder")}
                 minLength={6}
                 required
               />
@@ -150,25 +146,25 @@ export default function SignupPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-                Company name
+                {t("companyName")}
               </label>
               <input
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
-                placeholder="e.g. Van Damme Cleaning bv"
+                placeholder={t("companyNamePlaceholder")}
                 required
               />
             </div>
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-                Address
+                {t("address")}
               </label>
               <input
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
-                placeholder="e.g. Antwerp"
+                placeholder={t("addressPlaceholder")}
                 required
               />
             </div>
@@ -176,17 +172,17 @@ export default function SignupPage() {
 
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-              Company size
+              {t("companySize")}
             </label>
             <select
               value={companySize}
               onChange={(e) => setCompanySize(e.target.value)}
               className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
             >
-              <option value="">Prefer not to say</option>
+              <option value="">{t("preferNotToSay")}</option>
               {COMPANY_SIZES.map((s) => (
                 <option key={s.key} value={s.key}>
-                  {s.label}
+                  {tCompanySize(s.key)}
                 </option>
               ))}
             </select>
@@ -194,20 +190,20 @@ export default function SignupPage() {
 
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
-              What does your business do?
+              {t("descriptionLabel")}
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              placeholder="A couple sentences is enough — this is what powers each tender's match score."
+              placeholder={t("descriptionPlaceholder")}
               className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
             />
           </div>
 
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-2">
-              Sectors
+              {t("sectors")}
             </label>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
               {SECTORS.map((sector) => (
@@ -221,7 +217,7 @@ export default function SignupPage() {
                     checked={sectors.includes(sector.key)}
                     onChange={() => toggleSector(sector.key)}
                   />
-                  {sector.label}
+                  {tSector(sector.key)}
                 </label>
               ))}
             </div>
@@ -233,18 +229,18 @@ export default function SignupPage() {
             disabled={loading}
             className="w-full bg-accent text-white py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
           >
-            {loading ? "Creating account…" : "Sign up"}
+            {loading ? t("creatingAccount") : t("signUp")}
           </button>
         </form>
 
         <p className="text-xs text-inkDim text-center mt-6">
-          Already have an account?{" "}
+          {t("alreadyHaveAccount")}{" "}
           <Link href="/login" className="underline">
-            Log in
+            {t("logIn")}
           </Link>
           . ·{" "}
           <Link href="/pricing" className="underline">
-            View pricing
+            {t("viewPricing")}
           </Link>
         </p>
       </div>

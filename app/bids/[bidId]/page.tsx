@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import BidStatusSelect from "@/components/bids/BidStatusSelect";
 import DocumentsChecklist from "@/components/bids/DocumentsChecklist";
@@ -7,19 +8,10 @@ import RecordOutcomeForm from "@/components/bids/RecordOutcomeForm";
 import { createClient } from "@/lib/supabase/server";
 import { REQUIREMENT_CATEGORIES } from "@/lib/ai/types";
 import { computeProgress } from "@/lib/bids";
+import { requirementCategoryLabel } from "@/lib/requirementCategory";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 
 export const dynamic = "force-dynamic";
-
-function formatDate(d: string | null) {
-  if (!d) return "—";
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-}
-
-function categoryLabel(category: string) {
-  return category.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
-}
 
 const STATUS_DOT: Record<string, string> = {
   NOT_STARTED: "bg-line",
@@ -35,6 +27,22 @@ export default async function BidWorkspacePage({
   params: Promise<{ bidId: string }>;
 }) {
   const { bidId } = await params;
+  const t = await getTranslations("BidWorkspace");
+  const tCategory = await getTranslations("Enums.requirementCategory");
+  const tStatus = await getTranslations("Enums.requirementStatus");
+  const locale = (await getLocale()) as Locale;
+
+  function formatDate(d: string | null) {
+    if (!d) return "—";
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString(INTL_LOCALE[locale], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -85,17 +93,19 @@ export default async function BidWorkspacePage({
       <Header />
       <main className="max-w-4xl mx-auto px-6 py-10">
         <Link href="/bids" className="text-sm text-inkDim hover:text-ink">
-          ← Back to bids
+          ← {t("backToBids")}
         </Link>
 
         <div className="mt-6 mb-8 flex items-start justify-between gap-6 flex-wrap">
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-inkDim">
-              {tender?.contracting_authority ?? "—"} · Deadline{" "}
-              {formatDate(tender?.submission_deadline ?? null)}
+              {t("authorityDeadline", {
+                authority: tender?.contracting_authority ?? "—",
+                date: formatDate(tender?.submission_deadline ?? null),
+              })}
             </p>
             <h1 className="font-display font-bold text-3xl text-ink mt-1 leading-tight tracking-tight">
-              {tender?.title || "Untitled tender"}
+              {tender?.title || t("untitledTender")}
             </h1>
           </div>
           <div className="flex items-center gap-3">
@@ -103,7 +113,7 @@ export default async function BidWorkspacePage({
               href={`/bids/${bidId}/review`}
               className="text-sm font-medium text-accent border border-accent/30 bg-accent/5 rounded-doc px-4 py-2 hover:bg-accent/10 transition-colors"
             >
-              Review Bid →
+              {t("reviewBid")} →
             </Link>
             <BidStatusSelect bidId={bid.id} status={bid.status} />
           </div>
@@ -112,7 +122,7 @@ export default async function BidWorkspacePage({
         {openWarnings && openWarnings.length > 0 && (
           <div className="border border-gold/30 bg-gold/5 rounded-doc p-4 text-sm text-ink mb-8">
             <p className="font-medium text-gold mb-1">
-              {openWarnings.length} open warning{openWarnings.length === 1 ? "" : "s"}
+              {t("openWarnings", { count: openWarnings.length })}
             </p>
             <ul className="space-y-1">
               {openWarnings.slice(0, 5).map((w) => (
@@ -126,7 +136,7 @@ export default async function BidWorkspacePage({
 
         <div className="mb-8">
           <div className="flex items-center justify-between mb-1">
-            <p className="text-sm font-medium text-ink">Overall progress</p>
+            <p className="text-sm font-medium text-ink">{t("overallProgress")}</p>
             <p className="text-sm text-inkDim">{overallProgress}%</p>
           </div>
           <div className="h-2 bg-paperDim rounded-full overflow-hidden">
@@ -141,7 +151,7 @@ export default async function BidWorkspacePage({
               <div key={group.category}>
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-inkDim">
-                    {categoryLabel(group.category)}
+                    {requirementCategoryLabel(group.category, tCategory)}
                   </p>
                   <p className="text-xs text-inkDim">{progress}%</p>
                 </div>
@@ -153,12 +163,12 @@ export default async function BidWorkspacePage({
           })}
         </div>
 
-        <h2 className="font-display font-semibold text-lg text-ink mb-3">Requirements</h2>
+        <h2 className="font-display font-semibold text-lg text-ink mb-3">{t("requirements")}</h2>
         <div className="space-y-5">
           {categoryGroups.map((group) => (
             <div key={group.category}>
               <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-2">
-                {categoryLabel(group.category)} · {group.items.length}
+                {requirementCategoryLabel(group.category, tCategory)} · {group.items.length}
               </p>
               <ul className="space-y-2">
                 {group.items.map((r) => (
@@ -174,11 +184,11 @@ export default async function BidWorkspacePage({
                         <span className="font-medium text-ink">{r.title}</span>
                         {r.mandatory && (
                           <span className="text-[10px] font-semibold uppercase text-stamp">
-                            Mandatory
+                            {t("mandatory")}
                           </span>
                         )}
                       </span>
-                      <span className="text-xs text-inkDim">{r.status.replace(/_/g, " ")}</span>
+                      <span className="text-xs text-inkDim">{tStatus(r.status)}</span>
                     </Link>
                   </li>
                 ))}
