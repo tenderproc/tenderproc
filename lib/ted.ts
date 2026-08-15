@@ -154,7 +154,7 @@ export async function searchBelgianTenders(
     const value = extractValue(n);
     return {
       publicationNumber: String(pubNumber),
-      title: firstValue(n["notice-title"], titlePriority) ?? "Untitled notice",
+      title: stripTedTitleBoilerplate(firstValue(n["notice-title"], titlePriority) ?? "Untitled notice"),
       buyerName: firstValue(n["buyer-name"]) ?? "Unknown buyer",
       buyerCountry: firstValue(n["buyer-country"]) ?? "BEL",
       totalValue: value.text,
@@ -221,7 +221,7 @@ export async function getTenderById(
   const value = extractValue(n);
   return {
     publicationNumber: id,
-    title: firstValue(n["notice-title"], titlePriority) ?? "Untitled notice",
+    title: stripTedTitleBoilerplate(firstValue(n["notice-title"], titlePriority) ?? "Untitled notice"),
     buyerName: firstValue(n["buyer-name"]) ?? "Unknown buyer",
     buyerCountry: firstValue(n["buyer-country"]) ?? "BEL",
     totalValue: value.text,
@@ -297,7 +297,7 @@ export async function searchAwardedTenders(
     const hasNumeric = !isNaN(numeric) && numeric > 0;
     return {
       publicationNumber: String(pubNumber),
-      title: firstValue(n["notice-title"]) ?? "Untitled notice",
+      title: stripTedTitleBoilerplate(firstValue(n["notice-title"]) ?? "Untitled notice"),
       buyerName: firstValue(n["buyer-name"]) ?? "Unknown buyer",
       winnerName: firstValue(n["winner-name"]) ?? "Unknown winner",
       winnerCountry: firstValue(n["winner-country"]) ?? "BEL",
@@ -401,6 +401,20 @@ function firstValue(v: unknown, priority: string[] = LANGUAGE_PRIORITY): string 
     return firstValue(preferred, priority);
   }
   return null;
+}
+
+// TED auto-generates every language variant of notice-title as
+// "<Country> – <CPV category> – <original title>". Only the first two
+// segments are actually translated by TED; the third — the buyer's own
+// submitted title — is never translated and stays in whichever language
+// the buyer wrote it in. That makes an "eng" title read as English for
+// two segments then switch language for the rest, which looks like a bug
+// but is baked into TED's data. Since translating just the boilerplate
+// prefix wouldn't fix the mixed-language look, we drop the prefix
+// entirely and show only the buyer's original title.
+function stripTedTitleBoilerplate(title: string): string {
+  const parts = title.split(" – ");
+  return parts.length >= 3 ? parts.slice(2).join(" – ") : title;
 }
 
 // Builds a firstValue() priority list from a user's selected display
