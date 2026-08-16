@@ -4,6 +4,90 @@
     "pricing": "Prijzen",
     "signOut": "Afmelden"
   },
+  "Landing": {
+    "hero": {
+      "eyebrow": "België · Overheidsopdrachten",
+      "headline": "AI-ondersteunde opsporing van overheidsopdrachten voor Belgische kmo's",
+      "subheading": "TenderProc matcht nieuwe Belgische overheidsopdrachten met jouw sector, filtert de ruis eruit, en helpt je een opdracht te screenen en een offerte voor te bereiden — allemaal op één plek.",
+      "ctaPrimary": "Gratis registreren",
+      "ctaSecondary": "Inloggen"
+    },
+    "problem": {
+      "eyebrow": "Het probleem",
+      "heading": "Relevante opdrachten gaan verloren in de ruis",
+      "body": "De Belgische feed van overheidsopdrachten publiceert jaarlijks duizenden aankondigingen, in vier talen, in elke sector. Die handmatig doorzoeken naar de paar die bij jouw bedrijf passen, kost uren — en uit onze tests bleek dat ongeveer een derde van een ongefilterde feed aankondigingen betrof van opdrachten die al gegund waren. Mis je de juiste, of verspil je tijd aan de verkeerde, dan bied je op minder dan mogelijk is."
+    },
+    "features": {
+      "eyebrow": "Wat je krijgt",
+      "heading": "Alles tussen publicatie en indiening",
+      "subheading": "Opsporen, screenen en offertes voorbereiden in één workflow.",
+      "items": [
+        {
+          "tier": "Pro",
+          "title": "AI-sectormatching",
+          "description": "Elke nieuwe opdracht krijgt een matchscore op 100 tegenover je bedrijfsprofiel, zodat je meteen ziet wat echt de moeite waard is."
+        },
+        {
+          "tier": "Pro",
+          "title": "Dagelijkse e-mailmeldingen",
+          "description": "Een dagelijkse samenvatting meldt alles wat nieuw gepubliceerd is in jouw sectoren, zodat je het nooit zelf hoeft te onthouden."
+        },
+        {
+          "tier": "Pro",
+          "title": "Workflow-pipelinebord",
+          "description": "Volg opdrachten die je nastreeft doorheen screening, review, kandidatuur en indiening op één bord."
+        },
+        {
+          "tier": "Premium",
+          "title": "Marktoverzicht & gunningsanalyses",
+          "description": "Zie wie Belgische overheidsopdrachten wint, voor welk bedrag en bij wie — een live overzicht van recente gunningen, niet enkel open oproepen."
+        },
+        {
+          "tier": "Pro",
+          "title": "AI-ondersteunde offertevoorbereiding",
+          "description": "Upload een bestek als PDF: TenderProc haalt de vereisten eruit, beoordeelt je fit met een Bieden/Niet-bieden-advies, en schrijft een antwoord op basis van je eigen bedrijfsbewijs."
+        }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "Hoe het werkt",
+      "heading": "Van sectorprofiel tot ingediende offerte",
+      "steps": [
+        {
+          "title": "Stel je sectorprofiel in",
+          "description": "Geef je sector, bedrijfsgrootte en activiteit op bij registratie — dat bepaalt elke matchscore die je te zien krijgt."
+        },
+        {
+          "title": "Krijg elke dag gematchte opdrachten",
+          "description": "Bekijk relevante open Belgische opdrachten zodra ze gepubliceerd worden, gescoord tegenover je profiel, plus een dagelijkse samenvatting zodat niets je ontgaat."
+        },
+        {
+          "title": "Volg op en bied met vertrouwen",
+          "description": "Verplaats opdrachten doorheen je pipeline en laat TenderProc je helpen bij het checken van geschiktheid, het in kaart brengen van bewijs en het opstellen van een onderbouwd antwoord."
+        }
+      ]
+    },
+    "pricingSection": {
+      "eyebrow": "Prijzen",
+      "heading": "Eenvoudige, duidelijke plannen",
+      "subheading": "Begin gratis, upgrade wanneer je serieus wilt gaan bieden.",
+      "viewFullPricing": "Bekijk alle plandetails"
+    },
+    "finalCta": {
+      "heading": "Klaar om geen opdracht meer te missen?",
+      "subheading": "Stel je profiel in enkele minuten in — geen kaart nodig om te starten met Gratis.",
+      "cta": "Gratis registreren"
+    },
+    "footer": {
+      "tagline": "AI-ondersteunde opsporing van overheidsopdrachten voor Belgische kmo's.",
+      "product": "Product",
+      "pricing": "Prijzen",
+      "account": "Account",
+      "logIn": "Inloggen",
+      "signUp": "Registreren",
+      "rights": "© {year} TenderProc. Alle rechten voorbehouden."
+    }
+  },
   "Nav": {
     "opportunities": "Opportuniteiten",
     "workflow": "Workflow",

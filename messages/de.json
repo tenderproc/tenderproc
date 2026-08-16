@@ -4,6 +4,90 @@
     "pricing": "Preise",
     "signOut": "Abmelden"
   },
+  "Landing": {
+    "hero": {
+      "eyebrow": "Belgien · Öffentliche Ausschreibungen",
+      "headline": "KI-gestützte Erkennung öffentlicher Ausschreibungen für belgische KMU",
+      "subheading": "TenderProc gleicht neue belgische Ausschreibungen mit deiner Branche ab, filtert das Rauschen heraus und hilft dir, ein Angebot zu prüfen und vorzubereiten — alles an einem Ort.",
+      "ctaPrimary": "Kostenlos registrieren",
+      "ctaSecondary": "Anmelden"
+    },
+    "problem": {
+      "eyebrow": "Das Problem",
+      "heading": "Relevante Ausschreibungen gehen im Rauschen unter",
+      "body": "Der belgische Ausschreibungs-Feed veröffentlicht jährlich Tausende Bekanntmachungen, in vier Sprachen, über alle Branchen hinweg. Ihn manuell nach der Handvoll zu durchsuchen, die zu deinem Unternehmen passt, kostet Stunden — und in unseren Tests betraf etwa ein Drittel eines ungefilterten Feeds bereits vergebene Aufträge. Verpasst du die richtige Ausschreibung oder verlierst du Zeit mit den falschen, bietest du auf weniger, als möglich wäre."
+    },
+    "features": {
+      "eyebrow": "Was du bekommst",
+      "heading": "Alles zwischen Veröffentlichung und Einreichung",
+      "subheading": "Erkennung, Prüfung und Angebotsvorbereitung in einem Workflow.",
+      "items": [
+        {
+          "tier": "Pro",
+          "title": "KI-Branchenabgleich",
+          "description": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von 100 gegenüber deinem Firmenprofil, damit du zuerst siehst, was sich wirklich lohnt."
+        },
+        {
+          "tier": "Pro",
+          "title": "Tägliche E-Mail-Benachrichtigungen",
+          "description": "Eine tägliche Zusammenfassung meldet alles, was neu in deinen Branchen veröffentlicht wurde — du musst nicht selbst dran denken."
+        },
+        {
+          "tier": "Pro",
+          "title": "Workflow-Pipeline-Board",
+          "description": "Verfolge Ausschreibungen, die du verfolgst, durch Prüfung, Review, Bewerbung und Einreichung auf einem einzigen Board."
+        },
+        {
+          "tier": "Premium",
+          "title": "Marktübersicht & Zuschlagsanalysen",
+          "description": "Sieh, wer belgische öffentliche Aufträge gewinnt, für welchen Betrag und von wem — eine Live-Ansicht aktueller Zuschläge, nicht nur offener Ausschreibungen."
+        },
+        {
+          "tier": "Pro",
+          "title": "KI-gestützte Angebotsvorbereitung",
+          "description": "Lade eine Ausschreibung als PDF hoch: TenderProc extrahiert die Anforderungen, bewertet deine Eignung mit einer Bieten/Nicht-bieten-Empfehlung und entwirft eine Antwort auf Basis deiner eigenen Firmennachweise."
+        }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "So funktioniert's",
+      "heading": "Vom Branchenprofil zum eingereichten Angebot",
+      "steps": [
+        {
+          "title": "Lege dein Branchenprofil fest",
+          "description": "Gib bei der Registrierung deine Branche, Unternehmensgröße und Tätigkeit an — das bestimmt jede Übereinstimmungsbewertung, die du siehst."
+        },
+        {
+          "title": "Täglich passende Ausschreibungen erhalten",
+          "description": "Sieh relevante offene belgische Ausschreibungen, sobald sie veröffentlicht werden, bewertet anhand deines Profils, plus eine tägliche Zusammenfassung, damit dir nichts entgeht."
+        },
+        {
+          "title": "Verfolgen und mit Zuversicht bieten",
+          "description": "Bewege Ausschreibungen durch deine Pipeline und lass TenderProc dir helfen, die Eignung zu prüfen, Nachweise zuzuordnen und eine fundierte Antwort zu entwerfen."
+        }
+      ]
+    },
+    "pricingSection": {
+      "eyebrow": "Preise",
+      "heading": "Einfache, klare Pläne",
+      "subheading": "Starte kostenlos, upgrade, sobald du ernsthaft bieten willst.",
+      "viewFullPricing": "Alle Plandetails ansehen"
+    },
+    "finalCta": {
+      "heading": "Bereit, keine Ausschreibung mehr zu verpassen?",
+      "subheading": "Richte dein Profil in wenigen Minuten ein — keine Karte nötig, um mit Kostenlos zu starten.",
+      "cta": "Kostenlos registrieren"
+    },
+    "footer": {
+      "tagline": "KI-gestützte Erkennung öffentlicher Ausschreibungen für belgische KMU.",
+      "product": "Produkt",
+      "pricing": "Preise",
+      "account": "Konto",
+      "logIn": "Anmelden",
+      "signUp": "Registrieren",
+      "rights": "© {year} TenderProc. Alle Rechte vorbehalten."
+    }
+  },
   "Nav": {
     "opportunities": "Chancen",
     "workflow": "Workflow",

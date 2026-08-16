@@ -4,6 +4,90 @@
     "pricing": "Tarifs",
     "signOut": "Se déconnecter"
   },
+  "Landing": {
+    "hero": {
+      "eyebrow": "Belgique · Marchés publics",
+      "headline": "La veille de marchés publics assistée par IA pour les PME belges",
+      "subheading": "TenderProc met en correspondance les nouveaux marchés publics belges avec votre secteur, filtre le bruit, et vous aide à qualifier et préparer une offre — le tout au même endroit.",
+      "ctaPrimary": "S'inscrire gratuitement",
+      "ctaSecondary": "Se connecter"
+    },
+    "problem": {
+      "eyebrow": "Le problème",
+      "heading": "Les marchés pertinents se perdent dans le bruit",
+      "body": "Le flux belge des marchés publics publie des milliers d'avis par an, en quatre langues, dans tous les secteurs. Le parcourir à la main pour repérer la poignée qui correspond à votre activité coûte des heures — et lors de nos tests, environ un tiers d'un flux non filtré concernait des marchés déjà attribués. Ratez le bon avis, ou perdez du temps à filtrer les mauvais, et vous soumissionnez moins que vous ne le pourriez."
+    },
+    "features": {
+      "eyebrow": "Ce que vous obtenez",
+      "heading": "Tout, de la publication jusqu'au dépôt",
+      "subheading": "Veille, filtrage et préparation d'offre dans un seul flux de travail.",
+      "items": [
+        {
+          "tier": "Pro",
+          "title": "Correspondance sectorielle par IA",
+          "description": "Chaque nouveau marché reçoit un score de correspondance sur 100 par rapport à votre profil d'entreprise, pour repérer d'abord ce qui vaut vraiment votre temps."
+        },
+        {
+          "tier": "Pro",
+          "title": "Alertes e-mail quotidiennes",
+          "description": "Un résumé quotidien signale tout ce qui vient d'être publié dans vos secteurs, pour ne jamais devoir y penser vous-même."
+        },
+        {
+          "tier": "Pro",
+          "title": "Tableau de suivi des marchés",
+          "description": "Suivez les marchés que vous visez à travers le filtrage, la revue, la candidature et le dépôt sur un seul tableau."
+        },
+        {
+          "tier": "Premium",
+          "title": "Aperçu du marché & analyse des attributions",
+          "description": "Voyez qui remporte les marchés publics belges, pour quel montant et auprès de qui — une vue en direct des attributions récentes, pas seulement des appels ouverts."
+        },
+        {
+          "tier": "Pro",
+          "title": "Préparation d'offre assistée par IA",
+          "description": "Téléversez un cahier des charges en PDF : TenderProc en extrait les exigences, évalue votre adéquation avec une recommandation Go/No-Go, et rédige une réponse fondée sur vos propres preuves d'entreprise."
+        }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "Comment ça marche",
+      "heading": "Du profil sectoriel à l'offre déposée",
+      "steps": [
+        {
+          "title": "Définissez votre profil sectoriel",
+          "description": "Indiquez votre secteur, la taille de votre entreprise et votre activité lors de l'inscription — cela détermine chaque score de correspondance que vous verrez."
+        },
+        {
+          "title": "Recevez des marchés ciblés, chaque jour",
+          "description": "Consultez les marchés belges ouverts pertinents dès leur publication, notés selon votre profil, avec un résumé quotidien pour ne rien manquer."
+        },
+        {
+          "title": "Suivez et soumissionnez en toute confiance",
+          "description": "Faites avancer vos marchés dans le pipeline, puis laissez TenderProc vérifier l'éligibilité, cartographier vos preuves et rédiger une réponse fondée."
+        }
+      ]
+    },
+    "pricingSection": {
+      "eyebrow": "Tarifs",
+      "heading": "Des formules simples et claires",
+      "subheading": "Commencez gratuitement, passez à la vitesse supérieure quand vous êtes prêt à soumissionner sérieusement.",
+      "viewFullPricing": "Voir le détail des formules"
+    },
+    "finalCta": {
+      "heading": "Prêt à ne plus manquer un marché ?",
+      "subheading": "Configurez votre profil en quelques minutes — aucune carte requise pour démarrer avec la formule gratuite.",
+      "cta": "S'inscrire gratuitement"
+    },
+    "footer": {
+      "tagline": "La veille de marchés publics assistée par IA pour les PME belges.",
+      "product": "Produit",
+      "pricing": "Tarifs",
+      "account": "Compte",
+      "logIn": "Se connecter",
+      "signUp": "S'inscrire",
+      "rights": "© {year} TenderProc. Tous droits réservés."
+    }
+  },
   "Nav": {
     "opportunities": "Opportunités",
     "workflow": "Suivi",

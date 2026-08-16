@@ -26,6 +26,10 @@ export async function proxy(req: NextRequest) {
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/signup");
   const isPublic =
     isAuthPage ||
+    // Root is the public marketing landing page — page.tsx itself redirects
+    // an already-authenticated visitor on to /opportunities, so this only
+    // needs to keep signed-out visitors from being bounced to /login first.
+    pathname === "/" ||
     pathname.startsWith("/pricing") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||

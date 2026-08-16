@@ -4,6 +4,90 @@
     "pricing": "Pricing",
     "signOut": "Sign out"
   },
+  "Landing": {
+    "hero": {
+      "eyebrow": "Belgium · Public tenders",
+      "headline": "AI-assisted public tender discovery for Belgian SMEs",
+      "subheading": "TenderProc matches new Belgian public tenders to your sector, screens out the noise, and helps you qualify and prepare a bid — all in one place.",
+      "ctaPrimary": "Sign up free",
+      "ctaSecondary": "Log in"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "heading": "Relevant tenders get lost in the noise",
+      "body": "Belgium's public tender feed publishes thousands of notices a year, in four languages, across every sector. Scanning it by hand for the handful that fit your business costs hours — and in testing, about a third of an unfiltered feed turned out to be notices for contracts that were already awarded. Miss the right one, or waste time screening the wrong ones, and you bid on less than you could."
+    },
+    "features": {
+      "eyebrow": "What you get",
+      "heading": "Everything between \"published\" and \"submitted\"",
+      "subheading": "Discovery, screening, and bid preparation in one workflow.",
+      "items": [
+        {
+          "tier": "Pro",
+          "title": "AI sector matching",
+          "description": "Every new tender gets a match score out of 100 against your company profile, so you see what's actually worth your time first."
+        },
+        {
+          "tier": "Pro",
+          "title": "Daily email alerts",
+          "description": "A daily digest flags anything newly published in your sectors, so you never have to remember to check back."
+        },
+        {
+          "tier": "Pro",
+          "title": "Workflow pipeline board",
+          "description": "Track tenders you're pursuing through screening, review, application, and submission on one board."
+        },
+        {
+          "tier": "Premium",
+          "title": "Market overview & award analytics",
+          "description": "See who's winning Belgian public contracts, for how much, and from whom — a live view of recent awards, not just open calls."
+        },
+        {
+          "tier": "Pro",
+          "title": "AI-assisted bid preparation",
+          "description": "Upload a tender PDF and TenderProc extracts the requirements, scores your fit with a Bid/No-Bid recommendation, and drafts a response grounded in your own company evidence."
+        }
+      ]
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "heading": "From sector profile to submitted bid",
+      "steps": [
+        {
+          "title": "Set your sector profile",
+          "description": "Tell us your sector, company size, and what you do when you sign up — it shapes every match score you see."
+        },
+        {
+          "title": "Get matched tenders, daily",
+          "description": "See relevant open Belgian tenders as they're published, scored against your profile, plus a daily digest so nothing new slips by."
+        },
+        {
+          "title": "Track and bid with confidence",
+          "description": "Move tenders through your pipeline, then let TenderProc help you check eligibility, map your evidence, and draft a grounded bid response."
+        }
+      ]
+    },
+    "pricingSection": {
+      "eyebrow": "Pricing",
+      "heading": "Simple, straightforward plans",
+      "subheading": "Start free, upgrade when you're ready to bid seriously.",
+      "viewFullPricing": "See full plan details"
+    },
+    "finalCta": {
+      "heading": "Ready to stop missing tenders?",
+      "subheading": "Set up your profile in a couple of minutes — no card required to start on Free.",
+      "cta": "Sign up free"
+    },
+    "footer": {
+      "tagline": "AI-assisted public tender discovery for Belgian SMEs.",
+      "product": "Product",
+      "pricing": "Pricing",
+      "account": "Account",
+      "logIn": "Log in",
+      "signUp": "Sign up",
+      "rights": "© {year} TenderProc. All rights reserved."
+    }
+  },
   "Nav": {
     "opportunities": "Opportunities",
     "workflow": "Workflow",
