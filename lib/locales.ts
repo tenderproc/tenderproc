@@ -4,11 +4,11 @@ export const DEFAULT_LOCALE: Locale = "en";
 
 export const LOCALE_COOKIE = "locale";
 
-export const LOCALE_META: Record<Locale, { label: string; flag: string }> = {
-  en: { label: "English", flag: "🇬🇧" },
-  nl: { label: "Nederlands", flag: "🇳🇱" },
-  fr: { label: "Français", flag: "🇫🇷" },
-  de: { label: "Deutsch", flag: "🇩🇪" },
+export const LOCALE_META: Record<Locale, { label: string }> = {
+  en: { label: "English" },
+  nl: { label: "Nederlands" },
+  fr: { label: "Français" },
+  de: { label: "Deutsch" },
 };
 
 export function isLocale(value: string | undefined | null): value is Locale {

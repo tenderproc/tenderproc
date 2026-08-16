@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/locales";
+import FlagIcon from "@/components/FlagIcon";
 
 export default function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
@@ -34,7 +35,7 @@ export default function LocaleSwitcher() {
         disabled={pending}
         className="flex items-center gap-1 hover:text-ink transition-colors disabled:opacity-50"
       >
-        <span className="text-base leading-none">{LOCALE_META[locale].flag}</span>
+        <FlagIcon locale={locale} />
         <span className="hidden sm:inline">{LOCALE_META[locale].label}</span>
       </button>
 
@@ -57,7 +58,7 @@ export default function LocaleSwitcher() {
                   code === locale ? "text-ink font-medium" : "text-inkDim"
                 }`}
               >
-                <span className="text-base leading-none">{LOCALE_META[code].flag}</span>
+                <FlagIcon locale={code} />
                 {LOCALE_META[code].label}
               </button>
             ))}
