@@ -35,7 +35,7 @@ export default function UploadTenderButton() {
 
   return (
     <div>
-      <label className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors cursor-pointer disabled:opacity-50">
+      <label className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors cursor-pointer disabled:opacity-50">
         {uploading ? t("uploadingAndAnalyzing") : t("uploadTender")}
         <input
           type="file"

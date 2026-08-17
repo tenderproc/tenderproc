@@ -31,6 +31,11 @@ export async function proxy(req: NextRequest) {
     // needs to keep signed-out visitors from being bounced to /login first.
     pathname === "/" ||
     pathname.startsWith("/pricing") ||
+    // Legal pages must be readable pre-auth — linked from the signup
+    // consent checkbox and the marketing footer, before anyone has a session.
+    pathname.startsWith("/terms") ||
+    pathname.startsWith("/privacy") ||
+    pathname.startsWith("/refund") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     // Has its own CRON_SECRET bearer-token check — not a user session.

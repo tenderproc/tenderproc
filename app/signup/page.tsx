@@ -22,6 +22,7 @@ export default function SignupPage() {
   const [sectors, setSectors] = useState<string[]>([]);
   const [companySize, setCompanySize] = useState("");
   const [description, setDescription] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
@@ -34,6 +35,10 @@ export default function SignupPage() {
     e.preventDefault();
     if (sectors.length === 0) {
       setError(t("pickSector"));
+      return;
+    }
+    if (!agreedToTerms) {
+      setError(t("mustAgreeToTerms"));
       return;
     }
     setLoading(true);
@@ -122,7 +127,7 @@ export default function SignupPage() {
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder="you@company.be"
                 required
               />
@@ -135,7 +140,7 @@ export default function SignupPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("passwordPlaceholder")}
                 minLength={6}
                 required
@@ -151,7 +156,7 @@ export default function SignupPage() {
               <input
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("companyNamePlaceholder")}
                 required
               />
@@ -163,7 +168,7 @@ export default function SignupPage() {
               <input
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+                className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("addressPlaceholder")}
                 required
               />
@@ -177,7 +182,7 @@ export default function SignupPage() {
             <select
               value={companySize}
               onChange={(e) => setCompanySize(e.target.value)}
-              className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+              className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
             >
               <option value="">{t("preferNotToSay")}</option>
               {COMPANY_SIZES.map((s) => (
@@ -197,7 +202,7 @@ export default function SignupPage() {
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               placeholder={t("descriptionPlaceholder")}
-              className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+              className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
             />
           </div>
 
@@ -223,11 +228,34 @@ export default function SignupPage() {
             </div>
           </div>
 
+          <label className="flex items-start gap-2 text-sm text-ink cursor-pointer">
+            <input
+              type="checkbox"
+              className="accent-accent mt-0.5"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+            />
+            <span>
+              {t.rich("agreeToTerms", {
+                terms: (chunks) => (
+                  <Link href="/terms" className="underline" target="_blank">
+                    {chunks}
+                  </Link>
+                ),
+                privacy: (chunks) => (
+                  <Link href="/privacy" className="underline" target="_blank">
+                    {chunks}
+                  </Link>
+                ),
+              })}
+            </span>
+          </label>
+
           {error && <p className="text-sm text-stamp">{error}</p>}
 
           <button
             disabled={loading}
-            className="w-full bg-accent text-white py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
+            className="w-full bg-accent text-white py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50"
           >
             {loading ? t("creatingAccount") : t("signUp")}
           </button>

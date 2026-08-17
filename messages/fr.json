@@ -2,6 +2,7 @@
   "Header": {
     "tagline": "Belgique · Marchés publics",
     "pricing": "Tarifs",
+    "billing": "Facturation",
     "signOut": "Se déconnecter"
   },
   "Landing": {
@@ -85,7 +86,10 @@
       "account": "Compte",
       "logIn": "Se connecter",
       "signUp": "S'inscrire",
-      "rights": "© {year} TenderProc. Tous droits réservés."
+      "rights": "© {year} TenderProc. Tous droits réservés.",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "refund": "Politique de remboursement"
     }
   },
   "Nav": {
@@ -99,6 +103,16 @@
   },
   "LocaleSwitcher": {
     "label": "Langue"
+  },
+  "Legal": {
+    "goToApp": "Accéder à l'application",
+    "logIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "englishOnlyNotice": "Ce document n'est disponible qu'en anglais. Si quelque chose n'est pas clair, contactez-nous et nous vous aiderons dans votre langue.",
+    "backToTenderProc": "Retour à TenderProc",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "refund": "Politique de remboursement"
   },
   "Login": {
     "heading": "Connexion",
@@ -163,7 +177,8 @@
   },
   "TenderCard": {
     "refPublished": "Réf. {ref} · Publié le {date}",
-    "deadline": "Échéance"
+    "deadline": "Échéance",
+    "titleLanguageHint": "Publié en : {languages}"
   },
   "MatchScoreBadge": {
     "criteriaCount": "{met}/{total} critères"
@@ -178,6 +193,9 @@
     "mostPopular": "Le plus populaire",
     "perMonth": "/mois",
     "getStarted": "Commencer",
+    "subscribe": "S'abonner",
+    "loadingPrice": "Chargement du prix…",
+    "priceUnavailable": "Prix indisponible",
     "tiers": {
       "free": {
         "name": "Gratuit",
@@ -206,6 +224,36 @@
       }
     }
   },
+  "UpgradeButton": {
+    "opening": "Ouverture du paiement…",
+    "couldNotStartCheckout": "Impossible de démarrer le paiement pour le moment. Réessayez dans un instant."
+  },
+  "BillingSuccessPage": {
+    "eyebrow": "Abonnement",
+    "heading": "Paiement réussi",
+    "body": "Merci — votre abonnement est maintenant actif. La mise à jour de votre compte peut prendre quelques secondes.",
+    "cta": "Aller à la facturation"
+  },
+  "BillingPage": {
+    "heading": "Facturation",
+    "currentPlan": "Plan actuel",
+    "renewsOn": "Renouvellement le {date}",
+    "canceled": "Votre abonnement est annulé. Vous disposez d'un accès au plan Gratuit.",
+    "paymentFailedHeading": "Votre dernier paiement a échoué",
+    "paymentFailedBody": "Mettez à jour votre moyen de paiement pour conserver votre plan actuel.",
+    "paymentFailedBodyWithDate": "Mettez à jour votre moyen de paiement avant le {date} pour conserver votre plan actuel — après cette date, vous passerez au plan Gratuit.",
+    "tierNames": {
+      "FREE": "Gratuit",
+      "PRO": "Pro",
+      "PREMIUM": "Premium"
+    },
+    "upgradeToPro": "Passer à Pro",
+    "upgradeToPremium": "Passer à Premium",
+    "managePlan": "Gérer le plan",
+    "opening": "Ouverture…",
+    "couldNotOpenPortal": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant.",
+    "refundPolicy": "Politique de remboursement"
+  },
   "WorkflowPage": {
     "eyebrow": "Votre pipeline",
     "heading": "Suivi",
@@ -213,12 +261,23 @@
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Retour aux marchés ouverts",
+    "viewOriginalNotice": "Voir l'avis original sur {source}"
+  },
+  "TenderOverview": {
     "ref": "Réf. {ref}",
-    "buyer": "Acheteur",
     "deadline": "Échéance",
-    "estValue": "Valeur estimée",
     "published": "Publié",
-    "viewOnTed": "Voir l'avis officiel complet sur TED"
+    "estValue": "Valeur estimée",
+    "procedureType": "Type de procédure",
+    "sector": "Secteur",
+    "region": "Région",
+    "notPublished": "Non publié",
+    "objectOfContract": "Objet du marché",
+    "descriptionNotPublished": "Aucune description publiée pour cet avis.",
+    "readMore": "Lire la suite",
+    "readLess": "Réduire",
+    "documents": "Documents",
+    "viewDocumentsOn": "Voir les documents du marché sur {host} →"
   },
   "AddToWorkflowButton": {
     "added": "Ajouté au suivi ✓",
@@ -502,6 +561,8 @@
     "descriptionLabel": "Que fait votre entreprise ?",
     "descriptionPlaceholder": "Quelques phrases suffisent — cela alimente le score de correspondance de chaque marché.",
     "sectors": "Secteurs",
+    "agreeToTerms": "J'accepte les <terms>Conditions d'utilisation</terms> et la <privacy>Politique de confidentialité</privacy>.",
+    "mustAgreeToTerms": "Veuillez accepter les Conditions d'utilisation et la Politique de confidentialité pour continuer.",
     "creatingAccount": "Création du compte…",
     "signUp": "S'inscrire",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
@@ -531,7 +592,11 @@
       "couldNotFindEvidence": "Impossible de trouver des preuves pour le moment. Réessayez dans un instant.",
       "couldNotGenerateDraft": "Impossible de générer un brouillon pour le moment. Réessayez dans un instant.",
       "invalidLocale": "Langue invalide.",
-      "couldNotTranslate": "Impossible de traduire cet appel d'offres pour le moment. Réessayez dans un instant."
+      "couldNotTranslate": "Impossible de traduire cet appel d'offres pour le moment. Réessayez dans un instant.",
+      "invalidTier": "Plan invalide.",
+      "checkoutFailed": "Impossible de démarrer le paiement pour le moment. Réessayez dans un instant.",
+      "noBillingAccount": "Pas encore de compte de facturation — passez d'abord à un plan payant.",
+      "portalFailed": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant."
     },
     "auth": {
       "invalidCredentials": "E-mail ou mot de passe incorrect.",
@@ -564,7 +629,9 @@
   "PreferencesSidebar": {
     "sectors": "Secteurs",
     "languages": "Langues",
-    "languagesHint": "Détermine dans quelle langue les titres traduits sont affichés — chaque marché reste visible dans tous les cas.",
+    "languagesHint": "Priorise les résultats dans ces langues lorsqu'une traduction existe réellement. Les titres ne sont jamais traduits par la source et s'affichent toujours dans la langue de publication d'origine de l'acheteur — chaque marché reste visible dans tous les cas.",
+    "strictLanguageFilter": "N'afficher que les marchés dans ces langues",
+    "strictLanguageFilterHint": "Masque les marchés que TED ne signale pas comme publiés dans une langue sélectionnée — y compris ceux dont la langue n'est pas renseignée. Désactivé par défaut pour ne pas manquer de véritables opportunités.",
     "saving": "Enregistrement…"
   },
   "Enums": {
@@ -633,6 +700,11 @@
       "ANALYZING": "En analyse",
       "READY": "Prêt",
       "FAILED": "Échoué"
+    },
+    "tenderOpenStatus": {
+      "open": "Ouvert",
+      "deadlinePassed": "Échéance dépassée",
+      "unknown": "Échéance inconnue"
     },
     "companySize": {
       "solo": "Indépendant / freelance",

@@ -254,7 +254,7 @@ export default async function TenderDetailPage({
                 {existingBid ? (
                   <Link
                     href={`/bids/${existingBid.id}`}
-                    className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors"
+                    className="inline-block bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors"
                   >
                     {t("goToBidWorkspace")} →
                   </Link>

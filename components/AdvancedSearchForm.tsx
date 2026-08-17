@@ -40,7 +40,7 @@ export default function AdvancedSearchForm() {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           placeholder={t("keywordPlaceholder")}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
 
@@ -52,7 +52,7 @@ export default function AdvancedSearchForm() {
           value={cpv}
           onChange={(e) => setCpv(e.target.value)}
           placeholder={t("cpvPlaceholder")}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -66,7 +66,7 @@ export default function AdvancedSearchForm() {
             value={valueMin}
             onChange={(e) => setValueMin(e.target.value)}
             placeholder="0"
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
         <div>
@@ -79,7 +79,7 @@ export default function AdvancedSearchForm() {
             value={valueMax}
             onChange={(e) => setValueMax(e.target.value)}
             placeholder={t("noLimit")}
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function AdvancedSearchForm() {
           type="date"
           value={deadlineAfter}
           onChange={(e) => setDeadlineAfter(e.target.value)}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
       <div>
@@ -103,12 +103,12 @@ export default function AdvancedSearchForm() {
           type="date"
           value={deadlineBefore}
           onChange={(e) => setDeadlineBefore(e.target.value)}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
 
       <div className="sm:col-span-2">
-        <button className="bg-accent text-white px-5 py-2 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors">
+        <button className="bg-accent text-white px-5 py-2 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors">
           {t("search")}
         </button>
       </div>

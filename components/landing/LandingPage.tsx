@@ -255,10 +255,21 @@ export default async function LandingPage() {
           </nav>
         </div>
         <div className="border-t border-line">
-          <div className="max-w-6xl mx-auto px-6 py-4 text-center sm:text-left">
+          <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-xs text-inkDim">
               {t("footer.rights", { year: new Date().getFullYear() })}
             </p>
+            <nav className="flex items-center gap-4 text-xs text-inkDim">
+              <Link href="/terms" className="hover:text-ink transition-colors">
+                {t("footer.terms")}
+              </Link>
+              <Link href="/privacy" className="hover:text-ink transition-colors">
+                {t("footer.privacy")}
+              </Link>
+              <Link href="/refund" className="hover:text-ink transition-colors">
+                {t("footer.refund")}
+              </Link>
+            </nav>
           </div>
         </div>
       </footer>

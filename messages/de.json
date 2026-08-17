@@ -2,6 +2,7 @@
   "Header": {
     "tagline": "Belgien · Öffentliche Ausschreibungen",
     "pricing": "Preise",
+    "billing": "Abrechnung",
     "signOut": "Abmelden"
   },
   "Landing": {
@@ -85,7 +86,10 @@
       "account": "Konto",
       "logIn": "Anmelden",
       "signUp": "Registrieren",
-      "rights": "© {year} TenderProc. Alle Rechte vorbehalten."
+      "rights": "© {year} TenderProc. Alle Rechte vorbehalten.",
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzerklärung",
+      "refund": "Rückerstattungsrichtlinie"
     }
   },
   "Nav": {
@@ -99,6 +103,16 @@
   },
   "LocaleSwitcher": {
     "label": "Sprache"
+  },
+  "Legal": {
+    "goToApp": "Zur App",
+    "logIn": "Anmelden",
+    "signUp": "Registrieren",
+    "englishOnlyNotice": "Dieses Dokument ist nur auf Englisch verfügbar. Bei Unklarheiten kontaktieren Sie uns — wir helfen Ihnen in Ihrer Sprache.",
+    "backToTenderProc": "Zurück zu TenderProc",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzerklärung",
+    "refund": "Rückerstattungsrichtlinie"
   },
   "Login": {
     "heading": "Anmelden",
@@ -163,7 +177,8 @@
   },
   "TenderCard": {
     "refPublished": "Ref. {ref} · Veröffentlicht {date}",
-    "deadline": "Frist"
+    "deadline": "Frist",
+    "titleLanguageHint": "Veröffentlicht in: {languages}"
   },
   "MatchScoreBadge": {
     "criteriaCount": "{met}/{total} Kriterien"
@@ -178,6 +193,9 @@
     "mostPopular": "Am beliebtesten",
     "perMonth": "/Monat",
     "getStarted": "Loslegen",
+    "subscribe": "Abonnieren",
+    "loadingPrice": "Preis wird geladen…",
+    "priceUnavailable": "Preis nicht verfügbar",
     "tiers": {
       "free": {
         "name": "Kostenlos",
@@ -206,6 +224,36 @@
       }
     }
   },
+  "UpgradeButton": {
+    "opening": "Kasse wird geöffnet…",
+    "couldNotStartCheckout": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal."
+  },
+  "BillingSuccessPage": {
+    "eyebrow": "Abonnement",
+    "heading": "Zahlung erfolgreich",
+    "body": "Danke — Ihr Abonnement ist jetzt aktiv. Es kann einige Sekunden dauern, bis Ihr Konto aktualisiert wird.",
+    "cta": "Zur Abrechnung"
+  },
+  "BillingPage": {
+    "heading": "Abrechnung",
+    "currentPlan": "Aktueller Plan",
+    "renewsOn": "Verlängert sich am {date}",
+    "canceled": "Ihr Abonnement wurde gekündigt. Sie haben Zugriff auf den kostenlosen Plan.",
+    "paymentFailedHeading": "Ihre letzte Zahlung ist fehlgeschlagen",
+    "paymentFailedBody": "Aktualisieren Sie Ihre Zahlungsmethode, um Ihren aktuellen Plan zu behalten.",
+    "paymentFailedBodyWithDate": "Aktualisieren Sie Ihre Zahlungsmethode bis zum {date}, um Ihren aktuellen Plan zu behalten — danach werden Sie auf den kostenlosen Plan zurückgestuft.",
+    "tierNames": {
+      "FREE": "Kostenlos",
+      "PRO": "Pro",
+      "PREMIUM": "Premium"
+    },
+    "upgradeToPro": "Auf Pro upgraden",
+    "upgradeToPremium": "Auf Premium upgraden",
+    "managePlan": "Plan verwalten",
+    "opening": "Wird geöffnet…",
+    "couldNotOpenPortal": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal.",
+    "refundPolicy": "Rückerstattungsrichtlinie"
+  },
   "WorkflowPage": {
     "eyebrow": "Deine Pipeline",
     "heading": "Workflow",
@@ -213,12 +261,23 @@
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Zurück zu offenen Ausschreibungen",
+    "viewOriginalNotice": "Originalbekanntmachung auf {source} ansehen"
+  },
+  "TenderOverview": {
     "ref": "Ref. {ref}",
-    "buyer": "Käufer",
     "deadline": "Frist",
-    "estValue": "Geschätzter Wert",
     "published": "Veröffentlicht",
-    "viewOnTed": "Vollständige offizielle Bekanntmachung auf TED ansehen"
+    "estValue": "Geschätzter Wert",
+    "procedureType": "Verfahrensart",
+    "sector": "Sektor",
+    "region": "Region",
+    "notPublished": "Nicht veröffentlicht",
+    "objectOfContract": "Auftragsgegenstand",
+    "descriptionNotPublished": "Für diese Bekanntmachung wurde keine Beschreibung veröffentlicht.",
+    "readMore": "Mehr lesen",
+    "readLess": "Weniger anzeigen",
+    "documents": "Dokumente",
+    "viewDocumentsOn": "Ausschreibungsunterlagen auf {host} ansehen →"
   },
   "AddToWorkflowButton": {
     "added": "Zum Workflow hinzugefügt ✓",
@@ -502,6 +561,8 @@
     "descriptionLabel": "Was macht dein Unternehmen?",
     "descriptionPlaceholder": "Ein paar Sätze reichen — das bestimmt die Übereinstimmungsbewertung jeder Ausschreibung.",
     "sectors": "Branchen",
+    "agreeToTerms": "Ich stimme den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
+    "mustAgreeToTerms": "Bitte stimmen Sie den Nutzungsbedingungen und der Datenschutzerklärung zu, um fortzufahren.",
     "creatingAccount": "Konto wird erstellt…",
     "signUp": "Registrieren",
     "alreadyHaveAccount": "Hast du bereits ein Konto?",
@@ -531,7 +592,11 @@
       "couldNotFindEvidence": "Nachweise konnten gerade nicht gefunden werden. Versuche es gleich noch einmal.",
       "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuche es gleich noch einmal.",
       "invalidLocale": "Ungültige Sprache.",
-      "couldNotTranslate": "Diese Ausschreibung konnte gerade nicht übersetzt werden. Versuche es gleich noch einmal."
+      "couldNotTranslate": "Diese Ausschreibung konnte gerade nicht übersetzt werden. Versuche es gleich noch einmal.",
+      "invalidTier": "Ungültiger Plan.",
+      "checkoutFailed": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal.",
+      "noBillingAccount": "Noch kein Abrechnungskonto — upgraden Sie zuerst auf einen kostenpflichtigen Plan.",
+      "portalFailed": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal."
     },
     "auth": {
       "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",
@@ -564,7 +629,9 @@
   "PreferencesSidebar": {
     "sectors": "Branchen",
     "languages": "Sprachen",
-    "languagesHint": "Bestimmt, in welcher Sprache übersetzte Titel angezeigt werden — jede Ausschreibung bleibt trotzdem sichtbar.",
+    "languagesHint": "Bevorzugt Ergebnisse in diesen Sprachen, wenn tatsächlich eine Übersetzung vorliegt. Titel werden von der Quelle nie übersetzt und immer so angezeigt, wie der Auftraggeber sie ursprünglich veröffentlicht hat — jede Ausschreibung bleibt trotzdem sichtbar.",
+    "strictLanguageFilter": "Nur Ausschreibungen in diesen Sprachen anzeigen",
+    "strictLanguageFilterHint": "Blendet Ausschreibungen aus, die TED nicht als in einer ausgewählten Sprache veröffentlicht meldet — auch solche ohne erfasste Sprache. Standardmäßig aus, damit dir keine echten Chancen entgehen.",
     "saving": "Wird gespeichert…"
   },
   "Enums": {
@@ -633,6 +700,11 @@
       "ANALYZING": "Wird analysiert",
       "READY": "Bereit",
       "FAILED": "Fehlgeschlagen"
+    },
+    "tenderOpenStatus": {
+      "open": "Offen",
+      "deadlinePassed": "Frist abgelaufen",
+      "unknown": "Frist unbekannt"
     },
     "companySize": {
       "solo": "Einzelunternehmen / freiberuflich",

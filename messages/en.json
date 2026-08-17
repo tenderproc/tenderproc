@@ -2,6 +2,7 @@
   "Header": {
     "tagline": "Belgium · Public tenders",
     "pricing": "Pricing",
+    "billing": "Billing",
     "signOut": "Sign out"
   },
   "Landing": {
@@ -85,7 +86,10 @@
       "account": "Account",
       "logIn": "Log in",
       "signUp": "Sign up",
-      "rights": "© {year} TenderProc. All rights reserved."
+      "rights": "© {year} TenderProc. All rights reserved.",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Notice",
+      "refund": "Refund Policy"
     }
   },
   "Nav": {
@@ -99,6 +103,16 @@
   },
   "LocaleSwitcher": {
     "label": "Language"
+  },
+  "Legal": {
+    "goToApp": "Go to app",
+    "logIn": "Log in",
+    "signUp": "Sign up",
+    "englishOnlyNotice": "This document is only available in English. If anything is unclear, contact us and we'll help in your language.",
+    "backToTenderProc": "Back to TenderProc",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Notice",
+    "refund": "Refund Policy"
   },
   "Login": {
     "heading": "Log in",
@@ -163,7 +177,8 @@
   },
   "TenderCard": {
     "refPublished": "Ref. {ref} · Published {date}",
-    "deadline": "Deadline"
+    "deadline": "Deadline",
+    "titleLanguageHint": "Published in: {languages}"
   },
   "MatchScoreBadge": {
     "criteriaCount": "{met}/{total} criteria"
@@ -178,6 +193,9 @@
     "mostPopular": "Most popular",
     "perMonth": "/month",
     "getStarted": "Get started",
+    "subscribe": "Subscribe",
+    "loadingPrice": "Loading price…",
+    "priceUnavailable": "Price unavailable",
     "tiers": {
       "free": {
         "name": "Free",
@@ -206,6 +224,36 @@
       }
     }
   },
+  "UpgradeButton": {
+    "opening": "Opening checkout…",
+    "couldNotStartCheckout": "Could not start checkout right now. Try again in a moment."
+  },
+  "BillingSuccessPage": {
+    "eyebrow": "Subscription",
+    "heading": "Payment successful",
+    "body": "Thanks — your subscription is now active. It can take a few seconds for your account to update.",
+    "cta": "Go to billing"
+  },
+  "BillingPage": {
+    "heading": "Billing",
+    "currentPlan": "Current plan",
+    "renewsOn": "Renews on {date}",
+    "canceled": "Your subscription is canceled. You have Free-tier access.",
+    "paymentFailedHeading": "Your last payment failed",
+    "paymentFailedBody": "Update your payment method to keep your current plan.",
+    "paymentFailedBodyWithDate": "Update your payment method by {date} to keep your current plan — after that you'll be moved to Free.",
+    "tierNames": {
+      "FREE": "Free",
+      "PRO": "Pro",
+      "PREMIUM": "Premium"
+    },
+    "upgradeToPro": "Upgrade to Pro",
+    "upgradeToPremium": "Upgrade to Premium",
+    "managePlan": "Manage plan",
+    "opening": "Opening…",
+    "couldNotOpenPortal": "Could not open the billing portal right now. Try again in a moment.",
+    "refundPolicy": "Refund Policy"
+  },
   "WorkflowPage": {
     "eyebrow": "Your pipeline",
     "heading": "Workflow",
@@ -213,12 +261,23 @@
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Back to open tenders",
+    "viewOriginalNotice": "View original notice on {source}"
+  },
+  "TenderOverview": {
     "ref": "Ref. {ref}",
-    "buyer": "Buyer",
     "deadline": "Deadline",
-    "estValue": "Est. value",
     "published": "Published",
-    "viewOnTed": "View full official notice on TED"
+    "estValue": "Est. value",
+    "procedureType": "Procedure type",
+    "sector": "Sector",
+    "region": "Region",
+    "notPublished": "Not published",
+    "objectOfContract": "Object of the contract",
+    "descriptionNotPublished": "No description published for this notice.",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "documents": "Documents",
+    "viewDocumentsOn": "View tender documents on {host} →"
   },
   "AddToWorkflowButton": {
     "added": "Added to workflow ✓",
@@ -502,6 +561,8 @@
     "descriptionLabel": "What does your business do?",
     "descriptionPlaceholder": "A couple sentences is enough — this is what powers each tender's match score.",
     "sectors": "Sectors",
+    "agreeToTerms": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Notice</privacy>.",
+    "mustAgreeToTerms": "Please agree to the Terms of Service and Privacy Notice to continue.",
     "creatingAccount": "Creating account…",
     "signUp": "Sign up",
     "alreadyHaveAccount": "Already have an account?",
@@ -531,7 +592,11 @@
       "couldNotFindEvidence": "Could not find evidence right now. Try again in a moment.",
       "couldNotGenerateDraft": "Could not generate a draft right now. Try again in a moment.",
       "invalidLocale": "Invalid language.",
-      "couldNotTranslate": "Could not translate this tender right now. Try again in a moment."
+      "couldNotTranslate": "Could not translate this tender right now. Try again in a moment.",
+      "invalidTier": "Invalid plan.",
+      "checkoutFailed": "Could not start checkout right now. Try again in a moment.",
+      "noBillingAccount": "No billing account yet — upgrade to a paid plan first.",
+      "portalFailed": "Could not open the billing portal right now. Try again in a moment."
     },
     "auth": {
       "invalidCredentials": "Incorrect email or password.",
@@ -564,7 +629,9 @@
   "PreferencesSidebar": {
     "sectors": "Sectors",
     "languages": "Languages",
-    "languagesHint": "Controls which translation titles are shown in — every tender stays visible either way.",
+    "languagesHint": "Prioritizes results in these languages where a translation genuinely exists. Titles are never translated by the source and always show as the buyer originally published them — every tender stays visible either way.",
+    "strictLanguageFilter": "Only show tenders in these languages",
+    "strictLanguageFilterHint": "Hides tenders TED doesn't report as published in a selected language — including ones with no language on file. Off by default so you don't miss real opportunities.",
     "saving": "Saving…"
   },
   "Enums": {
@@ -633,6 +700,11 @@
       "ANALYZING": "Analyzing",
       "READY": "Ready",
       "FAILED": "Failed"
+    },
+    "tenderOpenStatus": {
+      "open": "Open",
+      "deadlinePassed": "Deadline passed",
+      "unknown": "Deadline unknown"
     },
     "companySize": {
       "solo": "Solo / freelance",

@@ -24,6 +24,9 @@ export default async function Header() {
           <Link href="/pricing" className="hover:text-ink transition-colors">
             {t("pricing")}
           </Link>
+          <Link href="/billing" className="hover:text-ink transition-colors">
+            {t("billing")}
+          </Link>
           <SignOutButton />
         </nav>
       </div>

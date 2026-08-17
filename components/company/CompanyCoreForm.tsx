@@ -92,7 +92,7 @@ export default function CompanyCoreForm({
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
             required
           />
         </div>
@@ -104,7 +104,7 @@ export default function CompanyCoreForm({
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
             placeholder="https://…"
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
       </div>
@@ -118,7 +118,7 @@ export default function CompanyCoreForm({
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
           placeholder={t("descriptionPlaceholder")}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
       </div>
 
@@ -130,7 +130,7 @@ export default function CompanyCoreForm({
           <select
             value={companySize}
             onChange={(e) => setCompanySize(e.target.value)}
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           >
             <option value="">{t("preferNotToSay")}</option>
             {COMPANY_SIZES.map((s) => (
@@ -149,7 +149,7 @@ export default function CompanyCoreForm({
             min={0}
             value={employeeCount}
             onChange={(e) => setEmployeeCount(e.target.value)}
-            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
       </div>
@@ -180,7 +180,7 @@ export default function CompanyCoreForm({
       <div className="flex items-center gap-3">
         <button
           disabled={saving}
-          className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
+          className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50"
         >
           {saving ? t("saving") : hasCompany ? t("saveChanges") : t("createProfile")}
         </button>

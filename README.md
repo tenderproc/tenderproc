@@ -37,6 +37,8 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 - **Bids** (`/bids`) — the bid workspace. Starting a bid snapshots that tender's requirements into a per-bid checklist (`bid_requirements`) with progress bars per category, plus a **Documents** checklist snapshotted from the tender's extracted required-documents list — mark each ready manually or attach a real file. Each requirement has its own page: **Find Evidence** surfaces relevant company services/certifications/references (never a fabricated one — see `docs/ai.md`), pick which to use, **Generate Draft** writes a response grounded only in that evidence, then a second AI pass checks the draft for any claim it can't verify and flags it as an **Unsupported claim** — including on a draft you've hand-edited, via **Save & Re-check**. Accept a draft to mark its requirement complete; the bid's own status (Evaluation → … → Won/Lost/Withdrawn/No result) is a separate dropdown in the workspace header.
 - **Pre-submission review** (`/bids/[id]/review`) — a compliance check before you submit: unanswered mandatory requirements and missing documents are counted as critical issues, unresolved unsupported claims and any AI-detected contradiction between two drafted responses as warnings, rolled into a compliance score and a READY/NOT READY banner. From there: download whatever documents you've uploaded, a link to the tender's official submission platform if one was captured, and **Mark as Submitted**. Afterward, record the outcome (won/lost/withdrawn/no result) — contract value and duration for a win, reason/winning bidder/price for a loss — stored for future win-rate tracking, not analyzed yet.
 
+**Billing** (`/pricing`, `/billing`) — not one of the seven core pages (no `PrimaryNav` entry), but live: Free/Pro/Premium tiers via Paddle as Merchant of Record (hosted checkout and hosted customer portal — no card data ever touches this app). `/pricing` shows the three tiers with an Upgrade button once logged in; `/billing` shows the current plan, renewal date, a grace-period banner if a payment's failed, and a link to Paddle's portal to manage or cancel. Webhook handling (`app/api/billing/webhook/route.ts`, `lib/billing/webhookHandlers.ts`) verifies Paddle's signature, logs every event to `billing_webhook_events` before acting (idempotent on `paddle_event_id`), and is the sole writer of `subscriptions` — the DB, not the Paddle API, is what `lib/billing/tiers.ts`'s `getEffectiveTier()` reads for access control, including a grace period on `past_due` before a failed payment actually loses access. Downgrading (Premium→Pro, or → Free on cancellation) only blocks *creating new* tier-gated output going forward; anything already built stays visible, since visibility is a plain ownership check, not a tier check. `incumbent_screening`/`tender_forecasting` feature keys are pre-wired in `lib/billing/tiers.ts` for when those features (see the roadmap above) ship — they don't gate anything yet because nothing built there yet needs gating. On successful payment, `lib/odoo/client.ts` creates an Odoo invoice with no Odoo-side tax applied (Paddle already collects/remits VAT as Merchant of Record) — scaffolded and unit-tested, not yet wired to a live Odoo instance.
+
 **Notice-type filtering**: TED's Belgian feed mixes genuinely open contract notices (`cn-*`) with already-awarded notices (`can-*`) and a few administrative types — about a third of an unfiltered feed turned out to be already-decided contracts in testing. Opportunities and Search filter to `cn-*`/`pin-cfc-*` (open calls) via `isOpenCallNotice()` in `lib/ted.ts`; Market overview deliberately targets the `can-*` notices that Opportunities excludes.
 
 **Match scores are metadata-only**: the score/criteria are based on the notice's title, buyer, CPV codes, value, and deadline — not the full tender document, which TED's list view doesn't carry. `lib/scoring.ts`'s prompt is deliberately restricted to not invent specific legal/technical requirements it can't actually see; a document-grounded check is still available per-tender via "Check eligibility" (paste the real text in) on the detail page.
@@ -46,7 +48,6 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 ## What's deliberately NOT in this beta (see the "next" list below)
 
 - Below-threshold Belgian tenders (regional/municipal notices outside TED)
-- Payments/billing
 - A way to turn notifications off (every user with saved sectors gets the daily digest)
 - Full historical market analytics (Market overview is a 90-day snapshot, not a paginated archive)
 - Automatic claim-text splicing (unsupported claims are Dismissed or hand-edited, never auto-deleted) and a granular per-claim "attach evidence" mechanism
@@ -67,7 +68,7 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 4. `npm run dev`, then open http://localhost:3000
 
 The Supabase project needs:
-- A `profiles` table: `id` (uuid, references `auth.users.id`), `sectors` (text array), `languages` (text array), `company_name` (text), `address` (text), `company_size` (text), `company_description` (text), `updated_at`, with RLS allowing each user to read/write their own row. All of `company_name`/`address`/`company_size`/`company_description` are collected at signup and feed the match-score prompt.
+- A `profiles` table: `id` (uuid, references `auth.users.id`), `sectors` (text array), `languages` (text array), `strict_language_filter` (boolean, default false — see `supabase-language-filter-migration.sql`; unlike `languages`, which only reorders which translated title shows, this actually excludes notices TED doesn't report as published in a selected language), `company_name` (text), `address` (text), `company_size` (text), `company_description` (text), `updated_at`, with RLS allowing each user to read/write their own row. All of `company_name`/`address`/`company_size`/`company_description` are collected at signup and feed the match-score prompt.
 - A `notified_tenders` table (dedup ledger for the notification job — see `lib/supabase/admin.ts` and `app/api/cron/notify/route.ts`):
   ```sql
   create table public.notified_tenders (
@@ -133,6 +134,13 @@ If testers hit an error saving preferences in the sidebar or adding a tender to 
   and the `tender_requirement_evidence`/`tender_requirement_evidence_items`
   tables for tender-level evidence mapping — full SQL is in
   `supabase-phase4-migration.sql` at the repo root.
+- The billing tables (`subscriptions`, `billing_webhook_events`,
+  `odoo_invoice_log`) — full SQL is in `supabase-phase5-billing-migration.sql`
+  at the repo root. Billing is fully optional: with `PADDLE_API_KEY` unset,
+  `/pricing` and `/billing` still render and every user is treated as Free
+  (`rowToUserSubscription` defaults a missing row to Free rather than
+  erroring). Fill in the Paddle/Odoo block in `.env.example` only once you
+  have real sandbox credentials to test against.
 
 ## Testing & linting
 

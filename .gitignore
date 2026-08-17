@@ -9,6 +9,7 @@
 .env
 .env.local
 .env*.local
+.env.paddle-ids
 
 # logs
 npm-debug.log*

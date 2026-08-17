@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import WorkflowBoard from "@/components/WorkflowBoard";
-import { getTenderById } from "@/lib/ted";
+import { getTenderById } from "@/lib/tenders/getTenderById";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";

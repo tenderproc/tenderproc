@@ -48,7 +48,7 @@ export default function LocaleSwitcher() {
             className="fixed inset-0 z-10 cursor-default"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-2 z-20 min-w-[9rem] border border-line bg-paper rounded-doc shadow-sm overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 z-20 min-w-36 border border-line bg-paper rounded-doc shadow-xs overflow-hidden">
             {LOCALES.map((code) => (
               <button
                 key={code}

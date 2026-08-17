@@ -1,22 +1,14 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import PricingCards from "@/components/billing/PricingCards";
+import { getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
+import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
+import type { Tier as TierName } from "@/lib/billing/types";
 
 export const dynamic = "force-dynamic";
-
-interface Tier {
-  key: string;
-  price: string;
-  hasPeriod: boolean;
-  highlighted?: boolean;
-}
-
-const TIERS: Tier[] = [
-  { key: "free", price: "€0", hasPeriod: false },
-  { key: "pro", price: "€49", hasPeriod: true, highlighted: true },
-  { key: "premium", price: "€79", hasPeriod: true },
-];
 
 export default async function PricingPage() {
   const t = await getTranslations("Pricing");
@@ -24,6 +16,21 @@ export default async function PricingPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  // Vercel sets this on every request; PricePreview falls back to its own
+  // IP-based geolocation when it's absent (different host, or local dev),
+  // so there's no in-app fallback/sentinel to maintain here.
+  const countryCode = (await headers()).get("x-vercel-ip-country") ?? undefined;
+
+  let currentTier: TierName = "FREE";
+  if (user) {
+    const { data: row } = await supabase
+      .from("subscriptions")
+      .select(SUBSCRIPTION_COLUMNS)
+      .eq("user_id", user.id)
+      .maybeSingle();
+    currentTier = getEffectiveTier(rowToUserSubscription(row)).tier;
+  }
 
   return (
     <div>
@@ -73,52 +80,12 @@ export default async function PricingPage() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-6">
-          {TIERS.map((tier) => (
-            <div
-              key={tier.key}
-              className={`rounded-2xl p-6 flex flex-col ${
-                tier.highlighted
-                  ? "border-2 border-accent bg-accent/5 shadow-sm relative"
-                  : "border border-line bg-white"
-              }`}
-            >
-              {tier.highlighted && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-wide text-white bg-accent rounded-full px-3 py-1">
-                  {t("mostPopular")}
-                </span>
-              )}
-              <h2 className="font-display font-semibold text-xl text-ink">
-                {t(`tiers.${tier.key}.name`)}
-              </h2>
-              <p className="text-sm text-inkDim mt-1">{t(`tiers.${tier.key}.blurb`)}</p>
-              <p className="mt-5">
-                <span className="font-display font-bold text-3xl text-ink">{tier.price}</span>
-                <span className="text-sm text-inkDim">{tier.hasPeriod ? t("perMonth") : ""}</span>
-              </p>
-
-              <ul className="mt-6 space-y-2 flex-1">
-                {(t.raw(`tiers.${tier.key}.features`) as string[]).map((f, i) => (
-                  <li key={i} className="text-sm text-ink flex gap-2">
-                    <span className="text-accent">—</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                href={user ? "/opportunities" : "/signup"}
-                className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors ${
-                  tier.highlighted
-                    ? "bg-accent text-white hover:bg-accentDim"
-                    : "border border-line text-ink hover:bg-paperDim"
-                }`}
-              >
-                {user ? t("goToApp") : t("getStarted")}
-              </Link>
-            </div>
-          ))}
-        </div>
+        <PricingCards
+          paidTiers={PRICING_TIERS}
+          countryCode={countryCode}
+          currentTier={currentTier}
+          user={user ? { id: user.id, email: user.email ?? undefined } : null}
+        />
       </main>
     </div>
   );

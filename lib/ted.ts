@@ -1,4 +1,4 @@
-import { AwardedTender, TenderNotice } from "./types";
+import { AwardedTender, TenderDetail, TenderNotice } from "./types";
 import { LANGUAGES } from "./languages";
 
 const TED_SEARCH_URL = "https://api.ted.europa.eu/v3/notices/search";
@@ -25,7 +25,26 @@ const FIELDS = [
   "deadline-receipt-request",
   "publication-date",
   "classification-cpv",
+  "official-language",
 ];
+
+// Extra fields only needed for the single-notice detail page (in-app
+// overview) — kept out of FIELDS above so list/search responses (30-100
+// notices) don't carry i18n description text and document arrays they never
+// render. Verified live against TED's Search API before adding: all four
+// are real field ids (confirmed via the /api-v3.yaml OpenAPI spec) with
+// meaningful fill rates on a live Belgian sample (description-proc and
+// procedure-type 15/15, place-of-performance-subdiv-proc 12/15,
+// document-url-lot 11/15, place-of-performance-city-proc only 1/15).
+const DETAIL_ONLY_FIELDS = [
+  "description-proc",
+  "procedure-type",
+  "place-of-performance-country-proc",
+  "place-of-performance-subdiv-proc",
+  "place-of-performance-city-proc",
+  "document-url-lot",
+];
+const DETAIL_FIELDS = [...FIELDS, ...DETAIL_ONLY_FIELDS];
 
 // Fields for the awards search (searchAwardedTenders) — a different shape
 // than the open-call fields above (no deadline/estimated-value, but winner
@@ -72,12 +91,26 @@ export interface TedSearchParams {
   cpvPrefixes?: string[];
   /**
    * Preferred display language(s) (see lib/languages.ts), in priority order.
-   * TED titles come back translated into every EU language, so this can't
-   * usefully filter which notices appear — instead it controls which
-   * translation of the title is shown, falling back to the default
-   * priority if none of the preferred languages are present.
+   * TED's notice-title field carries a key per EU language, but only the
+   * "<Country> – <CPV category>" boilerplate is actually translated — the
+   * buyer's own title text is stored once, in whichever language they
+   * submitted it in, and is identical across every key. This can't usefully
+   * filter which notices appear, and (since stripTedTitleBoilerplate below
+   * discards the only part that varies) it currently has no effect on the
+   * displayed title either. It still matters for genuinely multilingual
+   * fields like a bilingual notice's description-proc on the detail page.
    */
   languageKeys?: string[];
+  /**
+   * Actually excludes notices, unlike `languageKeys` above — kept as a
+   * separate opt-in param rather than folding into `languageKeys` because
+   * the two express different intent (priority vs. exclusion) and
+   * defaulting to exclusion would risk hiding real, biddable Belgian
+   * tenders just because TED never reports/translates a language for them.
+   * Matched against TenderNotice.titleLanguages (TED's own official-language
+   * field — see mapOfficialLanguages below), not the title-priority guess.
+   */
+  filterLanguageKeys?: string[];
   /** Excludes already-awarded and other non-biddable notice types (see isOpenCallNotice). */
   onlyOpenCalls?: boolean;
   /** YYYY-MM-DD; added as query clauses (TED supports date comparisons natively). */
@@ -117,7 +150,11 @@ export async function searchBelgianTenders(
 
   const displayLimit = params.limit ?? 30;
   const needsOverfetch =
-    params.cpvPrefixes?.length || params.onlyOpenCalls || params.valueMin != null || params.valueMax != null;
+    params.cpvPrefixes?.length ||
+    params.onlyOpenCalls ||
+    params.valueMin != null ||
+    params.valueMax != null ||
+    params.filterLanguageKeys?.length;
   const fetchLimit = needsOverfetch ? Math.max(displayLimit * 4, 100) : displayLimit;
   const titlePriority = buildTitlePriority(params.languageKeys);
 
@@ -162,6 +199,7 @@ export async function searchBelgianTenders(
       deadline: firstValue(n["deadline-receipt-request"]),
       publicationDate: firstValue(n["publication-date"]),
       cpvCodes: toArray(n["classification-cpv"]),
+      titleLanguages: mapOfficialLanguages(n["official-language"]),
       url: `https://ted.europa.eu/en/notice/-/detail/${pubNumber}`,
     };
   });
@@ -182,23 +220,33 @@ export async function searchBelgianTenders(
     notices = notices.filter((t) => t.totalValueRaw != null && t.totalValueRaw <= max);
   }
 
+  if (params.filterLanguageKeys?.length) {
+    const wanted = params.filterLanguageKeys;
+    // A notice with no official-language on file can't be confirmed to
+    // match, so it's excluded too — this filter is opt-in specifically for
+    // users who want certainty over completeness (see filterLanguageKeys doc).
+    notices = notices.filter((t) => t.titleLanguages.some((l) => wanted.includes(l)));
+  }
+
   return notices.slice(0, displayLimit);
 }
 
 /**
- * Fetches a single notice by publication number for the detail page.
+ * Fetches a single notice by publication number for the detail page,
+ * including the detail-only overview fields (description, procedure type,
+ * region, document links) that searchBelgianTenders' list fetch doesn't need.
  */
 export async function getTenderById(
   id: string,
   languageKeys?: string[]
-): Promise<TenderNotice | null> {
+): Promise<TenderDetail | null> {
   const titlePriority = buildTitlePriority(languageKeys);
   const res = await fetch(TED_SEARCH_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `publication-number="${id}"`,
-      fields: FIELDS,
+      fields: DETAIL_FIELDS,
       limit: 1,
       scope: "ALL",
       checkQuerySyntax: false,
@@ -219,17 +267,28 @@ export async function getTenderById(
   }
   const n = rawNotices[0];
   const value = extractValue(n);
+  const buyerCountry = firstValue(n["buyer-country"]) ?? "BEL";
   return {
     publicationNumber: id,
     title: stripTedTitleBoilerplate(firstValue(n["notice-title"], titlePriority) ?? "Untitled notice"),
     buyerName: firstValue(n["buyer-name"]) ?? "Unknown buyer",
-    buyerCountry: firstValue(n["buyer-country"]) ?? "BEL",
+    buyerCountry,
     totalValue: value.text,
     totalValueRaw: value.raw,
     deadline: firstValue(n["deadline-receipt-request"]),
     publicationDate: firstValue(n["publication-date"]),
     cpvCodes: toArray(n["classification-cpv"]),
+    titleLanguages: mapOfficialLanguages(n["official-language"]),
     url: `https://ted.europa.eu/en/notice/-/detail/${id}`,
+    sourceName: "TED",
+    description: firstValue(n["description-proc"], titlePriority),
+    procedureType: firstValue(n["procedure-type"]),
+    region: regionLabel({
+      country: firstValue(n["place-of-performance-country-proc"]) ?? buyerCountry,
+      subdiv: firstValue(n["place-of-performance-subdiv-proc"]),
+      city: firstValue(n["place-of-performance-city-proc"]),
+    }),
+    documentUrls: toArray(n["document-url-lot"]),
   };
 }
 
@@ -560,6 +619,18 @@ function stripTedTitleBoilerplate(title: string): string {
   return parts.length >= 3 ? parts.slice(2).join(" – ") : title;
 }
 
+// The real, ground-truth language(s) a notice was published in — unlike
+// notice-title's per-language keys (see buildTitlePriority above), this
+// reflects TED's own official-language field (ISO 639-2/B codes like "NLD",
+// "FRA"), so it's what should actually be shown to explain why a title
+// reads in a given language. Unrecognized/rare codes are dropped rather
+// than guessed at; a notice missing this field entirely returns [].
+function mapOfficialLanguages(v: unknown): string[] {
+  const codes = toArray(v).map((c) => c.toLowerCase());
+  const keys = LANGUAGES.filter((l) => l.aliases.some((a) => codes.includes(a))).map((l) => l.key);
+  return Array.from(new Set(keys));
+}
+
 // Builds a firstValue() priority list from a user's selected display
 // languages: their picks come first (in lib/languages.ts's canonical
 // order), then the default priority as a fallback so a title still
@@ -576,4 +647,64 @@ function toArray(v: unknown): string[] {
   if (v == null) return [];
   const values = Array.isArray(v) ? v.map((x) => String(firstValue(x) ?? x)) : [String(firstValue(v) ?? v)];
   return Array.from(new Set(values));
+}
+
+// The official EU "procurement-procedure-type" codelist (source:
+// https://github.com/OP-TED/eForms-SDK/blob/develop/codelists/procurement-procedure-type.gc,
+// English labels) — TED's procedure-type field returns these raw codes,
+// untranslated, same as BOSA's own procedure_type. An unmapped code falls
+// back to the raw value in the UI rather than guessing a label, per this
+// codebase's never-fabricate-a-translation rule.
+export const PROCEDURE_TYPE_LABELS: Record<string, string> = {
+  "comp-dial": "Competitive dialogue",
+  "comp-tend": "Competitive tendering",
+  "exp-int-rail": "Request for expression of interest (rail)",
+  innovation: "Innovation partnership",
+  "neg-w-call": "Negotiated with prior call for competition",
+  "neg-wo-call": "Negotiated without prior call for competition",
+  open: "Open procedure",
+  "oth-mult": "Other multiple-stage procedure",
+  "oth-single": "Other single-stage procedure",
+  restricted: "Restricted procedure",
+};
+
+export function mapProcedureType(code: string | null): string | null {
+  if (!code) return null;
+  return PROCEDURE_TYPE_LABELS[code] ?? code;
+}
+
+// NUTS2 = Belgian provinces + Brussels-Capital — stable, decades-old EU
+// classification (Eurostat). TED's place-of-performance-subdiv-proc comes
+// back at NUTS3 (e.g. "BE224"); truncating to 4 chars gives the NUTS2
+// province code this map covers.
+const BELGIAN_NUTS2_PROVINCES: Record<string, string> = {
+  BE10: "Brussels-Capital",
+  BE21: "Antwerp",
+  BE22: "Limburg",
+  BE23: "East Flanders",
+  BE24: "Flemish Brabant",
+  BE25: "West Flanders",
+  BE31: "Walloon Brabant",
+  BE32: "Hainaut",
+  BE33: "Liège",
+  BE34: "Luxembourg",
+  BE35: "Namur",
+};
+
+/**
+ * Resolves a display region label from the place-of-performance fields.
+ * Prefers a named Belgian province (from the NUTS subdivision code), falls
+ * back to city, falls back to just the country — returns null only if
+ * nothing at all was captured (so the UI can show "Region not published").
+ */
+export function regionLabel(place: {
+  country: string | null;
+  subdiv: string | null;
+  city: string | null;
+}): string | null {
+  const province = place.subdiv ? BELGIAN_NUTS2_PROVINCES[place.subdiv.slice(0, 4)] : null;
+  if (province) return province;
+  if (place.city) return place.city;
+  if (place.country === "BEL" || place.country === "BE") return "Belgium";
+  return place.country;
 }

@@ -2,6 +2,7 @@
   "Header": {
     "tagline": "België · Overheidsopdrachten",
     "pricing": "Prijzen",
+    "billing": "Facturatie",
     "signOut": "Afmelden"
   },
   "Landing": {
@@ -85,7 +86,10 @@
       "account": "Account",
       "logIn": "Inloggen",
       "signUp": "Registreren",
-      "rights": "© {year} TenderProc. Alle rechten voorbehouden."
+      "rights": "© {year} TenderProc. Alle rechten voorbehouden.",
+      "terms": "Gebruiksvoorwaarden",
+      "privacy": "Privacyverklaring",
+      "refund": "Terugbetalingsbeleid"
     }
   },
   "Nav": {
@@ -99,6 +103,16 @@
   },
   "LocaleSwitcher": {
     "label": "Taal"
+  },
+  "Legal": {
+    "goToApp": "Naar de app",
+    "logIn": "Inloggen",
+    "signUp": "Registreren",
+    "englishOnlyNotice": "Dit document is alleen beschikbaar in het Engels. Is iets onduidelijk? Neem contact met ons op, we helpen je in je eigen taal.",
+    "backToTenderProc": "Terug naar TenderProc",
+    "terms": "Gebruiksvoorwaarden",
+    "privacy": "Privacyverklaring",
+    "refund": "Terugbetalingsbeleid"
   },
   "Login": {
     "heading": "Inloggen",
@@ -163,7 +177,8 @@
   },
   "TenderCard": {
     "refPublished": "Ref. {ref} · Gepubliceerd {date}",
-    "deadline": "Deadline"
+    "deadline": "Deadline",
+    "titleLanguageHint": "Gepubliceerd in: {languages}"
   },
   "MatchScoreBadge": {
     "criteriaCount": "{met}/{total} criteria"
@@ -178,6 +193,9 @@
     "mostPopular": "Meest gekozen",
     "perMonth": "/maand",
     "getStarted": "Aan de slag",
+    "subscribe": "Abonneren",
+    "loadingPrice": "Prijs laden…",
+    "priceUnavailable": "Prijs niet beschikbaar",
     "tiers": {
       "free": {
         "name": "Gratis",
@@ -206,6 +224,36 @@
       }
     }
   },
+  "UpgradeButton": {
+    "opening": "Afrekenen wordt geopend…",
+    "couldNotStartCheckout": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw."
+  },
+  "BillingSuccessPage": {
+    "eyebrow": "Abonnement",
+    "heading": "Betaling geslaagd",
+    "body": "Bedankt — je abonnement is nu actief. Het kan enkele seconden duren voor je account bijwerkt.",
+    "cta": "Naar facturatie"
+  },
+  "BillingPage": {
+    "heading": "Facturatie",
+    "currentPlan": "Huidig plan",
+    "renewsOn": "Verlengt op {date}",
+    "canceled": "Je abonnement is opgezegd. Je hebt toegang tot het Gratis plan.",
+    "paymentFailedHeading": "Je laatste betaling is mislukt",
+    "paymentFailedBody": "Werk je betaalmethode bij om je huidige plan te behouden.",
+    "paymentFailedBodyWithDate": "Werk je betaalmethode bij vóór {date} om je huidige plan te behouden — daarna word je overgezet naar Gratis.",
+    "tierNames": {
+      "FREE": "Gratis",
+      "PRO": "Pro",
+      "PREMIUM": "Premium"
+    },
+    "upgradeToPro": "Upgraden naar Pro",
+    "upgradeToPremium": "Upgraden naar Premium",
+    "managePlan": "Plan beheren",
+    "opening": "Openen…",
+    "couldNotOpenPortal": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw.",
+    "refundPolicy": "Terugbetalingsbeleid"
+  },
   "WorkflowPage": {
     "eyebrow": "Jouw pipeline",
     "heading": "Workflow",
@@ -213,12 +261,23 @@
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Terug naar open opdrachten",
+    "viewOriginalNotice": "Bekijk originele bekendmaking op {source}"
+  },
+  "TenderOverview": {
     "ref": "Ref. {ref}",
-    "buyer": "Koper",
     "deadline": "Deadline",
-    "estValue": "Geraamde waarde",
     "published": "Gepubliceerd",
-    "viewOnTed": "Bekijk volledig officieel bericht op TED"
+    "estValue": "Geraamde waarde",
+    "procedureType": "Procedure type",
+    "sector": "Sector",
+    "region": "Regio",
+    "notPublished": "Niet gepubliceerd",
+    "objectOfContract": "Voorwerp van de opdracht",
+    "descriptionNotPublished": "Geen beschrijving gepubliceerd voor deze bekendmaking.",
+    "readMore": "Meer lezen",
+    "readLess": "Minder tonen",
+    "documents": "Documenten",
+    "viewDocumentsOn": "Bekijk opdrachtdocumenten op {host} →"
   },
   "AddToWorkflowButton": {
     "added": "Toegevoegd aan workflow ✓",
@@ -502,6 +561,8 @@
     "descriptionLabel": "Wat doet je bedrijf?",
     "descriptionPlaceholder": "Een paar zinnen volstaan — dit bepaalt de matchscore van elke opdracht.",
     "sectors": "Sectoren",
+    "agreeToTerms": "Ik ga akkoord met de <terms>Gebruiksvoorwaarden</terms> en <privacy>Privacyverklaring</privacy>.",
+    "mustAgreeToTerms": "Ga akkoord met de Gebruiksvoorwaarden en Privacyverklaring om verder te gaan.",
     "creatingAccount": "Account wordt aangemaakt…",
     "signUp": "Registreren",
     "alreadyHaveAccount": "Heb je al een account?",
@@ -531,7 +592,11 @@
       "couldNotFindEvidence": "Kon momenteel geen bewijs vinden. Probeer het zo opnieuw.",
       "couldNotGenerateDraft": "Kon momenteel geen concept genereren. Probeer het zo opnieuw.",
       "invalidLocale": "Ongeldige taal.",
-      "couldNotTranslate": "Kon deze aanbesteding momenteel niet vertalen. Probeer het zo opnieuw."
+      "couldNotTranslate": "Kon deze aanbesteding momenteel niet vertalen. Probeer het zo opnieuw.",
+      "invalidTier": "Ongeldig plan.",
+      "checkoutFailed": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw.",
+      "noBillingAccount": "Nog geen facturatieaccount — upgrade eerst naar een betaald plan.",
+      "portalFailed": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw."
     },
     "auth": {
       "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",
@@ -564,7 +629,9 @@
   "PreferencesSidebar": {
     "sectors": "Sectoren",
     "languages": "Talen",
-    "languagesHint": "Bepaalt in welke taal vertaalde titels worden getoond — elke opdracht blijft in elk geval zichtbaar.",
+    "languagesHint": "Geeft voorrang aan resultaten in deze talen waar echt een vertaling bestaat. Titels worden nooit vertaald door de bron en tonen altijd de taal waarin de aanbestedende dienst ze oorspronkelijk publiceerde — elke opdracht blijft in elk geval zichtbaar.",
+    "strictLanguageFilter": "Alleen opdrachten in deze talen tonen",
+    "strictLanguageFilterHint": "Verbergt opdrachten die TED niet als gepubliceerd in een geselecteerde taal vermeldt — ook die zonder geregistreerde taal. Standaard uit, zodat je geen echte kansen mist.",
     "saving": "Bezig met opslaan…"
   },
   "Enums": {
@@ -633,6 +700,11 @@
       "ANALYZING": "Bezig met analyseren",
       "READY": "Klaar",
       "FAILED": "Mislukt"
+    },
+    "tenderOpenStatus": {
+      "open": "Open",
+      "deadlinePassed": "Deadline verstreken",
+      "unknown": "Deadline onbekend"
     },
     "companySize": {
       "solo": "Zelfstandig / freelance",

@@ -10,7 +10,7 @@ row (`companies.user_id` is `unique`).
 
 | Table | Purpose |
 |---|---|
-| `profiles` | One row per user. `sectors`/`languages`/`company_name`/`address`/`company_size`/`company_description`, collected at signup. Powers the live-TED match-scoring feature (`lib/scoring.ts`) and the Opportunities/Search sector filter. Not touched by this expansion. |
+| `profiles` | One row per user. `sectors`/`languages`/`company_name`/`address`/`company_size`/`company_description`, collected at signup, plus `strict_language_filter` (opt-in, actually excludes notices by language — see `supabase-language-filter-migration.sql`, as opposed to `languages` which only reorders display). Powers the live-TED match-scoring feature (`lib/scoring.ts`) and the Opportunities/Search sector filter. Not touched by this expansion. |
 | `notified_tenders` | Dedup ledger for the daily email-digest cron job. Service-role only, no user-facing RLS policy. |
 | `pipeline_items` | The lightweight Workflow kanban — tracks a *live TED* tender through `screening/reviewing/applying/submitted/won/lost`. Unrelated to the new `tenders` table below. |
 | `tender_scores` | Cache for the metadata-only TED-feed match score, keyed by `(user_id, publication_number, profile_hash)`. |

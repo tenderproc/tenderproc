@@ -11,10 +11,12 @@ export default function PreferencesSidebar({
   userId,
   initialSectors,
   initialLanguages,
+  initialStrictLanguageFilter,
 }: {
   userId: string;
   initialSectors: string[];
   initialLanguages: string[];
+  initialStrictLanguageFilter: boolean;
 }) {
   const t = useTranslations("PreferencesSidebar");
   const tSector = useTranslations("Enums.sector");
@@ -22,6 +24,7 @@ export default function PreferencesSidebar({
   const router = useRouter();
   const [sectors, setSectors] = useState(initialSectors);
   const [languages, setLanguages] = useState(initialLanguages);
+  const [strictLanguageFilter, setStrictLanguageFilter] = useState(initialStrictLanguageFilter);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const skipFirst = useRef(true);
@@ -42,6 +45,7 @@ export default function PreferencesSidebar({
         id: userId,
         sectors,
         languages,
+        strict_language_filter: strictLanguageFilter,
         updated_at: new Date().toISOString(),
       });
       setSaving(false);
@@ -53,7 +57,7 @@ export default function PreferencesSidebar({
     }, 400);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectors, languages]);
+  }, [sectors, languages, strictLanguageFilter]);
 
   function toggleSector(key: string) {
     setSectors((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
@@ -108,6 +112,19 @@ export default function PreferencesSidebar({
             </label>
           ))}
         </div>
+
+        <label className="flex items-start gap-2 text-sm text-ink cursor-pointer mt-4 pt-4 border-t border-line">
+          <input
+            type="checkbox"
+            className="accent-accent mt-0.5"
+            checked={strictLanguageFilter}
+            onChange={() => setStrictLanguageFilter((v) => !v)}
+          />
+          <span>
+            {t("strictLanguageFilter")}
+            <span className="block text-xs text-inkDim mt-0.5">{t("strictLanguageFilterHint")}</span>
+          </span>
+        </label>
       </div>
 
       <p className="text-xs text-inkDim mt-5 h-4">

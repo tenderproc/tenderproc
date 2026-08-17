@@ -27,29 +27,35 @@ export default async function OpportunitiesPage({
 
   let savedSectors: string[] = [];
   let savedLanguages: string[] = [];
+  let strictLanguageFilter = false;
   let companyDescription = "";
   let address = "";
   let companySize = "";
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("sectors, languages, company_description, address, company_size")
+      .select("sectors, languages, strict_language_filter, company_description, address, company_size")
       .eq("id", user.id)
       .maybeSingle();
     savedSectors = profile?.sectors ?? [];
     savedLanguages = profile?.languages ?? [];
+    strictLanguageFilter = profile?.strict_language_filter ?? false;
     companyDescription = profile?.company_description ?? "";
     address = profile?.address ?? "";
     companySize = profile?.company_size ?? "";
   }
 
-  // A manual CPV search overrides the saved sector default. Languages don't
-  // filter results — TED titles are translated into every EU language, so
-  // "preferred languages" instead just controls which translation shows.
+  // A manual CPV search overrides the saved sector default. `languageKeys`
+  // doesn't filter results by itself — TED titles are translated into every
+  // EU language, so it only controls which translation shows. Actual
+  // exclusion only happens when strictLanguageFilter is explicitly on (see
+  // filterLanguageKeys's doc in lib/ted.ts).
   const cpvPrefixes = !params.cpv && savedSectors.length > 0
     ? sectorsToCpvPrefixes(savedSectors)
     : undefined;
   const languageKeys = savedLanguages.length > 0 ? savedLanguages : undefined;
+  const filterLanguageKeys =
+    strictLanguageFilter && savedLanguages.length > 0 ? savedLanguages : undefined;
 
   let tenders: TenderNotice[] = [];
   let loadError: string | null = null;
@@ -59,6 +65,7 @@ export default async function OpportunitiesPage({
       cpv: params.cpv,
       cpvPrefixes,
       languageKeys,
+      filterLanguageKeys,
       onlyOpenCalls: true,
       limit: 25,
     });
@@ -86,6 +93,7 @@ export default async function OpportunitiesPage({
             userId={user.id}
             initialSectors={savedSectors}
             initialLanguages={savedLanguages}
+            initialStrictLanguageFilter={strictLanguageFilter}
           />
         )}
 

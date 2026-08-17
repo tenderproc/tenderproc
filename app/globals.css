@@ -1,6 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #ffffff;
+  --color-paperDim: #f8fafc;
+  --color-ink: #0f172a;
+  --color-inkDim: #475569;
+  --color-stamp: #dc2626;
+  --color-gold: #d97706;
+  --color-moss: #16a34a;
+  --color-line: #e2e8f0;
+  --color-accent: #2563eb;
+  --color-accentDim: #1d4ed8;
+
+  --font-display: var(--font-display), sans-serif;
+  --font-body: var(--font-body), sans-serif;
+  --font-mono: var(--font-mono), sans-serif;
+
+  --radius-doc: 10px;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
   /* One typeface (Inter, loaded in layout.tsx) mapped to all three slots so

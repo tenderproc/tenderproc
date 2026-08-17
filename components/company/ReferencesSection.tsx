@@ -117,20 +117,20 @@ export default function ReferencesSection({
             value={client}
             onChange={(e) => setClient(e.target.value)}
             placeholder={t("clientPlaceholder")}
-            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
           <input
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
             placeholder={t("projectNamePlaceholder")}
-            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
         </div>
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder={t("descriptionPlaceholder")}
-          className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+          className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         />
         <div className="grid sm:grid-cols-2 gap-2">
           <input
@@ -139,12 +139,12 @@ export default function ReferencesSection({
             value={contractValue}
             onChange={(e) => setContractValue(e.target.value)}
             placeholder={t("contractValuePlaceholder")}
-            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           />
           <select
             value={isPublic}
             onChange={(e) => setIsPublic(e.target.value as "" | "public" | "private")}
-            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+            className="border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
           >
             <option value="">{t("sectorOptional")}</option>
             <option value="public">{t("publicSector")}</option>

@@ -279,7 +279,7 @@ export default function RequirementWorkspace({
         <button
           onClick={generateDraft}
           disabled={generating}
-          className="mt-4 bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
+          className="mt-4 bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50"
         >
           {generating ? t("generating") : draftText ? t("regenerateDraft") : t("generateDraft")}
         </button>
@@ -305,7 +305,7 @@ export default function RequirementWorkspace({
               value={draftText}
               onChange={(e) => setDraftText(e.target.value)}
               rows={8}
-              className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+              className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
             />
           ) : (
             <p className="text-ink leading-relaxed whitespace-pre-wrap text-sm">{draftText}</p>

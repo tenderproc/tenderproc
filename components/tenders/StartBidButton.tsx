@@ -35,7 +35,7 @@ export default function StartBidButton({ tenderId }: { tenderId: string }) {
       <button
         onClick={start}
         disabled={starting}
-        className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-sm hover:bg-accentDim transition-colors disabled:opacity-50"
+        className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50"
       >
         {starting ? t("starting") : t("startBid")}
       </button>

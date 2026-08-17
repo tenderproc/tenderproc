@@ -63,7 +63,7 @@ export default function TagInput({
         }}
         onBlur={commit}
         placeholder={placeholder ?? t("defaultPlaceholder")}
-        className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
+        className="w-full border border-line rounded-doc px-3 py-2 bg-paper text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
     </div>
   );

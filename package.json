@@ -11,27 +11,30 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.27.0",
+    "@anthropic-ai/sdk": "^0.117.1",
+    "@paddle/paddle-js": "^1.6.4",
+    "@paddle/paddle-node-sdk": "^3.10.0",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.112.3",
-    "next": "^16.3.0",
+    "next": "^16.3.1",
     "next-intl": "^4.13.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "resend": "^6.19.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "resend": "^6.20.0",
     "unpdf": "^1.8.1"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "autoprefixer": "^10.4.19",
-    "eslint": "^9.17.0",
+    "cheerio": "^1.2.0",
+    "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.0",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.6",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.5.3",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^2.1.8"
+    "vitest": "^4.1.10"
   }
 }

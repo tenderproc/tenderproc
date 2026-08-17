@@ -1,0 +1,22 @@
+[
+  { "name": "Antwerpen", "region": "Flanders", "province": "Antwerp", "population": 530504, "websiteUrl": "https://www.antwerpen.be" },
+  { "name": "Gent", "region": "Flanders", "province": "East Flanders", "population": 265086, "websiteUrl": "https://stad.gent" },
+  { "name": "Leuven", "region": "Flanders", "province": "Flemish Brabant", "population": 102275, "websiteUrl": "https://www.leuven.be" },
+  { "name": "Mechelen", "region": "Flanders", "province": "Antwerp", "population": 86921, "websiteUrl": "https://www.mechelen.be" },
+  { "name": "Kortrijk", "region": "Flanders", "province": "West Flanders", "population": 77812, "websiteUrl": "https://www.kortrijk.be" },
+  { "name": "Sint-Niklaas", "region": "Flanders", "province": "East Flanders", "population": 80202, "websiteUrl": "https://www.sint-niklaas.be" },
+  { "name": "Voeren", "region": "Flanders", "province": "Limburg", "population": 4194, "websiteUrl": "https://voeren.mijn-gemeente.be" },
+  { "name": "Herstappe", "region": "Flanders", "province": "Limburg", "population": 79, "websiteUrl": "https://herstappe.mijn-gemeente.be" },
+  { "name": "Liège", "region": "Wallonia", "province": "Liège", "population": 197355, "websiteUrl": "https://www.liege.be" },
+  { "name": "Charleroi", "region": "Wallonia", "province": "Hainaut", "population": 202000, "websiteUrl": "https://www.charleroi.be" },
+  { "name": "Namur", "region": "Wallonia", "province": "Namur", "population": 110939, "websiteUrl": "https://www.namur.be" },
+  { "name": "Mons", "region": "Wallonia", "province": "Hainaut", "population": 95576, "websiteUrl": "https://www.mons.be" },
+  { "name": "Ottignies-Louvain-la-Neuve", "region": "Wallonia", "province": "Walloon Brabant", "population": 31385, "websiteUrl": "https://www.olln.be" },
+  { "name": "Bastogne", "region": "Wallonia", "province": "Luxembourg", "population": 20654, "websiteUrl": "https://www.bastogne.be" },
+  { "name": "Daverdisse", "region": "Wallonia", "province": "Luxembourg", "population": 1407, "websiteUrl": "https://www.daverdisse.be" },
+  { "name": "Ville de Bruxelles", "region": "Brussels-Capital", "province": null, "population": 185670, "websiteUrl": "https://www.bruxelles.be" },
+  { "name": "Schaerbeek", "region": "Brussels-Capital", "province": null, "population": 132097, "websiteUrl": "https://www.1030.be" },
+  { "name": "Ixelles", "region": "Brussels-Capital", "province": null, "population": 86336, "websiteUrl": "https://www.ixelles.be" },
+  { "name": "Watermael-Boitsfort", "region": "Brussels-Capital", "province": null, "population": 25276, "websiteUrl": "https://watermael-boitsfort.be" },
+  { "name": "Eupen", "region": "German-speaking", "province": "Liège", "population": 20583, "websiteUrl": "https://www.eupen.be" }
+]

@@ -24,6 +24,22 @@ export function sectorsToCpvPrefixes(keys: string[]): string[] {
   return Array.from(new Set(prefixes));
 }
 
+/** Reverse lookup: given a tender's CPV codes, find the first matching sector's label, for display. */
+export function sectorLabelForCpv(cpvCodes: string[], t?: (key: string) => string): string | null {
+  const sector = SECTORS.find((s) =>
+    s.cpvPrefixes.some((prefix) => cpvCodes.some((code) => code.startsWith(prefix)))
+  );
+  if (!sector) return null;
+  if (t) {
+    try {
+      return t(sector.key);
+    } catch {
+      // fall through to the English default below
+    }
+  }
+  return sector.label;
+}
+
 export function sectorLabels(keys: string[], t?: (key: string) => string): string[] {
   return SECTORS.filter((s) => keys.includes(s.key)).map((s) => {
     if (t) {

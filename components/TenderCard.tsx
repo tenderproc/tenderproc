@@ -49,7 +49,17 @@ export default async function TenderCard({
           <h3 className="font-display font-semibold text-lg text-ink leading-snug">
             {tender.title}
           </h3>
-          <p className="text-sm text-inkDim mt-1">{tender.buyerName}</p>
+          <p className="text-sm text-inkDim mt-1 flex items-center gap-2 flex-wrap">
+            {tender.buyerName}
+            {tender.titleLanguages.length > 0 && (
+              <span
+                className="text-[10px] font-medium uppercase tracking-wide border border-line rounded-full px-2 py-0.5 text-inkDim shrink-0"
+                title={t("titleLanguageHint", { languages: tender.titleLanguages.join(", ").toUpperCase() })}
+              >
+                {tender.titleLanguages.join(" · ").toUpperCase()}
+              </span>
+            )}
+          </p>
           {score && (
             <div className="relative z-10">
               <MatchScoreBadge score={score} />
