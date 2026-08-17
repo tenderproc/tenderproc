@@ -10,7 +10,7 @@ export default async function Header() {
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper">
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link href="/opportunities" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <span className="font-display font-semibold text-xl text-ink tracking-tight">
             TenderProc
           </span>
