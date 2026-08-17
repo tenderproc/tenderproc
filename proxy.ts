@@ -40,6 +40,11 @@ export async function proxy(req: NextRequest) {
     pathname.startsWith("/favicon") ||
     // Has its own CRON_SECRET bearer-token check — not a user session.
     pathname.startsWith("/api/cron") ||
+    // Paddle-to-server webhook call — has its own signature verification
+    // (unmarshalWebhook / PADDLE_WEBHOOK_SECRET), never carries a user
+    // session cookie. Redirecting it to /login would mean Paddle's
+    // notifications never reach the actual handler at all.
+    pathname.startsWith("/api/billing/webhook") ||
     // Called from the signup form right after auth.signUp(), before a
     // session exists (email confirmation is required on this project).
     // Insert-only server-side, see app/api/signup-profile/route.ts.
