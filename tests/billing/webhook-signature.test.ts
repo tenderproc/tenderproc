@@ -43,10 +43,22 @@ describe("Paddle webhook signature verification", () => {
     await expect(unmarshalWebhook(body, sign(body, "not-the-real-secret"))).rejects.toThrow(/signature/i);
   });
 
-  it("rejects a stale timestamp (replay protection)", async () => {
+  it("rejects a timestamp older than the configured tolerance (replay protection)", async () => {
     const { unmarshalWebhook } = await import("@/lib/billing/paddle");
     const body = JSON.stringify(subscriptionCreatedPayload());
-    const oldTs = Math.floor(Date.now() / 1000) - 60; // 60s old — the SDK's own window is ~5s
+    const oldTs = Math.floor(Date.now() / 1000) - 400; // older than the 300s default tolerance
     await expect(unmarshalWebhook(body, sign(body, SECRET, oldTs))).rejects.toThrow(/signature/i);
+  });
+
+  it("accepts a signature within the tolerance window even if a few seconds old", async () => {
+    // Real Paddle deliveries regularly carry >5s of dispatch latency before
+    // this route even sees them — this is the case the SDK's own hardcoded
+    // 5s window used to reject outright. See the comment on
+    // unmarshalWebhook in lib/billing/paddle.ts.
+    const { unmarshalWebhook } = await import("@/lib/billing/paddle");
+    const body = JSON.stringify(subscriptionCreatedPayload());
+    const slightlyOldTs = Math.floor(Date.now() / 1000) - 60;
+    const event = await unmarshalWebhook(body, sign(body, SECRET, slightlyOldTs));
+    expect(event.eventType).toBe("subscription.created");
   });
 });
