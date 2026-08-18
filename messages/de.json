@@ -194,7 +194,6 @@
     "perMonth": "/Monat",
     "getStarted": "Loslegen",
     "subscribe": "Abonnieren",
-    "loadingPrice": "Preis wird geladen…",
     "priceUnavailable": "Preis nicht verfügbar",
     "tiers": {
       "free": {
@@ -546,8 +545,10 @@
     "pickSector": "Wähle mindestens eine Branche.",
     "checkEmailHeading": "Überprüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Bestätigungslink an {email} gesendet. Klicke darauf und melde dich dann an — dein Unternehmensprofil ist bereits gespeichert.",
+    "checkEmailPlanNote": "Nach der Bestätigung geht es direkt weiter zur Kasse für {plan}.",
     "backToLogin": "Zurück zur Anmeldung",
     "heading": "Konto erstellen",
+    "signingUpFor": "Du meldest dich an für {plan} — {price}/Monat",
     "subheading": "Erzähl uns von deinem Unternehmen — das bestimmt, welche Ausschreibungen du siehst, und die Übereinstimmungsbewertung jeder Ausschreibung.",
     "email": "E-Mail",
     "password": "Passwort",

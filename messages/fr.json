@@ -194,7 +194,6 @@
     "perMonth": "/mois",
     "getStarted": "Commencer",
     "subscribe": "S'abonner",
-    "loadingPrice": "Chargement du prix…",
     "priceUnavailable": "Prix indisponible",
     "tiers": {
       "free": {
@@ -546,8 +545,10 @@
     "pickSector": "Choisissez au moins un secteur.",
     "checkEmailHeading": "Vérifiez votre e-mail",
     "checkEmailBody": "Nous avons envoyé un lien de confirmation à {email}. Cliquez dessus, puis connectez-vous — le profil de votre entreprise est déjà enregistré.",
+    "checkEmailPlanNote": "Une fois confirmé, vous serez dirigé directement vers le paiement pour {plan}.",
     "backToLogin": "Retour à la connexion",
     "heading": "Créez votre compte",
+    "signingUpFor": "Vous vous inscrivez pour {plan} — {price}/mois",
     "subheading": "Parlez-nous de votre entreprise — cela détermine les marchés que vous voyez et le score de correspondance de chacun.",
     "email": "E-mail",
     "password": "Mot de passe",

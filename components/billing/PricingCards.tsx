@@ -15,6 +15,7 @@ interface CardViewModel {
   tierName: TierName;
   highlighted?: boolean;
   priceId?: string;
+  basePrice?: string;
 }
 
 export default function PricingCards({
@@ -22,6 +23,7 @@ export default function PricingCards({
   countryCode,
   currentTier,
   user,
+  autoOpenPlan,
 }: {
   paidTiers: PricingTierConfig[];
   /** From `x-vercel-ip-country`. Omitted entirely (not an "unknown"
@@ -30,12 +32,15 @@ export default function PricingCards({
   countryCode?: string;
   currentTier: TierName;
   user: { id: string; email?: string } | null;
+  /** Set from ?plan= after a signup redirect carried a plan choice through
+   * (see app/signup/page.tsx) — opens that tier's checkout automatically
+   * once, so picking a plan before signing up isn't a wasted click. */
+  autoOpenPlan?: "pro" | "premium";
 }) {
   const t = useTranslations("Pricing");
   // priceId -> Paddle's own formatted total string (e.g. "€49.00") — never
   // reformatted or recomputed here, just displayed as Paddle returns it.
   const [formattedTotals, setFormattedTotals] = useState<Record<string, string> | null>(null);
-  const [priceError, setPriceError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,7 +60,8 @@ export default function PricingCards({
         }
         setFormattedTotals(next);
       } catch {
-        if (!cancelled) setPriceError(true);
+        // Swallowed — the basePrice fallback already covers this case in
+        // the render below, no separate error UI needed.
       }
     }
 
@@ -72,6 +78,7 @@ export default function PricingCards({
       tierName: tier.tierName,
       highlighted: tier.highlighted,
       priceId: tier.priceId.month,
+      basePrice: tier.basePrice,
     })),
   ];
 
@@ -106,10 +113,18 @@ export default function PricingCards({
                   <span className="font-display font-bold text-3xl text-ink">{formattedPrice}</span>
                   <span className="text-sm text-inkDim">{t("perMonth")}</span>
                 </>
-              ) : priceError ? (
-                <span className="text-sm text-inkDim">{t("priceUnavailable")}</span>
+              ) : card.basePrice ? (
+                // Instant fallback — the exact localized/currency-converted
+                // total from Paddle.PricePreview (formattedPrice above)
+                // swaps in silently once it resolves, so the visitor never
+                // sees an empty "Loading price…" placeholder where a real
+                // number should be.
+                <>
+                  <span className="font-display font-bold text-3xl text-ink">{card.basePrice}</span>
+                  <span className="text-sm text-inkDim">{t("perMonth")}</span>
+                </>
               ) : (
-                <span className="text-sm text-inkDim">{t("loadingPrice")}</span>
+                <span className="text-sm text-inkDim">{t("priceUnavailable")}</span>
               )}
             </p>
 
@@ -128,6 +143,7 @@ export default function PricingCards({
                 userId={user!.id}
                 email={user!.email}
                 label={t("subscribe")}
+                autoOpen={autoOpenPlan === card.key}
                 className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors w-full ${
                   card.highlighted
                     ? "bg-accent text-white hover:bg-accentDim"
@@ -136,7 +152,7 @@ export default function PricingCards({
               />
             ) : (
               <Link
-                href={user ? "/opportunities" : "/signup"}
+                href={user ? "/opportunities" : `/signup?plan=${card.key}`}
                 className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors ${
                   card.highlighted
                     ? "bg-accent text-white hover:bg-accentDim"

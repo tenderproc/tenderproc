@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
 
 interface Tier {
   key: string;
@@ -12,8 +13,12 @@ interface Tier {
 
 const TIERS: Tier[] = [
   { key: "free", price: "€0", hasPeriod: false },
-  { key: "pro", price: "€49", hasPeriod: true, highlighted: true },
-  { key: "premium", price: "€79", hasPeriod: true },
+  ...PRICING_TIERS.map((tier) => ({
+    key: tier.key,
+    price: tier.basePrice,
+    hasPeriod: true,
+    highlighted: tier.highlighted,
+  })),
 ];
 
 export default async function LandingPage() {
@@ -29,7 +34,7 @@ export default async function LandingPage() {
       <header className="sticky top-0 z-10 border-b border-line bg-paper">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/tenderproc-logo.svg" alt="TenderProc" width={101} height={32} priority />
+            <Image src="/tenderproc-logo.svg" alt="TenderProc" width={127} height={40} priority />
             <span className="text-[11px] font-medium uppercase tracking-wide text-accent bg-accent/10 border border-accent/25 rounded-full px-2 py-0.5">
               Beta
             </span>

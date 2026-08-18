@@ -2,19 +2,31 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { SECTORS } from "@/lib/sectors";
 import { COMPANY_SIZES } from "@/lib/companySizes";
 import { authErrorMessage } from "@/lib/authErrors";
+import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
+
+// This banner just confirms which plan the user picked before signup, not
+// a live quote — basePrice is the same static display price PricingCards
+// falls back to before Paddle's localized total loads.
+const PLAN_DISPLAY: Record<string, { nameKey: string; price: string }> = Object.fromEntries(
+  PRICING_TIERS.map((tier) => [tier.key, { nameKey: `tiers.${tier.key}.name`, price: tier.basePrice }])
+);
 
 export default function SignupPage() {
   const t = useTranslations("Signup");
+  const tPricing = useTranslations("Pricing");
   const tSector = useTranslations("Enums.sector");
   const tCompanySize = useTranslations("Enums.companySize");
   const tAuthError = useTranslations("Errors.auth");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const plan = searchParams.get("plan");
+  const planDisplay = plan ? PLAN_DISPLAY[plan] : undefined;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -44,7 +56,16 @@ export default function SignupPage() {
     setLoading(true);
     setError(null);
     const supabase = createClient();
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    // Carries the chosen plan through email confirmation — the user lands
+    // back on /pricing?plan=... afterward, where PricingCards auto-opens
+    // that tier's checkout (see autoOpenPlan), instead of losing the plan
+    // choice and having to hunt for an upgrade button after confirming.
+    const redirectPath = planDisplay ? `/pricing?plan=${plan}` : "/opportunities";
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: `${window.location.origin}${redirectPath}` },
+    });
     if (error) {
       setLoading(false);
       setError(authErrorMessage(error.message, tAuthError));
@@ -75,7 +96,7 @@ export default function SignupPage() {
       setCheckEmail(true);
       return;
     }
-    router.push("/opportunities");
+    router.push(redirectPath);
     router.refresh();
   }
 
@@ -92,6 +113,11 @@ export default function SignupPage() {
           <p className="text-sm text-inkDim mt-3 leading-relaxed">
             {t("checkEmailBody", { email })}
           </p>
+          {planDisplay && (
+            <p className="text-sm text-inkDim mt-3 leading-relaxed">
+              {t("checkEmailPlanNote", { plan: tPricing(planDisplay.nameKey) })}
+            </p>
+          )}
           <Link href="/login" className="inline-block mt-6 underline text-sm text-ink">
             {t("backToLogin")}
           </Link>
@@ -111,6 +137,11 @@ export default function SignupPage() {
             {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-3 leading-relaxed">{t("subheading")}</p>
+          {planDisplay && (
+            <p className="inline-block mt-4 text-sm font-medium text-accent bg-accent/10 border border-accent/25 rounded-full px-3 py-1">
+              {t("signingUpFor", { plan: tPricing(planDisplay.nameKey), price: planDisplay.price })}
+            </p>
+          )}
         </div>
 
         <form

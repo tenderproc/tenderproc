@@ -13,9 +13,15 @@ export interface PricingTierConfig {
   tierName: "PRO" | "PREMIUM";
   priceId: { month: string };
   highlighted?: boolean;
+  /** Static EUR display price — not a live quote (Paddle.PricePreview
+   * supplies the actual localized/currency-converted total once it loads;
+   * see PricingCards). Only used as an instant, no-flash fallback while
+   * that fetch is in flight, and on the landing page's non-interactive
+   * pricing preview. */
+  basePrice: string;
 }
 
 export const PRICING_TIERS: PricingTierConfig[] = [
-  { key: "pro", tierName: "PRO", priceId: { month: PADDLE_PRICE_IDS.PRO }, highlighted: true },
-  { key: "premium", tierName: "PREMIUM", priceId: { month: PADDLE_PRICE_IDS.PREMIUM } },
+  { key: "pro", tierName: "PRO", priceId: { month: PADDLE_PRICE_IDS.PRO }, highlighted: true, basePrice: "€49" },
+  { key: "premium", tierName: "PREMIUM", priceId: { month: PADDLE_PRICE_IDS.PREMIUM }, basePrice: "€79" },
 ];

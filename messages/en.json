@@ -194,7 +194,6 @@
     "perMonth": "/month",
     "getStarted": "Get started",
     "subscribe": "Subscribe",
-    "loadingPrice": "Loading price…",
     "priceUnavailable": "Price unavailable",
     "tiers": {
       "free": {
@@ -546,8 +545,10 @@
     "pickSector": "Pick at least one sector.",
     "checkEmailHeading": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {email}. Click it, then log in — your company profile is already saved.",
+    "checkEmailPlanNote": "Once you confirm, you'll be taken straight to checkout for {plan}.",
     "backToLogin": "Back to login",
     "heading": "Create your account",
+    "signingUpFor": "You're signing up for {plan} — {price}/month",
     "subheading": "Tell us about your business — it powers the tenders you see and each tender's match score.",
     "email": "Email",
     "password": "Password",

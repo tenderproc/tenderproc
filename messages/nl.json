@@ -194,7 +194,6 @@
     "perMonth": "/maand",
     "getStarted": "Aan de slag",
     "subscribe": "Abonneren",
-    "loadingPrice": "Prijs laden…",
     "priceUnavailable": "Prijs niet beschikbaar",
     "tiers": {
       "free": {
@@ -546,8 +545,10 @@
     "pickSector": "Kies minstens één sector.",
     "checkEmailHeading": "Controleer je e-mail",
     "checkEmailBody": "We hebben een bevestigingslink gestuurd naar {email}. Klik erop en log dan in — je bedrijfsprofiel is al opgeslagen.",
+    "checkEmailPlanNote": "Na bevestiging ga je meteen door naar de afrekening voor {plan}.",
     "backToLogin": "Terug naar inloggen",
     "heading": "Maak je account aan",
+    "signingUpFor": "Je meldt je aan voor {plan} — {price}/maand",
     "subheading": "Vertel ons over je bedrijf — dit bepaalt welke opdrachten je ziet en de matchscore van elke opdracht.",
     "email": "E-mail",
     "password": "Wachtwoord",

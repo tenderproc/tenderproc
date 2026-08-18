@@ -12,7 +12,7 @@ export default async function Header() {
     <header className="sticky top-0 z-10 border-b border-line bg-paper">
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/tenderproc-logo.svg" alt="TenderProc" width={101} height={32} priority />
+          <Image src="/tenderproc-logo.svg" alt="TenderProc" width={127} height={40} priority />
           <span className="text-[11px] font-medium uppercase tracking-wide text-accent bg-accent/10 border border-accent/25 rounded-full px-2 py-0.5">
             Beta
           </span>
