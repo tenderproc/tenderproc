@@ -95,5 +95,11 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image).*)"],
+  // Also excludes any path with a file extension (e.g. /tenderproc-logo.svg,
+  // a future /favicon.ico) — public/ static assets have no session cookie
+  // and no need for the locale-cookie/auth logic below, so without this
+  // they'd otherwise get redirected to /login like a real protected route.
+  // Confirmed safe against real app routes: TED publication-number ids
+  // (used in /tenders/[id]) use hyphens, never dots (e.g. "769741-2025").
+  matcher: ["/((?!_next/static|_next/image|.*\\..*).*)"],
 };
