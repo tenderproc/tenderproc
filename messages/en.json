@@ -629,9 +629,7 @@
   "PreferencesSidebar": {
     "sectors": "Sectors",
     "languages": "Languages",
-    "languagesHint": "Prioritizes results in these languages where a translation genuinely exists. Titles are never translated by the source and always show as the buyer originally published them — every tender stays visible either way.",
-    "strictLanguageFilter": "Only show tenders in these languages",
-    "strictLanguageFilterHint": "Hides tenders TED doesn't report as published in a selected language — including ones with no language on file. Off by default so you don't miss real opportunities.",
+    "allLanguages": "All languages",
     "saving": "Saving…"
   },
   "Enums": {

@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
     sectors: cleanSectors,
     company_size: typeof companySize === "string" ? companySize.slice(0, 50) : "",
     company_description: typeof description === "string" ? description.slice(0, 2000) : "",
-    languages: [],
   });
 
   if (error) {

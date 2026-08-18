@@ -68,7 +68,7 @@ Seven pages (`components/PrimaryNav.tsx`), all behind real per-person accounts (
 4. `npm run dev`, then open http://localhost:3000
 
 The Supabase project needs:
-- A `profiles` table: `id` (uuid, references `auth.users.id`), `sectors` (text array), `languages` (text array), `strict_language_filter` (boolean, default false — see `supabase-language-filter-migration.sql`; unlike `languages`, which only reorders which translated title shows, this actually excludes notices TED doesn't report as published in a selected language), `company_name` (text), `address` (text), `company_size` (text), `company_description` (text), `updated_at`, with RLS allowing each user to read/write their own row. All of `company_name`/`address`/`company_size`/`company_description` are collected at signup and feed the match-score prompt.
+- A `profiles` table: `id` (uuid, references `auth.users.id`), `sectors` (text array), `language` (nullable text, default null — see `supabase-language-filter-single-select-migration.sql`; `null` means "All languages", otherwise a single `lib/languages.ts` key that both filters Opportunities/Search to that language, matched against TED's official-language field, and becomes the preferred display language — exclusive single-select, not a multi-language list), `company_name` (text), `address` (text), `company_size` (text), `company_description` (text), `updated_at`, with RLS allowing each user to read/write their own row. All of `company_name`/`address`/`company_size`/`company_description` are collected at signup and feed the match-score prompt.
 - A `notified_tenders` table (dedup ledger for the notification job — see `lib/supabase/admin.ts` and `app/api/cron/notify/route.ts`):
   ```sql
   create table public.notified_tenders (

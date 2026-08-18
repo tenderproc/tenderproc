@@ -54,12 +54,12 @@ export default async function SearchPage({
   if (user && tenders.length > 0) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("sectors, languages, company_description, address, company_size")
+      .select("sectors, language, company_description, address, company_size")
       .eq("id", user.id)
       .maybeSingle();
     scores = await getMatchScores(supabase, user.id, tenders, {
       sectors: profile?.sectors ?? [],
-      languages: profile?.languages ?? [],
+      languages: profile?.language ? [profile.language] : [],
       description: profile?.company_description ?? "",
       address: profile?.address ?? "",
       companySize: profile?.company_size ?? "",

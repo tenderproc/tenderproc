@@ -629,9 +629,7 @@
   "PreferencesSidebar": {
     "sectors": "Secteurs",
     "languages": "Langues",
-    "languagesHint": "Priorise les résultats dans ces langues lorsqu'une traduction existe réellement. Les titres ne sont jamais traduits par la source et s'affichent toujours dans la langue de publication d'origine de l'acheteur — chaque marché reste visible dans tous les cas.",
-    "strictLanguageFilter": "N'afficher que les marchés dans ces langues",
-    "strictLanguageFilterHint": "Masque les marchés que TED ne signale pas comme publiés dans une langue sélectionnée — y compris ceux dont la langue n'est pas renseignée. Désactivé par défaut pour ne pas manquer de véritables opportunités.",
+    "allLanguages": "Toutes les langues",
     "saving": "Enregistrement…"
   },
   "Enums": {

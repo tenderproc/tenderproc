@@ -10,21 +10,18 @@ import { LANGUAGES } from "@/lib/languages";
 export default function PreferencesSidebar({
   userId,
   initialSectors,
-  initialLanguages,
-  initialStrictLanguageFilter,
+  initialLanguage,
 }: {
   userId: string;
   initialSectors: string[];
-  initialLanguages: string[];
-  initialStrictLanguageFilter: boolean;
+  initialLanguage: string | null;
 }) {
   const t = useTranslations("PreferencesSidebar");
   const tSector = useTranslations("Enums.sector");
   const tLanguage = useTranslations("Enums.language");
   const router = useRouter();
   const [sectors, setSectors] = useState(initialSectors);
-  const [languages, setLanguages] = useState(initialLanguages);
-  const [strictLanguageFilter, setStrictLanguageFilter] = useState(initialStrictLanguageFilter);
+  const [language, setLanguage] = useState<string | null>(initialLanguage);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const skipFirst = useRef(true);
@@ -44,8 +41,7 @@ export default function PreferencesSidebar({
       const { error } = await supabase.from("profiles").upsert({
         id: userId,
         sectors,
-        languages,
-        strict_language_filter: strictLanguageFilter,
+        language,
         updated_at: new Date().toISOString(),
       });
       setSaving(false);
@@ -57,14 +53,10 @@ export default function PreferencesSidebar({
     }, 400);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectors, languages, strictLanguageFilter]);
+  }, [sectors, language]);
 
   function toggleSector(key: string) {
     setSectors((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
-  }
-
-  function toggleLanguage(key: string) {
-    setLanguages((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
   }
 
   return (
@@ -95,36 +87,37 @@ export default function PreferencesSidebar({
         <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
           {t("languages")}
         </p>
-        <p className="text-xs text-inkDim mb-3 -mt-2">{t("languagesHint")}</p>
+        {/* Exclusive single-select: exactly one of "All languages" or a
+         * specific language is active at a time — a native radio group gets
+         * this right (mutual exclusion, keyboard/screen-reader support) for
+         * free instead of hand-rolling toggle logic that could double-select. */}
         <div className="space-y-2">
-          {LANGUAGES.map((language) => (
+          <label className="flex items-center gap-2 text-sm text-ink cursor-pointer">
+            <input
+              type="radio"
+              name="language-filter"
+              className="accent-accent"
+              checked={language === null}
+              onChange={() => setLanguage(null)}
+            />
+            {t("allLanguages")}
+          </label>
+          {LANGUAGES.map((lang) => (
             <label
-              key={language.key}
+              key={lang.key}
               className="flex items-center gap-2 text-sm text-ink cursor-pointer"
             >
               <input
-                type="checkbox"
+                type="radio"
+                name="language-filter"
                 className="accent-accent"
-                checked={languages.includes(language.key)}
-                onChange={() => toggleLanguage(language.key)}
+                checked={language === lang.key}
+                onChange={() => setLanguage(lang.key)}
               />
-              {tLanguage(language.key)}
+              {tLanguage(lang.key)}
             </label>
           ))}
         </div>
-
-        <label className="flex items-start gap-2 text-sm text-ink cursor-pointer mt-4 pt-4 border-t border-line">
-          <input
-            type="checkbox"
-            className="accent-accent mt-0.5"
-            checked={strictLanguageFilter}
-            onChange={() => setStrictLanguageFilter((v) => !v)}
-          />
-          <span>
-            {t("strictLanguageFilter")}
-            <span className="block text-xs text-inkDim mt-0.5">{t("strictLanguageFilterHint")}</span>
-          </span>
-        </label>
       </div>
 
       <p className="text-xs text-inkDim mt-5 h-4">

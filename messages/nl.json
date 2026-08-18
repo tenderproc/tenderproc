@@ -629,9 +629,7 @@
   "PreferencesSidebar": {
     "sectors": "Sectoren",
     "languages": "Talen",
-    "languagesHint": "Geeft voorrang aan resultaten in deze talen waar echt een vertaling bestaat. Titels worden nooit vertaald door de bron en tonen altijd de taal waarin de aanbestedende dienst ze oorspronkelijk publiceerde — elke opdracht blijft in elk geval zichtbaar.",
-    "strictLanguageFilter": "Alleen opdrachten in deze talen tonen",
-    "strictLanguageFilterHint": "Verbergt opdrachten die TED niet als gepubliceerd in een geselecteerde taal vermeldt — ook die zonder geregistreerde taal. Standaard uit, zodat je geen echte kansen mist.",
+    "allLanguages": "Alle talen",
     "saving": "Bezig met opslaan…"
   },
   "Enums": {

@@ -629,9 +629,7 @@
   "PreferencesSidebar": {
     "sectors": "Branchen",
     "languages": "Sprachen",
-    "languagesHint": "Bevorzugt Ergebnisse in diesen Sprachen, wenn tatsächlich eine Übersetzung vorliegt. Titel werden von der Quelle nie übersetzt und immer so angezeigt, wie der Auftraggeber sie ursprünglich veröffentlicht hat — jede Ausschreibung bleibt trotzdem sichtbar.",
-    "strictLanguageFilter": "Nur Ausschreibungen in diesen Sprachen anzeigen",
-    "strictLanguageFilterHint": "Blendet Ausschreibungen aus, die TED nicht als in einer ausgewählten Sprache veröffentlicht meldet — auch solche ohne erfasste Sprache. Standardmäßig aus, damit dir keine echten Chancen entgehen.",
+    "allLanguages": "Alle Sprachen",
     "saving": "Wird gespeichert…"
   },
   "Enums": {

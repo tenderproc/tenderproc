@@ -26,36 +26,34 @@ export default async function OpportunitiesPage({
   } = await supabase.auth.getUser();
 
   let savedSectors: string[] = [];
-  let savedLanguages: string[] = [];
-  let strictLanguageFilter = false;
+  let savedLanguage: string | null = null;
   let companyDescription = "";
   let address = "";
   let companySize = "";
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("sectors, languages, strict_language_filter, company_description, address, company_size")
+      .select("sectors, language, company_description, address, company_size")
       .eq("id", user.id)
       .maybeSingle();
     savedSectors = profile?.sectors ?? [];
-    savedLanguages = profile?.languages ?? [];
-    strictLanguageFilter = profile?.strict_language_filter ?? false;
+    savedLanguage = profile?.language ?? null;
     companyDescription = profile?.company_description ?? "";
     address = profile?.address ?? "";
     companySize = profile?.company_size ?? "";
   }
 
-  // A manual CPV search overrides the saved sector default. `languageKeys`
-  // doesn't filter results by itself — TED titles are translated into every
-  // EU language, so it only controls which translation shows. Actual
-  // exclusion only happens when strictLanguageFilter is explicitly on (see
-  // filterLanguageKeys's doc in lib/ted.ts).
+  // A manual CPV search overrides the saved sector default. The sidebar's
+  // language selection is exclusive-single-select (see PreferencesSidebar) —
+  // `null` means "All languages" (no filtering); a specific language both
+  // filters results to it (filterLanguageKeys, matched against TED's
+  // official-language field — see its doc in lib/ted.ts) and becomes the
+  // preferred display language (languageKeys).
   const cpvPrefixes = !params.cpv && savedSectors.length > 0
     ? sectorsToCpvPrefixes(savedSectors)
     : undefined;
-  const languageKeys = savedLanguages.length > 0 ? savedLanguages : undefined;
-  const filterLanguageKeys =
-    strictLanguageFilter && savedLanguages.length > 0 ? savedLanguages : undefined;
+  const languageKeys = savedLanguage ? [savedLanguage] : undefined;
+  const filterLanguageKeys = savedLanguage ? [savedLanguage] : undefined;
 
   let tenders: TenderNotice[] = [];
   let loadError: string | null = null;
@@ -77,7 +75,7 @@ export default async function OpportunitiesPage({
   if (user && tenders.length > 0) {
     scores = await getMatchScores(supabase, user.id, tenders, {
       sectors: savedSectors,
-      languages: savedLanguages,
+      languages: savedLanguage ? [savedLanguage] : [],
       description: companyDescription,
       address,
       companySize,
@@ -92,8 +90,7 @@ export default async function OpportunitiesPage({
           <PreferencesSidebar
             userId={user.id}
             initialSectors={savedSectors}
-            initialLanguages={savedLanguages}
-            initialStrictLanguageFilter={strictLanguageFilter}
+            initialLanguage={savedLanguage}
           />
         )}
 
