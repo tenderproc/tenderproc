@@ -155,7 +155,7 @@ export default function SignupPage() {
           onSubmit={onSubmit}
           className="border border-line bg-white rounded-2xl p-6 space-y-5"
         >
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("email")}
@@ -186,7 +186,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("companyName")}

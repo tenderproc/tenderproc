@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -10,6 +11,11 @@ import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
 import type { Tier as TierName } from "@/lib/billing/types";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Pricing — TenderProc",
+  description: "Simple, straightforward plans for AI-assisted public tender discovery in Belgium.",
+};
 
 export default async function PricingPage({
   searchParams,
