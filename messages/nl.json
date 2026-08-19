@@ -830,5 +830,18 @@
       "WITHDRAWN": "Ingetrokken",
       "NO_RESULT": "Geen resultaat"
     }
+  },
+  "SupportChat": {
+    "bubbleLabel": "Chatondersteuning openen",
+    "title": "TenderProc-ondersteuning",
+    "greeting": "Hallo! Ik ben de TenderProc-assistent. Stel me gerust een vraag over tender matching, abonnementen of facturatie.",
+    "placeholder": "Typ je bericht…",
+    "send": "Verzenden",
+    "sending": "Verzenden…",
+    "close": "Chat sluiten",
+    "talkToPerson": "Praat met een medewerker via WhatsApp",
+    "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur, Brusselse tijd.",
+    "whatsappLeadIn": "Hallo, ik was aan het chatten met de TenderProc-supportbot over:",
+    "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of praat hieronder met een medewerker via WhatsApp."
   }
 }

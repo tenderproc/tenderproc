@@ -40,6 +40,9 @@ export async function proxy(req: NextRequest) {
     // marketing footer/nav for visitors who haven't signed up yet.
     pathname.startsWith("/contact") ||
     pathname.startsWith("/api/contact") ||
+    // Support chat widget is rendered site-wide, including the pre-auth
+    // marketing pages above — it must work for signed-out visitors too.
+    pathname.startsWith("/api/chat") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     // Has its own CRON_SECRET bearer-token check — not a user session.

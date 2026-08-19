@@ -830,5 +830,18 @@
       "WITHDRAWN": "Withdrawn",
       "NO_RESULT": "No result"
     }
+  },
+  "SupportChat": {
+    "bubbleLabel": "Open support chat",
+    "title": "TenderProc support",
+    "greeting": "Hi! I'm the TenderProc assistant. Ask me anything about tender matching, plans, or billing.",
+    "placeholder": "Type your message…",
+    "send": "Send",
+    "sending": "Sending…",
+    "close": "Close chat",
+    "talkToPerson": "Talk to a person on WhatsApp",
+    "operatorHours": "Operators are available 9 AM–5 PM Brussels time.",
+    "whatsappLeadIn": "Hi, I was chatting with the TenderProc support bot about:",
+    "errorFallback": "Sorry, something went wrong on my end. You can try again, or reach a person on WhatsApp below."
   }
 }

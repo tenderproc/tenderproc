@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import SupportChatWidget from "@/components/SupportChatWidget";
 import "./globals.css";
 
 // One typeface for everything (headings, body, labels) — matches the clean,
@@ -29,7 +30,10 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={inter.variable}>
       <body className="font-body min-h-screen">
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+          <SupportChatWidget />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

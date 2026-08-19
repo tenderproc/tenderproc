@@ -830,5 +830,18 @@
       "WITHDRAWN": "Zurückgezogen",
       "NO_RESULT": "Kein Ergebnis"
     }
+  },
+  "SupportChat": {
+    "bubbleLabel": "Support-Chat öffnen",
+    "title": "TenderProc-Support",
+    "greeting": "Hallo! Ich bin der TenderProc-Assistent. Stellen Sie mir gerne Fragen zum Tender-Matching, zu den Tarifen oder zur Abrechnung.",
+    "placeholder": "Nachricht eingeben…",
+    "send": "Senden",
+    "sending": "Wird gesendet…",
+    "close": "Chat schließen",
+    "talkToPerson": "Mit einer Person auf WhatsApp sprechen",
+    "operatorHours": "Mitarbeiter sind von 9 bis 17 Uhr Brüsseler Zeit erreichbar.",
+    "whatsappLeadIn": "Hallo, ich habe mit dem TenderProc-Support-Bot gesprochen über:",
+    "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder wenden Sie sich unten per WhatsApp an eine Person."
   }
 }
