@@ -660,16 +660,19 @@
       "other": "Autre"
     },
     "sector": {
-      "construction": "Construction & travaux",
+      "construction": "Construction, travaux & électricité",
       "it-telecom": "Informatique, logiciels & télécom",
-      "consulting": "Conseil & services professionnels",
+      "consulting": "Conseil, sécurité, design & traduction",
       "engineering": "Ingénierie & architecture",
-      "cleaning-facilities": "Nettoyage & services d'installations",
+      "cleaning-facilities": "Nettoyage, déchets & services d'installations",
       "transport-logistics": "Transport & logistique",
       "catering": "Restauration & alimentation",
-      "healthcare": "Santé & services sociaux",
+      "healthcare": "Santé, petite enfance & services sociaux",
       "education": "Éducation & formation",
       "supplies-equipment": "Fournitures & équipements de bureau",
+      "landscaping": "Aménagement paysager & espaces verts",
+      "energy-sustainability": "Énergie & durabilité",
+      "printing-signage": "Impression & signalétique",
       "other": "Autre — montrez-moi tout"
     },
     "language": {

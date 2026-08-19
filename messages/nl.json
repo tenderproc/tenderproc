@@ -660,16 +660,19 @@
       "other": "Overig"
     },
     "sector": {
-      "construction": "Bouw & werken",
+      "construction": "Bouw, werken & elektriciteit",
       "it-telecom": "IT, software & telecom",
-      "consulting": "Consulting & professionele diensten",
+      "consulting": "Consulting, beveiliging, ontwerp & vertaling",
       "engineering": "Engineering & architectuur",
-      "cleaning-facilities": "Schoonmaak & facilitaire diensten",
+      "cleaning-facilities": "Schoonmaak, afval & facilitaire diensten",
       "transport-logistics": "Transport & logistiek",
       "catering": "Catering & voeding",
-      "healthcare": "Zorg & sociale diensten",
+      "healthcare": "Zorg, kinderopvang & sociale diensten",
       "education": "Onderwijs & opleiding",
       "supplies-equipment": "Kantoorbenodigdheden & uitrusting",
+      "landscaping": "Tuinaanleg & groenvoorziening",
+      "energy-sustainability": "Energie & duurzaamheid",
+      "printing-signage": "Drukwerk & signalisatie",
       "other": "Anders — toon me alles"
     },
     "language": {
