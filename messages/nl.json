@@ -145,8 +145,7 @@
       "successBody": "Bedankt voor uw bericht — we nemen binnenkort contact met u op."
     },
     "info": {
-      "emailLabel": "Mail ons rechtstreeks",
-      "replyTime": "We reageren doorgaans binnen 1 werkdag."
+      "emailLabel": "Mail ons rechtstreeks"
     },
     "faq": {
       "heading": "Veelgestelde vragen",

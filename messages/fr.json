@@ -145,8 +145,7 @@
       "successBody": "Merci de nous avoir contactés — nous vous répondrons bientôt."
     },
     "info": {
-      "emailLabel": "Écrivez-nous directement",
-      "replyTime": "Nous répondons généralement sous 1 jour ouvré."
+      "emailLabel": "Écrivez-nous directement"
     },
     "faq": {
       "heading": "Questions fréquentes",

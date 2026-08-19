@@ -13,7 +13,7 @@ export const LEGAL_ENTITY = {
    * "Commercial Registration / Tax Number" in page copy rather than
    * asserting it's specifically a VAT number, since that wasn't confirmed. */
   companyNumber: "3123756993100003",
-  contactEmail: "privacy@tenderproc.com",
+  contactEmail: "contact@tenderproc.com",
   /** Chosen governing law for the Terms — note this is a non-EU company
    * (Saudi Arabia) voluntarily designating Belgian law, not a company
    * headquartered there. */

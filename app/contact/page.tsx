@@ -47,7 +47,6 @@ export default async function ContactPage() {
             <a href={`mailto:${LEGAL_ENTITY.contactEmail}`} className="block text-lg text-ink font-medium">
               {LEGAL_ENTITY.contactEmail}
             </a>
-            <p className="text-sm text-inkDim leading-relaxed pt-2">{t("info.replyTime")}</p>
           </div>
         </div>
 

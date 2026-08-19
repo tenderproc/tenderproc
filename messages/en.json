@@ -145,8 +145,7 @@
       "successBody": "Thanks for reaching out — we'll get back to you soon."
     },
     "info": {
-      "emailLabel": "Email us directly",
-      "replyTime": "We typically reply within 1 business day."
+      "emailLabel": "Email us directly"
     },
     "faq": {
       "heading": "Frequently asked questions",

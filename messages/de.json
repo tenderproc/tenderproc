@@ -145,8 +145,7 @@
       "successBody": "Danke für Ihre Nachricht — wir melden uns in Kürze bei Ihnen."
     },
     "info": {
-      "emailLabel": "Schreiben Sie uns direkt",
-      "replyTime": "Wir antworten in der Regel innerhalb von 1 Werktag."
+      "emailLabel": "Schreiben Sie uns direkt"
     },
     "faq": {
       "heading": "Häufig gestellte Fragen",
