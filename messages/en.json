@@ -86,6 +86,7 @@
       "account": "Account",
       "logIn": "Log in",
       "signUp": "Sign up",
+      "contact": "Contact",
       "rights": "© {year} TenderProc. All rights reserved.",
       "terms": "Terms of Service",
       "privacy": "Privacy Notice",
@@ -112,7 +113,73 @@
     "backToTenderProc": "Back to TenderProc",
     "terms": "Terms of Service",
     "privacy": "Privacy Notice",
-    "refund": "Refund Policy"
+    "refund": "Refund Policy",
+    "contact": "Contact"
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "heading": "Get in touch",
+    "subheading": "Questions about TenderProc? Send us a message and we'll get back to you.",
+    "form": {
+      "heading": "Send us a message",
+      "name": "Name",
+      "email": "Email",
+      "company": "Company (optional)",
+      "reason": "Reason",
+      "reasonOptions": {
+        "general": "General question",
+        "pricing": "Pricing",
+        "technical": "Technical issue",
+        "partnership": "Partnership"
+      },
+      "message": "Message",
+      "messagePlaceholder": "How can we help?",
+      "send": "Send message",
+      "sending": "Sending…",
+      "nameRequired": "Please enter your name.",
+      "emailRequired": "Please enter your email address.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageRequired": "Please enter a message.",
+      "genericError": "Something went wrong. Please try again in a moment.",
+      "successHeading": "Message sent",
+      "successBody": "Thanks for reaching out — we'll get back to you soon."
+    },
+    "info": {
+      "emailLabel": "Email us directly",
+      "replyTime": "We typically reply within 1 business day."
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "categories": {
+        "gettingStarted": {
+          "title": "Getting started",
+          "items": [
+            { "question": "What is TenderProc, exactly?", "answer": "[TODO: answer]" },
+            { "question": "How does the AI matching work?", "answer": "[TODO: answer]" },
+            { "question": "Do I need experience with public tenders to use this?", "answer": "[TODO: answer]" },
+            { "question": "Which regions/sectors are covered?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "pricingTrust": {
+          "title": "Pricing & trust",
+          "items": [
+            { "question": "How much does it cost?", "answer": "[TODO: answer]" },
+            { "question": "Is there a free trial?", "answer": "[TODO: answer]" },
+            { "question": "Can I cancel anytime?", "answer": "[TODO: answer]" },
+            { "question": "Is my company data secure/GDPR-compliant?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "usingProduct": {
+          "title": "Using the product",
+          "items": [
+            { "question": "How often are new tenders added?", "answer": "[TODO: answer]" },
+            { "question": "Can I get help preparing my actual bid, or just find opportunities?", "answer": "[TODO: answer]" },
+            { "question": "What languages does the platform support?", "answer": "[TODO: answer]" },
+            { "question": "What happens if I miss a deadline notification?", "answer": "[TODO: answer]" }
+          ]
+        }
+      }
+    }
   },
   "Login": {
     "heading": "Log in",

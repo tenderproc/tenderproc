@@ -24,6 +24,7 @@ const TIERS: Tier[] = [
 export default async function LandingPage() {
   const t = await getTranslations("Landing");
   const tPricing = await getTranslations("Pricing");
+  const tLegal = await getTranslations("Legal");
 
   const features = t.raw("features.items") as { tier: string; title: string; description: string }[];
   const steps = t.raw("howItWorks.steps") as { title: string; description: string }[];
@@ -43,6 +44,9 @@ export default async function LandingPage() {
             <LocaleSwitcher />
             <Link href="/pricing" className="hover:text-ink transition-colors">
               {tPricing("eyebrow")}
+            </Link>
+            <Link href="/contact" className="hover:text-ink transition-colors">
+              {tLegal("contact")}
             </Link>
             <Link href="/login" className="hover:text-ink transition-colors">
               {t("hero.ctaSecondary")}
@@ -255,6 +259,9 @@ export default async function LandingPage() {
             </Link>
             <Link href="/signup" className="hover:text-ink transition-colors">
               {t("footer.signUp")}
+            </Link>
+            <Link href="/contact" className="hover:text-ink transition-colors">
+              {t("footer.contact")}
             </Link>
           </nav>
         </div>

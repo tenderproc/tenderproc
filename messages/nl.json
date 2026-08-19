@@ -86,6 +86,7 @@
       "account": "Account",
       "logIn": "Inloggen",
       "signUp": "Registreren",
+      "contact": "Contact",
       "rights": "© {year} TenderProc. Alle rechten voorbehouden.",
       "terms": "Gebruiksvoorwaarden",
       "privacy": "Privacyverklaring",
@@ -112,7 +113,73 @@
     "backToTenderProc": "Terug naar TenderProc",
     "terms": "Gebruiksvoorwaarden",
     "privacy": "Privacyverklaring",
-    "refund": "Terugbetalingsbeleid"
+    "refund": "Terugbetalingsbeleid",
+    "contact": "Contact"
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "heading": "Neem contact op",
+    "subheading": "Vragen over TenderProc? Stuur ons een bericht en we nemen contact met u op.",
+    "form": {
+      "heading": "Stuur ons een bericht",
+      "name": "Naam",
+      "email": "E-mail",
+      "company": "Bedrijf (optioneel)",
+      "reason": "Onderwerp",
+      "reasonOptions": {
+        "general": "Algemene vraag",
+        "pricing": "Prijzen",
+        "technical": "Technisch probleem",
+        "partnership": "Samenwerking"
+      },
+      "message": "Bericht",
+      "messagePlaceholder": "Hoe kunnen we helpen?",
+      "send": "Bericht versturen",
+      "sending": "Versturen…",
+      "nameRequired": "Vul uw naam in.",
+      "emailRequired": "Vul uw e-mailadres in.",
+      "emailInvalid": "Vul een geldig e-mailadres in.",
+      "messageRequired": "Vul een bericht in.",
+      "genericError": "Er ging iets mis. Probeer het straks opnieuw.",
+      "successHeading": "Bericht verzonden",
+      "successBody": "Bedankt voor uw bericht — we nemen binnenkort contact met u op."
+    },
+    "info": {
+      "emailLabel": "Mail ons rechtstreeks",
+      "replyTime": "We reageren doorgaans binnen 1 werkdag."
+    },
+    "faq": {
+      "heading": "Veelgestelde vragen",
+      "categories": {
+        "gettingStarted": {
+          "title": "Aan de slag",
+          "items": [
+            { "question": "Wat is TenderProc precies?", "answer": "[TODO: answer]" },
+            { "question": "Hoe werkt de AI-matching?", "answer": "[TODO: answer]" },
+            { "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?", "answer": "[TODO: answer]" },
+            { "question": "Welke regio's/sectoren worden gedekt?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "pricingTrust": {
+          "title": "Prijzen & vertrouwen",
+          "items": [
+            { "question": "Hoeveel kost het?", "answer": "[TODO: answer]" },
+            { "question": "Is er een gratis proefperiode?", "answer": "[TODO: answer]" },
+            { "question": "Kan ik op elk moment opzeggen?", "answer": "[TODO: answer]" },
+            { "question": "Zijn mijn bedrijfsgegevens veilig/AVG-conform?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "usingProduct": {
+          "title": "Het platform gebruiken",
+          "items": [
+            { "question": "Hoe vaak worden nieuwe opdrachten toegevoegd?", "answer": "[TODO: answer]" },
+            { "question": "Kan ik hulp krijgen bij het voorbereiden van mijn offerte, of alleen kansen vinden?", "answer": "[TODO: answer]" },
+            { "question": "Welke talen ondersteunt het platform?", "answer": "[TODO: answer]" },
+            { "question": "Wat gebeurt er als ik een deadline-melding mis?", "answer": "[TODO: answer]" }
+          ]
+        }
+      }
+    }
   },
   "Login": {
     "heading": "Inloggen",

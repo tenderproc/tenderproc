@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { TenderNotice } from "./types";
+import { LEGAL_ENTITY } from "./legal/companyInfo";
 
 function formatDate(d: string | null) {
   if (!d) return "no deadline listed";
@@ -59,6 +60,42 @@ export async function sendNewTendersEmail(to: string, tenders: TenderNotice[]) {
   // The Resend SDK returns { error } instead of throwing on API-level
   // failures (e.g. sandbox address restrictions) — surface it so the caller
   // (the cron route) can report it instead of silently "succeeding".
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
+export interface ContactFormSubmission {
+  name: string;
+  email: string;
+  company: string;
+  reason: string;
+  message: string;
+}
+
+export async function sendContactEmail(submission: ContactFormSubmission) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const to = process.env.CONTACT_FORM_TO_EMAIL || LEGAL_ENTITY.contactEmail;
+
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    replyTo: submission.email,
+    subject: `[Contact] ${submission.reason} — ${submission.name}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;">
+        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc contact form</p>
+        <p><strong>Name:</strong> ${escapeHtml(submission.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
+        ${submission.company ? `<p><strong>Company:</strong> ${escapeHtml(submission.company)}</p>` : ""}
+        <p><strong>Reason:</strong> ${escapeHtml(submission.reason)}</p>
+        <p><strong>Message:</strong></p>
+        <p style="white-space:pre-wrap;">${escapeHtml(submission.message)}</p>
+      </div>
+    `,
+  });
+
   if (error) {
     throw new Error(`Resend error: ${error.message}`);
   }

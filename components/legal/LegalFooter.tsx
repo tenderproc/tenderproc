@@ -20,6 +20,9 @@ export default async function LegalFooter() {
           <Link href="/refund" className="hover:text-ink transition-colors">
             {t("refund")}
           </Link>
+          <Link href="/contact" className="hover:text-ink transition-colors">
+            {t("contact")}
+          </Link>
         </nav>
       </div>
     </footer>

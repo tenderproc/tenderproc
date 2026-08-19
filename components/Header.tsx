@@ -7,6 +7,7 @@ import LocaleSwitcher from "./LocaleSwitcher";
 
 export default async function Header() {
   const t = await getTranslations("Header");
+  const tLegal = await getTranslations("Legal");
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper">
@@ -25,6 +26,9 @@ export default async function Header() {
           </Link>
           <Link href="/billing" className="hover:text-ink transition-colors">
             {t("billing")}
+          </Link>
+          <Link href="/contact" className="hover:text-ink transition-colors">
+            {tLegal("contact")}
           </Link>
           <SignOutButton />
         </nav>

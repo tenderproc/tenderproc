@@ -36,6 +36,10 @@ export async function proxy(req: NextRequest) {
     pathname.startsWith("/terms") ||
     pathname.startsWith("/privacy") ||
     pathname.startsWith("/refund") ||
+    // Contact form + FAQ must be reachable pre-auth — linked from the
+    // marketing footer/nav for visitors who haven't signed up yet.
+    pathname.startsWith("/contact") ||
+    pathname.startsWith("/api/contact") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     // Has its own CRON_SECRET bearer-token check — not a user session.

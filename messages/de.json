@@ -86,6 +86,7 @@
       "account": "Konto",
       "logIn": "Anmelden",
       "signUp": "Registrieren",
+      "contact": "Kontakt",
       "rights": "© {year} TenderProc. Alle Rechte vorbehalten.",
       "terms": "Nutzungsbedingungen",
       "privacy": "Datenschutzerklärung",
@@ -112,7 +113,73 @@
     "backToTenderProc": "Zurück zu TenderProc",
     "terms": "Nutzungsbedingungen",
     "privacy": "Datenschutzerklärung",
-    "refund": "Rückerstattungsrichtlinie"
+    "refund": "Rückerstattungsrichtlinie",
+    "contact": "Kontakt"
+  },
+  "Contact": {
+    "eyebrow": "Kontakt",
+    "heading": "Kontaktieren Sie uns",
+    "subheading": "Fragen zu TenderProc? Senden Sie uns eine Nachricht — wir melden uns bei Ihnen.",
+    "form": {
+      "heading": "Nachricht senden",
+      "name": "Name",
+      "email": "E-Mail",
+      "company": "Unternehmen (optional)",
+      "reason": "Thema",
+      "reasonOptions": {
+        "general": "Allgemeine Frage",
+        "pricing": "Preise",
+        "technical": "Technisches Problem",
+        "partnership": "Partnerschaft"
+      },
+      "message": "Nachricht",
+      "messagePlaceholder": "Wie können wir helfen?",
+      "send": "Nachricht senden",
+      "sending": "Wird gesendet…",
+      "nameRequired": "Bitte geben Sie Ihren Namen ein.",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "messageRequired": "Bitte geben Sie eine Nachricht ein.",
+      "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
+      "successHeading": "Nachricht gesendet",
+      "successBody": "Danke für Ihre Nachricht — wir melden uns in Kürze bei Ihnen."
+    },
+    "info": {
+      "emailLabel": "Schreiben Sie uns direkt",
+      "replyTime": "Wir antworten in der Regel innerhalb von 1 Werktag."
+    },
+    "faq": {
+      "heading": "Häufig gestellte Fragen",
+      "categories": {
+        "gettingStarted": {
+          "title": "Erste Schritte",
+          "items": [
+            { "question": "Was ist TenderProc genau?", "answer": "[TODO: answer]" },
+            { "question": "Wie funktioniert das KI-Matching?", "answer": "[TODO: answer]" },
+            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "[TODO: answer]" },
+            { "question": "Welche Regionen/Branchen werden abgedeckt?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "pricingTrust": {
+          "title": "Preise & Vertrauen",
+          "items": [
+            { "question": "Was kostet es?", "answer": "[TODO: answer]" },
+            { "question": "Gibt es eine kostenlose Testphase?", "answer": "[TODO: answer]" },
+            { "question": "Kann ich jederzeit kündigen?", "answer": "[TODO: answer]" },
+            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "usingProduct": {
+          "title": "Die Plattform nutzen",
+          "items": [
+            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "[TODO: answer]" },
+            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "[TODO: answer]" },
+            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "[TODO: answer]" },
+            { "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?", "answer": "[TODO: answer]" }
+          ]
+        }
+      }
+    }
   },
   "Login": {
     "heading": "Anmelden",

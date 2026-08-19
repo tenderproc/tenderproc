@@ -86,6 +86,7 @@
       "account": "Compte",
       "logIn": "Se connecter",
       "signUp": "S'inscrire",
+      "contact": "Contact",
       "rights": "© {year} TenderProc. Tous droits réservés.",
       "terms": "Conditions d'utilisation",
       "privacy": "Politique de confidentialité",
@@ -112,7 +113,73 @@
     "backToTenderProc": "Retour à TenderProc",
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
-    "refund": "Politique de remboursement"
+    "refund": "Politique de remboursement",
+    "contact": "Contact"
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "heading": "Contactez-nous",
+    "subheading": "Des questions sur TenderProc ? Envoyez-nous un message, nous vous répondrons rapidement.",
+    "form": {
+      "heading": "Envoyez-nous un message",
+      "name": "Nom",
+      "email": "E-mail",
+      "company": "Entreprise (facultatif)",
+      "reason": "Sujet",
+      "reasonOptions": {
+        "general": "Question générale",
+        "pricing": "Tarifs",
+        "technical": "Problème technique",
+        "partnership": "Partenariat"
+      },
+      "message": "Message",
+      "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+      "send": "Envoyer le message",
+      "sending": "Envoi…",
+      "nameRequired": "Veuillez indiquer votre nom.",
+      "emailRequired": "Veuillez indiquer votre adresse e-mail.",
+      "emailInvalid": "Veuillez indiquer une adresse e-mail valide.",
+      "messageRequired": "Veuillez saisir un message.",
+      "genericError": "Une erreur s'est produite. Veuillez réessayer dans un instant.",
+      "successHeading": "Message envoyé",
+      "successBody": "Merci de nous avoir contactés — nous vous répondrons bientôt."
+    },
+    "info": {
+      "emailLabel": "Écrivez-nous directement",
+      "replyTime": "Nous répondons généralement sous 1 jour ouvré."
+    },
+    "faq": {
+      "heading": "Questions fréquentes",
+      "categories": {
+        "gettingStarted": {
+          "title": "Premiers pas",
+          "items": [
+            { "question": "Qu'est-ce que TenderProc, exactement ?", "answer": "[TODO: answer]" },
+            { "question": "Comment fonctionne le matching par IA ?", "answer": "[TODO: answer]" },
+            { "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?", "answer": "[TODO: answer]" },
+            { "question": "Quelles régions/secteurs sont couverts ?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "pricingTrust": {
+          "title": "Tarifs & confiance",
+          "items": [
+            { "question": "Combien ça coûte ?", "answer": "[TODO: answer]" },
+            { "question": "Y a-t-il un essai gratuit ?", "answer": "[TODO: answer]" },
+            { "question": "Puis-je annuler à tout moment ?", "answer": "[TODO: answer]" },
+            { "question": "Mes données d'entreprise sont-elles sécurisées et conformes au RGPD ?", "answer": "[TODO: answer]" }
+          ]
+        },
+        "usingProduct": {
+          "title": "Utiliser la plateforme",
+          "items": [
+            { "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?", "answer": "[TODO: answer]" },
+            { "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?", "answer": "[TODO: answer]" },
+            { "question": "Quelles langues la plateforme prend-elle en charge ?", "answer": "[TODO: answer]" },
+            { "question": "Que se passe-t-il si je manque une notification d'échéance ?", "answer": "[TODO: answer]" }
+          ]
+        }
+      }
+    }
   },
   "Login": {
     "heading": "Connexion",
