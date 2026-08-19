@@ -46,7 +46,7 @@ export default async function TenderCard({
               date: formatDate(tender.publicationDate),
             })}
           </p>
-          <h3 className="font-display font-semibold text-lg text-ink leading-snug">
+          <h3 className="font-display font-semibold text-base text-ink leading-snug">
             {tender.title}
           </h3>
           <p className="text-sm text-inkDim mt-1 flex items-center gap-2 flex-wrap">
