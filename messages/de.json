@@ -543,6 +543,7 @@
   },
   "Signup": {
     "pickSector": "Wähle mindestens eine Branche.",
+    "descriptionRequiredForOther": "„Andere“ entspricht keiner bestimmten Branche — beschreibe oben, was dein Unternehmen macht, damit wir passende Ausschreibungen finden können.",
     "checkEmailHeading": "Überprüfe deine E-Mail",
     "checkEmailBody": "Wir haben einen Bestätigungslink an {email} gesendet. Klicke darauf und melde dich dann an — dein Unternehmensprofil ist bereits gespeichert.",
     "checkEmailPlanNote": "Nach der Bestätigung geht es direkt weiter zur Kasse für {plan}.",
@@ -668,7 +669,8 @@
       "catering": "Catering & Verpflegung",
       "healthcare": "Gesundheit & Sozialdienste",
       "education": "Bildung & Ausbildung",
-      "supplies-equipment": "Bürobedarf & Ausstattung"
+      "supplies-equipment": "Bürobedarf & Ausstattung",
+      "other": "Andere — zeig mir alles"
     },
     "language": {
       "nl": "Niederländisch",

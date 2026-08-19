@@ -543,6 +543,7 @@
   },
   "Signup": {
     "pickSector": "Pick at least one sector.",
+    "descriptionRequiredForOther": "\"Other\" doesn't map to a specific sector, so we need a description of your business to find relevant tenders — please fill that in above.",
     "checkEmailHeading": "Check your email",
     "checkEmailBody": "We sent a confirmation link to {email}. Click it, then log in — your company profile is already saved.",
     "checkEmailPlanNote": "Once you confirm, you'll be taken straight to checkout for {plan}.",
@@ -668,7 +669,8 @@
       "catering": "Catering & food services",
       "healthcare": "Healthcare & social services",
       "education": "Education & training",
-      "supplies-equipment": "Office supplies & equipment"
+      "supplies-equipment": "Office supplies & equipment",
+      "other": "Other — show me everything"
     },
     "language": {
       "nl": "Dutch",

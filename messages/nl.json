@@ -543,6 +543,7 @@
   },
   "Signup": {
     "pickSector": "Kies minstens één sector.",
+    "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat je bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
     "checkEmailHeading": "Controleer je e-mail",
     "checkEmailBody": "We hebben een bevestigingslink gestuurd naar {email}. Klik erop en log dan in — je bedrijfsprofiel is al opgeslagen.",
     "checkEmailPlanNote": "Na bevestiging ga je meteen door naar de afrekening voor {plan}.",
@@ -668,7 +669,8 @@
       "catering": "Catering & voeding",
       "healthcare": "Zorg & sociale diensten",
       "education": "Onderwijs & opleiding",
-      "supplies-equipment": "Kantoorbenodigdheden & uitrusting"
+      "supplies-equipment": "Kantoorbenodigdheden & uitrusting",
+      "other": "Anders — toon me alles"
     },
     "language": {
       "nl": "Nederlands",

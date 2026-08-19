@@ -17,6 +17,14 @@ export const SECTORS: Sector[] = [
   { key: "healthcare", label: "Healthcare & social services", cpvPrefixes: ["85"] },
   { key: "education", label: "Education & training", cpvPrefixes: ["80"] },
   { key: "supplies-equipment", label: "Office supplies & equipment", cpvPrefixes: ["30", "39"] },
+  // Deliberately empty cpvPrefixes: this is the escape hatch for a
+  // business that doesn't fit any sector above (see the free-text
+  // "what does your business do?" field, required when this is picked —
+  // app/signup/page.tsx). sectorsToCpvPrefixes() contributes nothing for
+  // it, so selecting it alone shows every open Belgian tender unfiltered,
+  // relying on the AI match score (which reads that description) for
+  // relevance instead of a CPV filter that has nothing to match against.
+  { key: "other", label: "Other — show me everything", cpvPrefixes: [] },
 ];
 
 export function sectorsToCpvPrefixes(keys: string[]): string[] {

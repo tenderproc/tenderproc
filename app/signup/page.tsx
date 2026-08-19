@@ -49,6 +49,13 @@ export default function SignupPage() {
       setError(t("pickSector"));
       return;
     }
+    // "other" carries no CPV mapping (see lib/sectors.ts) — the AI match
+    // score is the only thing that can make the feed relevant for these
+    // users, and it needs an actual description to work with.
+    if (sectors.includes("other") && description.trim().length < 15) {
+      setError(t("descriptionRequiredForOther"));
+      return;
+    }
     if (!agreedToTerms) {
       setError(t("mustAgreeToTerms"));
       return;
