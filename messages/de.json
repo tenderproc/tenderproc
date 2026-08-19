@@ -154,27 +154,27 @@
         "gettingStarted": {
           "title": "Erste Schritte",
           "items": [
-            { "question": "Was ist TenderProc genau?", "answer": "[TODO: answer]" },
-            { "question": "Wie funktioniert das KI-Matching?", "answer": "[TODO: answer]" },
-            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "[TODO: answer]" },
-            { "question": "Welche Regionen/Branchen werden abgedeckt?", "answer": "[TODO: answer]" }
+            { "question": "Was ist TenderProc genau?", "answer": "TenderProc ist eine KI-gestützte Plattform, um belgische öffentliche Ausschreibungen zu finden und Angebote dafür vorzubereiten. Sie gleicht neue Ausschreibungen mit Ihrem Unternehmen ab, filtert Rauschen heraus (etwa bereits vergebene Aufträge) und hilft Ihnen, eine Ausschreibung zu qualifizieren und ein Angebot vorzubereiten — alles an einem Ort." },
+            { "question": "Wie funktioniert das KI-Matching?", "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu Ihrem Unternehmensprofil (Branchen, Größe, Beschreibung) — so sehen Sie zuerst, was wirklich Ihre Zeit wert ist." },
+            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "Nein — TenderProc wurde entwickelt, um belgische öffentliche Ausschreibungen zugänglich zu machen, auch wenn Sie noch nie ein Angebot abgegeben haben. Sie legen ein Unternehmensprofil an, und die Plattform übernimmt Screening, das Herausarbeiten von Anforderungen und Eignungsprüfungen." },
+            { "question": "Welche Regionen/Branchen werden abgedeckt?", "answer": "Belgische öffentliche Ausschreibungen — aus der offiziellen EU-Datenbank TED, der belgischen BOSA e-Notification-Plattform und unserem eigenen Netzwerk, über verschiedene Branchenkategorien hinweg, von Bau und IT bis Gesundheitswesen, Catering und Beratung." }
           ]
         },
         "pricingTrust": {
           "title": "Preise & Vertrauen",
           "items": [
-            { "question": "Was kostet es?", "answer": "[TODO: answer]" },
-            { "question": "Gibt es eine kostenlose Testphase?", "answer": "[TODO: answer]" },
-            { "question": "Kann ich jederzeit kündigen?", "answer": "[TODO: answer]" },
-            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "[TODO: answer]" }
+            { "question": "Was kostet es?", "answer": "Kostenlos, Pro (49 €/Monat) und Premium (79 €/Monat) — Details zu den einzelnen Plänen finden Sie auf der Preisseite." },
+            { "question": "Gibt es eine kostenlose Testphase?", "answer": "Es gibt keine zeitlich begrenzte Testphase, aber der kostenlose Plan selbst läuft nie ab und erfordert keine Kreditkarte — Sie können die Ausschreibungssuche für eine Branche kostenlos ausprobieren, bevor Sie upgraden." },
+            { "question": "Kann ich jederzeit kündigen?", "answer": "Ja — Sie können jederzeit über die Abrechnungsseite kündigen. Die Kündigung stoppt künftige Verlängerungen; Sie behalten den Zugang zu Ihrem bezahlten Plan bis zum Ende des aktuellen Zeitraums und werden danach nicht mehr belastet." },
+            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "Ja — TenderProc ist von Grund auf DSGVO-konform (dokumentierte Rechtsgrundlage für jede Nutzung Ihrer Daten, Wahrung der Rechte betroffener Personen), Daten werden bei der Übertragung verschlüsselt (HTTPS), und der Zugriff ist auf Ihr eigenes Konto beschränkt. Alle Details finden Sie in unserer Datenschutzerklärung." }
           ]
         },
         "usingProduct": {
           "title": "Die Plattform nutzen",
           "items": [
-            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "[TODO: answer]" },
-            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "[TODO: answer]" },
-            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "[TODO: answer]" },
+            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "Ausschreibungen werden live aus der offiziellen EU-Datenbank TED abgerufen, sobald sie veröffentlicht werden — ohne Verzögerung durch Stapelverarbeitung —, und eine tägliche Zusammenfassung per E-Mail meldet alles Neue in Ihren Branchen." },
+            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "Beides — über die reine Suche hinaus umfasst Pro eine KI-gestützte Angebotsvorbereitung: Laden Sie ein PDF der Ausschreibung hoch, und TenderProc extrahiert die Anforderungen, bewertet Ihre Eignung mit einer Bid/No-Bid-Empfehlung und entwirft eine Antwort auf Basis Ihrer eigenen Unternehmensnachweise." },
+            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "Die App selbst ist auf Deutsch, Englisch, Niederländisch und Französisch verfügbar, und Ausschreibungen, die in anderen Sprachen veröffentlicht wurden, können für Sie KI-übersetzt werden." },
             { "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?", "answer": "[TODO: answer]" }
           ]
         }

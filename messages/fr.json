@@ -154,27 +154,27 @@
         "gettingStarted": {
           "title": "Premiers pas",
           "items": [
-            { "question": "Qu'est-ce que TenderProc, exactement ?", "answer": "[TODO: answer]" },
-            { "question": "Comment fonctionne le matching par IA ?", "answer": "[TODO: answer]" },
-            { "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?", "answer": "[TODO: answer]" },
-            { "question": "Quelles régions/secteurs sont couverts ?", "answer": "[TODO: answer]" }
+            { "question": "Qu'est-ce que TenderProc, exactement ?", "answer": "TenderProc est une plateforme assistée par IA pour trouver et préparer des offres sur les marchés publics belges. Elle met en correspondance les nouveaux marchés avec votre activité, filtre le bruit (comme les marchés déjà attribués) et vous aide à qualifier puis préparer une offre — le tout au même endroit." },
+            { "question": "Comment fonctionne le matching par IA ?", "answer": "Chaque nouveau marché reçoit un score de correspondance sur 100 par rapport à votre profil d'entreprise (secteurs, taille, description) — pour repérer d'abord ce qui vaut vraiment votre temps." },
+            { "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?", "answer": "Non — TenderProc est conçu pour rendre les marchés publics belges accessibles même si vous n'avez jamais soumissionné. Vous configurez un profil d'entreprise, et la plateforme s'occupe du filtrage, de l'extraction des exigences et des vérifications d'éligibilité." },
+            { "question": "Quelles régions/secteurs sont couverts ?", "answer": "Les marchés publics belges — provenant de la base de données officielle TED de l'UE, de la plateforme belge BOSA e-Notification, et de notre propre réseau, répartis sur différentes catégories de secteurs, de la construction et l'IT à la santé, la restauration et le conseil." }
           ]
         },
         "pricingTrust": {
           "title": "Tarifs & confiance",
           "items": [
-            { "question": "Combien ça coûte ?", "answer": "[TODO: answer]" },
-            { "question": "Y a-t-il un essai gratuit ?", "answer": "[TODO: answer]" },
-            { "question": "Puis-je annuler à tout moment ?", "answer": "[TODO: answer]" },
-            { "question": "Mes données d'entreprise sont-elles sécurisées et conformes au RGPD ?", "answer": "[TODO: answer]" }
+            { "question": "Combien ça coûte ?", "answer": "Gratuit, Pro (49 €/mois) et Premium (79 €/mois) — consultez la page Tarifs pour le détail de chaque formule." },
+            { "question": "Y a-t-il un essai gratuit ?", "answer": "Il n'y a pas d'essai limité dans le temps, mais la formule Gratuite elle-même n'expire jamais et ne nécessite pas de carte — vous pouvez essayer la découverte de marchés pour un secteur gratuitement avant de passer à une formule supérieure." },
+            { "question": "Puis-je annuler à tout moment ?", "answer": "Oui — vous pouvez annuler à tout moment depuis la page Facturation. L'annulation arrête les renouvellements futurs ; vous conservez l'accès à votre formule payante jusqu'à la fin de la période en cours et n'êtes plus facturé ensuite." },
+            { "question": "Mes données d'entreprise sont-elles sécurisées et conformes au RGPD ?", "answer": "Oui — TenderProc est conforme au RGPD par conception (base légale documentée pour chaque utilisation de vos données, droits des personnes concernées respectés), les données sont chiffrées en transit (HTTPS), et l'accès est limité à votre propre compte. Tous les détails figurent dans notre Politique de confidentialité." }
           ]
         },
         "usingProduct": {
           "title": "Utiliser la plateforme",
           "items": [
-            { "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?", "answer": "[TODO: answer]" },
-            { "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?", "answer": "[TODO: answer]" },
-            { "question": "Quelles langues la plateforme prend-elle en charge ?", "answer": "[TODO: answer]" },
+            { "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?", "answer": "Les marchés sont récupérés en direct depuis la base de données officielle TED de l'UE dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs." },
+            { "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?", "answer": "Les deux — au-delà de la découverte, Pro inclut une préparation d'offre assistée par IA : téléversez un PDF du marché et TenderProc en extrait les exigences, évalue votre adéquation avec une recommandation Go/No-Go, et rédige une réponse fondée sur vos propres preuves d'entreprise." },
+            { "question": "Quelles langues la plateforme prend-elle en charge ?", "answer": "L'application elle-même est disponible en français, néerlandais, anglais et allemand, et les avis de marché publiés dans d'autres langues peuvent être traduits pour vous par IA." },
             { "question": "Que se passe-t-il si je manque une notification d'échéance ?", "answer": "[TODO: answer]" }
           ]
         }

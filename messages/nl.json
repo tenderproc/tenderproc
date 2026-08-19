@@ -154,27 +154,27 @@
         "gettingStarted": {
           "title": "Aan de slag",
           "items": [
-            { "question": "Wat is TenderProc precies?", "answer": "[TODO: answer]" },
-            { "question": "Hoe werkt de AI-matching?", "answer": "[TODO: answer]" },
-            { "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?", "answer": "[TODO: answer]" },
-            { "question": "Welke regio's/sectoren worden gedekt?", "answer": "[TODO: answer]" }
+            { "question": "Wat is TenderProc precies?", "answer": "TenderProc is een AI-ondersteund platform voor het vinden en voorbereiden van offertes voor Belgische overheidsopdrachten. Het platform matcht nieuwe opdrachten met uw bedrijf, filtert ruis eruit (zoals reeds gegunde opdrachten) en helpt u de opdracht te kwalificeren en een offerte voor te bereiden — allemaal op één plek." },
+            { "question": "Hoe werkt de AI-matching?", "answer": "Elke nieuwe opdracht krijgt een matchscore op 100 ten opzichte van uw bedrijfsprofiel (sectoren, grootte, beschrijving) — zo ziet u meteen wat uw tijd echt waard is." },
+            { "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?", "answer": "Nee — TenderProc is gebouwd om Belgische overheidsopdrachten toegankelijk te maken, ook als u nog nooit heeft ingeschreven. U stelt een bedrijfsprofiel op en het platform verzorgt screening, het uitlichten van vereisten en geschiktheidscontroles." },
+            { "question": "Welke regio's/sectoren worden gedekt?", "answer": "Belgische overheidsopdrachten — afkomstig van de officiële EU-databank TED, het Belgische BOSA e-Notification-platform en ons eigen netwerk, verspreid over verschillende sectorcategorieën, van bouw en IT tot zorg, catering en consulting." }
           ]
         },
         "pricingTrust": {
           "title": "Prijzen & vertrouwen",
           "items": [
-            { "question": "Hoeveel kost het?", "answer": "[TODO: answer]" },
-            { "question": "Is er een gratis proefperiode?", "answer": "[TODO: answer]" },
-            { "question": "Kan ik op elk moment opzeggen?", "answer": "[TODO: answer]" },
-            { "question": "Zijn mijn bedrijfsgegevens veilig/AVG-conform?", "answer": "[TODO: answer]" }
+            { "question": "Hoeveel kost het?", "answer": "Gratis, Pro (€49/maand) en Premium (€79/maand) — bekijk de Prijzenpagina voor wat elk plan bevat." },
+            { "question": "Is er een gratis proefperiode?", "answer": "Er is geen tijdelijke proefperiode, maar het Gratis-plan zelf verloopt nooit en vereist geen kaart — u kunt de opdrachten-detectie voor één sector gratis uitproberen voordat u upgradet." },
+            { "question": "Kan ik op elk moment opzeggen?", "answer": "Ja — u kunt op elk moment opzeggen via de Facturatiepagina. Opzeggen stopt toekomstige verlengingen; u behoudt toegang tot uw betaalde plan tot het einde van de huidige periode en wordt daarna niet meer gefactureerd." },
+            { "question": "Zijn mijn bedrijfsgegevens veilig/AVG-conform?", "answer": "Ja — TenderProc is by design AVG-conform (voor elk gebruik van uw gegevens is er een gedocumenteerde rechtsgrond, en uw rechten als betrokkene onder de AVG worden gerespecteerd), gegevens worden versleuteld verzonden (HTTPS) en toegang is beperkt tot uw eigen account. Meer details vindt u in onze Privacyverklaring." }
           ]
         },
         "usingProduct": {
           "title": "Het platform gebruiken",
           "items": [
-            { "question": "Hoe vaak worden nieuwe opdrachten toegevoegd?", "answer": "[TODO: answer]" },
-            { "question": "Kan ik hulp krijgen bij het voorbereiden van mijn offerte, of alleen kansen vinden?", "answer": "[TODO: answer]" },
-            { "question": "Welke talen ondersteunt het platform?", "answer": "[TODO: answer]" },
+            { "question": "Hoe vaak worden nieuwe opdrachten toegevoegd?", "answer": "Opdrachten worden live opgehaald uit de officiële EU-databank TED zodra ze gepubliceerd worden — niet met vertraging via een batchverwerking — en een dagelijkse samenvatting per e-mail meldt u alles wat nieuw is binnen uw sectoren." },
+            { "question": "Kan ik hulp krijgen bij het voorbereiden van mijn offerte, of alleen kansen vinden?", "answer": "Beide — naast het vinden van kansen omvat Pro ook AI-ondersteunde offertevoorbereiding: upload een PDF van de opdracht en TenderProc haalt de vereisten eruit, beoordeelt uw geschiktheid met een Bid/No-Bid-advies, en stelt een offerte op basis van uw eigen bedrijfsgegevens." },
+            { "question": "Welke talen ondersteunt het platform?", "answer": "De app zelf is beschikbaar in het Nederlands, Engels, Frans en Duits, en opdrachten die in andere talen gepubliceerd zijn kunnen voor u AI-vertaald worden." },
             { "question": "Wat gebeurt er als ik een deadline-melding mis?", "answer": "[TODO: answer]" }
           ]
         }

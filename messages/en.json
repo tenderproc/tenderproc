@@ -154,27 +154,27 @@
         "gettingStarted": {
           "title": "Getting started",
           "items": [
-            { "question": "What is TenderProc, exactly?", "answer": "[TODO: answer]" },
-            { "question": "How does the AI matching work?", "answer": "[TODO: answer]" },
-            { "question": "Do I need experience with public tenders to use this?", "answer": "[TODO: answer]" },
-            { "question": "Which regions/sectors are covered?", "answer": "[TODO: answer]" }
+            { "question": "What is TenderProc, exactly?", "answer": "TenderProc is an AI-assisted platform for finding and preparing bids on Belgian public tenders. It matches new tenders to your business, screens out noise (like already-awarded notices), and helps you qualify and prepare a bid — all in one workflow." },
+            { "question": "How does the AI matching work?", "answer": "Every new tender gets a match score out of 100 against your company profile (sectors, size, description) — so you see what's actually worth your time first." },
+            { "question": "Do I need experience with public tenders to use this?", "answer": "No — TenderProc is built to make Belgian public procurement approachable even if you've never bid before. You set up a company profile, and the platform handles screening, requirement extraction, and eligibility checks." },
+            { "question": "Which regions/sectors are covered?", "answer": "Belgian public tenders — pulled from the EU's official TED database, Belgium's BOSA e-Notification platform, and our own network, across different sector categories from construction and IT to healthcare, catering, and consulting." }
           ]
         },
         "pricingTrust": {
           "title": "Pricing & trust",
           "items": [
-            { "question": "How much does it cost?", "answer": "[TODO: answer]" },
-            { "question": "Is there a free trial?", "answer": "[TODO: answer]" },
-            { "question": "Can I cancel anytime?", "answer": "[TODO: answer]" },
-            { "question": "Is my company data secure/GDPR-compliant?", "answer": "[TODO: answer]" }
+            { "question": "How much does it cost?", "answer": "Free, Pro (€49/month), and Premium (€79/month) — see the Pricing page for what's included in each." },
+            { "question": "Is there a free trial?", "answer": "There's no time-limited trial, but the Free plan itself never expires and needs no card — you can try tender discovery for one sector at no cost before upgrading." },
+            { "question": "Can I cancel anytime?", "answer": "Yes — cancel anytime from the Billing page. Cancelling stops future renewals; you keep paid-tier access until your current period ends and aren't charged again after that." },
+            { "question": "Is my company data secure/GDPR-compliant?", "answer": "Yes — TenderProc is GDPR-compliant by design (documented legal basis for every use of your data, EU data-subject rights honored), data in transit is encrypted (HTTPS), and access is scoped to your own account. Full details are in our Privacy Notice." }
           ]
         },
         "usingProduct": {
           "title": "Using the product",
           "items": [
-            { "question": "How often are new tenders added?", "answer": "[TODO: answer]" },
-            { "question": "Can I get help preparing my actual bid, or just find opportunities?", "answer": "[TODO: answer]" },
-            { "question": "What languages does the platform support?", "answer": "[TODO: answer]" },
+            { "question": "How often are new tenders added?", "answer": "Tenders are pulled live from the EU's official TED database as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors." },
+            { "question": "Can I get help preparing my actual bid, or just find opportunities?", "answer": "Both — beyond discovery, Pro includes AI-assisted bid preparation: upload a tender PDF and TenderProc extracts requirements, scores your fit with a Bid/No-Bid recommendation, and drafts a response grounded in your own company evidence." },
+            { "question": "What languages does the platform support?", "answer": "The app itself is available in English, Dutch, French, and German, and tender notices published in other languages can be AI-translated for you." },
             { "question": "What happens if I miss a deadline notification?", "answer": "[TODO: answer]" }
           ]
         }
