@@ -60,20 +60,27 @@ export default function PreferencesSidebar({
   }
 
   return (
-    <aside className="w-full md:w-60 shrink-0 md:sticky md:top-24 md:self-start border border-line rounded-2xl bg-white p-5">
-      <div className="mb-6">
-        <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
+    <aside className="w-full md:w-60 shrink-0 md:sticky md:top-24 md:self-start md:max-h-[calc(100vh-7rem)] md:overflow-y-auto border border-line rounded-2xl bg-white p-4">
+      <details className="group mb-4" open>
+        <summary className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-inkDim mb-2 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
           {t("sectors")}
-        </p>
-        <div className="space-y-2">
+          <svg
+            viewBox="0 0 20 20"
+            fill="none"
+            className="h-3.5 w-3.5 shrink-0 text-inkDim transition-transform group-open:rotate-180"
+          >
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </summary>
+        <div className="space-y-1">
           {SECTORS.map((sector) => (
             <label
               key={sector.key}
-              className="flex items-center gap-2 text-sm text-ink cursor-pointer"
+              className="flex items-start gap-2 text-[13px] leading-snug text-ink cursor-pointer"
             >
               <input
                 type="checkbox"
-                className="accent-accent"
+                className="accent-accent mt-0.5 h-3.5 w-3.5 shrink-0"
                 checked={sectors.includes(sector.key)}
                 onChange={() => toggleSector(sector.key)}
               />
@@ -81,22 +88,29 @@ export default function PreferencesSidebar({
             </label>
           ))}
         </div>
-      </div>
+      </details>
 
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-inkDim mb-3">
+      <details className="group" open>
+        <summary className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-inkDim mb-2 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
           {t("languages")}
-        </p>
+          <svg
+            viewBox="0 0 20 20"
+            fill="none"
+            className="h-3.5 w-3.5 shrink-0 text-inkDim transition-transform group-open:rotate-180"
+          >
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </summary>
         {/* Exclusive single-select: exactly one of "All languages" or a
          * specific language is active at a time — a native radio group gets
          * this right (mutual exclusion, keyboard/screen-reader support) for
          * free instead of hand-rolling toggle logic that could double-select. */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm text-ink cursor-pointer">
+        <div className="space-y-1">
+          <label className="flex items-center gap-2 text-[13px] leading-snug text-ink cursor-pointer">
             <input
               type="radio"
               name="language-filter"
-              className="accent-accent"
+              className="accent-accent h-3.5 w-3.5 shrink-0"
               checked={language === null}
               onChange={() => setLanguage(null)}
             />
@@ -105,12 +119,12 @@ export default function PreferencesSidebar({
           {LANGUAGES.map((lang) => (
             <label
               key={lang.key}
-              className="flex items-center gap-2 text-sm text-ink cursor-pointer"
+              className="flex items-center gap-2 text-[13px] leading-snug text-ink cursor-pointer"
             >
               <input
                 type="radio"
                 name="language-filter"
-                className="accent-accent"
+                className="accent-accent h-3.5 w-3.5 shrink-0"
                 checked={language === lang.key}
                 onChange={() => setLanguage(lang.key)}
               />
@@ -118,9 +132,9 @@ export default function PreferencesSidebar({
             </label>
           ))}
         </div>
-      </div>
+      </details>
 
-      <p className="text-xs text-inkDim mt-5 h-4">
+      <p className="text-xs text-inkDim mt-3 h-4">
         {saving ? t("saving") : error ? <span className="text-stamp">{error}</span> : " "}
       </p>
     </aside>
