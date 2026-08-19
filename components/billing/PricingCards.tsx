@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import UpgradeButton from "./UpgradeButton";
 import { getPaddleClient } from "@/lib/paddleClient";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 import type { PricingTierConfig } from "@/lib/billing/pricingTiers";
 import type { Tier as TierName } from "@/lib/billing/types";
 
@@ -38,8 +39,20 @@ export default function PricingCards({
   autoOpenPlan?: "pro" | "premium";
 }) {
   const t = useTranslations("Pricing");
-  // priceId -> Paddle's own formatted total string (e.g. "€49.00") — never
-  // reformatted or recomputed here, just displayed as Paddle returns it.
+  const locale = useLocale() as Locale;
+  // priceId -> the exact total Paddle quoted (currency-converted for the
+  // visitor's country), reformatted with Intl.NumberFormat in the site's
+  // active locale. Paddle.PricePreview has no locale option of its own —
+  // its own formattedTotals string is always period-decimal, symbol-first
+  // ("€49.00"), regardless of site language, which read as unfinished
+  // localization next to translated French/Dutch/German copy ("49,00 €"
+  // is the correct Belgian French convention). item.totals.total is the
+  // same amount as formattedTotals.total, but as an integer string in the
+  // currency's smallest unit (Paddle's standard minor-units convention —
+  // "4900" for €49.00), which we reformat ourselves instead of parsing
+  // Paddle's punctuation. The minor-unit divisor varies by currency (most
+  // are 2 decimal places, some are 0 or 3), so it's derived from Intl's
+  // own resolved fraction digits for the currency rather than assumed.
   const [formattedTotals, setFormattedTotals] = useState<Record<string, string> | null>(null);
 
   useEffect(() => {
@@ -54,9 +67,17 @@ export default function PricingCards({
           ...(countryCode ? { address: { countryCode } } : {}),
         });
         if (cancelled) return;
+        const currencyCode = response.data.currencyCode;
+        const formatter = new Intl.NumberFormat(INTL_LOCALE[locale], {
+          style: "currency",
+          currency: currencyCode,
+        });
+        const minorUnitDigits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
         const next: Record<string, string> = {};
         for (const item of response.data.details.lineItems) {
-          next[item.price.id] = item.formattedTotals.total;
+          const minorUnits = Number(item.totals.total);
+          const amount = minorUnits / 10 ** minorUnitDigits;
+          next[item.price.id] = Number.isFinite(amount) ? formatter.format(amount) : item.formattedTotals.total;
         }
         setFormattedTotals(next);
       } catch {
@@ -69,7 +90,7 @@ export default function PricingCards({
     return () => {
       cancelled = true;
     };
-  }, [paidTiers, countryCode]);
+  }, [paidTiers, countryCode, locale]);
 
   const cards: CardViewModel[] = [
     { key: "free", tierName: "FREE" },
