@@ -10,7 +10,7 @@ export default async function Header() {
   const tLegal = await getTranslations("Legal");
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-paper">
+    <header className="sticky top-0 z-20 border-b border-line bg-paper">
       <div className="max-w-6xl mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-y-2">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/tenderproc-logo.svg" alt="TenderProc" width={165} height={52} priority />
