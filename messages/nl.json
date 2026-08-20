@@ -194,7 +194,7 @@
   "Opportunities": {
     "eyebrow": "Enkel open oproepen · Bron: TED",
     "heading": "Opportuniteiten",
-    "description": "Werkelijk open opdrachten in België, gematcht aan jouw sectoren — reeds gegunde en informatieve berichten worden weggefilterd. Opgehaald uit de officiële TED-databank van de EU; deze bèta dekt berichten boven de EU-publicatiedrempels.",
+    "description": "Werkelijk open opdrachten in België, gematcht aan jouw sectoren — reeds gegunde en informatieve berichten worden weggefilterd.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
     "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk."
@@ -839,7 +839,7 @@
     "sending": "Verzenden…",
     "close": "Chat sluiten",
     "talkToPerson": "Praat met een medewerker via WhatsApp",
-    "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur, Brusselse tijd.",
+    "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur.",
     "whatsappLeadIn": "Hallo, ik was aan het chatten met de TenderProc-supportbot over:",
     "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of praat hieronder met een medewerker via WhatsApp."
   }

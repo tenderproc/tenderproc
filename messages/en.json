@@ -194,7 +194,7 @@
   "Opportunities": {
     "eyebrow": "Open calls only · Source: TED",
     "heading": "Opportunities",
-    "description": "Genuinely open tenders in Belgium, matched to your sectors — already-awarded and informational notices are filtered out. Pulled from the EU's official TED database; this beta covers notices above the EU publication thresholds.",
+    "description": "Genuinely open tenders in Belgium, matched to your sectors — already-awarded and informational notices are filtered out.",
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
     "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar."
@@ -839,7 +839,7 @@
     "sending": "Sending…",
     "close": "Close chat",
     "talkToPerson": "Talk to a person on WhatsApp",
-    "operatorHours": "Operators are available 9 AM–5 PM Brussels time.",
+    "operatorHours": "Operators are available 9 AM–5 PM.",
     "whatsappLeadIn": "Hi, I was chatting with the TenderProc support bot about:",
     "errorFallback": "Sorry, something went wrong on my end. You can try again, or reach a person on WhatsApp below."
   }

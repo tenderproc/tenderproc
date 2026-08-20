@@ -194,7 +194,7 @@
   "Opportunities": {
     "eyebrow": "Nur offene Ausschreibungen · Quelle: TED",
     "heading": "Chancen",
-    "description": "Tatsächlich offene Ausschreibungen in Belgien, passend zu deinen Branchen — bereits vergebene und informative Bekanntmachungen werden herausgefiltert. Aus der offiziellen TED-Datenbank der EU; diese Beta deckt Bekanntmachungen oberhalb der EU-Veröffentlichungsschwellen ab.",
+    "description": "Tatsächlich offene Ausschreibungen in Belgien, passend zu deinen Branchen — bereits vergebene und informative Bekanntmachungen werden herausgefiltert.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
     "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
     "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste."
@@ -839,7 +839,7 @@
     "sending": "Wird gesendet…",
     "close": "Chat schließen",
     "talkToPerson": "Mit einer Person auf WhatsApp sprechen",
-    "operatorHours": "Mitarbeiter sind von 9 bis 17 Uhr Brüsseler Zeit erreichbar.",
+    "operatorHours": "Mitarbeiter sind von 9 bis 17 Uhr erreichbar.",
     "whatsappLeadIn": "Hallo, ich habe mit dem TenderProc-Support-Bot gesprochen über:",
     "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder wenden Sie sich unten per WhatsApp an eine Person."
   }

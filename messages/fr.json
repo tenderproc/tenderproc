@@ -194,7 +194,7 @@
   "Opportunities": {
     "eyebrow": "Appels ouverts uniquement · Source : TED",
     "heading": "Opportunités",
-    "description": "Marchés réellement ouverts en Belgique, correspondant à vos secteurs — les avis déjà attribués et informatifs sont filtrés. Extrait de la base de données officielle TED de l'UE ; cette bêta couvre les avis au-dessus des seuils de publication de l'UE.",
+    "description": "Marchés réellement ouverts en Belgique, correspondant à vos secteurs — les avis déjà attribués et informatifs sont filtrés.",
     "couldNotReachTed": "Impossible de contacter TED.",
     "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
     "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale."
@@ -839,7 +839,7 @@
     "sending": "Envoi…",
     "close": "Fermer le chat",
     "talkToPerson": "Parler à une personne sur WhatsApp",
-    "operatorHours": "Les opérateurs sont disponibles de 9h à 17h, heure de Bruxelles.",
+    "operatorHours": "Les opérateurs sont disponibles de 9h à 17h.",
     "whatsappLeadIn": "Bonjour, je discutais avec l'assistant TenderProc à propos de :",
     "errorFallback": "Désolé, une erreur s'est produite de notre côté. Vous pouvez réessayer, ou contacter une personne sur WhatsApp ci-dessous."
   }
