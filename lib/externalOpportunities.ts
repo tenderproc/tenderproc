@@ -38,7 +38,18 @@ interface ExternalOpportunityRow {
  * only rows already confirmed as an exact duplicate of a live TED notice
  * are excluded, to avoid showing the same tender twice under two
  * different presentations.
+ *
+ * One additional exclusion: deliberations.be (wallonia_deliberations)
+ * stamps every "Projet de décision" (draft, not yet adopted by the
+ * commune) with a standard boilerplate disclaimer in its description
+ * ("Ce projet de délibération est un document préparatoire...Ce texte
+ * n'a pas encore été adopté par l'autorité communale."). Those are drafts
+ * that can still change or be rejected, not real procurement decisions,
+ * so they're filtered out here rather than shown as an "opportunity".
  */
+const DRAFT_DISCLAIMER_MARKER =
+  "document préparatoire ayant vocation de permettre aux membres du Conseil communal";
+
 export async function getExternalOpportunities(): Promise<TenderNotice[]> {
   const supabase = createAdminClient();
   const { data, error } = await supabase
@@ -47,6 +58,7 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
       "source, source_reference, title, buyer_name, description, cpv_codes, estimated_value, estimated_value_currency, deadline, publication_date, region, source_url, dedup_status"
     )
     .neq("dedup_status", "confirmed_duplicate")
+    .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`)
     .order("publication_date", { ascending: false, nullsFirst: false })
     .limit(500);
 
