@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { AIProvider } from "./provider";
 import {
+  buildAwardDurationExtractionPrompt,
   buildBidRecommendationPrompt,
   buildComplianceReviewPrompt,
   buildFindEvidencePrompt,
@@ -9,6 +10,7 @@ import {
   buildTenderAnalysisPrompt,
   buildTranslateFieldsPrompt,
   buildValidateResponsePrompt,
+  formatAwardDurationContext,
   formatCompanyKnowledge,
   formatComplianceReviewContext,
   formatFindEvidenceContext,
@@ -22,6 +24,7 @@ import {
 import {
   AnalyzeTenderInput,
   AwardCriterion,
+  AwardDurationExtraction,
   BidConfidence,
   BidMatchLabel,
   BidRecommendation,
@@ -36,6 +39,7 @@ import {
   EvidenceMatch,
   EvidenceRelevance,
   EvidenceType,
+  ExtractAwardDurationInput,
   ExtractedRequirement,
   FindCompanyEvidenceInput,
   GenerateBidRecommendationInput,
@@ -492,6 +496,16 @@ export function parseTranslatedFields(
   return result;
 }
 
+/** Pure, network-free parser — same discipline as parseTenderAnalysis above. */
+export function parseAwardDurationExtraction(raw: string): AwardDurationExtraction {
+  const parsed = parseJsonLoosely(raw);
+  const months = asNumber(parsed?.months);
+  return {
+    months: months != null ? Math.round(months) : null,
+    reasoning: months != null ? asString(parsed?.reasoning) : null,
+  };
+}
+
 export class AnthropicProvider implements AIProvider {
   async analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis> {
     const client = getAnthropicClient();
@@ -677,6 +691,21 @@ ${formatCompanyKnowledge(input.company)}`;
     );
 
     return Object.assign({}, ...chunkResults);
+  }
+
+  async extractAwardDuration(input: ExtractAwardDurationInput): Promise<AwardDurationExtraction> {
+    if (!input.text.trim()) return { months: null, reasoning: null };
+
+    const client = getAnthropicClient();
+    const message = await client.messages.create({
+      model: MODEL,
+      max_tokens: 300,
+      system: buildAwardDurationExtractionPrompt(),
+      messages: [{ role: "user", content: formatAwardDurationContext(input) }],
+    });
+    const textBlock = message.content.find((b) => b.type === "text");
+    const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
+    return parseAwardDurationExtraction(raw);
   }
 }
 

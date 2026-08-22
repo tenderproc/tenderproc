@@ -98,9 +98,10 @@
     "workflow": "Suivi",
     "search": "Recherche",
     "market": "Aperçu du marché",
+    "forecast": "Prévisions",
     "tenders": "Marchés",
     "bids": "Offres",
-    "company": "Entreprise"
+    "company": "Mon profil"
   },
   "LocaleSwitcher": {
     "label": "Langue"
@@ -192,9 +193,9 @@
     "viewPricing": "Voir les tarifs"
   },
   "Opportunities": {
-    "eyebrow": "Appels ouverts uniquement · Source : TED",
+    "eyebrow": "Sources : TED, BOSA, données communales régionales",
     "heading": "Opportunités",
-    "description": "Marchés réellement ouverts en Belgique, correspondant à vos secteurs — les avis déjà attribués et informatifs sont filtrés.",
+    "description": "Marchés publics belges correspondant à vos secteurs, issus de TED, BOSA et de sources régionales/communales — y compris des avis potentiellement déjà attribués ou de statut incertain.",
     "couldNotReachTed": "Impossible de contacter TED.",
     "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
     "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale."
@@ -213,7 +214,71 @@
     "buyerLine": "{title} · acheteur : {buyer}",
     "value": "Valeur",
     "notEnoughData": "Pas encore assez de données.",
-    "awardCount": "{count, plural, one {# attribution} other {# attributions}}"
+    "awardCount": "{count, plural, one {# attribution} other {# attributions}}",
+    "subNavOverview": "Aperçu",
+    "subNavFollowing": "Suivi"
+  },
+  "MarketShare": {
+    "heading": "Parts de marché",
+    "disclaimer": "Reflète uniquement les attributions présentes dans nos données TED, pas l'ensemble du marché.",
+    "noData": "Pas encore assez de données pour ce secteur et cette période.",
+    "you": "Vous",
+    "sharePercent": "{percent}%",
+    "totalValue": "Valeur totale attribuée dans ce périmètre : {value}",
+    "windowLabel": "Période",
+    "windowMonths": "{months, plural, one {Dernier # mois} other {Derniers # mois}}"
+  },
+  "FollowCompanyButton": {
+    "follow": "Suivre",
+    "saving": "Ajout…",
+    "following": "Suivi ✓",
+    "tryAgain": "Réessayer"
+  },
+  "FollowedCompanies": {
+    "eyebrow": "Suivi d'entreprises",
+    "heading": "Suivi",
+    "description": "Entreprises que vous suivez — soyez notifié quand l'une d'elles remporte une nouvelle attribution.",
+    "empty": "Vous ne suivez aucune entreprise pour l'instant. Utilisez le bouton Suivre à côté d'un nom d'entreprise sur l'aperçu du marché.",
+    "followedSince": "Suivie depuis le {date}",
+    "remove": "Retirer"
+  },
+  "ForecastPage": {
+    "eyebrow": "Estimations uniquement · Source : avis d'attribution TED collectés",
+    "heading": "Prévisions",
+    "description": "Marchés publics belges actuellement attribués dont la date probable de nouvelle mise en concurrence tombe dans la période choisie, mis en correspondance avec vos secteurs.",
+    "windowLabel": "Période",
+    "windowMonths": "{months} prochains mois",
+    "resultCount": "{count, plural, one {# marché} other {# marchés}}",
+    "loadError": "Impossible de charger les données de prévision pour le moment ({loadError}). Réessayez dans un instant.",
+    "noResults": "Aucun marché de vos secteurs n'est estimé être remis en concurrence dans cette période."
+  },
+  "ForecastCard": {
+    "awardedOn": "Attribué le {date}",
+    "incumbent": "Titulaire actuel : {winner}",
+    "unknownWinner": "Inconnu",
+    "estimatedRetender": "Nouvelle mise en concurrence est."
+  },
+  "ConfidenceBadge": {
+    "confirmed": "Durée confirmée",
+    "estimated": "Durée estimée",
+    "unknown": "Durée inconnue"
+  },
+  "ForecastDisclaimer": {
+    "text": "Les prévisions sont des estimations basées sur la date d'attribution et la durée du contrat, et ne garantissent pas une nouvelle mise en concurrence."
+  },
+  "ForecastDetail": {
+    "backToForecast": "Retour aux prévisions",
+    "buyer": "Acheteur",
+    "incumbentWinner": "Titulaire actuel (attributaire)",
+    "unknownWinner": "Inconnu",
+    "awardDate": "Date d'attribution",
+    "awardValue": "Valeur du marché",
+    "cpvCodes": "Codes CPV",
+    "forecastReasoning": "Justification de la prévision",
+    "reasoningFromDuration": "Attribué le {awardDate}, pour une durée de {months} mois → expiration estimée {expiryDate}.",
+    "reasoningFromEndDate": "L'avis d'attribution TED indique directement une date de fin de contrat : {expiryDate}.",
+    "viewOriginalNotice": "Voir l'avis original sur TED",
+    "viewInApp": "Voir dans TenderProc"
   },
   "Search": {
     "eyebrow": "Recherche ponctuelle · Source : TED",
@@ -582,7 +647,7 @@
   "CompanyPage": {
     "eyebrow": "Base de connaissances",
     "heading": "Entreprise",
-    "description": "Ce que Bidara sait réellement de votre entreprise — services, certifications et références. Utilisé pour faire correspondre les marchés téléchargés et, plus tard, pour rédiger des réponses d'offres basées uniquement sur ce qui est saisi ici.",
+    "description": "Ce que nous savons réellement de votre entreprise — services, certifications et références. Utilisé pour faire correspondre les marchés téléchargés et, plus tard, pour rédiger des réponses d'offres basées uniquement sur ce qui est saisi ici.",
     "unlockHint": "Enregistrez le profil de votre entreprise ci-dessus pour débloquer les services, certifications, références et documents."
   },
   "CompanyCoreForm": {

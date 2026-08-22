@@ -98,9 +98,10 @@
     "workflow": "Workflow",
     "search": "Suche",
     "market": "Marktübersicht",
+    "forecast": "Prognose",
     "tenders": "Ausschreibungen",
     "bids": "Angebote",
-    "company": "Unternehmen"
+    "company": "Mein Profil"
   },
   "LocaleSwitcher": {
     "label": "Sprache"
@@ -192,9 +193,9 @@
     "viewPricing": "Preise ansehen"
   },
   "Opportunities": {
-    "eyebrow": "Nur offene Ausschreibungen · Quelle: TED",
+    "eyebrow": "Quellen: TED, BOSA, regionale Gemeinderatsdaten",
     "heading": "Chancen",
-    "description": "Tatsächlich offene Ausschreibungen in Belgien, passend zu deinen Branchen — bereits vergebene und informative Bekanntmachungen werden herausgefiltert.",
+    "description": "Belgische öffentliche Ausschreibungen passend zu deinen Branchen, aus TED, BOSA und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
     "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
     "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste."
@@ -213,7 +214,71 @@
     "buyerLine": "{title} · Käufer: {buyer}",
     "value": "Wert",
     "notEnoughData": "Noch nicht genug Daten.",
-    "awardCount": "{count, plural, one {# Zuschlag} other {# Zuschläge}}"
+    "awardCount": "{count, plural, one {# Zuschlag} other {# Zuschläge}}",
+    "subNavOverview": "Übersicht",
+    "subNavFollowing": "Beobachtungsliste"
+  },
+  "MarketShare": {
+    "heading": "Marktanteil",
+    "disclaimer": "Zeigt nur Zuschläge aus unseren TED-Daten, nicht den gesamten Markt.",
+    "noData": "Noch nicht genug Daten für diese Branche und diesen Zeitraum.",
+    "you": "Du",
+    "sharePercent": "{percent}%",
+    "totalValue": "Vergebener Gesamtwert in diesem Bereich: {value}",
+    "windowLabel": "Zeitfenster",
+    "windowMonths": "Letzte {months} Monate"
+  },
+  "FollowCompanyButton": {
+    "follow": "Beobachten",
+    "saving": "Wird gespeichert…",
+    "following": "Beobachtet ✓",
+    "tryAgain": "Erneut versuchen"
+  },
+  "FollowedCompanies": {
+    "eyebrow": "Unternehmen beobachten",
+    "heading": "Beobachtungsliste",
+    "description": "Unternehmen, die du beobachtest — werde benachrichtigt, wenn eines davon eine neu erfasste Zuschlagsbekanntmachung gewinnt.",
+    "empty": "Du beobachtest noch keine Unternehmen. Nutze die Schaltfläche „Beobachten“ neben einem Firmennamen in der Marktübersicht.",
+    "followedSince": "Beobachtet seit {date}",
+    "remove": "Entfernen"
+  },
+  "ForecastPage": {
+    "eyebrow": "Nur Schätzungen · Quelle: erfasste TED-Zuschlagsbekanntmachungen",
+    "heading": "Prognose",
+    "description": "Aktuell vergebene belgische öffentliche Aufträge, deren voraussichtliches Neuausschreibungsdatum in Ihrem gewählten Zeitfenster liegt, abgestimmt auf Ihre Branchen.",
+    "windowLabel": "Zeitfenster",
+    "windowMonths": "Nächste {months} Monate",
+    "resultCount": "{count, plural, one {# Auftrag} other {# Aufträge}}",
+    "loadError": "Prognosedaten konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "noResults": "Keine Aufträge in Ihren Branchen werden voraussichtlich in diesem Zeitfenster neu ausgeschrieben."
+  },
+  "ForecastCard": {
+    "awardedOn": "Vergeben am {date}",
+    "incumbent": "Bisheriger Auftragnehmer: {winner}",
+    "unknownWinner": "Unbekannt",
+    "estimatedRetender": "Vorauss. Neuausschreibung"
+  },
+  "ConfidenceBadge": {
+    "confirmed": "Bestätigte Laufzeit",
+    "estimated": "Geschätzte Laufzeit",
+    "unknown": "Unbekannte Laufzeit"
+  },
+  "ForecastDisclaimer": {
+    "text": "Prognosen sind Schätzungen auf Basis von Vergabedatum und Vertragslaufzeit, keine Garantie für eine Neuausschreibung."
+  },
+  "ForecastDetail": {
+    "backToForecast": "Zurück zur Prognose",
+    "buyer": "Auftraggeber",
+    "incumbentWinner": "Bisheriger Auftragnehmer (Gewinner)",
+    "unknownWinner": "Unbekannt",
+    "awardDate": "Vergabedatum",
+    "awardValue": "Vergabewert",
+    "cpvCodes": "CPV-Codes",
+    "forecastReasoning": "Prognosebegründung",
+    "reasoningFromDuration": "Vergeben am {awardDate}, mit einer Laufzeit von {months} Monaten → geschätztes Ablaufdatum {expiryDate}.",
+    "reasoningFromEndDate": "Die TED-Zuschlagsbekanntmachung nennt ein Vertragsende direkt: {expiryDate}.",
+    "viewOriginalNotice": "Originalbekanntmachung auf TED ansehen",
+    "viewInApp": "In TenderProc ansehen"
   },
   "Search": {
     "eyebrow": "Ad-hoc-Suche · Quelle: TED",
@@ -582,7 +647,7 @@
   "CompanyPage": {
     "eyebrow": "Wissensbasis",
     "heading": "Unternehmen",
-    "description": "Was Bidara wirklich über dein Unternehmen weiß — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
+    "description": "Was wir wirklich über dein Unternehmen wissen — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
     "unlockHint": "Speichere dein Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten."
   },
   "CompanyCoreForm": {

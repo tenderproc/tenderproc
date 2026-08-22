@@ -323,3 +323,26 @@ export interface TranslateFieldsInput {
   fields: Record<string, string>;
   targetLanguage: string;
 }
+
+// --- Tender Forecast: award-notice duration extraction ---
+
+/**
+ * Fallback path only — used when a TED award notice states no explicit
+ * duration via structured fields (lib/ted.ts's parseAwardDuration), but does
+ * carry free text that might state one anyway (currently just
+ * renewal-description-lot; see lib/ted.ts's AWARD_FIELDS comment for fill
+ * rates). Most awards never reach this path — the structured fields cover
+ * the large majority when present at all.
+ */
+export interface ExtractAwardDurationInput {
+  text: string;
+  /** For prompt context only (helps the model judge plausibility) — not matched against anything. */
+  cpvCodes: string[];
+}
+
+export interface AwardDurationExtraction {
+  /** Maximum total duration in months if the text states (or straightforwardly sums) one, including any explicitly-numbered renewal/extension options — null if the text doesn't give enough to compute a number. Never a guess. */
+  months: number | null;
+  /** One short sentence citing what in the text supports `months` — null whenever months is null. */
+  reasoning: string | null;
+}

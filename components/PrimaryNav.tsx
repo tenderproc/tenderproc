@@ -9,6 +9,7 @@ const TABS = [
   { href: "/workflow", key: "workflow" },
   { href: "/search", key: "search" },
   { href: "/market", key: "market" },
+  { href: "/forecast", key: "forecast" },
   { href: "/my-tenders", key: "tenders" },
   { href: "/bids", key: "bids" },
   { href: "/company", key: "company" },

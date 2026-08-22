@@ -1,7 +1,7 @@
 import { load, type CheerioAPI } from "cheerio";
 import type { Element } from "domhandler";
 import { randomUUID } from "crypto";
-import { TenderDetail } from "./types";
+import { TenderDetail, TenderNotice } from "./types";
 import { LANGUAGES } from "./languages";
 
 /**
@@ -386,6 +386,84 @@ function pickJsonText(items: TextEntry[] | undefined): string | null {
   }
   const first = byLang.values().next();
   return first.done ? null : first.value;
+}
+
+const BOSA_SEARCH_URL = `${BOSA_BASE_URL}/api/sea/search/publications`;
+
+/**
+ * Live search against BOSA's own listing endpoint — the "separate, not-
+ * yet-built feature" this module's header comment originally flagged.
+ * Unlike getBosaTenderById, this deliberately does NOT fetch each result's
+ * detail/XML (that's one request per row — fine for a single tender, far
+ * too slow for a list on every Opportunities page load): title, buyer,
+ * CPV, dispatch date, and deadline are all already present on the search
+ * response itself (confirmed against the sibling Python scraper's
+ * normalize.py, which normalizes a "prelim" record from the exact same
+ * raw search item before ever fetching a detail page). Belgium's national
+ * publication threshold is lower than TED's EU threshold, so this
+ * necessarily overlaps with some TED results — dedup against TED is not
+ * attempted here; see the regional-sources dedup work in the sibling
+ * scraper project for why that's a separate, harder problem than it looks.
+ */
+export async function searchBosaTenders(params: { keyword?: string; limit?: number } = {}): Promise<TenderNotice[]> {
+  const pageSize = params.limit ?? 30;
+  const doFetch = async (forceRefresh: boolean) =>
+    fetch(BOSA_SEARCH_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${await fetchToken(forceRefresh)}`,
+        "BelGov-Trace-Id": randomUUID(),
+        "Content-Type": "application/json",
+        Accept: "application/json, text/plain, */*",
+        "Account-Type": "public",
+      },
+      body: JSON.stringify({
+        terms: params.keyword ?? "",
+        includeOrganisationChildren: true,
+        page: 1,
+        pageSize,
+      }),
+      next: { revalidate: 300 },
+    });
+
+  let res = await doFetch(false);
+  if (res.status === 401 || res.status === 403) {
+    res = await doFetch(true);
+  }
+  if (!res.ok) {
+    throw new Error(`BOSA: search failed: HTTP ${res.status}`);
+  }
+  const body = await res.json();
+  const publications = (body.publications as Record<string, unknown>[] | undefined) ?? [];
+
+  return publications
+    .map((raw): TenderNotice | null => {
+      const workspaceId = raw.publicationWorkspaceId as string | undefined;
+      if (!workspaceId) return null;
+      const dossier = (raw.dossier as Record<string, unknown> | undefined) ?? {};
+      const organisation = (raw.organisation as Record<string, unknown> | undefined) ?? {};
+      const cpvMainCode = (raw.cpvMainCode as { code?: string } | undefined)?.code;
+      const title = pickJsonText(dossier.titles as TextEntry[] | undefined);
+      if (!title) return null;
+
+      return {
+        publicationNumber: `BOSA:${workspaceId}`,
+        title,
+        buyerName: pickJsonText(organisation.organisationNames as TextEntry[] | undefined) ?? "Unknown buyer",
+        buyerCountry: "BEL",
+        totalValue: null,
+        totalValueRaw: null,
+        // The search API omits this field entirely for notices with no
+        // deadline (e.g. award notices) rather than sending null - both
+        // read the same way here.
+        deadline: (raw.vaultSubmissionDeadline as string | undefined) ?? null,
+        publicationDate: (raw.dispatchDate as string | undefined) ?? null,
+        cpvCodes: cpvMainCode ? [cpvMainCode] : [],
+        titleLanguages: [],
+        url: `${BOSA_BASE_URL}/publication-workspaces/${workspaceId}`,
+      };
+    })
+    .filter((t): t is TenderNotice => t !== null);
 }
 
 /**

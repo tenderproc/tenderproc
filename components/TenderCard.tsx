@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { TenderNotice } from "@/lib/types";
 import { MatchScore } from "@/lib/scoring";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";
+import { tenderSourceBadge } from "@/lib/externalOpportunities";
 import AddToWorkflowButton from "./AddToWorkflowButton";
 import MatchScoreBadge from "./MatchScoreBadge";
 
@@ -51,6 +52,9 @@ export default async function TenderCard({
           </h3>
           <p className="text-sm text-inkDim mt-1 flex items-center gap-2 flex-wrap">
             {tender.buyerName}
+            <span className="text-[10px] font-medium uppercase tracking-wide border border-line rounded-full px-2 py-0.5 text-inkDim shrink-0">
+              {tenderSourceBadge(tender.publicationNumber)}
+            </span>
             {tender.titleLanguages.length > 0 && (
               <span
                 className="text-[10px] font-medium uppercase tracking-wide border border-line rounded-full px-2 py-0.5 text-inkDim shrink-0"

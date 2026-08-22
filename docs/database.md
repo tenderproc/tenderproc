@@ -70,7 +70,65 @@ constraint needs a migration to match.
 
 | Table | Key columns |
 |---|---|
-| `contract_awards` | Historical award notices, ingested (not live-fetched) — powers incumbent/winner screening. `source` (`ted`/`eprocurement` — only `ted` is actually ingested today; `eprocurement` blocked, see below), `source_reference` (TED publication-number), unique on `(source, source_reference)`. `contracting_authority`, `cpv_codes text[]`, `award_date`, `winner_name`, `winner_country`, `award_value`, `award_value_currency`, `ted_published`, `source_url`, `raw_title`. Service-role only, no user-facing RLS policy — same precedent as `notified_tenders`, since awards have no single owning user. Populated by `app/api/cron/ingest-awards/route.ts`. e-Procurement (`publicprocurement.be`) was evaluated as a second source but its search API enforces a server-side origin allowlist (403 for any non-`www.publicprocurement.be` caller) — not integrated. |
+| `contract_awards` | Historical award notices, ingested (not live-fetched) — powers incumbent/winner screening and Tender Forecast. `source` (`ted`/`eprocurement` — only `ted` is actually ingested today; `eprocurement` blocked, see below), `source_reference` (TED publication-number), unique on `(source, source_reference)`. `contracting_authority`, `cpv_codes text[]`, `award_date`, `winner_name`, `winner_country`, `award_value`, `award_value_currency`, `ted_published`, `source_url`, `raw_title`. Service-role only, no user-facing RLS policy — same precedent as `notified_tenders`, since awards have no single owning user. Populated by `app/api/cron/ingest-awards/route.ts`. e-Procurement (`publicprocurement.be`) was evaluated as a second source but its search API enforces a server-side origin allowlist (403 for any non-`www.publicprocurement.be` caller) — not integrated. |
+
+### Tender Forecast (extends `contract_awards`, see `supabase-forecast-migration.sql`)
+
+Three columns added to `contract_awards`, no new table — a forecast is a property of the
+award itself: `contract_duration_months` (nullable int), `duration_confidence` (`confirmed`
+/`estimated`/`unknown`, default `unknown`), `estimated_expiry_date` (nullable date, indexed).
+Computed by `lib/forecast/expiry.ts`'s `computeEstimatedExpiry()`, called from the same
+`ingest-awards` cron run that writes the rest of the row: `confirmed` when TED's own eForms
+fields state a duration or end date directly (`lib/ted.ts`'s `parseAwardDuration` — see the
+`AWARD_FIELDS` comment for verified field names/fill rates — with a small Anthropic call,
+`AIProvider.extractAwardDuration()`, as a narrow fallback when only free-text renewal terms
+are published); `estimated` when neither is available and the CPV-prefix fallback table
+(`lib/forecast/durationDefaults.ts`) has a typical-length entry for the award's sector;
+`unknown` (with `estimated_expiry_date` left `null`) when neither source has anything —
+never guessed. The cron's final step also re-derives every non-`confirmed` row's expiry
+against the current fallback table, so an edit to `durationDefaults.ts` reaches
+already-ingested rows on the next run. `/forecast` and `/forecast/[id]` read this table via
+`createAdminClient()` (same as `app/my-tenders/[tenderId]/page.tsx` already does), filtering
+`estimated_expiry_date` into the user's chosen window at query time rather than maintaining a
+separate "in window" flag column. Sector matching reuses `lib/sectors.ts`'s
+`sectorsToCpvPrefixes()` (`lib/forecast/matching.ts`) — the same CPV-prefix filter
+Opportunities and the ingestion cron use — not the separate per-tender AI match-score system
+(`lib/scoring.ts`), since that would mean a fresh Anthropic call per viewer for a shared,
+slowly-changing table. "Add to workflow" on a forecast needs no `pipeline_items` schema
+change: TED's by-ID lookup (`getTenderById`) isn't restricted to open-call notice types, so
+`contract_awards.source_reference` already works as `pipeline_items.publication_number`
+end-to-end (confirmed live against TED's Search API).
+
+### Market Share & Company Following (extends `contract_awards`, see `supabase-company-following-migration.sql`)
+
+Market Share (`/market`) reads `contract_awards` the same way `/forecast` does — via
+`createAdminClient()`, sector-filtered with `lib/forecast/matching.ts`'s
+`filterAwardsBySector()` — and adds no new table: it's a read/aggregation over existing rows
+(`lib/marketShare/compute.ts`'s `computeMarketShare()`), grouped by
+`lib/companies/normalize.ts`'s `normalizeCompanyName()` rather than raw `winner_name`, so
+legal-suffix/casing/whitespace variants of the same company collapse into one row.
+
+Company Following (`/market/following`) adds two tables:
+
+| Table | Key columns |
+|---|---|
+| `followed_companies` | `user_id`, `followed_company_name` (normalized, unique per user), `followed_company_display_name` (raw, as first followed), `created_at`. Owner-anchored RLS (`auth.uid() = user_id`), same as `companies`. |
+| `company_follow_matches` | Dedup/alert ledger, same shape and purpose as `notified_tenders`: `user_id`, `followed_company_name`, `contract_award_id → contract_awards(id)`, `matched_at`, `emailed_at` (nullable). Unique on `(user_id, contract_award_id)`. Service-role only, no user-facing RLS policy — same precedent as `notified_tenders`/`contract_awards`. |
+
+Written by `app/api/cron/ingest-awards/route.ts`: after each page's `contract_awards` upsert,
+that batch's winners are matched (`lib/companies/followMatch.ts`'s `matchFollowedCompanies()`,
+same normalization as Market Share) against every `followed_companies` row, and a
+`company_follow_matches` row is inserted per match (`onConflict` + `ignoreDuplicates`, so
+re-matching an already-seen award on a later run is a harmless no-op). Only runs against each
+day's newly-upserted batch, not the full historical table — following a company doesn't
+retroactively surface its past awards, only ones ingested from that point forward.
+
+Read by `app/api/cron/notify/route.ts`: pending matches (`emailed_at is null`) are folded into
+that user's daily digest email (`lib/email.ts`'s `sendNewTendersEmail()`, extended with an
+optional "Companies you follow" section), then stamped `emailed_at`. Unlike the tender digest,
+there's no "first run" bootstrap suppression for company matches — since matching only ever
+looks at newly-ingested rows, there's no historical backlog to accidentally dump on a new
+follower.
 
 ## Storage
 

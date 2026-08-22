@@ -548,3 +548,37 @@ export function formatRequirementEvidenceMappingContext(
 
   return `Requirements:\n${requirementList}\n\nCompany evidence available:\n${formatCompanyKnowledgeWithIds(company)}`;
 }
+
+// --- Tender Forecast: award-notice duration extraction (fallback path) ---
+
+export function buildAwardDurationExtractionPrompt(): string {
+  return `You read a short free-text renewal/duration note published alongside a
+Belgian/EU public contract award notice, and extract a single total contract
+duration in months — used to forecast when the contract is likely to be
+re-tendered.
+
+Extract the MAXIMUM total duration a buyer could keep this contract running
+without a new tender: the base term plus any explicitly-numbered renewal or
+extension options (e.g. "initial term 2 years, renewable twice for 1 year
+each" = 48 months total). Only sum renewals that give an explicit count and
+length — if the text mentions renewals without numbers (e.g. "renewable by
+mutual agreement"), do not guess a count; use only the base term if one is
+stated, or null if not.
+
+Never invent a number that isn't stated or a direct arithmetic sum of what's
+stated. If the text doesn't give enough to compute a duration, return
+months: null — do not estimate.
+
+Respond ONLY with a JSON object, no other text, matching exactly this shape:
+{
+  "months": <integer or null>,
+  "reasoning": "<one short sentence citing what in the text supports this figure, or null if months is null>"
+}`;
+}
+
+export function formatAwardDurationContext(input: { text: string; cpvCodes: string[] }): string {
+  return `CPV code(s) (context only): ${input.cpvCodes.join(", ") || "none published"}
+
+Renewal/duration text:
+${input.text}`;
+}

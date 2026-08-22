@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   mapTedNoticeToContractAward,
+  parseAwardDuration,
   parseAwardValue,
   resolveIngestionSinceDate,
 } from "@/lib/ted";
@@ -56,6 +57,7 @@ describe("mapTedNoticeToContractAward", () => {
       awardValueCurrency: "EUR",
       sourceUrl: "https://ted.europa.eu/en/notice/-/detail/769741-2025",
       rawTitle: "5 afvalophaalwagens MTM 3.5ton",
+      duration: { explicitDurationMonths: null, explicitExpiryDate: null, renewalText: null },
     });
   });
 
@@ -71,6 +73,61 @@ describe("mapTedNoticeToContractAward", () => {
     expect(record.awardValueCurrency).toBeNull();
     expect(record.awardDate).toBeNull();
     expect(record.cpvCodes).toEqual([]);
+    expect(record.duration).toEqual({
+      explicitDurationMonths: null,
+      explicitExpiryDate: null,
+      renewalText: null,
+    });
+  });
+});
+
+describe("parseAwardDuration", () => {
+  it("converts an explicit value+unit lot into months", () => {
+    expect(
+      parseAwardDuration({
+        "duration-period-value-lot": ["4"],
+        "duration-period-unit-lot": ["YEAR"],
+      })
+    ).toEqual({ explicitDurationMonths: 48, explicitExpiryDate: null, renewalText: null });
+
+    expect(
+      parseAwardDuration({
+        "duration-period-value-lot": ["18"],
+        "duration-period-unit-lot": ["MONTH"],
+      }).explicitDurationMonths
+    ).toBe(18);
+  });
+
+  it("prefers a literal end date when TED publishes one instead of value/unit", () => {
+    const result = parseAwardDuration({
+      "contract-duration-end-date-lot": ["2030-08-31+02:00"],
+    });
+    expect(result.explicitExpiryDate).toBe("2030-08-31");
+    expect(result.explicitDurationMonths).toBeNull();
+  });
+
+  it("captures free-text renewal terms when published", () => {
+    const result = parseAwardDuration({
+      "renewal-description-lot": { nld: ["2 mogelijke verlengingen van maximum 1 jaar"] },
+    });
+    expect(result.renewalText).toBe("2 mogelijke verlengingen van maximum 1 jaar");
+  });
+
+  it("returns all-null when TED published no duration data at all", () => {
+    expect(parseAwardDuration({})).toEqual({
+      explicitDurationMonths: null,
+      explicitExpiryDate: null,
+      renewalText: null,
+    });
+  });
+
+  it("ignores an unrecognized duration unit rather than guessing a conversion", () => {
+    expect(
+      parseAwardDuration({
+        "duration-period-value-lot": ["3"],
+        "duration-period-unit-lot": ["QUARTER"],
+      }).explicitDurationMonths
+    ).toBeNull();
   });
 });
 

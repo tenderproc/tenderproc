@@ -98,9 +98,10 @@
     "workflow": "Workflow",
     "search": "Search",
     "market": "Market overview",
+    "forecast": "Forecast",
     "tenders": "Tenders",
     "bids": "Bids",
-    "company": "Company"
+    "company": "My profile"
   },
   "LocaleSwitcher": {
     "label": "Language"
@@ -192,9 +193,9 @@
     "viewPricing": "View pricing"
   },
   "Opportunities": {
-    "eyebrow": "Open calls only · Source: TED",
+    "eyebrow": "Sources: TED, BOSA, regional council records",
     "heading": "Opportunities",
-    "description": "Genuinely open tenders in Belgium, matched to your sectors — already-awarded and informational notices are filtered out.",
+    "description": "Belgian public tenders matched to your sectors, from TED, BOSA, and regional/municipal council sources — including notices that may already be awarded or unclear in status.",
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
     "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar."
@@ -213,7 +214,71 @@
     "buyerLine": "{title} · buyer: {buyer}",
     "value": "Value",
     "notEnoughData": "Not enough data yet.",
-    "awardCount": "{count, plural, one {# award} other {# awards}}"
+    "awardCount": "{count, plural, one {# award} other {# awards}}",
+    "subNavOverview": "Overview",
+    "subNavFollowing": "Following"
+  },
+  "MarketShare": {
+    "heading": "Market share",
+    "disclaimer": "Reflects only awards captured in our TED-sourced data, not the full market.",
+    "noData": "Not enough data yet for this sector and window.",
+    "you": "You",
+    "sharePercent": "{percent}%",
+    "totalValue": "Total awarded value in scope: {value}",
+    "windowLabel": "Window",
+    "windowMonths": "Last {months} months"
+  },
+  "FollowCompanyButton": {
+    "follow": "Follow",
+    "saving": "Following…",
+    "following": "Following ✓",
+    "tryAgain": "Try again"
+  },
+  "FollowedCompanies": {
+    "eyebrow": "Company following",
+    "heading": "Following",
+    "description": "Companies you're tracking — get notified when one of them wins a newly-ingested award notice.",
+    "empty": "You're not following any companies yet. Use the Follow button next to a company name on Market overview.",
+    "followedSince": "Following since {date}",
+    "remove": "Remove"
+  },
+  "ForecastPage": {
+    "eyebrow": "Estimates only · Source: ingested TED award notices",
+    "heading": "Forecast",
+    "description": "Currently-awarded Belgian public contracts whose likely re-tender date falls in your selected window, matched to your sectors.",
+    "windowLabel": "Window",
+    "windowMonths": "Next {months} months",
+    "resultCount": "{count, plural, one {# contract} other {# contracts}}",
+    "loadError": "Couldn't load forecast data right now ({loadError}). Try again in a moment.",
+    "noResults": "No contracts in your sectors are estimated to re-tender in this window."
+  },
+  "ForecastCard": {
+    "awardedOn": "Awarded {date}",
+    "incumbent": "Incumbent: {winner}",
+    "unknownWinner": "Unknown",
+    "estimatedRetender": "Est. re-tender"
+  },
+  "ConfidenceBadge": {
+    "confirmed": "Confirmed duration",
+    "estimated": "Estimated duration",
+    "unknown": "Unknown duration"
+  },
+  "ForecastDisclaimer": {
+    "text": "Forecasts are estimates based on award date and contract duration, not guarantees of re-tendering."
+  },
+  "ForecastDetail": {
+    "backToForecast": "Back to forecast",
+    "buyer": "Buyer",
+    "incumbentWinner": "Incumbent (winner)",
+    "unknownWinner": "Unknown",
+    "awardDate": "Award date",
+    "awardValue": "Award value",
+    "cpvCodes": "CPV codes",
+    "forecastReasoning": "Forecast reasoning",
+    "reasoningFromDuration": "Awarded {awardDate}, with a duration of {months} months → estimated expiry {expiryDate}.",
+    "reasoningFromEndDate": "TED's award notice states a contract end date directly: {expiryDate}.",
+    "viewOriginalNotice": "View original notice on TED",
+    "viewInApp": "View in TenderProc"
   },
   "Search": {
     "eyebrow": "Ad-hoc lookup · Source: TED",
@@ -582,7 +647,7 @@
   "CompanyPage": {
     "eyebrow": "Knowledge base",
     "heading": "Company",
-    "description": "What Bidara actually knows about your business — services, certifications, and references. Used to match uploaded tenders and, later, to draft bid responses grounded only in what's entered here.",
+    "description": "What we actually know about your business — services, certifications, and references. Used to match uploaded tenders and, later, to draft bid responses grounded only in what's entered here.",
     "unlockHint": "Save your company profile above to unlock services, certifications, references, and documents."
   },
   "CompanyCoreForm": {

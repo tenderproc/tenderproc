@@ -24,11 +24,31 @@ function escapeHtml(s: string) {
   return s.replace(/[&<>"']/g, (c) => map[c]);
 }
 
-export async function sendNewTendersEmail(to: string, tenders: TenderNotice[]) {
+/** One followed company's new match, for the digest email's "Companies you follow" section (app/api/cron/notify). */
+export interface CompanyFollowMatchEmailItem {
+  companyName: string;
+  contractingAuthority: string;
+  awardDate: string | null;
+  url: string;
+}
+
+/**
+ * Sends the daily digest email — new tenders in the user's sectors, plus
+ * (when there's at least one) a "Companies you follow" section for any
+ * followed company that newly won an ingested award notice
+ * (app/api/cron/ingest-awards's matching step). Either list can be empty as
+ * long as the other isn't; the caller (app/api/cron/notify) only calls this
+ * when there's something to report.
+ */
+export async function sendNewTendersEmail(
+  to: string,
+  tenders: TenderNotice[],
+  companyMatches: CompanyFollowMatchEmailItem[] = []
+) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
-  const items = tenders
+  const tenderItems = tenders
     .map(
       (t) => `
         <li style="margin-bottom:16px;">
@@ -38,10 +58,26 @@ export async function sendNewTendersEmail(to: string, tenders: TenderNotice[]) {
     )
     .join("");
 
+  const companyItems = companyMatches
+    .map(
+      (m) => `
+        <li style="margin-bottom:16px;">
+          <a href="${m.url}" style="font-weight:600;color:#111;text-decoration:none;">${escapeHtml(m.companyName)}</a><br/>
+          <span style="color:#666;font-size:13px;">Won a contract with ${escapeHtml(m.contractingAuthority)} &middot; Awarded ${formatDate(m.awardDate)}</span>
+        </li>`
+    )
+    .join("");
+
   const subject =
-    tenders.length === 1
-      ? "1 new tender matches your sectors"
-      : `${tenders.length} new tenders match your sectors`;
+    companyMatches.length === 0
+      ? tenders.length === 1
+        ? "1 new tender matches your sectors"
+        : `${tenders.length} new tenders match your sectors`
+      : tenders.length === 0
+        ? companyMatches.length === 1
+          ? "1 company you follow has an update"
+          : `${companyMatches.length} companies you follow have updates`
+        : `${tenders.length} new tenders · ${companyMatches.length} company update${companyMatches.length === 1 ? "" : "s"}`;
 
   const { error } = await resend.emails.send({
     from,
@@ -50,9 +86,19 @@ export async function sendNewTendersEmail(to: string, tenders: TenderNotice[]) {
     html: `
       <div style="font-family:sans-serif;max-width:560px;">
         <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc</p>
-        <h1 style="font-size:20px;margin:4px 0 20px;">New in your sectors</h1>
-        <ul style="list-style:none;padding:0;margin:0;">${items}</ul>
-        <p style="font-size:12px;color:#888;margin-top:24px;">You can change your sectors any time in Settings.</p>
+        ${
+          tenders.length > 0
+            ? `<h1 style="font-size:20px;margin:4px 0 20px;">New in your sectors</h1>
+        <ul style="list-style:none;padding:0;margin:0 0 24px;">${tenderItems}</ul>`
+            : ""
+        }
+        ${
+          companyMatches.length > 0
+            ? `<h1 style="font-size:20px;margin:4px 0 20px;">Companies you follow</h1>
+        <ul style="list-style:none;padding:0;margin:0;">${companyItems}</ul>`
+            : ""
+        }
+        <p style="font-size:12px;color:#888;margin-top:24px;">You can change your sectors any time in Settings${companyMatches.length > 0 ? ", and manage followed companies under Market → Following" : ""}.</p>
       </div>
     `,
   });

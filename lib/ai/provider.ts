@@ -1,9 +1,11 @@
 import {
   AnalyzeTenderInput,
+  AwardDurationExtraction,
   BidRecommendation,
   ComplianceReviewInput,
   ComplianceReviewResult,
   EvidenceMatch,
+  ExtractAwardDurationInput,
   FindCompanyEvidenceInput,
   GenerateBidRecommendationInput,
   GenerateResponseDraftInput,
@@ -24,7 +26,9 @@ import {
  * disqualifying factors (the "TenderProc Score" / "Why Not Bid"), and adds
  * mapRequirementsToEvidence for tender-level, pre-bid evidence coverage.
  * Increment 2 adds translateFields for on-demand translation of AI-generated
- * free text into the user's chosen UI language.
+ * free text into the user's chosen UI language. Tender Forecast adds
+ * extractAwardDuration — a narrow fallback for award notices whose duration
+ * isn't in TED's structured fields (see lib/ted.ts's parseAwardDuration).
  */
 export interface AIProvider {
   analyzeTender(input: AnalyzeTenderInput): Promise<TenderAnalysis>;
@@ -35,4 +39,5 @@ export interface AIProvider {
   runComplianceReview(input: ComplianceReviewInput): Promise<ComplianceReviewResult>;
   mapRequirementsToEvidence(input: MapRequirementEvidenceInput): Promise<MapRequirementEvidenceResult>;
   translateFields(input: TranslateFieldsInput): Promise<Record<string, string>>;
+  extractAwardDuration(input: ExtractAwardDurationInput): Promise<AwardDurationExtraction>;
 }

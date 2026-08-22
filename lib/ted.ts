@@ -49,6 +49,18 @@ const DETAIL_FIELDS = [...FIELDS, ...DETAIL_ONLY_FIELDS];
 // Fields for the awards search (searchAwardedTenders) — a different shape
 // than the open-call fields above (no deadline/estimated-value, but winner
 // + result-value instead).
+//
+// The five duration-* fields below back the Tender Forecast feature
+// (parseAwardDuration, below). Verified live against a 20-notice Belgian
+// can-standard sample on 2026-08-22 before adding: duration-period-value-lot
+// + duration-period-unit-lot (BT-36, "Duration") filled on 14/20; when TED
+// instead publishes an explicit end date, it uses
+// contract-duration-end-date-lot in place of value/unit (never both — seen
+// on 3/20); renewal-description-lot (free text) on 1/20. Two other
+// duration-shaped fields TED's schema exposes —
+// duration-additional-information-lot and framework-duration-justification-lot
+// — were 0/20 in the same sample and are left out, per this codebase's
+// discipline of only requesting fields with a meaningful fill rate.
 const AWARD_FIELDS = [
   "publication-number",
   "notice-title",
@@ -61,6 +73,10 @@ const AWARD_FIELDS = [
   "result-value-cur-lot",
   "publication-date",
   "classification-cpv",
+  "duration-period-value-lot",
+  "duration-period-unit-lot",
+  "contract-duration-end-date-lot",
+  "renewal-description-lot",
 ];
 
 // TED's own eForms notice-subtype taxonomy: "cn-*" = contract notice (a
@@ -389,6 +405,7 @@ export interface ContractAwardRecord {
   awardValueCurrency: string | null;
   sourceUrl: string;
   rawTitle: string | null;
+  duration: AwardDurationInfo;
 }
 
 /** Pure mapping from a raw TED notice to a contract_awards row — no network, unit-testable. */
@@ -406,6 +423,52 @@ export function mapTedNoticeToContractAward(n: Record<string, unknown>): Contrac
     awardValueCurrency: hasNumeric ? currency : null,
     sourceUrl: `https://ted.europa.eu/en/notice/-/detail/${pubNumber}`,
     rawTitle: stripTedTitleBoilerplate(firstValue(n["notice-title"]) ?? "Untitled notice"),
+    duration: parseAwardDuration(n),
+  };
+}
+
+/** eForms' BT-36 duration-unit codelist, as observed on live TED data (YEAR/MONTH); DAY/WEEK included defensively per the codelist even though not seen in the verification sample (see AWARD_FIELDS comment). */
+const DURATION_UNIT_TO_MONTHS: Record<string, number> = {
+  DAY: 1 / 30,
+  WEEK: 7 / 30,
+  MONTH: 1,
+  YEAR: 12,
+};
+
+function monthsFromValueUnit(value: string | null, unit: string | null): number | null {
+  if (value == null || unit == null) return null;
+  const n = Number(value);
+  const factor = DURATION_UNIT_TO_MONTHS[unit.toUpperCase()];
+  if (!Number.isFinite(n) || n <= 0 || factor == null) return null;
+  return Math.round(n * factor);
+}
+
+export interface AwardDurationInfo {
+  /** Explicit total duration in months, from duration-period-value-lot/-unit-lot (first lot — see multi-lot note below). Null if TED didn't publish this. */
+  explicitDurationMonths: number | null;
+  /** TED's own literal contract end date (contract-duration-end-date-lot), when published in place of value/unit. Takes priority over awardDate + duration arithmetic wherever both this and explicitDurationMonths are non-null, since it needs no arithmetic and no award_date. */
+  explicitExpiryDate: string | null;
+  /** Free-text renewal/extension terms (renewal-description-lot), for display in forecast reasoning and as input to the AI duration-extraction fallback when the structured fields above are absent. */
+  renewalText: string | null;
+}
+
+/**
+ * Pure extraction of duration signals from a raw TED notice — no network,
+ * unit-testable, same style as parseAwardValue above. A multi-lot notice can
+ * repeat these fields once per lot (e.g. duration-period-value-lot:
+ * ["4","4","4"]); contract_awards stores one row per notice, so this takes
+ * the first lot's value, matching how award_value already takes the first
+ * lot's result-value-lot.
+ */
+export function parseAwardDuration(n: Record<string, unknown>): AwardDurationInfo {
+  const value = firstValue(n["duration-period-value-lot"]);
+  const unit = firstValue(n["duration-period-unit-lot"]);
+  const endDate = firstValue(n["contract-duration-end-date-lot"]);
+  return {
+    explicitDurationMonths: monthsFromValueUnit(value, unit),
+    // TED returns these as e.g. "2030-08-31+02:00" — strip the UTC-offset suffix down to a plain YYYY-MM-DD.
+    explicitExpiryDate: endDate ? endDate.slice(0, 10) : null,
+    renewalText: firstValue(n["renewal-description-lot"]),
   };
 }
 

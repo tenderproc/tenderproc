@@ -98,9 +98,10 @@
     "workflow": "Workflow",
     "search": "Zoeken",
     "market": "Marktoverzicht",
+    "forecast": "Prognose",
     "tenders": "Opdrachten",
     "bids": "Offertes",
-    "company": "Bedrijf"
+    "company": "Mijn profiel"
   },
   "LocaleSwitcher": {
     "label": "Taal"
@@ -192,9 +193,9 @@
     "viewPricing": "Bekijk prijzen"
   },
   "Opportunities": {
-    "eyebrow": "Enkel open oproepen · Bron: TED",
+    "eyebrow": "Bronnen: TED, BOSA, regionale gemeenteraadsgegevens",
     "heading": "Opportuniteiten",
-    "description": "Werkelijk open opdrachten in België, gematcht aan jouw sectoren — reeds gegunde en informatieve berichten worden weggefilterd.",
+    "description": "Belgische overheidsopdrachten gematcht aan jouw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen — inclusief berichten die mogelijk al gegund zijn of een onduidelijke status hebben.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
     "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk."
@@ -213,7 +214,71 @@
     "buyerLine": "{title} · koper: {buyer}",
     "value": "Waarde",
     "notEnoughData": "Nog niet genoeg gegevens.",
-    "awardCount": "{count, plural, one {# gunning} other {# gunningen}}"
+    "awardCount": "{count, plural, one {# gunning} other {# gunningen}}",
+    "subNavOverview": "Overzicht",
+    "subNavFollowing": "Volgen"
+  },
+  "MarketShare": {
+    "heading": "Marktaandeel",
+    "disclaimer": "Weerspiegelt enkel gunningen die in onze TED-gegevens zijn vastgelegd, niet de volledige markt.",
+    "noData": "Nog niet genoeg gegevens voor deze sector en periode.",
+    "you": "Jij",
+    "sharePercent": "{percent}%",
+    "totalValue": "Totaal gegunde waarde binnen deze selectie: {value}",
+    "windowLabel": "Periode",
+    "windowMonths": "Laatste {months} maanden"
+  },
+  "FollowCompanyButton": {
+    "follow": "Volgen",
+    "saving": "Bezig…",
+    "following": "Gevolgd ✓",
+    "tryAgain": "Opnieuw proberen"
+  },
+  "FollowedCompanies": {
+    "eyebrow": "Bedrijven volgen",
+    "heading": "Volgen",
+    "description": "Bedrijven die je volgt — krijg een melding wanneer een van hen een nieuw gunningsbericht wint.",
+    "empty": "Je volgt nog geen bedrijven. Gebruik de knop Volgen naast een bedrijfsnaam op het marktoverzicht.",
+    "followedSince": "Gevolgd sinds {date}",
+    "remove": "Verwijderen"
+  },
+  "ForecastPage": {
+    "eyebrow": "Enkel schattingen · Bron: verzamelde TED-gunningsberichten",
+    "heading": "Prognose",
+    "description": "Momenteel gegunde Belgische overheidsopdrachten waarvan de vermoedelijke heraanbestedingsdatum binnen uw gekozen periode valt, afgestemd op uw sectoren.",
+    "windowLabel": "Periode",
+    "windowMonths": "Volgende {months} maanden",
+    "resultCount": "{count, plural, one {# opdracht} other {# opdrachten}}",
+    "loadError": "Kon momenteel geen prognosegegevens laden ({loadError}). Probeer het zo opnieuw.",
+    "noResults": "Geen opdrachten in uw sectoren worden naar schatting binnen deze periode heraanbesteed."
+  },
+  "ForecastCard": {
+    "awardedOn": "Gegund op {date}",
+    "incumbent": "Huidige uitvoerder: {winner}",
+    "unknownWinner": "Onbekend",
+    "estimatedRetender": "Verw. heraanbesteding"
+  },
+  "ConfidenceBadge": {
+    "confirmed": "Bevestigde looptijd",
+    "estimated": "Geschatte looptijd",
+    "unknown": "Onbekende looptijd"
+  },
+  "ForecastDisclaimer": {
+    "text": "Prognoses zijn schattingen op basis van gunningsdatum en contractduur, geen garantie op heraanbesteding."
+  },
+  "ForecastDetail": {
+    "backToForecast": "Terug naar prognose",
+    "buyer": "Koper",
+    "incumbentWinner": "Huidige uitvoerder (winnaar)",
+    "unknownWinner": "Onbekend",
+    "awardDate": "Gunningsdatum",
+    "awardValue": "Gunningswaarde",
+    "cpvCodes": "CPV-codes",
+    "forecastReasoning": "Prognoseonderbouwing",
+    "reasoningFromDuration": "Gegund op {awardDate}, met een looptijd van {months} maanden → geschatte einddatum {expiryDate}.",
+    "reasoningFromEndDate": "Het TED-gunningsbericht vermeldt rechtstreeks een einddatum van het contract: {expiryDate}.",
+    "viewOriginalNotice": "Origineel bericht bekijken op TED",
+    "viewInApp": "Bekijken in TenderProc"
   },
   "Search": {
     "eyebrow": "Ad-hoc opzoeking · Bron: TED",
@@ -582,7 +647,7 @@
   "CompanyPage": {
     "eyebrow": "Kennisbank",
     "heading": "Bedrijf",
-    "description": "Wat Bidara echt weet over jouw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
+    "description": "Wat wij echt weten over jouw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
     "unlockHint": "Sla je bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen."
   },
   "CompanyCoreForm": {
