@@ -207,6 +207,16 @@ export default async function LandingPage() {
                     </li>
                   ))}
                 </ul>
+                <Link
+                  href={tier.key === "free" ? "/signup" : `/signup?plan=${tier.key}`}
+                  className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors ${
+                    tier.highlighted
+                      ? "bg-accent text-white hover:bg-accentDim"
+                      : "border border-line text-ink hover:bg-paperDim"
+                  }`}
+                >
+                  {tPricing("getStarted")}
+                </Link>
               </div>
             ))}
           </div>
