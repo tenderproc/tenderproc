@@ -170,6 +170,38 @@ const CLOSED_SHORTLIST_CONSULTATION_PATTERN =
 
 const EMPTY_DESCRIPTION_PLACEHOLDER = "geef korte beschrijving op";
 
+/**
+ * Exclusion 7: a Wallonia/Flanders council-decision record with no
+ * `deadline` isn't itself something a company can bid into — it's the
+ * commune's internal authorization to go start a procurement, not the
+ * published notice with a real submission window (see
+ * [[project_tenderproc_opportunities_missing_deadlines]] / a live example:
+ * a Walhain road-works decision surfaced in Opportunities while the actual
+ * biddable notice, with a real deadline, only existed as a separate BOSA
+ * record days later). At user's explicit request 2026-08-23: only records
+ * with a genuine deadline count as an "actual tender" here.
+ *
+ * Deliberately implemented as a general "deadline present" condition
+ * rather than a source-specific check: today this excludes 100% of
+ * external_opportunities rows, since none of the three regional scrapers
+ * currently extract a real deadline (structural limitation of their
+ * source sites, not a bug) — Opportunities' regional-source section will
+ * show nothing until that changes. Written this way on purpose so it
+ * requires no further code change and starts including rows the moment
+ * deadline extraction becomes possible for any of these sources, rather
+ * than needing to be revisited.
+ *
+ * Applied client-side (see the `.filter()` below, alongside
+ * hasNoRealDescription) rather than as a `.not("deadline", "is", null)`
+ * query clause — chaining one more `.not()` onto this builder pushed
+ * TypeScript's type-checker over its recursion limit ("Type instantiation
+ * is excessively deep"), a known supabase-js issue with long fluent
+ * chains, not a logic problem with the filter itself.
+ */
+function hasNoDeadline(deadline: string | null): boolean {
+  return deadline == null;
+}
+
 /** True for a description with no real content: null, blank, a bare zero-width space, or the scraper's own placeholder text (see exclusion 5 above). */
 function hasNoRealDescription(description: string | null): boolean {
   const stripped = (description ?? "").replace(/[\s​]+/g, "");
@@ -199,6 +231,7 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
 
   return ((data as ExternalOpportunityRow[] | null) ?? [])
     .filter((row) => !hasNoRealDescription(row.description))
+    .filter((row) => !hasNoDeadline(row.deadline))
     .map(rowToTenderNotice);
 }
 
