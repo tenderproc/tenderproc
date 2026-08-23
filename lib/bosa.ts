@@ -417,6 +417,12 @@ export async function searchBosaTenders(
   // ex-ante transparency notices) never carry vaultSubmissionDeadline,
   // while every open-call notice sampled did — same signal the mapping
   // below already used for the `deadline` field, just applied as a filter.
+  // That signal alone isn't enough, though: the search endpoint ranks by
+  // keyword relevance, not recency, so it freely surfaces notices whose
+  // deadline has already passed. Confirmed live 2026-08-23 — a "vertalingen"
+  // search with onlyOpenCalls:true returned 30/30 results with a past
+  // deadline, none actually biddable — so the deadline must also still be
+  // in the future, not merely present.
   const pageSize = params.onlyOpenCalls ? Math.max(displayLimit * 3, 90) : displayLimit;
   const doFetch = async (forceRefresh: boolean) =>
     fetch(BOSA_SEARCH_URL, {
@@ -448,7 +454,13 @@ export async function searchBosaTenders(
   let publications = (body.publications as Record<string, unknown>[] | undefined) ?? [];
 
   if (params.onlyOpenCalls) {
-    publications = publications.filter((raw) => Boolean(raw.vaultSubmissionDeadline));
+    const now = Date.now();
+    publications = publications.filter((raw) => {
+      const deadline = raw.vaultSubmissionDeadline as string | undefined;
+      if (!deadline) return false;
+      const deadlineMs = new Date(deadline).getTime();
+      return !isNaN(deadlineMs) && deadlineMs > now;
+    });
   }
 
   return publications
