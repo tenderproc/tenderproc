@@ -142,6 +142,32 @@ const NON_TENDER_MARKERS = [
   "décide d'attribuer", // straight apostrophe (U+0027) — see comment above
 ];
 
+/**
+ * Exclusion 6: a decision can invite a closed shortlist without either of
+ * exclusion 3's tells ("à consulter", "te contacteren"/"uit te nodigen") —
+ * the same closed-consultation pattern also shows up as "consultation des
+ * <category> suivant(e)s :" followed by the named list (e.g. "consultation
+ * des établissements de crédits suivants : BELFIUS...", "consultation des
+ * entreprises suivantes : DISTRINOX..."). A plain substring doesn't
+ * generalize here — the noun between "des" and "suivant(e)s" varies
+ * ("entreprises", "établissements de crédits", etc.) — so this is a regex
+ * (PostgREST `imatch`, case-insensitive `~*`) rather than one more entry in
+ * NON_TENDER_MARKERS.
+ *
+ * Confirmed live 2026-08-23 against the full table (3,939 rows): 48 rows
+ * contain "consultation" at all; this pattern matches exactly 2 of them
+ * (Gembloux kitchen-equipment purchase, Ham-sur-Heure-Nalinnes loan
+ * financing), both genuine closed-shortlist invitations to named companies.
+ * Manually reviewed the other 46 "consultation" rows to rule out false
+ * positives — all were unrelated uses (delegating supplier consultation to
+ * SPW, a procedural document literally named "dossier de consultation", a
+ * file "mis à la consultation des conseillers communaux" for internal
+ * council review, general framework-agreement call-off descriptions) — none
+ * name a specific closed shortlist the way the 2 matches do.
+ */
+const CLOSED_SHORTLIST_CONSULTATION_PATTERN =
+  "consultation des.{0,60}suivante?s?[[:space:]]*:";
+
 const EMPTY_DESCRIPTION_PLACEHOLDER = "geef korte beschrijving op";
 
 /** True for a description with no real content: null, blank, a bare zero-width space, or the scraper's own placeholder text (see exclusion 5 above). */
@@ -158,7 +184,8 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
       "source, source_reference, title, buyer_name, description, cpv_codes, estimated_value, estimated_value_currency, deadline, publication_date, region, source_url, dedup_status"
     )
     .neq("dedup_status", "confirmed_duplicate")
-    .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`);
+    .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`)
+    .not("description", "imatch", CLOSED_SHORTLIST_CONSULTATION_PATTERN);
   for (const marker of NON_TENDER_MARKERS) {
     query = query.not("description", "ilike", `%${marker}%`);
   }
