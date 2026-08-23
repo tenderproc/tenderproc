@@ -405,8 +405,19 @@ const BOSA_SEARCH_URL = `${BOSA_BASE_URL}/api/sea/search/publications`;
  * attempted here; see the regional-sources dedup work in the sibling
  * scraper project for why that's a separate, harder problem than it looks.
  */
-export async function searchBosaTenders(params: { keyword?: string; limit?: number } = {}): Promise<TenderNotice[]> {
-  const pageSize = params.limit ?? 30;
+export async function searchBosaTenders(
+  params: { keyword?: string; limit?: number; onlyOpenCalls?: boolean } = {}
+): Promise<TenderNotice[]> {
+  const displayLimit = params.limit ?? 30;
+  // Mirrors lib/ted.ts's onlyOpenCalls overfetch: filtering happens
+  // client-side after the request, so ask BOSA for more than we'll show.
+  // Confirmed live (2026-08-23, 50-record sample) that award notices and
+  // other already-decided notices (e.g. "avis d'attribution",
+  // noticeSubType E4/29/33 — negotiated-without-publication results,
+  // ex-ante transparency notices) never carry vaultSubmissionDeadline,
+  // while every open-call notice sampled did — same signal the mapping
+  // below already used for the `deadline` field, just applied as a filter.
+  const pageSize = params.onlyOpenCalls ? Math.max(displayLimit * 3, 90) : displayLimit;
   const doFetch = async (forceRefresh: boolean) =>
     fetch(BOSA_SEARCH_URL, {
       method: "POST",
@@ -434,9 +445,14 @@ export async function searchBosaTenders(params: { keyword?: string; limit?: numb
     throw new Error(`BOSA: search failed: HTTP ${res.status}`);
   }
   const body = await res.json();
-  const publications = (body.publications as Record<string, unknown>[] | undefined) ?? [];
+  let publications = (body.publications as Record<string, unknown>[] | undefined) ?? [];
+
+  if (params.onlyOpenCalls) {
+    publications = publications.filter((raw) => Boolean(raw.vaultSubmissionDeadline));
+  }
 
   return publications
+    .slice(0, displayLimit)
     .map((raw): TenderNotice | null => {
       const workspaceId = raw.publicationWorkspaceId as string | undefined;
       if (!workspaceId) return null;
