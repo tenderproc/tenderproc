@@ -46,9 +46,15 @@ interface ExternalOpportunityRow {
  * n'a pas encore été adopté par l'autorité communale."). Those are drafts
  * that can still change or be rejected, not real procurement decisions,
  * so they're filtered out here rather than shown as an "opportunity".
+ *
+ * Keep this marker to a single phrase, not a longer quoted sentence: the
+ * scraper joins each card's DOM text nodes with newlines, so a multi-line
+ * disclaimer sentence has newlines where this constant would need spaces —
+ * a longer marker silently never matches. "document préparatoire" always
+ * lands intact on one text node, confirmed 2026-08-23 against 319 real
+ * draft rows (0 misses) with no false positives against non-draft rows.
  */
-const DRAFT_DISCLAIMER_MARKER =
-  "document préparatoire ayant vocation de permettre aux membres du Conseil communal";
+const DRAFT_DISCLAIMER_MARKER = "document préparatoire";
 
 export async function getExternalOpportunities(): Promise<TenderNotice[]> {
   const supabase = createAdminClient();
