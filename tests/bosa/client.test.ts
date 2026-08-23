@@ -46,6 +46,8 @@ const SINGLE_LANG_XML = `<?xml version="1.0" encoding="UTF-8"?>
 const MULTI_LANG_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <ContractAwardNotice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
   <cac:ProcurementProject>
+    <cbc:Name languageID="FRA">Achat de moteurs</cbc:Name>
+    <cbc:Name languageID="NLD">Aankoop van motoren</cbc:Name>
     <cbc:Description languageID="FRA">L'achat de moteurs</cbc:Description>
     <cbc:Description languageID="NLD">De aankoop van motoren</cbc:Description>
     <cbc:Description languageID="ENG">The purchase of motors</cbc:Description>
@@ -96,9 +98,15 @@ describe("extractNoticeMetadata", () => {
     const { extractNoticeMetadata } = await import("@/lib/bosa");
     const meta = extractNoticeMetadata(SINGLE_LANG_XML);
     expect(meta.title).toBe("Aankoop van boeken");
+    expect(meta.titleLanguages).toEqual(["nl"]);
     expect(meta.cpvCode).toBe("22100000");
     expect(meta.procedureType).toBe("open");
     expect(meta.region).toBe("BE213");
+  });
+
+  it("collects every language the title is published in, not just the displayed pick", async () => {
+    const { extractNoticeMetadata } = await import("@/lib/bosa");
+    expect(extractNoticeMetadata(MULTI_LANG_XML).titleLanguages).toEqual(["nl", "fr"]);
   });
 
   it("extracts the first lot's submission deadline as a combined ISO datetime", async () => {
@@ -115,6 +123,7 @@ describe("extractNoticeMetadata", () => {
     const { extractNoticeMetadata } = await import("@/lib/bosa");
     expect(extractNoticeMetadata(null)).toEqual({
       title: null,
+      titleLanguages: [],
       cpvCode: null,
       procedureType: null,
       deadline: null,
@@ -239,5 +248,66 @@ describe("getBosaTenderById", () => {
     // No xmlContent in this response -> title/description absent, never a guess.
     expect(tender?.title).toBe("Untitled notice");
     expect(tender?.description).toBeNull();
+  });
+});
+
+describe("searchBosaTenders", () => {
+  function stubSearch(publications: Record<string, unknown>[]) {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        if (url.endsWith("/env.config.js")) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () =>
+              "VITE_AUTH_CLIENTID: 'pub-client', VITE_AUTH_CLIENTSECRET: 'pub-secret', VITE_AUTH_REALM: 'supplier', VITE_AUTH_URL: ''",
+          } as Response;
+        }
+        if (url.includes("/protocol/openid-connect/token")) {
+          return { ok: true, status: 200, json: async () => ({ access_token: "tok-1", expires_in: 300 }) } as Response;
+        }
+        if (url.includes("/search/publications")) {
+          return { ok: true, status: 200, json: async () => ({ publications }) } as Response;
+        }
+        throw new Error(`unexpected fetch: ${url}`);
+      })
+    );
+  }
+
+  it("populates titleLanguages from every language the search result's title carries", async () => {
+    stubSearch([
+      {
+        publicationWorkspaceId: "ws-1",
+        dossier: {
+          titles: [
+            { language: "NL", text: "Aankoop van boeken" },
+            { language: "FR", text: "Achat de livres" },
+          ],
+        },
+        organisation: { organisationNames: [{ language: "NL", text: "Test org" }] },
+      },
+    ]);
+
+    const { searchBosaTenders } = await import("@/lib/bosa");
+    const [tender] = await searchBosaTenders({ limit: 10 });
+
+    expect(tender.title).toBe("Aankoop van boeken");
+    expect(tender.titleLanguages).toEqual(["nl", "fr"]);
+  });
+
+  it("returns an empty titleLanguages array when the title carries no language codes", async () => {
+    stubSearch([
+      {
+        publicationWorkspaceId: "ws-2",
+        dossier: { titles: [{ text: "Untagged title" }] },
+        organisation: { organisationNames: [{ language: "NL", text: "Test org" }] },
+      },
+    ]);
+
+    const { searchBosaTenders } = await import("@/lib/bosa");
+    const [tender] = await searchBosaTenders({ limit: 10 });
+
+    expect(tender.titleLanguages).toEqual([]);
   });
 });

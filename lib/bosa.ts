@@ -217,6 +217,25 @@ function pickLocalized($: CheerioAPI, parent: Element, tagName: string): string 
   return fallback;
 }
 
+/**
+ * Which languages `parent`'s direct `tagName` children actually carry text
+ * in — the "Published in: NL, FR" hint TenderCard shows via
+ * TenderNotice.titleLanguages (see lib/ted.ts's mapOfficialLanguages for
+ * the TED equivalent). Unlike pickLocalized above, which picks one winner
+ * to display, this reports every language present, in canonical priority
+ * order.
+ */
+function localizedLanguageKeys($: CheerioAPI, parent: Element, tagName: string): string[] {
+  const found = new Set<string>();
+  for (const el of children($, parent, tagName)) {
+    if (!$(el).text().trim()) continue;
+    const langCode = attrLocal(el, "languageID");
+    const langKey = langCode ? langKeyForCode(langCode) : null;
+    if (langKey) found.add(langKey);
+  }
+  return DESCRIPTION_LANG_PRIORITY.filter((l) => found.has(l));
+}
+
 function parseXml(xmlContent: string): { $: CheerioAPI; root: Element } | null {
   let $: CheerioAPI;
   try {
@@ -279,6 +298,7 @@ export function extractEstimatedValue(xmlContent: string | null): EstimatedValue
 
 export interface NoticeMetadata {
   title: string | null;
+  titleLanguages: string[];
   cpvCode: string | null;
   procedureType: string | null;
   /** ISO datetime; deadlines are modeled per-lot in eForms — this is the first lot's, same one-field simplification lib/ted.ts already makes for TED's multi-lot notices. Legitimately null for award/result notices, which don't carry one. */
@@ -313,7 +333,14 @@ function combineXmlDateTime(rawDate: string, rawTime: string | null): string | n
  * the wrong one.
  */
 export function extractNoticeMetadata(xmlContent: string | null): NoticeMetadata {
-  const empty: NoticeMetadata = { title: null, cpvCode: null, procedureType: null, deadline: null, region: null };
+  const empty: NoticeMetadata = {
+    title: null,
+    titleLanguages: [],
+    cpvCode: null,
+    procedureType: null,
+    deadline: null,
+    region: null,
+  };
   if (!xmlContent) return empty;
   const parsed = parseXml(xmlContent);
   if (!parsed) return empty;
@@ -321,6 +348,7 @@ export function extractNoticeMetadata(xmlContent: string | null): NoticeMetadata
 
   const procurementProject = firstChild($, root, "ProcurementProject");
   const title = procurementProject ? pickLocalized($, procurementProject, "Name") : null;
+  const titleLanguages = procurementProject ? localizedLanguageKeys($, procurementProject, "Name") : [];
 
   let cpvCode: string | null = null;
   let region: string | null = null;
@@ -358,7 +386,7 @@ export function extractNoticeMetadata(xmlContent: string | null): NoticeMetadata
     break;
   }
 
-  return { title, cpvCode, procedureType, deadline, region };
+  return { title, titleLanguages, cpvCode, procedureType, deadline, region };
 }
 
 function formatValue(ev: EstimatedValue | null): { text: string | null; raw: number | null } {
@@ -386,6 +414,18 @@ function pickJsonText(items: TextEntry[] | undefined): string | null {
   }
   const first = byLang.values().next();
   return first.done ? null : first.value;
+}
+
+/** Same idea as localizedLanguageKeys above, for the search endpoint's flat `{language, text}[]` shape instead of XML elements. */
+function jsonLanguageKeys(items: TextEntry[] | undefined): string[] {
+  if (!items?.length) return [];
+  const found = new Set<string>();
+  for (const item of items) {
+    if (!item.text || !item.language) continue;
+    const langKey = langKeyForCode(item.language);
+    if (langKey) found.add(langKey);
+  }
+  return DESCRIPTION_LANG_PRIORITY.filter((l) => found.has(l));
 }
 
 const BOSA_SEARCH_URL = `${BOSA_BASE_URL}/api/sea/search/publications`;
@@ -509,7 +549,7 @@ export async function searchBosaTenders(
         deadline: (raw.vaultSubmissionDeadline as string | undefined) ?? null,
         publicationDate: (raw.dispatchDate as string | undefined) ?? null,
         cpvCodes: cpvMainCode ? [cpvMainCode] : [],
-        titleLanguages: [],
+        titleLanguages: jsonLanguageKeys(dossier.titles as TextEntry[] | undefined),
         url: `${BOSA_BASE_URL}/publication-workspaces/${workspaceId}`,
       };
     })
@@ -543,7 +583,7 @@ export async function getBosaTenderById(workspaceId: string): Promise<TenderDeta
     deadline: meta.deadline,
     publicationDate: version?.publicationDate ?? null,
     cpvCodes: meta.cpvCode ? [meta.cpvCode] : [],
-    titleLanguages: [],
+    titleLanguages: meta.titleLanguages,
     url: `${BOSA_BASE_URL}/publication-workspaces/${workspaceId}`,
     sourceName: "BOSA e-Notification",
     description,
