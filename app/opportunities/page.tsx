@@ -74,7 +74,7 @@ export default async function OpportunitiesPage({
       onlyOpenCalls: true,
       limit: 25,
     }),
-    searchBosaTenders({ keyword: params.q, limit: 30, onlyOpenCalls: true }),
+    searchBosaTenders({ keyword: params.q, limit: 30, onlyOpenCalls: true, filterLanguageKeys }),
     getExternalOpportunities(),
   ]);
 

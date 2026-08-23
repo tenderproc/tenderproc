@@ -446,7 +446,16 @@ const BOSA_SEARCH_URL = `${BOSA_BASE_URL}/api/sea/search/publications`;
  * scraper project for why that's a separate, harder problem than it looks.
  */
 export async function searchBosaTenders(
-  params: { keyword?: string; limit?: number; onlyOpenCalls?: boolean } = {}
+  params: {
+    keyword?: string;
+    limit?: number;
+    onlyOpenCalls?: boolean;
+    /** Same contract as lib/ted.ts's filterLanguageKeys: matched against each
+     * notice's titleLanguages (parsed from its multilingual title fields,
+     * below), not merely used for display priority. A notice with no
+     * titleLanguages on file is excluded, same as TED's version. */
+    filterLanguageKeys?: string[];
+  } = {}
 ): Promise<TenderNotice[]> {
   const displayLimit = params.limit ?? 30;
   // Mirrors lib/ted.ts's onlyOpenCalls overfetch: filtering happens
@@ -463,7 +472,8 @@ export async function searchBosaTenders(
   // search with onlyOpenCalls:true returned 30/30 results with a past
   // deadline, none actually biddable — so the deadline must also still be
   // in the future, not merely present.
-  const pageSize = params.onlyOpenCalls ? Math.max(displayLimit * 3, 90) : displayLimit;
+  const needsOverfetch = params.onlyOpenCalls || params.filterLanguageKeys?.length;
+  const pageSize = needsOverfetch ? Math.max(displayLimit * 3, 90) : displayLimit;
   const doFetch = async (forceRefresh: boolean) =>
     fetch(BOSA_SEARCH_URL, {
       method: "POST",
@@ -525,8 +535,7 @@ export async function searchBosaTenders(
     });
   }
 
-  return publications
-    .slice(0, displayLimit)
+  let notices = publications
     .map((raw): TenderNotice | null => {
       const workspaceId = raw.publicationWorkspaceId as string | undefined;
       if (!workspaceId) return null;
@@ -554,6 +563,16 @@ export async function searchBosaTenders(
       };
     })
     .filter((t): t is TenderNotice => t !== null);
+
+  if (params.filterLanguageKeys?.length) {
+    const wanted = params.filterLanguageKeys;
+    // A notice with no titleLanguages on file can't be confirmed to match,
+    // so it's excluded too — same "certainty over completeness" contract as
+    // lib/ted.ts's filterLanguageKeys.
+    notices = notices.filter((t) => t.titleLanguages.some((l) => wanted.includes(l)));
+  }
+
+  return notices.slice(0, displayLimit);
 }
 
 /**
