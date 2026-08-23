@@ -763,7 +763,8 @@
     "sectors": "Branchen",
     "languages": "Sprachen",
     "allLanguages": "Alle Sprachen",
-    "saving": "Wird gespeichert…"
+    "saving": "Wird gespeichert…",
+    "filtering": "Ergebnisse werden aktualisiert…"
   },
   "Enums": {
     "matchLabel": {

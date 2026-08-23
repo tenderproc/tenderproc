@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
@@ -24,11 +24,15 @@ export default function PreferencesSidebar({
   const [language, setLanguage] = useState<string | null>(initialLanguage);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, startRefresh] = useTransition();
   const skipFirst = useRef(true);
 
   // Live-save on every change (debounced) and refresh the dashboard's
   // server-rendered results so the tender list reflects the new selection
-  // without a separate "Save" step.
+  // without a separate "Save" step. router.refresh() itself can take several
+  // seconds (it re-fetches TED/BOSA/regional sources + match scores), so it's
+  // wrapped in a transition — otherwise `saving` flips off right after the
+  // DB write and the sidebar looks idle while the list is still updating.
   useEffect(() => {
     if (skipFirst.current) {
       skipFirst.current = false;
@@ -49,7 +53,9 @@ export default function PreferencesSidebar({
         setError(error.message);
         return;
       }
-      router.refresh();
+      startRefresh(() => {
+        router.refresh();
+      });
     }, 400);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,7 +141,13 @@ export default function PreferencesSidebar({
       </details>
 
       <p className="text-xs text-inkDim mt-3 h-4">
-        {saving ? t("saving") : error ? <span className="text-stamp">{error}</span> : " "}
+        {saving
+          ? t("saving")
+          : isRefreshing
+          ? t("filtering")
+          : error
+          ? <span className="text-stamp">{error}</span>
+          : " "}
       </p>
     </aside>
   );

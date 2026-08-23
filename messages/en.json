@@ -763,7 +763,8 @@
     "sectors": "Sectors",
     "languages": "Languages",
     "allLanguages": "All languages",
-    "saving": "Saving…"
+    "saving": "Saving…",
+    "filtering": "Updating results…"
   },
   "Enums": {
     "matchLabel": {

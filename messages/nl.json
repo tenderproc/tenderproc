@@ -763,7 +763,8 @@
     "sectors": "Sectoren",
     "languages": "Talen",
     "allLanguages": "Alle talen",
-    "saving": "Bezig met opslaan…"
+    "saving": "Bezig met opslaan…",
+    "filtering": "Resultaten worden bijgewerkt…"
   },
   "Enums": {
     "matchLabel": {
