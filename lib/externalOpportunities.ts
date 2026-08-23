@@ -181,25 +181,31 @@ const EMPTY_DESCRIPTION_PLACEHOLDER = "geef korte beschrijving op";
  * record days later). At user's explicit request 2026-08-23: only records
  * with a genuine deadline count as an "actual tender" here.
  *
- * Deliberately implemented as a general "deadline present" condition
- * rather than a source-specific check: today this excludes 100% of
- * external_opportunities rows, since none of the three regional scrapers
- * currently extract a real deadline (structural limitation of their
- * source sites, not a bug) — Opportunities' regional-source section will
- * show nothing until that changes. Written this way on purpose so it
- * requires no further code change and starts including rows the moment
- * deadline extraction becomes possible for any of these sources, rather
- * than needing to be revisited.
+ * Originally implemented as a general "deadline present" condition when
+ * none of the three regional scrapers extracted one at all (structural
+ * limitation, not a bug) — that excluded 100% of external_opportunities
+ * rows. Since then, wallonia_deliberations gained real deadline extraction
+ * (extract_deadline.py in the sibling scraper project, parses an explicit
+ * absolute date like "la date limite de dépôt des offres est fixée au 30
+ * juin 2026 à 12h00" out of the decision's own prose — confirmed live
+ * 2026-08-23 against 21 real matches, each manually checked against source
+ * text). A present-but-already-passed deadline is exactly as non-biddable
+ * as no deadline at all — same "no closed tenders" principle as
+ * [[project_tenderproc_bosa_stale_deadline_filter]]'s BOSA fix — so this
+ * now checks both presence AND recency, kept general (not source-specific)
+ * for the same forward-compatibility reason as before.
  *
  * Applied client-side (see the `.filter()` below, alongside
- * hasNoRealDescription) rather than as a `.not("deadline", "is", null)`
- * query clause — chaining one more `.not()` onto this builder pushed
- * TypeScript's type-checker over its recursion limit ("Type instantiation
- * is excessively deep"), a known supabase-js issue with long fluent
- * chains, not a logic problem with the filter itself.
+ * hasNoRealDescription) rather than as a query clause — chaining one more
+ * `.not()` onto this builder pushed TypeScript's type-checker over its
+ * recursion limit ("Type instantiation is excessively deep"), a known
+ * supabase-js issue with long fluent chains, not a logic problem with the
+ * filter itself.
  */
-function hasNoDeadline(deadline: string | null): boolean {
-  return deadline == null;
+function hasNoUsableDeadline(deadline: string | null): boolean {
+  if (deadline == null) return true;
+  const deadlineMs = new Date(deadline).getTime();
+  return isNaN(deadlineMs) || deadlineMs <= Date.now();
 }
 
 /** True for a description with no real content: null, blank, a bare zero-width space, or the scraper's own placeholder text (see exclusion 5 above). */
@@ -231,7 +237,7 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
 
   return ((data as ExternalOpportunityRow[] | null) ?? [])
     .filter((row) => !hasNoRealDescription(row.description))
-    .filter((row) => !hasNoDeadline(row.deadline))
+    .filter((row) => !hasNoUsableDeadline(row.deadline))
     .map(rowToTenderNotice);
 }
 
