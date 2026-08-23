@@ -459,7 +459,29 @@ export async function searchBosaTenders(
       const deadline = raw.vaultSubmissionDeadline as string | undefined;
       if (!deadline) return false;
       const deadlineMs = new Date(deadline).getTime();
-      return !isNaN(deadlineMs) && deadlineMs > now;
+      if (isNaN(deadlineMs) || deadlineMs <= now) return false;
+      // Closed-shortlist exclusion, BOSA's own structured equivalent of the
+      // Wallonia/Flanders text-marker filters in lib/externalOpportunities.ts
+      // (see NEGOTIATED_WITHOUT_PUBLICATION_MARKERS there) - every BOSA
+      // notice carries dossier.procurementProcedureType, a first-party
+      // eForms classification code, language-independent unlike title text.
+      // Confirmed live 2026-08-23 against a 900-record sample: values
+      // starting "NEG_WO_CALL" ("negotiated, WithOut a public Call") were
+      // 241/900 (27%) and every title/description sampled read exactly like
+      // the Wallonia/Flanders closed-shortlist cases ("Onderhandelingsprocedure
+      // zonder voorafgaande bekendmaking" / "Procédure négociée sans
+      // publication préalable") - a pre-chosen list of firms invited
+      // directly, nothing for an outside company to bid into. The "W_CALL"
+      // (with a call) and plain "OPEN"/"OPEN_DEF"/"OPEN_CONS" variants are
+      // genuinely open and left untouched; the small residual categories
+      // (LOW_VALUE_T, SUIGEN_OTHER, missing type - together <2% of the
+      // sample) were spot-checked and left alone: LOW_VALUE_T is 13/900
+      // and 12 of those already lack a deadline entirely (excluded above
+      // regardless), too small and ambiguous a bucket to build a rule for.
+      const dossier = raw.dossier as Record<string, unknown> | undefined;
+      const procedureType = dossier?.procurementProcedureType as string | undefined;
+      if (procedureType?.startsWith("NEG_WO_CALL")) return false;
+      return true;
     });
   }
 
