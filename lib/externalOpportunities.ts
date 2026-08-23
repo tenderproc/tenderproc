@@ -7,6 +7,23 @@ const SOURCE_NAMES: Record<string, string> = {
   flanders_gelinkt_notuleren: "Flanders — Gelinkt Notuleren",
 };
 
+/**
+ * Each regional source's official council language, used as titleLanguages
+ * for the sidebar's language filter (lib/ted.ts/lib/bosa.ts's
+ * filterLanguageKeys). Unlike TED/BOSA there's no per-notice multilingual
+ * title field to parse here — these are plain-text council-decision scrapes
+ * in whatever language that commune publishes in. But that's actually a
+ * reliable signal, not a guess: Walloon communes publish exclusively in
+ * French and Flemish communes exclusively in Dutch (no bilingual source is
+ * ingested — Brussels has no equivalent source at all), so the source
+ * itself determines the language with certainty.
+ */
+const SOURCE_LANGUAGE: Record<string, string> = {
+  wallonia_deliberations: "fr",
+  wallonia_conseilcommunal: "fr",
+  flanders_gelinkt_notuleren: "nl",
+};
+
 export const EXTERNAL_PREFIX = "EXT:";
 
 interface ExternalOpportunityRow {
@@ -266,7 +283,7 @@ export function rowToTenderNotice(row: ExternalOpportunityRow): TenderNotice {
     deadline: row.deadline,
     publicationDate: row.publication_date,
     cpvCodes: row.cpv_codes ?? [],
-    titleLanguages: [],
+    titleLanguages: SOURCE_LANGUAGE[row.source] ? [SOURCE_LANGUAGE[row.source]] : [],
     url: row.source_url,
   };
 }

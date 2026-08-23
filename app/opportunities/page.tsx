@@ -103,6 +103,9 @@ export default async function OpportunitiesPage({
       (t) => t.title.toLowerCase().includes(q) || t.buyerName.toLowerCase().includes(q)
     );
   }
+  if (filterLanguageKeys?.length) {
+    externalTenders = externalTenders.filter((t) => t.titleLanguages.some((l) => filterLanguageKeys.includes(l)));
+  }
 
   const tenders = [...tedTenders, ...bosaTenders, ...externalTenders].sort((a, b) => {
     if (!a.publicationDate) return 1;
