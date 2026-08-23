@@ -904,9 +904,11 @@
     "send": "Verzenden",
     "sending": "Verzenden…",
     "close": "Chat sluiten",
-    "talkToPerson": "Praat met een medewerker via WhatsApp",
     "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur.",
-    "whatsappLeadIn": "Hallo, ik was aan het chatten met de TenderProc-supportbot over:",
-    "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of praat hieronder met een medewerker via WhatsApp."
+    "escalateEmailPlaceholder": "Je e-mailadres",
+    "escalateSend": "Naar een medewerker sturen",
+    "emailSent": "Bedankt — we reageren binnenkort per e-mail.",
+    "emailError": "Verzenden mislukt. Probeer het opnieuw.",
+    "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of mail hieronder een medewerker."
   }
 }

@@ -111,6 +111,46 @@ export async function sendNewTendersEmail(
   }
 }
 
+export interface SupportChatEscalation {
+  email: string;
+  messages: { role: "user" | "assistant"; content: string }[];
+}
+
+/** Sends the support-chat transcript to the support inbox when the bot
+ * couldn't resolve the visitor's question (app/api/support-chat/escalate).
+ * `replyTo` is the visitor's own address so a human can just hit reply. */
+export async function sendSupportChatEscalation(submission: SupportChatEscalation) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const to = process.env.CONTACT_FORM_TO_EMAIL || LEGAL_ENTITY.contactEmail;
+
+  const transcript = submission.messages
+    .map(
+      (m) =>
+        `<p style="margin:0 0 10px;"><strong>${m.role === "user" ? "Visitor" : "Bot"}:</strong> ${escapeHtml(m.content)}</p>`
+    )
+    .join("");
+
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    replyTo: submission.email,
+    subject: `[Support chat] Escalation from ${submission.email}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;">
+        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc support chat</p>
+        <p><strong>Visitor email:</strong> ${escapeHtml(submission.email)}</p>
+        <p style="font-size:12px;color:#888;margin:16px 0 8px;">Conversation:</p>
+        ${transcript}
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
 export interface ContactFormSubmission {
   name: string;
   email: string;

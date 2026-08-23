@@ -904,9 +904,11 @@
     "send": "Send",
     "sending": "Sending…",
     "close": "Close chat",
-    "talkToPerson": "Talk to a person on WhatsApp",
     "operatorHours": "Operators are available 9 AM–5 PM.",
-    "whatsappLeadIn": "Hi, I was chatting with the TenderProc support bot about:",
-    "errorFallback": "Sorry, something went wrong on my end. You can try again, or reach a person on WhatsApp below."
+    "escalateEmailPlaceholder": "Your email",
+    "escalateSend": "Send to a person",
+    "emailSent": "Thanks — we'll reply by email shortly.",
+    "emailError": "Couldn't send. Try again.",
+    "errorFallback": "Sorry, something went wrong on my end. You can try again, or email a person below."
   }
 }

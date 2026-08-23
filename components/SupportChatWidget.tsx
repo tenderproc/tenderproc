@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { buildWhatsAppUrl } from "@/lib/supportChat/whatsapp";
 import { loadConversation, saveConversation, type StoredChatMessage } from "@/lib/supportChat/storage";
 
 export default function SupportChatWidget() {
@@ -15,6 +14,8 @@ export default function SupportChatWidget() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [needsHuman, setNeedsHuman] = useState(false);
+  const [escalateEmail, setEscalateEmail] = useState("");
+  const [escalateStatus, setEscalateStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,8 +60,24 @@ export default function SupportChatWidget() {
     }
   }
 
-  const lastUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
-  const whatsappUrl = buildWhatsAppUrl(lastUserMessage, t("whatsappLeadIn"));
+  async function sendEscalationEmail(e: React.FormEvent) {
+    e.preventDefault();
+    const email = escalateEmail.trim();
+    if (!email || escalateStatus === "sending") return;
+
+    setEscalateStatus("sending");
+    try {
+      const res = await fetch("/api/support-chat/escalate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, messages }),
+      });
+      if (!res.ok) throw new Error();
+      setEscalateStatus("sent");
+    } catch {
+      setEscalateStatus("error");
+    }
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -101,15 +118,31 @@ export default function SupportChatWidget() {
 
           {needsHuman && (
             <div className="px-4 pb-3">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-moss text-white py-2.5 rounded-doc font-medium shadow-xs hover:opacity-90 transition-opacity"
-              >
-                <WhatsAppIcon />
-                {t("talkToPerson")}
-              </a>
+              {escalateStatus === "sent" ? (
+                <p className="text-sm text-ink text-center py-2">{t("emailSent")}</p>
+              ) : (
+                <form onSubmit={sendEscalationEmail} className="flex items-center gap-2">
+                  <input
+                    type="email"
+                    value={escalateEmail}
+                    onChange={(e) => setEscalateEmail(e.target.value)}
+                    placeholder={t("escalateEmailPlaceholder")}
+                    required
+                    disabled={escalateStatus === "sending"}
+                    aria-label={t("escalateEmailPlaceholder")}
+                    className="flex-1 border border-line rounded-doc px-3 py-2 text-sm bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent disabled:opacity-50"
+                  />
+                  <button
+                    type="submit"
+                    disabled={escalateStatus === "sending" || !escalateEmail.trim()}
+                    aria-label={t("escalateSend")}
+                    className="shrink-0 flex items-center justify-center bg-moss text-white p-2.5 rounded-doc shadow-xs hover:opacity-90 transition-opacity disabled:opacity-50"
+                  >
+                    <MailIcon />
+                  </button>
+                </form>
+              )}
+              {escalateStatus === "error" && <p className="text-xs text-stamp mt-1">{t("emailError")}</p>}
               <p className="text-xs text-inkDim mt-1.5 text-center">{t("operatorHours")}</p>
             </div>
           )}
@@ -208,10 +241,11 @@ function SendIcon() {
   );
 }
 
-function WhatsAppIcon() {
+function MailIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.07-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.1a8.1 8.1 0 01-4.12-1.13l-.3-.18-3.05.8.82-2.97-.2-.3A8.1 8.1 0 1120.1 12 8.11 8.11 0 0112 20.1zm4.44-6.07c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.17-.7-.63-1.18-1.4-1.31-1.64-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.8-.2-.48-.4-.42-.55-.42-.14 0-.3-.02-.46-.02-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02 0 1.19.87 2.34.99 2.5.12.16 1.71 2.62 4.15 3.67.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.15-.06-.1-.22-.16-.46-.28z" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M3.5 6.5L12 13L20.5 6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

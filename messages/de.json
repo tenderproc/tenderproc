@@ -904,9 +904,11 @@
     "send": "Senden",
     "sending": "Wird gesendet…",
     "close": "Chat schließen",
-    "talkToPerson": "Mit einer Person auf WhatsApp sprechen",
     "operatorHours": "Mitarbeiter sind von 9 bis 17 Uhr erreichbar.",
-    "whatsappLeadIn": "Hallo, ich habe mit dem TenderProc-Support-Bot gesprochen über:",
-    "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder wenden Sie sich unten per WhatsApp an eine Person."
+    "escalateEmailPlaceholder": "Ihre E-Mail-Adresse",
+    "escalateSend": "An eine Person senden",
+    "emailSent": "Danke — wir antworten in Kürze per E-Mail.",
+    "emailError": "Senden fehlgeschlagen. Bitte erneut versuchen.",
+    "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder erreichen Sie unten eine Person per E-Mail."
   }
 }
