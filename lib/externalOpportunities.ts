@@ -37,15 +37,21 @@ interface ExternalOpportunityRow {
  * regardless of estimated value or notice_kind (open/awarded/unclear) —
  * only rows already confirmed as an exact duplicate of a live TED notice
  * are excluded, to avoid showing the same tender twice under two
- * different presentations.
+ * different presentations. Two additional, narrower exclusions below are
+ * carve-outs from that blanket rule, not exceptions to it: both catch a
+ * specific, confidently-detectable non-biddable case rather than
+ * attempting the general open/awarded/unclear classification the product
+ * decision above deliberately avoids (that needs real NLP — see the
+ * sibling scraper project's dedup-classifier work, which left ~40% of
+ * records unclassified even with that as its sole goal).
  *
- * One additional exclusion: deliberations.be (wallonia_deliberations)
- * stamps every "Projet de décision" (draft, not yet adopted by the
- * commune) with a standard boilerplate disclaimer in its description
- * ("Ce projet de délibération est un document préparatoire...Ce texte
- * n'a pas encore été adopté par l'autorité communale."). Those are drafts
- * that can still change or be rejected, not real procurement decisions,
- * so they're filtered out here rather than shown as an "opportunity".
+ * Exclusion 1: deliberations.be (wallonia_deliberations) stamps every
+ * "Projet de décision" (draft, not yet adopted by the commune) with a
+ * standard boilerplate disclaimer in its description ("Ce projet de
+ * délibération est un document préparatoire...Ce texte n'a pas encore été
+ * adopté par l'autorité communale."). Those are drafts that can still
+ * change or be rejected, not real procurement decisions, so they're
+ * filtered out here rather than shown as an "opportunity".
  *
  * Keep this marker to a single phrase, not a longer quoted sentence: the
  * scraper joins each card's DOM text nodes with newlines, so a multi-line
@@ -56,15 +62,46 @@ interface ExternalOpportunityRow {
  */
 const DRAFT_DISCLAIMER_MARKER = "document préparatoire";
 
+/**
+ * Exclusion 2: council decisions that explicitly name a "negotiated
+ * procedure without prior publication" (French: procédure négociée sans
+ * publication/publicité préalable; Dutch: onderhandelingsprocedure zonder
+ * voorafgaande bekendmaking) invite a small, already-chosen list of firms
+ * directly — there's no public call and nothing for an outside company to
+ * bid into, even though (unlike the draft-disclaimer case) the decision
+ * itself is final and real. Same rationale as lib/ted.ts's onlyOpenCalls
+ * and lib/bosa.ts's onlyOpenCalls: an "opportunity" on this page should be
+ * something a visitor can actually respond to.
+ *
+ * All three phrases confirmed live 2026-08-23 against the full table
+ * (3,939 rows): 632 matching rows total, 0 cases where whitespace/newline
+ * normalization would have changed the match (the failure mode that broke
+ * DRAFT_DISCLAIMER_MARKER above), and manual review of a sample per phrase
+ * found no negated/false-positive usage (e.g. no "n'a pas retenu la
+ * procédure négociée..." case). wallonia_conseilcommunal never matches —
+ * expected, not a gap introduced here: that source's Motivations/Decisions
+ * text is structurally absent (see project memory), so it has no
+ * procedure-type prose to match against either way.
+ */
+const NEGOTIATED_WITHOUT_PUBLICATION_MARKERS = [
+  "sans publication préalable",
+  "sans publicité préalable",
+  "zonder voorafgaande bekendmaking",
+];
+
 export async function getExternalOpportunities(): Promise<TenderNotice[]> {
   const supabase = createAdminClient();
-  const { data, error } = await supabase
+  let query = supabase
     .from("external_opportunities")
     .select(
       "source, source_reference, title, buyer_name, description, cpv_codes, estimated_value, estimated_value_currency, deadline, publication_date, region, source_url, dedup_status"
     )
     .neq("dedup_status", "confirmed_duplicate")
-    .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`)
+    .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`);
+  for (const marker of NEGOTIATED_WITHOUT_PUBLICATION_MARKERS) {
+    query = query.not("description", "ilike", `%${marker}%`);
+  }
+  const { data, error } = await query
     .order("publication_date", { ascending: false, nullsFirst: false })
     .limit(500);
 
