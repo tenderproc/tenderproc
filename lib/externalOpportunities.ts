@@ -37,13 +37,17 @@ interface ExternalOpportunityRow {
  * regardless of estimated value or notice_kind (open/awarded/unclear) —
  * only rows already confirmed as an exact duplicate of a live TED notice
  * are excluded, to avoid showing the same tender twice under two
- * different presentations. Two additional, narrower exclusions below are
- * carve-outs from that blanket rule, not exceptions to it: both catch a
- * specific, confidently-detectable non-biddable case rather than
- * attempting the general open/awarded/unclear classification the product
- * decision above deliberately avoids (that needs real NLP — see the
- * sibling scraper project's dedup-classifier work, which left ~40% of
- * records unclassified even with that as its sole goal).
+ * different presentations. The exclusions below are carve-outs from that
+ * blanket rule, not exceptions to it: each catches a specific,
+ * confidently-detectable non-biddable case rather than attempting the
+ * general open/awarded/unclear classification the product decision above
+ * deliberately avoids (that needs real NLP — see the sibling scraper
+ * project's dedup-classifier work, which left ~40% of records
+ * unclassified even with that as its sole goal). A large residual bucket
+ * of genuinely ambiguous "council approved specs/procedure, no explicit
+ * open-or-closed signal in the text" records is deliberately left alone
+ * for the same reason — see NON_TENDER_MARKERS below for the line drawn
+ * there.
  *
  * Exclusion 1: deliberations.be (wallonia_deliberations) stamps every
  * "Projet de décision" (draft, not yet adopted by the commune) with a
@@ -89,6 +93,63 @@ const NEGOTIATED_WITHOUT_PUBLICATION_MARKERS = [
   "zonder voorafgaande bekendmaking",
 ];
 
+/**
+ * Exclusion 3: a decision can invite a closed shortlist of firms directly
+ * without ever naming the "negotiated without prior publication" procedure
+ * by name — the tell is the shortlist itself ("firms/companies to
+ * contact/invite/consult"), which only exists because the buyer already
+ * picked who gets asked; nobody outside that list can respond. Same
+ * closed-procedure rationale as exclusion 2, different phrasing.
+ *
+ * Exclusion 4: a decision naming the actual winner and award amount
+ * ("this contract is awarded to X for €Y") is by definition already
+ * decided — there's nothing left to bid on, same as a TED/BOSA award
+ * notice.
+ *
+ * Both confirmed live 2026-08-23 against the 1,561 rows still passing
+ * exclusions 1-2 (i.e. checked for incremental value, not against the
+ * full table): "te contacteren"/"uit te nodigen" (NL) and "à consulter"
+ * (FR) → 65 rows; the award markers → 96 rows across two Dutch verb forms
+ * ("gegund aan" — past participle, "this contract IS awarded to X" — and
+ * "gunnen aan" — infinitive, "decides TO award to X"; neither is a
+ * substring of the other, both needed) plus French ("marché est
+ * attribué", "attribuer le marché à", "décide d'attribuer" in both its
+ * curly-’ and straight-' apostrophe spellings — real scraped text mixes
+ * both for the same word, so both variants are listed). Every match
+ * manually reviewed for negation (e.g. a decision NOT to award, or
+ * explicitly declining a shortlist) — none found — and for the
+ * newline-splitting failure mode — none found.
+ *
+ * Exclusion 5 (applied after the query, not as a marker — see the filter
+ * below): a description that's empty or contains only a scraper-side
+ * placeholder/whitespace artifact (confirmed live: 390 rows are the exact
+ * literal string "Geef korte beschrijving op" — a Dutch UI form
+ * placeholder meaning "enter a short description here" that a source
+ * council left blank; 43 more are blank or a bare zero-width space) can
+ * never represent an actionable opportunity regardless of its true
+ * open/closed status, since there's no content to act on either way.
+ */
+const NON_TENDER_MARKERS = [
+  ...NEGOTIATED_WITHOUT_PUBLICATION_MARKERS,
+  "te contacteren",
+  "uit te nodigen",
+  "à consulter",
+  "gegund aan",
+  "gunnen aan",
+  "marché est attribué",
+  "attribuer le marché à",
+  "décide d’attribuer", // curly apostrophe (U+2019) — see comment above
+  "décide d'attribuer", // straight apostrophe (U+0027) — see comment above
+];
+
+const EMPTY_DESCRIPTION_PLACEHOLDER = "geef korte beschrijving op";
+
+/** True for a description with no real content: null, blank, a bare zero-width space, or the scraper's own placeholder text (see exclusion 5 above). */
+function hasNoRealDescription(description: string | null): boolean {
+  const stripped = (description ?? "").replace(/[\s​]+/g, "");
+  return stripped.length === 0 || stripped.toLowerCase() === EMPTY_DESCRIPTION_PLACEHOLDER.replace(/\s+/g, "");
+}
+
 export async function getExternalOpportunities(): Promise<TenderNotice[]> {
   const supabase = createAdminClient();
   let query = supabase
@@ -98,7 +159,7 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
     )
     .neq("dedup_status", "confirmed_duplicate")
     .not("description", "ilike", `%${DRAFT_DISCLAIMER_MARKER}%`);
-  for (const marker of NEGOTIATED_WITHOUT_PUBLICATION_MARKERS) {
+  for (const marker of NON_TENDER_MARKERS) {
     query = query.not("description", "ilike", `%${marker}%`);
   }
   const { data, error } = await query
@@ -109,7 +170,9 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
     throw new Error(`external_opportunities query failed: ${error.message}`);
   }
 
-  return ((data as ExternalOpportunityRow[] | null) ?? []).map(rowToTenderNotice);
+  return ((data as ExternalOpportunityRow[] | null) ?? [])
+    .filter((row) => !hasNoRealDescription(row.description))
+    .map(rowToTenderNotice);
 }
 
 export function rowToTenderNotice(row: ExternalOpportunityRow): TenderNotice {
