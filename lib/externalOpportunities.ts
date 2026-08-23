@@ -133,6 +133,17 @@ const NON_TENDER_MARKERS = [
   ...NEGOTIATED_WITHOUT_PUBLICATION_MARKERS,
   "te contacteren",
   "uit te nodigen",
+  // Same closed-shortlist concept as "uit te nodigen" (infinitive, "to be
+  // invited") but a different Dutch verb form the original marker missed:
+  // "N ondernemers worden uitgenodigd om deel te nemen aan de aanvaarde
+  // factuur" (N companies are [being] invited to participate in the
+  // accepted-invoice procedure) — Flanders' low-value equivalent of a
+  // negotiated-without-publication invite list. Confirmed live 2026-08-23:
+  // 48 rows total, 36 already excluded by an existing marker anyway
+  // (redundant), 12 net-new — every one manually checked, all genuine
+  // closed invitations to a specific named-count shortlist, no negated
+  // ("niet uitgenodigd") usage found anywhere in the table.
+  "uitgenodigd",
   "à consulter",
   "gegund aan",
   "gunnen aan",
