@@ -193,9 +193,9 @@
     "viewPricing": "Preise ansehen"
   },
   "Opportunities": {
-    "eyebrow": "Quellen: TED, BOSA, regionale Gemeinderatsdaten",
+    "eyebrow": "Quellen: TED, regionale Gemeinderatsdaten",
     "heading": "Chancen",
-    "description": "Belgische öffentliche Ausschreibungen passend zu deinen Branchen, aus TED, BOSA und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
+    "description": "Belgische öffentliche Ausschreibungen passend zu deinen Branchen, aus TED und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
     "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
     "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste.",

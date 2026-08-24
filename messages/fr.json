@@ -193,9 +193,9 @@
     "viewPricing": "Voir les tarifs"
   },
   "Opportunities": {
-    "eyebrow": "Sources : TED, BOSA, données communales régionales",
+    "eyebrow": "Sources : TED, données communales régionales",
     "heading": "Opportunités",
-    "description": "Marchés publics belges correspondant à vos secteurs, issus de TED, BOSA et de sources régionales/communales — y compris des avis potentiellement déjà attribués ou de statut incertain.",
+    "description": "Marchés publics belges correspondant à vos secteurs, issus de TED et de sources régionales/communales — y compris des avis potentiellement déjà attribués ou de statut incertain.",
     "couldNotReachTed": "Impossible de contacter TED.",
     "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
     "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale.",
