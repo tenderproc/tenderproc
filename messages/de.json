@@ -198,7 +198,9 @@
     "description": "Belgische öffentliche Ausschreibungen passend zu deinen Branchen, aus TED, BOSA und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
     "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
-    "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste."
+    "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste.",
+    "filteringByMatch": "Filtern nach Match %…",
+    "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuche, sie zu senken."
   },
   "Market": {
     "eyebrow": "Letzte 90 Tage · Quelle: TED-Zuschlagsbekanntmachungen",
@@ -304,6 +306,10 @@
   "SearchFilters": {
     "keywordPlaceholder": "Stichwort — z. B. Reinigungsdienste",
     "cpvPlaceholder": "CPV-Code — z. B. 90910000",
+    "matchFilterAny": "Beliebige Match %",
+    "matchFilterPossible": "Mögliche Übereinstimmung und höher (40 %+)",
+    "matchFilterGood": "Gute Übereinstimmung und höher (65 %+)",
+    "matchFilterStrong": "Starke Übereinstimmung (85 %+)",
     "search": "Suchen"
   },
   "TenderCard": {
@@ -312,7 +318,8 @@
     "titleLanguageHint": "Veröffentlicht in: {languages}"
   },
   "MatchScoreBadge": {
-    "criteriaCount": "{met}/{total} Kriterien"
+    "criteriaCount": "{met}/{total} Kriterien",
+    "scoring": "Übereinstimmung wird berechnet…"
   },
   "Pricing": {
     "goToApp": "Zur App",

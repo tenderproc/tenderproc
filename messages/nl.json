@@ -198,7 +198,9 @@
     "description": "Belgische overheidsopdrachten gematcht aan jouw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen — inclusief berichten die mogelijk al gegund zijn of een onduidelijke status hebben.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
-    "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk."
+    "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk.",
+    "filteringByMatch": "Filteren op match %…",
+    "noMatchResults": "Geen opportuniteiten halen deze matchdrempel. Probeer die te verlagen."
   },
   "Market": {
     "eyebrow": "Laatste 90 dagen · Bron: TED-gunningsberichten",
@@ -304,6 +306,10 @@
   "SearchFilters": {
     "keywordPlaceholder": "Trefwoord — bv. schoonmaakdiensten",
     "cpvPlaceholder": "CPV-code — bv. 90910000",
+    "matchFilterAny": "Elke match %",
+    "matchFilterPossible": "Mogelijke match en hoger (40%+)",
+    "matchFilterGood": "Goede match en hoger (65%+)",
+    "matchFilterStrong": "Sterke match (85%+)",
     "search": "Zoeken"
   },
   "TenderCard": {
@@ -312,7 +318,8 @@
     "titleLanguageHint": "Gepubliceerd in: {languages}"
   },
   "MatchScoreBadge": {
-    "criteriaCount": "{met}/{total} criteria"
+    "criteriaCount": "{met}/{total} criteria",
+    "scoring": "Overeenkomst wordt berekend…"
   },
   "Pricing": {
     "goToApp": "Naar de app",

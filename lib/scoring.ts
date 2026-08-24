@@ -39,10 +39,17 @@ export function profileHash(profile: CompanyProfile): string {
   return createHash("sha256").update(stable).digest("hex").slice(0, 16);
 }
 
+export const MATCH_BAND_MIN_SCORE = {
+  strong: 85,
+  good: 65,
+  possible: 40,
+  weak: 0,
+} as const;
+
 function matchBand(score: number): "strong" | "good" | "possible" | "weak" {
-  if (score >= 85) return "strong";
-  if (score >= 65) return "good";
-  if (score >= 40) return "possible";
+  if (score >= MATCH_BAND_MIN_SCORE.strong) return "strong";
+  if (score >= MATCH_BAND_MIN_SCORE.good) return "good";
+  if (score >= MATCH_BAND_MIN_SCORE.possible) return "possible";
   return "weak";
 }
 

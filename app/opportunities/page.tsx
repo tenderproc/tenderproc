@@ -3,20 +3,22 @@ import Header from "@/components/Header";
 import SearchFilters from "@/components/SearchFilters";
 import TenderCard from "@/components/TenderCard";
 import PreferencesSidebar from "@/components/PreferencesSidebar";
+import OpportunitiesScores from "@/components/OpportunitiesScores";
+import MatchFilterGate from "@/components/MatchFilterGate";
 import { searchBelgianTenders } from "@/lib/ted";
 import { searchBosaTenders } from "@/lib/bosa";
 import { getExternalOpportunities } from "@/lib/externalOpportunities";
 import { sectorsToCpvPrefixes } from "@/lib/sectors";
 import { createClient } from "@/lib/supabase/server";
-import { MatchScore } from "@/lib/scoring";
-import { getMatchScores } from "@/lib/matchScoreCache";
+import { getSavedCompanyProfile } from "@/lib/companyProfile";
+import { hasProfileSignal } from "@/lib/scoring";
 
 export const dynamic = "force-dynamic";
 
 export default async function OpportunitiesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; cpv?: string }>;
+  searchParams: Promise<{ q?: string; cpv?: string; minScore?: string }>;
 }) {
   const params = await searchParams;
   const t = await getTranslations("Opportunities");
@@ -28,20 +30,12 @@ export default async function OpportunitiesPage({
 
   let savedSectors: string[] = [];
   let savedLanguage: string | null = null;
-  let companyDescription = "";
-  let address = "";
-  let companySize = "";
+  let showMatchFilter = false;
   if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("sectors, language, company_description, address, company_size")
-      .eq("id", user.id)
-      .maybeSingle();
-    savedSectors = profile?.sectors ?? [];
-    savedLanguage = profile?.language ?? null;
-    companyDescription = profile?.company_description ?? "";
-    address = profile?.address ?? "";
-    companySize = profile?.company_size ?? "";
+    const saved = await getSavedCompanyProfile(supabase, user.id);
+    savedSectors = saved.savedSectors;
+    savedLanguage = saved.savedLanguage;
+    showMatchFilter = hasProfileSignal(saved.profile);
   }
 
   // A manual CPV search overrides the saved sector default. The sidebar's
@@ -72,9 +66,9 @@ export default async function OpportunitiesPage({
       languageKeys,
       filterLanguageKeys,
       onlyOpenCalls: true,
-      limit: 25,
+      limit: 50,
     }),
-    searchBosaTenders({ keyword: params.q, limit: 30, onlyOpenCalls: true, filterLanguageKeys }),
+    searchBosaTenders({ keyword: params.q, limit: 50, onlyOpenCalls: true, filterLanguageKeys }),
     getExternalOpportunities(),
   ]);
 
@@ -114,17 +108,6 @@ export default async function OpportunitiesPage({
   });
   const loadError = loadErrors.length > 0 ? loadErrors.join(" — ") : null;
 
-  let scores: Record<string, MatchScore> = {};
-  if (user && tenders.length > 0) {
-    scores = await getMatchScores(supabase, user.id, tenders, {
-      sectors: savedSectors,
-      languages: savedLanguage ? [savedLanguage] : [],
-      description: companyDescription,
-      address,
-      companySize,
-    });
-  }
-
   return (
     <div>
       <Header />
@@ -150,7 +133,7 @@ export default async function OpportunitiesPage({
             </p>
           </div>
 
-          <SearchFilters />
+          <SearchFilters showMatchFilter={showMatchFilter} />
 
           {loadError && (
             <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
@@ -164,15 +147,15 @@ export default async function OpportunitiesPage({
             </div>
           )}
 
-          <div>
-            {tenders.map((tender) => (
-              <TenderCard
-                key={tender.publicationNumber}
-                tender={tender}
-                score={scores[tender.publicationNumber]}
-              />
-            ))}
-          </div>
+          <OpportunitiesScores tenders={tenders} enabled={Boolean(user)}>
+            <div>
+              {tenders.map((tender) => (
+                <MatchFilterGate key={tender.publicationNumber} publicationNumber={tender.publicationNumber}>
+                  <TenderCard tender={tender} />
+                </MatchFilterGate>
+              ))}
+            </div>
+          </OpportunitiesScores>
         </div>
       </main>
     </div>

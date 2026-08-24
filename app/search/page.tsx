@@ -2,11 +2,10 @@ import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import AdvancedSearchForm from "@/components/AdvancedSearchForm";
 import TenderCard from "@/components/TenderCard";
+import OpportunitiesScores from "@/components/OpportunitiesScores";
 import { searchBelgianTenders } from "@/lib/ted";
 import { createClient } from "@/lib/supabase/server";
 import { TenderNotice } from "@/lib/types";
-import { MatchScore } from "@/lib/scoring";
-import { getMatchScores } from "@/lib/matchScoreCache";
 
 export const dynamic = "force-dynamic";
 
@@ -50,22 +49,6 @@ export default async function SearchPage({
     }
   }
 
-  let scores: Record<string, MatchScore> = {};
-  if (user && tenders.length > 0) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("sectors, language, company_description, address, company_size")
-      .eq("id", user.id)
-      .maybeSingle();
-    scores = await getMatchScores(supabase, user.id, tenders, {
-      sectors: profile?.sectors ?? [],
-      languages: profile?.language ? [profile.language] : [],
-      description: profile?.company_description ?? "",
-      address: profile?.address ?? "",
-      companySize: profile?.company_size ?? "",
-    });
-  }
-
   return (
     <div>
       <Header />
@@ -102,15 +85,13 @@ export default async function SearchPage({
           </div>
         )}
 
-        <div>
-          {tenders.map((tender) => (
-            <TenderCard
-              key={tender.publicationNumber}
-              tender={tender}
-              score={scores[tender.publicationNumber]}
-            />
-          ))}
-        </div>
+        <OpportunitiesScores tenders={tenders} enabled={Boolean(user)}>
+          <div>
+            {tenders.map((tender) => (
+              <TenderCard key={tender.publicationNumber} tender={tender} />
+            ))}
+          </div>
+        </OpportunitiesScores>
       </main>
     </div>
   );

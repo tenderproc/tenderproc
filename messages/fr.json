@@ -198,7 +198,9 @@
     "description": "Marchés publics belges correspondant à vos secteurs, issus de TED, BOSA et de sources régionales/communales — y compris des avis potentiellement déjà attribués ou de statut incertain.",
     "couldNotReachTed": "Impossible de contacter TED.",
     "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
-    "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale."
+    "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale.",
+    "filteringByMatch": "Filtrage par % de correspondance…",
+    "noMatchResults": "Aucune opportunité n'atteint ce seuil de correspondance. Essayez de l'abaisser."
   },
   "Market": {
     "eyebrow": "90 derniers jours · Source : avis d'attribution TED",
@@ -304,6 +306,10 @@
   "SearchFilters": {
     "keywordPlaceholder": "Mot-clé — p. ex. services de nettoyage",
     "cpvPlaceholder": "Code CPV — p. ex. 90910000",
+    "matchFilterAny": "Toute correspondance",
+    "matchFilterPossible": "Correspondance possible et plus (40 %+)",
+    "matchFilterGood": "Bonne correspondance et plus (65 %+)",
+    "matchFilterStrong": "Forte correspondance (85 %+)",
     "search": "Rechercher"
   },
   "TenderCard": {
@@ -312,7 +318,8 @@
     "titleLanguageHint": "Publié en : {languages}"
   },
   "MatchScoreBadge": {
-    "criteriaCount": "{met}/{total} critères"
+    "criteriaCount": "{met}/{total} critères",
+    "scoring": "Calcul de la correspondance…"
   },
   "Pricing": {
     "goToApp": "Accéder à l'application",

@@ -198,7 +198,9 @@
     "description": "Belgian public tenders matched to your sectors, from TED, BOSA, and regional/municipal council sources — including notices that may already be awarded or unclear in status.",
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
-    "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar."
+    "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar.",
+    "filteringByMatch": "Filtering by match %…",
+    "noMatchResults": "No opportunities meet that match threshold. Try lowering it."
   },
   "Market": {
     "eyebrow": "Last 90 days · Source: TED contract award notices",
@@ -304,6 +306,10 @@
   "SearchFilters": {
     "keywordPlaceholder": "Keyword — e.g. cleaning services",
     "cpvPlaceholder": "CPV code — e.g. 90910000",
+    "matchFilterAny": "Any match %",
+    "matchFilterPossible": "Possible match & up (40%+)",
+    "matchFilterGood": "Good match & up (65%+)",
+    "matchFilterStrong": "Strong match (85%+)",
     "search": "Search"
   },
   "TenderCard": {
@@ -312,7 +318,8 @@
     "titleLanguageHint": "Published in: {languages}"
   },
   "MatchScoreBadge": {
-    "criteriaCount": "{met}/{total} criteria"
+    "criteriaCount": "{met}/{total} criteria",
+    "scoring": "Scoring your match…"
   },
   "Pricing": {
     "goToApp": "Go to app",

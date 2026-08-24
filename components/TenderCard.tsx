@@ -1,19 +1,12 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { TenderNotice } from "@/lib/types";
-import { MatchScore } from "@/lib/scoring";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";
 import { tenderSourceBadge } from "@/lib/externalOpportunities";
 import AddToWorkflowButton from "./AddToWorkflowButton";
-import MatchScoreBadge from "./MatchScoreBadge";
+import MatchScoreSlot from "./MatchScoreSlot";
 
-export default async function TenderCard({
-  tender,
-  score,
-}: {
-  tender: TenderNotice;
-  score?: MatchScore;
-}) {
+export default async function TenderCard({ tender }: { tender: TenderNotice }) {
   const t = await getTranslations("TenderCard");
   const locale = (await getLocale()) as Locale;
 
@@ -64,11 +57,9 @@ export default async function TenderCard({
               </span>
             )}
           </p>
-          {score && (
-            <div className="relative z-10">
-              <MatchScoreBadge score={score} />
-            </div>
-          )}
+          <div className="relative z-10">
+            <MatchScoreSlot publicationNumber={tender.publicationNumber} />
+          </div>
         </div>
         <div className="text-right shrink-0">
           <p className="text-xs text-inkDim uppercase tracking-wide">{t("deadline")}</p>
