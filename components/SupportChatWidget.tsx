@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { loadConversation, saveConversation, type StoredChatMessage } from "@/lib/supportChat/storage";
 
@@ -14,6 +15,7 @@ export default function SupportChatWidget() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [needsHuman, setNeedsHuman] = useState(false);
+  const [accessBlocked, setAccessBlocked] = useState<"loginRequired" | "outOfTokens" | null>(null);
   const [escalateEmail, setEscalateEmail] = useState("");
   const [escalateStatus, setEscalateStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const listRef = useRef<HTMLDivElement>(null);
@@ -35,6 +37,7 @@ export default function SupportChatWidget() {
     setInput("");
     setSending(true);
     setNeedsHuman(false);
+    setAccessBlocked(null);
 
     try {
       const res = await fetch("/api/chat", {
@@ -42,6 +45,16 @@ export default function SupportChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, history }),
       });
+
+      if (res.status === 401) {
+        setAccessBlocked("loginRequired");
+        return;
+      }
+      if (res.status === 402) {
+        setAccessBlocked("outOfTokens");
+        return;
+      }
+
       const data = await res.json().catch(() => null);
 
       if (!res.ok || !data?.reply) {
@@ -116,7 +129,22 @@ export default function SupportChatWidget() {
             )}
           </div>
 
-          {needsHuman && (
+          {accessBlocked && (
+            <div className="px-4 pb-3">
+              <p className="text-sm text-ink text-center py-2">
+                {accessBlocked === "loginRequired" ? t("loginRequired") : t("outOfTokens")}
+                {" "}
+                <Link
+                  href={accessBlocked === "loginRequired" ? "/login?next=/" : "/billing"}
+                  className="underline hover:text-accent transition-colors"
+                >
+                  {accessBlocked === "loginRequired" ? t("logIn") : t("upgrade")}
+                </Link>
+              </p>
+            </div>
+          )}
+
+          {!accessBlocked && needsHuman && (
             <div className="px-4 pb-3">
               {escalateStatus === "sent" ? (
                 <p className="text-sm text-ink text-center py-2">{t("emailSent")}</p>

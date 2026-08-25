@@ -56,6 +56,10 @@ export async function proxy(req: NextRequest) {
     // session exists (email confirmation is required on this project).
     // Insert-only server-side, see app/api/signup-profile/route.ts.
     pathname.startsWith("/api/signup-profile") ||
+    // Company-name autocomplete on the signup form itself — also called
+    // before any session exists. Read-only public KBO register data (see
+    // supabase-kbo-companies-migration.sql), no user data exposed.
+    pathname.startsWith("/api/company-search") ||
     // The locale switcher must work pre-auth too (e.g. from /pricing).
     pathname.startsWith("/api/locale");
 
@@ -85,6 +89,17 @@ export async function proxy(req: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user && !isPublic) {
+    // API routes are called via fetch(), which follows a redirect
+    // transparently — the caller would see a 200 with the /login page's
+    // HTML instead of a blocked request, breaking every route's own
+    // { error, code: "notAuthenticated" } JSON contract (and any
+    // client-side handling keyed off a 401 status). Page routes still get
+    // the redirect so a browser navigation lands on the login form.
+    if (pathname.startsWith("/api/")) {
+      return withLocaleCookie(
+        NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 })
+      );
+    }
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", pathname);

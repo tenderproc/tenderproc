@@ -394,7 +394,10 @@
     "managePlan": "Plan verwalten",
     "opening": "Wird geöffnet…",
     "couldNotOpenPortal": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal.",
-    "refundPolicy": "Rückerstattungsrichtlinie"
+    "refundPolicy": "Rückerstattungsrichtlinie",
+    "tokensHeading": "Kostenlose Tokens",
+    "tokensRemaining": "{count, plural, one {# Token} other {# Tokens}} übrig",
+    "tokensResetInfo": "Ihr Guthaben wird jeden Monat auf 250 Tokens aufgefüllt, falls es darunter fällt. Upgraden Sie auf Pro oder Premium für unbegrenzte Nutzung."
   },
   "WorkflowPage": {
     "eyebrow": "Deine Pipeline",
@@ -436,7 +439,11 @@
     "attachFileHint": "oder füge eine Datei als Referenz hinzu (in der Beta noch nicht ausgewertet)",
     "readingTender": "Ausschreibung wird gelesen…",
     "runCheck": "Eignungsprüfung ausführen",
-    "keyRequirements": "Wichtigste Anforderungen"
+    "keyRequirements": "Wichtigste Anforderungen",
+    "loginRequired": "Melden Sie sich kostenlos an, um die Eignungsprüfung auszuführen.",
+    "outOfTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht.",
+    "logIn": "Anmelden",
+    "upgrade": "Upgraden"
   },
   "RequirementWorkspace": {
     "status": "Status",
@@ -708,6 +715,7 @@
     "sectors": "Branchen",
     "agreeToTerms": "Ich stimme den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
     "mustAgreeToTerms": "Bitte stimmen Sie den Nutzungsbedingungen und der Datenschutzerklärung zu, um fortzufahren.",
+    "professionalEmailRequired": "Der kostenlose Plan erfordert eine geschäftliche E-Mail-Adresse — persönliche Adressen wie Gmail oder Outlook werden nicht akzeptiert. Wählen Sie einen kostenpflichtigen Plan, um sich mit einer beliebigen E-Mail-Adresse anzumelden.",
     "creatingAccount": "Konto wird erstellt…",
     "signUp": "Registrieren",
     "alreadyHaveAccount": "Hast du bereits ein Konto?",
@@ -741,7 +749,8 @@
       "invalidTier": "Ungültiger Plan.",
       "checkoutFailed": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal.",
       "noBillingAccount": "Noch kein Abrechnungskonto — upgraden Sie zuerst auf einen kostenpflichtigen Plan.",
-      "portalFailed": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal."
+      "portalFailed": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal.",
+      "insufficientTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht. Upgraden Sie für unbegrenzte Nutzung."
     },
     "auth": {
       "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",
@@ -921,6 +930,10 @@
     "escalateSend": "An eine Person senden",
     "emailSent": "Danke — wir antworten in Kürze per E-Mail.",
     "emailError": "Senden fehlgeschlagen. Bitte erneut versuchen.",
-    "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder erreichen Sie unten eine Person per E-Mail."
+    "errorFallback": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Versuchen Sie es erneut, oder erreichen Sie unten eine Person per E-Mail.",
+    "loginRequired": "Melden Sie sich kostenlos an, um mit dem Support zu chatten.",
+    "outOfTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht.",
+    "logIn": "Anmelden",
+    "upgrade": "Upgraden"
   }
 }

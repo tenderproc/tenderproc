@@ -6,6 +6,7 @@ import ManageBillingLink from "@/components/billing/ManageBillingLink";
 import UpgradeButton from "@/components/billing/UpgradeButton";
 import { createClient } from "@/lib/supabase/server";
 import { getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
+import { peekTokens } from "@/lib/billing/tokens";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +28,7 @@ export default async function BillingPage() {
 
   const subscription = rowToUserSubscription(row);
   const effective = getEffectiveTier(subscription);
+  const tokenStatus = effective.tier === "FREE" ? await peekTokens(user.id) : null;
 
   function formatDate(d: string | null) {
     if (!d) return null;
@@ -78,6 +80,16 @@ export default async function BillingPage() {
             )}
           </div>
         </div>
+
+        {tokenStatus && !tokenStatus.unlimited && (
+          <div className="mt-6 border border-line rounded-doc p-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-inkDim">{t("tokensHeading")}</p>
+            <p className="font-display font-semibold text-2xl text-ink mt-1">
+              {t("tokensRemaining", { count: tokenStatus.balance })}
+            </p>
+            <p className="text-sm text-inkDim mt-2">{t("tokensResetInfo")}</p>
+          </div>
+        )}
 
         <p className="text-xs text-inkDim mt-4">
           <Link href="/refund" className="underline hover:text-ink transition-colors">

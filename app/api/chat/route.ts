@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicClient } from "@/lib/ai/anthropic-provider";
 import { ESCALATE_MARKER, stripEscalationMarker } from "@/lib/supportChat/escalation";
+import { createClient } from "@/lib/supabase/server";
+import { deductTokens, peekTokens, TOKEN_COSTS } from "@/lib/billing/tokens";
 
 export const runtime = "nodejs";
 
@@ -66,6 +68,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
+  }
+
+  const tokenStatus = await peekTokens(user.id);
+  if (!tokenStatus.unlimited && tokenStatus.balance < TOKEN_COSTS.CHAT) {
+    return NextResponse.json(
+      { error: "You're out of free tokens this month. Upgrade for unlimited use.", code: "insufficientTokens" },
+      { status: 402 }
+    );
+  }
+
   const body = await req.json().catch(() => null);
   const message = typeof body?.message === "string" ? body.message.trim() : "";
   if (!message) {
@@ -91,6 +109,8 @@ export async function POST(req: NextRequest) {
     const textBlock = response.content.find((b) => b.type === "text");
     const raw = textBlock && "text" in textBlock ? textBlock.text : "";
     const { text: reply, needsHuman } = stripEscalationMarker(raw);
+
+    if (!tokenStatus.unlimited) await deductTokens(user.id, TOKEN_COSTS.CHAT);
 
     return NextResponse.json({ reply, needsHuman });
   } catch (err) {

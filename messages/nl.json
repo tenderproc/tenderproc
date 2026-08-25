@@ -394,7 +394,10 @@
     "managePlan": "Plan beheren",
     "opening": "Openen…",
     "couldNotOpenPortal": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw.",
-    "refundPolicy": "Terugbetalingsbeleid"
+    "refundPolicy": "Terugbetalingsbeleid",
+    "tokensHeading": "Gratis tokens",
+    "tokensRemaining": "{count, plural, one {# token} other {# tokens}} resterend",
+    "tokensResetInfo": "Je saldo wordt elke maand weer aangevuld tot 250 tokens als het daaronder komt. Upgrade naar Pro of Premium voor onbeperkt gebruik."
   },
   "WorkflowPage": {
     "eyebrow": "Jouw pipeline",
@@ -436,7 +439,11 @@
     "attachFileHint": "of voeg een bestand toe ter referentie (nog niet verwerkt in bèta)",
     "readingTender": "Opdracht wordt gelezen…",
     "runCheck": "Geschiktheidscontrole uitvoeren",
-    "keyRequirements": "Belangrijkste vereisten"
+    "keyRequirements": "Belangrijkste vereisten",
+    "loginRequired": "Meld je gratis aan om de geschiktheidscontrole uit te voeren.",
+    "outOfTokens": "Je gratis tokens voor deze maand zijn op.",
+    "logIn": "Inloggen",
+    "upgrade": "Upgraden"
   },
   "RequirementWorkspace": {
     "status": "Status",
@@ -708,6 +715,7 @@
     "sectors": "Sectoren",
     "agreeToTerms": "Ik ga akkoord met de <terms>Gebruiksvoorwaarden</terms> en <privacy>Privacyverklaring</privacy>.",
     "mustAgreeToTerms": "Ga akkoord met de Gebruiksvoorwaarden en Privacyverklaring om verder te gaan.",
+    "professionalEmailRequired": "Voor het gratis plan is een professioneel/bedrijfs-e-mailadres vereist — persoonlijke adressen zoals Gmail of Outlook worden niet geaccepteerd. Kies een betaald plan om met elk e-mailadres te registreren.",
     "creatingAccount": "Account wordt aangemaakt…",
     "signUp": "Registreren",
     "alreadyHaveAccount": "Heb je al een account?",
@@ -741,7 +749,8 @@
       "invalidTier": "Ongeldig plan.",
       "checkoutFailed": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw.",
       "noBillingAccount": "Nog geen facturatieaccount — upgrade eerst naar een betaald plan.",
-      "portalFailed": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw."
+      "portalFailed": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw.",
+      "insufficientTokens": "Je gratis tokens voor deze maand zijn op. Upgrade voor onbeperkt gebruik."
     },
     "auth": {
       "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",
@@ -921,6 +930,10 @@
     "escalateSend": "Naar een medewerker sturen",
     "emailSent": "Bedankt — we reageren binnenkort per e-mail.",
     "emailError": "Verzenden mislukt. Probeer het opnieuw.",
-    "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of mail hieronder een medewerker."
+    "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of mail hieronder een medewerker.",
+    "loginRequired": "Meld je gratis aan om met support te chatten.",
+    "outOfTokens": "Je gratis tokens voor deze maand zijn op.",
+    "logIn": "Inloggen",
+    "upgrade": "Upgraden"
   }
 }

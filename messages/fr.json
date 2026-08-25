@@ -394,7 +394,10 @@
     "managePlan": "Gérer le plan",
     "opening": "Ouverture…",
     "couldNotOpenPortal": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant.",
-    "refundPolicy": "Politique de remboursement"
+    "refundPolicy": "Politique de remboursement",
+    "tokensHeading": "Jetons gratuits",
+    "tokensRemaining": "{count, plural, one {# jeton} other {# jetons}} restants",
+    "tokensResetInfo": "Votre solde est reconstitué à 250 jetons chaque mois s'il descend en dessous. Passez à Pro ou Premium pour une utilisation illimitée."
   },
   "WorkflowPage": {
     "eyebrow": "Votre pipeline",
@@ -436,7 +439,11 @@
     "attachFileHint": "ou joignez un fichier pour référence (pas encore analysé en bêta)",
     "readingTender": "Lecture du marché…",
     "runCheck": "Lancer la vérification d'éligibilité",
-    "keyRequirements": "Exigences clés"
+    "keyRequirements": "Exigences clés",
+    "loginRequired": "Créez un compte gratuit pour lancer la vérification d'éligibilité.",
+    "outOfTokens": "Vous n'avez plus de jetons gratuits ce mois-ci.",
+    "logIn": "Se connecter",
+    "upgrade": "Passer à un plan supérieur"
   },
   "RequirementWorkspace": {
     "status": "Statut",
@@ -708,6 +715,7 @@
     "sectors": "Secteurs",
     "agreeToTerms": "J'accepte les <terms>Conditions d'utilisation</terms> et la <privacy>Politique de confidentialité</privacy>.",
     "mustAgreeToTerms": "Veuillez accepter les Conditions d'utilisation et la Politique de confidentialité pour continuer.",
+    "professionalEmailRequired": "Le plan gratuit requiert une adresse e-mail professionnelle — les adresses personnelles comme Gmail ou Outlook ne sont pas acceptées. Choisissez un plan payant pour vous inscrire avec n'importe quelle adresse.",
     "creatingAccount": "Création du compte…",
     "signUp": "S'inscrire",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
@@ -741,7 +749,8 @@
       "invalidTier": "Plan invalide.",
       "checkoutFailed": "Impossible de démarrer le paiement pour le moment. Réessayez dans un instant.",
       "noBillingAccount": "Pas encore de compte de facturation — passez d'abord à un plan payant.",
-      "portalFailed": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant."
+      "portalFailed": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant.",
+      "insufficientTokens": "Vous n'avez plus de jetons gratuits ce mois-ci. Passez à un plan supérieur pour une utilisation illimitée."
     },
     "auth": {
       "invalidCredentials": "E-mail ou mot de passe incorrect.",
@@ -921,6 +930,10 @@
     "escalateSend": "Envoyer à une personne",
     "emailSent": "Merci — nous répondrons par e-mail sous peu.",
     "emailError": "Échec de l'envoi. Réessayez.",
-    "errorFallback": "Désolé, une erreur s'est produite de notre côté. Vous pouvez réessayer, ou contacter une personne par e-mail ci-dessous."
+    "errorFallback": "Désolé, une erreur s'est produite de notre côté. Vous pouvez réessayer, ou contacter une personne par e-mail ci-dessous.",
+    "loginRequired": "Créez un compte gratuit pour discuter avec le support.",
+    "outOfTokens": "Vous n'avez plus de jetons gratuits ce mois-ci.",
+    "logIn": "Se connecter",
+    "upgrade": "Passer à un plan supérieur"
   }
 }

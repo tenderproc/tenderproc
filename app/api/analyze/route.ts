@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAnthropicClient } from "@/lib/ai/anthropic-provider";
+import { createClient } from "@/lib/supabase/server";
+import { deductTokens, peekTokens, TOKEN_COSTS } from "@/lib/billing/tokens";
 
 export const runtime = "nodejs";
 
@@ -24,6 +26,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Server is missing ANTHROPIC_API_KEY.", code: "serverMisconfigured" },
       { status: 500 }
+    );
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
+  }
+
+  const tokenStatus = await peekTokens(user.id);
+  if (!tokenStatus.unlimited && tokenStatus.balance < TOKEN_COSTS.ANALYZE) {
+    return NextResponse.json(
+      { error: "You're out of free tokens this month. Upgrade for unlimited use.", code: "insufficientTokens" },
+      { status: 402 }
     );
   }
 
@@ -56,6 +74,8 @@ ${documentText ? documentText.slice(0, 15000) : "(no document provided — base 
     const raw = textBlock && "text" in textBlock ? textBlock.text : "{}";
     const cleaned = raw.replace(/```json|```/g, "").trim();
     const parsed = JSON.parse(cleaned);
+
+    if (!tokenStatus.unlimited) await deductTokens(user.id, TOKEN_COSTS.ANALYZE);
 
     return NextResponse.json({
       ...parsed,

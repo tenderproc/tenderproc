@@ -10,7 +10,7 @@ row (`companies.user_id` is `unique`).
 
 | Table | Purpose |
 |---|---|
-| `profiles` | One row per user. `sectors`/`company_name`/`address`/`company_size`/`company_description`, collected at signup, plus `language` (nullable text; `null` = All languages, otherwise a single `lib/languages.ts` key — the sidebar's exclusive-single-select filter, see `supabase-language-filter-single-select-migration.sql`; both filters *and* prioritizes display for that language). Powers the live-TED match-scoring feature (`lib/scoring.ts`) and the Opportunities/Search sector filter. Not touched by this expansion. |
+| `profiles` | One row per user. `sectors`/`company_name`/`company_number`/`address`/`company_size`/`company_description`, collected at signup (`company_number` nullable — only set if the user picked a result from the KBO autocomplete rather than free-typing a name; see Company search below), plus `language` (nullable text; `null` = All languages, otherwise a single `lib/languages.ts` key — the sidebar's exclusive-single-select filter, see `supabase-language-filter-single-select-migration.sql`; both filters *and* prioritizes display for that language). Powers the live-TED match-scoring feature (`lib/scoring.ts`) and the Opportunities/Search sector filter. Not touched by this expansion. |
 | `notified_tenders` | Dedup ledger for the daily email-digest cron job. Service-role only, no user-facing RLS policy. |
 | `pipeline_items` | The lightweight Workflow kanban — tracks a *live TED* tender through `screening/reviewing/applying/submitted/won/lost`. Unrelated to the new `tenders` table below. |
 | `tender_scores` | Cache for the metadata-only TED-feed match score, keyed by `(user_id, publication_number, profile_hash)`. |
@@ -129,6 +129,60 @@ optional "Companies you follow" section), then stamped `emailed_at`. Unlike the 
 there's no "first run" bootstrap suppression for company matches — since matching only ever
 looks at newly-ingested rows, there's no historical backlog to accidentally dump on a new
 follower.
+
+### Token Balance (see `supabase-tokens-migration.sql`)
+
+Free-tier credit system, called "tokens" in the UI, gating `app/api/analyze` (20/call) and
+`app/api/chat` (10/call — the support widget, not an AI copilot; both routes require login,
+no anonymous access at all). One table, `public.user_tokens`: `user_id` (PK), `balance`
+(starts 1000), `next_topup_at` (starts now + 1 month). PRO/PREMIUM users never get a row —
+`lib/billing/tokens.ts` checks `getUserTier()` first and treats them as unlimited, same "Free
+is an app-side flag" precedent as `subscriptions`.
+
+Row is created lazily on a user's first gated call, not a signup trigger. "Tops up to 250
+monthly" means raised to 250 only if currently below it when `next_topup_at` is reached —
+never additive, never lowers a balance already above 250 — computed and persisted lazily by
+`lib/billing/tokens.ts`'s `peekTokens()` (called from both the two gated routes and the
+billing page's display), not a DB trigger or cron. Deduction (`deductTokens()`) happens after
+a successful Anthropic call, not before — a failed/rejected AI call never costs tokens — and
+is best-effort (logged, not thrown, on a lost optimistic-concurrency race), matching this
+codebase's existing beta-scope simplicity elsewhere (`UploadAnalyzer.tsx`).
+
+### Company search (signup autocomplete, see `supabase-kbo-companies-migration.sql`)
+
+`kbo_companies`: a name-search index over Belgian KBO Open Data (the public Crossroads Bank
+for Enterprises register) — not written to by the app itself. `enterprise_number`,
+`denomination`, `start_date`; only currently-active ("AC") enterprises are imported, one row
+per denomination on file for them (legal name/abbreviation/commercial name, any language), so
+a company can match on whichever name variant the user types. A `pg_trgm` GIN index backs
+`search_kbo_companies(search_query, result_limit)`, a SQL function that ranks by trigram
+similarity + prefix match (prefix matches get a `+1` score bonus so "Van D" surfaces "Van
+Duyse..." before an unrelated short match like "VAN" — raw `similarity()` alone favors short
+strings) and dedupes to one (best-matching) row per company. Public read policy
+(`using (true)`) — it's non-sensitive government data and the signup page queries it before
+the user has an account; `/api/company-search` is also listed in `proxy.ts`'s `isPublic`
+allowlist for the same pre-session reason (easy to forget — it silently 401s otherwise, same
+as `/api/signup-profile` needs to be). Read via `app/api/company-search` (GET `?q=`, calls the
+RPC through `createAdminClient()`) and rendered by `components/CompanySearchInput.tsx`, a
+search-as-you-type dropdown wired into the `companyName` field on `app/signup/page.tsx`;
+picking a result also fills `profiles.company_number`, but the field stays free-typeable so a
+company not yet in the KBO import can still be entered by hand.
+
+**Populating it**: `scripts/import-kbo-companies.ts` is the one-off/manual path — point it at
+an already-downloaded-and-extracted KBO export folder. `scripts/refresh-kbo-companies.ts` is
+the unattended path: logs into kbopub.economie.fgov.be (`KBO_USERNAME`/`KBO_PASSWORD`,
+reverse-engineered Spring Security form auth — see `scripts/lib/kboPortal.ts`'s header
+comment), finds the newest "Full" export on the downloads listing (KBO actually publishes one
+daily, despite the portal's own UI text suggesting monthly), downloads and extracts it
+(shells out to PowerShell's `Expand-Archive` — Windows-only by design, see below), truncates
+`kbo_companies` via the `truncate_kbo_companies()` RPC, and reimports — both scripts share
+their CSV-parsing/import core (`scripts/lib/kboImport.ts`). Registered as a monthly Windows
+Scheduled Task via `scripts/register-kbo-refresh-task.ps1` (same precedent as
+`tenderproc_bosa_scraper`'s `register_windows_task.ps1`) — **remember to actually run the
+registration script**, not just have it exist in the repo; the BOSA scraper's task sat
+unregistered for days before anyone noticed (see the BOSA scraper project memory). Deliberately
+not a Vercel cron: the extracted export is multiple GB, far past a serverless function's
+`/tmp` and execution-time limits.
 
 ## Storage
 

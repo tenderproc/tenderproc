@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { EligibilityResult, TenderNotice } from "@/lib/types";
 import { apiErrorMessage } from "@/lib/apiErrors";
@@ -13,6 +14,7 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorAction, setErrorAction] = useState<{ href: string; label: string } | null>(null);
   const [result, setResult] = useState<EligibilityResult | null>(null);
 
   async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,6 +30,7 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
   async function runAnalysis() {
     setLoading(true);
     setError(null);
+    setErrorAction(null);
     setResult(null);
     try {
       const res = await fetch("/api/analyze", {
@@ -35,6 +38,18 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tender, documentText: pastedText }),
       });
+
+      if (res.status === 401) {
+        setError(t("loginRequired"));
+        setErrorAction({ href: `/login?next=/tenders/${encodeURIComponent(tender.publicationNumber)}`, label: t("logIn") });
+        return;
+      }
+      if (res.status === 402) {
+        setError(t("outOfTokens"));
+        setErrorAction({ href: "/billing", label: t("upgrade") });
+        return;
+      }
+
       const data = await res.json();
       if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("analysisFailed")));
       setResult(data);
@@ -74,7 +89,19 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
         {loading ? t("readingTender") : t("runCheck")}
       </button>
 
-      {error && <p className="text-sm text-stamp mt-4">{error}</p>}
+      {error && (
+        <p className="text-sm text-stamp mt-4">
+          {error}
+          {errorAction && (
+            <>
+              {" "}
+              <Link href={errorAction.href} className="underline hover:text-ink transition-colors">
+                {errorAction.label}
+              </Link>
+            </>
+          )}
+        </p>
+      )}
 
       {result && (
         <div className="mt-8 flex gap-6 items-start flex-wrap">

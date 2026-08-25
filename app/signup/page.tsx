@@ -9,6 +9,8 @@ import { SECTORS } from "@/lib/sectors";
 import { COMPANY_SIZES } from "@/lib/companySizes";
 import { authErrorMessage } from "@/lib/authErrors";
 import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
+import { isFreeEmailDomain } from "@/lib/freeEmailDomains";
+import CompanySearchInput, { type CompanyMatch } from "@/components/CompanySearchInput";
 
 // This banner just confirms which plan the user picked before signup, not
 // a live quote — basePrice is the same static display price PricingCards
@@ -30,6 +32,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [companyName, setCompanyName] = useState("");
+  const [companyNumber, setCompanyNumber] = useState<string | null>(null);
   const [address, setAddress] = useState("");
   const [sectors, setSectors] = useState<string[]>([]);
   const [companySize, setCompanySize] = useState("");
@@ -41,6 +44,18 @@ export default function SignupPage() {
 
   function toggleSector(key: string) {
     setSectors((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+  }
+
+  function handleCompanyNameChange(name: string) {
+    setCompanyName(name);
+    // Free-typing after picking a result means the number may no longer
+    // match what's on screen — drop it rather than silently keep a stale one.
+    setCompanyNumber(null);
+  }
+
+  function handleCompanySelect(company: CompanyMatch) {
+    setCompanyName(company.denomination);
+    setCompanyNumber(company.enterpriseNumber);
   }
 
   async function onSubmit(e: React.FormEvent) {
@@ -58,6 +73,12 @@ export default function SignupPage() {
     }
     if (!agreedToTerms) {
       setError(t("mustAgreeToTerms"));
+      return;
+    }
+    // Free tier (no plan selected) is for businesses evaluating the
+    // product — paid tiers aren't restricted to a work email.
+    if (!planDisplay && isFreeEmailDomain(email)) {
+      setError(t("professionalEmailRequired"));
       return;
     }
     setLoading(true);
@@ -80,20 +101,35 @@ export default function SignupPage() {
     }
 
     if (data.user) {
-      // Best-effort: a signup with an unreachable email still creates the
-      // auth user, so this seeds their profile even before they confirm.
-      await fetch("/api/signup-profile", {
+      // Not purely best-effort: this also carries the server-side backstop
+      // for the free-tier professional-email restriction (the check above
+      // only guards the UI — a direct supabase.auth.signUp() call would skip
+      // it). A 403 here means the API already deleted the auth user it just
+      // created, so surface that and stop instead of moving on to checkEmail.
+      const profileRes = await fetch("/api/signup-profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: data.user.id,
+          email,
+          isFreeTier: !planDisplay,
           companyName,
+          companyNumber,
           address,
           sectors,
           companySize,
           description,
         }),
-      }).catch(() => {});
+      }).catch(() => null);
+
+      if (profileRes && profileRes.status === 403) {
+        const { error: code } = await profileRes.json().catch(() => ({ error: null }));
+        if (code === "professional_email_required") {
+          setLoading(false);
+          setError(t("professionalEmailRequired"));
+          return;
+        }
+      }
     }
 
     setLoading(false);
@@ -191,9 +227,10 @@ export default function SignupPage() {
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("companyName")}
               </label>
-              <input
+              <CompanySearchInput
                 value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                onChange={handleCompanyNameChange}
+                onSelect={handleCompanySelect}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("companyNamePlaceholder")}
                 required

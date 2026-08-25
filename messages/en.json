@@ -394,7 +394,10 @@
     "managePlan": "Manage plan",
     "opening": "Opening…",
     "couldNotOpenPortal": "Could not open the billing portal right now. Try again in a moment.",
-    "refundPolicy": "Refund Policy"
+    "refundPolicy": "Refund Policy",
+    "tokensHeading": "Free tokens",
+    "tokensRemaining": "{count, plural, one {# token} other {# tokens}} remaining",
+    "tokensResetInfo": "Your balance tops back up to 250 tokens each month if it drops below that. Upgrade to Pro or Premium for unlimited use."
   },
   "WorkflowPage": {
     "eyebrow": "Your pipeline",
@@ -436,7 +439,11 @@
     "attachFileHint": "or attach a file for reference (not parsed yet in beta)",
     "readingTender": "Reading the tender…",
     "runCheck": "Run eligibility check",
-    "keyRequirements": "Key requirements"
+    "keyRequirements": "Key requirements",
+    "loginRequired": "Sign in for a free account to run the eligibility check.",
+    "outOfTokens": "You're out of free tokens this month.",
+    "logIn": "Log in",
+    "upgrade": "Upgrade"
   },
   "RequirementWorkspace": {
     "status": "Status",
@@ -708,6 +715,7 @@
     "sectors": "Sectors",
     "agreeToTerms": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Notice</privacy>.",
     "mustAgreeToTerms": "Please agree to the Terms of Service and Privacy Notice to continue.",
+    "professionalEmailRequired": "The free plan requires a professional/company email address — personal addresses like Gmail or Outlook aren't accepted. Pick a paid plan to sign up with any email.",
     "creatingAccount": "Creating account…",
     "signUp": "Sign up",
     "alreadyHaveAccount": "Already have an account?",
@@ -741,7 +749,8 @@
       "invalidTier": "Invalid plan.",
       "checkoutFailed": "Could not start checkout right now. Try again in a moment.",
       "noBillingAccount": "No billing account yet — upgrade to a paid plan first.",
-      "portalFailed": "Could not open the billing portal right now. Try again in a moment."
+      "portalFailed": "Could not open the billing portal right now. Try again in a moment.",
+      "insufficientTokens": "You're out of free tokens this month. Upgrade for unlimited use."
     },
     "auth": {
       "invalidCredentials": "Incorrect email or password.",
@@ -921,6 +930,10 @@
     "escalateSend": "Send to a person",
     "emailSent": "Thanks — we'll reply by email shortly.",
     "emailError": "Couldn't send. Try again.",
-    "errorFallback": "Sorry, something went wrong on my end. You can try again, or email a person below."
+    "errorFallback": "Sorry, something went wrong on my end. You can try again, or email a person below.",
+    "loginRequired": "Sign in for a free account to chat with support.",
+    "outOfTokens": "You're out of free tokens this month.",
+    "logIn": "Log in",
+    "upgrade": "Upgrade"
   }
 }
