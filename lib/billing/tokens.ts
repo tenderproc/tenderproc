@@ -29,6 +29,22 @@ type TokenRow = {
   next_topup_at: string;
 };
 
+/** Adds one calendar month to `d`, clamping the day to the target month's
+ * last day when it would otherwise overflow (e.g. Jan 31 -> Feb 28, not the
+ * raw `Date` rollover to Mar 3). Matches Postgres's own `+ interval '1
+ * month'` semantics, which is how `next_topup_at` gets its initial value
+ * (see supabase-tokens-migration.sql) — without this, a plain
+ * `new Date(y, m+1, d)` advance would silently drift any user whose
+ * topup day is the 29th-31st onto a different day once it first crosses a
+ * shorter month. */
+function addMonthClamped(d: Date): Date {
+  const day = d.getDate();
+  const next = new Date(d.getFullYear(), d.getMonth() + 1, 1, d.getHours(), d.getMinutes(), d.getSeconds());
+  const daysInNextMonth = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+  next.setDate(Math.min(day, daysInNextMonth));
+  return next;
+}
+
 /** Raises `balance` to TOPUP_FLOOR if a top-up boundary has passed and the
  * balance is currently below it (never additive, never lowers a balance
  * already at or above the floor), advancing `next_topup_at` to the next
@@ -40,7 +56,7 @@ function applyTopup(row: TokenRow, now: Date): TokenRow {
 
   while (next.getTime() <= now.getTime()) {
     if (balance < TOPUP_FLOOR) balance = TOPUP_FLOOR;
-    next = new Date(next.getFullYear(), next.getMonth() + 1, next.getDate(), next.getHours(), next.getMinutes(), next.getSeconds());
+    next = addMonthClamped(next);
   }
 
   return { balance, next_topup_at: next.toISOString() };
