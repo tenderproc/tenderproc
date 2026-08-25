@@ -337,7 +337,12 @@
       "free": {
         "name": "Gratuit",
         "blurb": "Essayez la découverte de marchés pour un secteur.",
-        "features": ["Flux d'opportunités pour 1 secteur", "Recherche manuelle", "Pages de détail des marchés"]
+        "features": [
+          "Flux d'opportunités pour 1 secteur",
+          "Recherche manuelle",
+          "Pages de détail des marchés",
+          "Score de correspondance IA & chat (1 000 jetons gratuits)"
+        ]
       },
       "pro": {
         "name": "Pro",

@@ -337,7 +337,12 @@
       "free": {
         "name": "Gratis",
         "blurb": "Ontdek het opsporen van opdrachten voor één sector.",
-        "features": ["Opportuniteiten-feed voor 1 sector", "Handmatig zoeken", "Detailpagina's van opdrachten"]
+        "features": [
+          "Opportuniteiten-feed voor 1 sector",
+          "Handmatig zoeken",
+          "Detailpagina's van opdrachten",
+          "AI-matchscore & chat (1.000 gratis tokens)"
+        ]
       },
       "pro": {
         "name": "Pro",

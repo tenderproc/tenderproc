@@ -337,7 +337,12 @@
       "free": {
         "name": "Free",
         "blurb": "Try out tender discovery for one sector.",
-        "features": ["Opportunities feed for 1 sector", "Manual search", "Tender detail pages"]
+        "features": [
+          "Opportunities feed for 1 sector",
+          "Manual search",
+          "Tender detail pages",
+          "AI match scoring & chat (1,000 free tokens)"
+        ]
       },
       "pro": {
         "name": "Pro",

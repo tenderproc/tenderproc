@@ -337,7 +337,12 @@
       "free": {
         "name": "Kostenlos",
         "blurb": "Teste die Ausschreibungssuche für eine Branche.",
-        "features": ["Chancen-Feed für 1 Branche", "Manuelle Suche", "Ausschreibungs-Detailseiten"]
+        "features": [
+          "Chancen-Feed für 1 Branche",
+          "Manuelle Suche",
+          "Ausschreibungs-Detailseiten",
+          "KI-Matching & Chat (1.000 kostenlose Tokens)"
+        ]
       },
       "pro": {
         "name": "Pro",
