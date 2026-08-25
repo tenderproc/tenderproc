@@ -193,9 +193,9 @@
     "viewPricing": "View pricing"
   },
   "Opportunities": {
-    "eyebrow": "Sources: TED, regional council records",
+    "eyebrow": "Sources: TED, BOSA, regional council records",
     "heading": "Opportunities",
-    "description": "Belgian public tenders matched to your sectors, from TED and regional/municipal council sources — including notices that may already be awarded or unclear in status.",
+    "description": "Belgian public tenders matched to your sectors, from TED, BOSA, and regional/municipal council sources — including notices that may already be awarded or unclear in status.",
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
     "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar.",

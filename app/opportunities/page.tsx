@@ -6,6 +6,7 @@ import PreferencesSidebar from "@/components/PreferencesSidebar";
 import OpportunitiesScores from "@/components/OpportunitiesScores";
 import MatchFilterGate from "@/components/MatchFilterGate";
 import { searchBelgianTenders } from "@/lib/ted";
+import { searchBosaTenders } from "@/lib/bosa";
 import { getExternalOpportunities } from "@/lib/externalOpportunities";
 import { sectorsToCpvPrefixes } from "@/lib/sectors";
 import { createClient } from "@/lib/supabase/server";
@@ -49,16 +50,15 @@ export default async function OpportunitiesPage({
   const languageKeys = savedLanguage ? [savedLanguage] : undefined;
   const filterLanguageKeys = savedLanguage ? [savedLanguage] : undefined;
 
-  // TED and the three regional Wallonia/Flanders sources are fetched
+  // TED, BOSA, and the three regional Wallonia/Flanders sources are fetched
   // independently and merged here rather than behind one shared function,
-  // since they have different freshness models: TED is live (fetched
-  // fresh every load), the regional sources are persisted (scraped
-  // weekly — see lib/externalOpportunities.ts). Each source's failure is
-  // independent (Promise.allSettled): if e.g. TED's API is briefly down,
-  // regional results still render rather than the whole page erroring out.
-  // BOSA e-Notification is deliberately excluded as a source here (kept
-  // available for direct-link detail pages via lib/tenders/getTenderById.ts).
-  const [tedResult, externalResult] = await Promise.allSettled([
+  // since they have three different freshness models: TED and BOSA are
+  // both live (fetched fresh every load), the regional sources are
+  // persisted (scraped weekly — see lib/externalOpportunities.ts). Each
+  // source's failure is independent (Promise.allSettled): if e.g. BOSA's
+  // API is briefly down, TED and regional results still render rather
+  // than the whole page erroring out.
+  const [tedResult, bosaResult, externalResult] = await Promise.allSettled([
     searchBelgianTenders({
       keyword: params.q,
       cpv: params.cpv,
@@ -68,6 +68,7 @@ export default async function OpportunitiesPage({
       onlyOpenCalls: true,
       limit: 50,
     }),
+    searchBosaTenders({ keyword: params.q, limit: 50, onlyOpenCalls: true, filterLanguageKeys }),
     getExternalOpportunities(),
   ]);
 
@@ -75,6 +76,10 @@ export default async function OpportunitiesPage({
   const tedTenders = tedResult.status === "fulfilled" ? tedResult.value : [];
   if (tedResult.status === "rejected") {
     loadErrors.push(tedResult.reason instanceof Error ? tedResult.reason.message : t("couldNotReachTed"));
+  }
+  const bosaTenders = bosaResult.status === "fulfilled" ? bosaResult.value : [];
+  if (bosaResult.status === "rejected") {
+    loadErrors.push(bosaResult.reason instanceof Error ? bosaResult.reason.message : "BOSA: could not load");
   }
   // Explicit-CPV search (params.cpv) can't match regional-source rows —
   // they don't publish CPV codes (council minutes, not eForms notices).
@@ -96,7 +101,7 @@ export default async function OpportunitiesPage({
     externalTenders = externalTenders.filter((t) => t.titleLanguages.some((l) => filterLanguageKeys.includes(l)));
   }
 
-  const tenders = [...tedTenders, ...externalTenders].sort((a, b) => {
+  const tenders = [...tedTenders, ...bosaTenders, ...externalTenders].sort((a, b) => {
     if (!a.publicationDate) return 1;
     if (!b.publicationDate) return -1;
     return b.publicationDate.localeCompare(a.publicationDate);
