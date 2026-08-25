@@ -58,12 +58,50 @@ $$;
 
 alter table profiles add column if not exists company_number text;
 
--- Used by scripts/refresh-kbo-companies.ts's automated monthly refresh
--- (truncateFirst) — a single TRUNCATE is far faster than a DELETE over
--- 2M+ rows, and resets the id sequence so re-imports don't grow unbounded.
-create or replace function truncate_kbo_companies()
+-- Bulk-reload support for scripts/refresh-kbo-companies.ts's automated
+-- monthly refresh. Two functions, called before/after the CSV reimport:
+-- prepare_kbo_companies_reload truncates the table (fast id-sequence reset,
+-- vs. a DELETE over 2M+ rows) and drops the trigram index; without dropping
+-- it first, the GIN index's internal "pending list" grows across millions
+-- of inserts and its periodic flush got expensive enough to blow past a
+-- batch's statement timeout partway through a real reimport (hit at row
+-- 1,545,000 of ~2M) — dropping and rebuilding around the bulk load is the
+-- standard fix, and only applies here (not the one-time manual
+-- scripts/import-kbo-companies.ts, which only ever loads into an empty
+-- table once). finalize_kbo_companies_reload rebuilds the index and
+-- ANALYZEs afterward (also fixing planner stats, same as the earlier
+-- one-off ANALYZE after the very first import — see docs/database.md).
+-- security definer on both: TRUNCATE ... RESTART IDENTITY needs ownership
+-- of the id sequence, which service_role (the caller, via
+-- createAdminClient()) doesn't have even though it bypasses RLS — running
+-- as the function's owner (whichever role runs this migration) sidesteps
+-- that. Safe here since neither function takes input.
+drop function if exists truncate_kbo_companies();
+
+-- set statement_timeout on both: PostgREST/Supavisor enforces a short
+-- default statement timeout on RPC calls (fine for the TRUNCATE, but a
+-- CREATE INDEX over 2M rows in finalize_kbo_companies_reload blew past it).
+-- A function's own SET clause overrides the caller's session timeout for
+-- just that call, without touching the project-wide default.
+create or replace function prepare_kbo_companies_reload()
 returns void
 language sql
+security definer
+set search_path = public
+set statement_timeout = '5min'
 as $$
   truncate table kbo_companies restart identity;
+  drop index if exists kbo_companies_denomination_trgm_idx;
+$$;
+
+create or replace function finalize_kbo_companies_reload()
+returns void
+language sql
+security definer
+set search_path = public
+set statement_timeout = '10min'
+as $$
+  create index if not exists kbo_companies_denomination_trgm_idx
+    on kbo_companies using gin (denomination gin_trgm_ops);
+  analyze kbo_companies;
 $$;

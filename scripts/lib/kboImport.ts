@@ -83,9 +83,9 @@ export async function importKboFromFolder(
   { truncateFirst = false }: { truncateFirst?: boolean } = {}
 ): Promise<KboImportStats> {
   if (truncateFirst) {
-    console.log("Truncating kbo_companies before reimport...");
-    const { error } = await supabase.rpc("truncate_kbo_companies");
-    if (error) throw new Error(`Truncate failed: ${error.message}`);
+    console.log("Truncating kbo_companies and dropping its search index before reimport...");
+    const { error } = await supabase.rpc("prepare_kbo_companies_reload");
+    if (error) throw new Error(`Prepare-reload failed: ${error.message}`);
   }
 
   console.log("Pass 1/2: reading enterprise.csv for active enterprises...");
@@ -124,6 +124,12 @@ export async function importKboFromFolder(
     if (batch.length >= BATCH_SIZE) await flush();
   });
   await flush();
+
+  if (truncateFirst) {
+    console.log("Rebuilding kbo_companies' search index...");
+    const { error } = await supabase.rpc("finalize_kbo_companies_reload");
+    if (error) throw new Error(`Finalize-reload failed: ${error.message}`);
+  }
 
   console.log(`Done. Scanned ${scanned} denomination rows, imported ${imported}.`);
   return { activeEnterprises: activeStartDates.size, scanned, imported };

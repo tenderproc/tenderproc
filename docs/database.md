@@ -175,14 +175,22 @@ reverse-engineered Spring Security form auth — see `scripts/lib/kboPortal.ts`'
 comment), finds the newest "Full" export on the downloads listing (KBO actually publishes one
 daily, despite the portal's own UI text suggesting monthly), downloads and extracts it
 (shells out to PowerShell's `Expand-Archive` — Windows-only by design, see below), truncates
-`kbo_companies` via the `truncate_kbo_companies()` RPC, and reimports — both scripts share
-their CSV-parsing/import core (`scripts/lib/kboImport.ts`). Registered as a monthly Windows
-Scheduled Task via `scripts/register-kbo-refresh-task.ps1` (same precedent as
-`tenderproc_bosa_scraper`'s `register_windows_task.ps1`) — **remember to actually run the
-registration script**, not just have it exist in the repo; the BOSA scraper's task sat
-unregistered for days before anyone noticed (see the BOSA scraper project memory). Deliberately
-not a Vercel cron: the extracted export is multiple GB, far past a serverless function's
-`/tmp` and execution-time limits.
+`kbo_companies` and drops its trigram index via `prepare_kbo_companies_reload()`, reimports,
+then rebuilds the index and re-`ANALYZE`s via `finalize_kbo_companies_reload()` (both `security
+definer` with their own `statement_timeout`, since a bulk INSERT into a live GIN index blew a
+batch's timeout via the index's pending-list flush, and rebuilding a 2M-row GIN index blew the
+default RPC timeout — see the migration file's comments) — both scripts share their
+CSV-parsing/import core (`scripts/lib/kboImport.ts`). Registered as a monthly Windows Scheduled
+Task via `scripts/register-kbo-refresh-task.ps1`, which shells out to `schtasks.exe` (not the
+`New-ScheduledTaskTrigger` cmdlet `tenderproc_bosa_scraper`'s `register_windows_task.ps1` uses
+for its daily trigger — that cmdlet has no `-Monthly` parameter set at all, and hand-building
+the underlying `MSFT_TaskMonthlyTrigger` CIM object hit an undocumented validation error;
+`schtasks /SC MONTHLY` just works) pointed at `scripts/run-kbo-refresh.cmd` (`/TR` only accepts
+a single executable path, not a shell command with `&&`, hence the wrapper). **Remember to
+actually run the registration script**, not just have it exist in the repo; the BOSA scraper's
+task sat unregistered for days before anyone noticed (see the BOSA scraper project memory).
+Deliberately not a Vercel cron: the extracted export is multiple GB, far past a serverless
+function's `/tmp` and execution-time limits.
 
 ## Storage
 
