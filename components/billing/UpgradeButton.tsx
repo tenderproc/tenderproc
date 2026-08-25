@@ -11,6 +11,7 @@ export default function UpgradeButton({
   label,
   userId,
   email,
+  paddleCustomerId,
   autoOpen,
 }: {
   tier: "PRO" | "PREMIUM";
@@ -18,6 +19,10 @@ export default function UpgradeButton({
   label: string;
   userId: string;
   email?: string;
+  /** The signed-in user's Paddle customer id (subscriptions.paddle_customer_id),
+   * if they already have one — wires Paddle Retain via pwCustomer. Undefined
+   * for a Free-tier user with no Paddle customer yet. */
+  paddleCustomerId?: string;
   /** Opens the checkout once on mount — used when the user already chose
    * this plan before signing up (see PricingCards' autoOpenPlan). */
   autoOpen?: boolean;
@@ -31,7 +36,7 @@ export default function UpgradeButton({
     setLoading(true);
     setError(null);
     try {
-      const paddle = await getPaddleClient();
+      const paddle = await getPaddleClient(paddleCustomerId);
       if (!paddle) throw new Error(t("couldNotStartCheckout"));
       paddle.Checkout.open({
         items: [{ priceId: PADDLE_PRICE_IDS[tier], quantity: 1 }],

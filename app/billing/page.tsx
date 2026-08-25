@@ -75,6 +75,7 @@ export default async function BillingPage() {
                 label={t(effective.tier === "FREE" ? "upgradeToPro" : "upgradeToPremium")}
                 userId={user.id}
                 email={user.email ?? undefined}
+                paddleCustomerId={subscription.paddleCustomerId ?? undefined}
                 className="text-sm font-medium text-white bg-accent rounded-doc px-4 py-2 hover:bg-accentDim transition-colors disabled:opacity-50"
               />
             )}

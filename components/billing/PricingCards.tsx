@@ -24,6 +24,7 @@ export default function PricingCards({
   countryCode,
   currentTier,
   user,
+  paddleCustomerId,
   autoOpenPlan,
 }: {
   paidTiers: PricingTierConfig[];
@@ -33,6 +34,10 @@ export default function PricingCards({
   countryCode?: string;
   currentTier: TierName;
   user: { id: string; email?: string } | null;
+  /** The signed-in user's Paddle customer id, if they already have one —
+   * wires Paddle Retain via pwCustomer. Undefined for a signed-out visitor
+   * or a Free-tier user with no Paddle customer yet. */
+  paddleCustomerId?: string;
   /** Set from ?plan= after a signup redirect carried a plan choice through
    * (see app/signup/page.tsx) — opens that tier's checkout automatically
    * once, so picking a plan before signing up isn't a wasted click. */
@@ -60,7 +65,7 @@ export default function PricingCards({
 
     async function loadPrices() {
       try {
-        const paddle = await getPaddleClient();
+        const paddle = await getPaddleClient(paddleCustomerId);
         if (!paddle) throw new Error("Paddle.js failed to initialize");
         const response = await paddle.PricePreview({
           items: paidTiers.map((tier) => ({ priceId: tier.priceId.month, quantity: 1 })),
@@ -90,7 +95,7 @@ export default function PricingCards({
     return () => {
       cancelled = true;
     };
-  }, [paidTiers, countryCode, locale]);
+  }, [paidTiers, countryCode, locale, paddleCustomerId]);
 
   const cards: CardViewModel[] = [
     { key: "free", tierName: "FREE" },
@@ -163,6 +168,7 @@ export default function PricingCards({
                 tier={card.tierName as "PRO" | "PREMIUM"}
                 userId={user!.id}
                 email={user!.email}
+                paddleCustomerId={paddleCustomerId}
                 label={t("subscribe")}
                 autoOpen={autoOpenPlan === card.key}
                 className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors w-full ${

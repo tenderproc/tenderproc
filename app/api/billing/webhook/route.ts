@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { unmarshalWebhook, EventName } from "@/lib/billing/paddle";
+import { clientIpFromHeaders, isAllowedPaddleWebhookIp } from "@/lib/billing/paddleIpAllowlist";
 import {
   applySubscriptionEvent,
   applyTransactionCompleted,
@@ -18,6 +19,11 @@ export const dynamic = "force-dynamic";
 /**
  * Paddle webhook endpoint. Order of operations is deliberate and must not
  * change:
+ *   0. Reject any delivery not sourced from one of Paddle's own published
+ *      IPs (api.paddle.com/ips or sandbox-api.paddle.com/ips, per
+ *      PADDLE_ENV — see lib/billing/paddleIpAllowlist.ts). A second,
+ *      independent gate in front of signature verification, not a
+ *      replacement for it.
  *   1. Verify the signature against the RAW body (never parse-then-verify —
  *      that would let a tampered payload through as long as it re-serializes
  *      to something the SDK re-signs internally, which is not how HMAC
@@ -29,6 +35,11 @@ export const dynamic = "force-dynamic";
  *      types we don't act on (price.updated, discount.created, ...).
  */
 export async function POST(req: NextRequest) {
+  const clientIp = clientIpFromHeaders(req.headers);
+  if (!(await isAllowedPaddleWebhookIp(clientIp))) {
+    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+  }
+
   const rawBody = await req.text();
   const signature = req.headers.get("paddle-signature");
   const adminClient = createAdminClient();

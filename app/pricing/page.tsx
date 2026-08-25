@@ -36,13 +36,16 @@ export default async function PricingPage({
   const countryCode = (await headers()).get("x-vercel-ip-country") ?? undefined;
 
   let currentTier: TierName = "FREE";
+  let paddleCustomerId: string | undefined;
   if (user) {
     const { data: row } = await supabase
       .from("subscriptions")
       .select(SUBSCRIPTION_COLUMNS)
       .eq("user_id", user.id)
       .maybeSingle();
-    currentTier = getEffectiveTier(rowToUserSubscription(row)).tier;
+    const subscription = rowToUserSubscription(row);
+    currentTier = getEffectiveTier(subscription).tier;
+    paddleCustomerId = subscription.paddleCustomerId ?? undefined;
   }
 
   return (
@@ -96,6 +99,7 @@ export default async function PricingPage({
           countryCode={countryCode}
           currentTier={currentTier}
           user={user ? { id: user.id, email: user.email ?? undefined } : null}
+          paddleCustomerId={paddleCustomerId}
           autoOpenPlan={autoOpenPlan}
         />
       </main>
