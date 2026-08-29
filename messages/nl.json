@@ -14,11 +14,11 @@
     },
     "login": {
       "title": "Inloggen — TenderProc",
-      "description": "Log in om opdrachten gefilterd op jouw sectoren te zien."
+      "description": "Log in om opdrachten gefilterd op uw sectoren te zien."
     },
     "signup": {
       "title": "Registreren — TenderProc",
-      "description": "Maak je TenderProc-account aan om opdrachten te ontvangen die passen bij jouw bedrijf."
+      "description": "Maak uw TenderProc-account aan om opdrachten te ontvangen die passen bij uw bedrijf."
     },
     "pricing": {
       "title": "Prijzen — TenderProc",
@@ -35,34 +35,34 @@
     "hero": {
       "eyebrow": "België · Overheidsopdrachten",
       "headline": "AI-ondersteunde opsporing van overheidsopdrachten voor Belgische kmo's",
-      "subheading": "TenderProc matcht nieuwe Belgische overheidsopdrachten met jouw sector, filtert de ruis eruit, en helpt je een opdracht te screenen en een offerte voor te bereiden — allemaal op één plek.",
+      "subheading": "TenderProc matcht nieuwe Belgische overheidsopdrachten met uw sector, filtert de ruis eruit, en helpt u een opdracht te screenen en een offerte voor te bereiden — allemaal op één plek.",
       "ctaPrimary": "Gratis registreren",
       "ctaSecondary": "Inloggen"
     },
     "problem": {
       "eyebrow": "Het probleem",
       "heading": "Relevante opdrachten gaan verloren in de ruis",
-      "body": "De Belgische feed van overheidsopdrachten publiceert jaarlijks duizenden aankondigingen, in vier talen, in elke sector. Die handmatig doorzoeken naar de paar die bij jouw bedrijf passen, kost uren — en uit onze tests bleek dat ongeveer een derde van een ongefilterde feed aankondigingen betrof van opdrachten die al gegund waren. Mis je de juiste, of verspil je tijd aan de verkeerde, dan bied je op minder dan mogelijk is."
+      "body": "De Belgische feed van overheidsopdrachten publiceert jaarlijks duizenden aankondigingen, in vier talen, in elke sector. Die handmatig doorzoeken naar de paar die bij uw bedrijf passen, kost uren — en uit onze tests bleek dat ongeveer een derde van een ongefilterde feed aankondigingen betrof van opdrachten die al gegund waren. Mist u de juiste, of verspilt u tijd aan de verkeerde, dan biedt u op minder dan mogelijk is."
     },
     "features": {
-      "eyebrow": "Wat je krijgt",
+      "eyebrow": "Wat u krijgt",
       "heading": "Alles tussen publicatie en indiening",
       "subheading": "Opsporen, screenen en offertes voorbereiden in één workflow.",
       "items": [
         {
           "tier": "Pro",
           "title": "AI-sectormatching",
-          "description": "Elke nieuwe opdracht krijgt een matchscore op 100 tegenover je bedrijfsprofiel, zodat je meteen ziet wat echt de moeite waard is."
+          "description": "Elke nieuwe opdracht krijgt een matchscore op 100 tegenover uw bedrijfsprofiel, zodat u meteen ziet wat echt de moeite waard is."
         },
         {
           "tier": "Pro",
           "title": "Dagelijkse e-mailmeldingen",
-          "description": "Een dagelijkse samenvatting meldt alles wat nieuw gepubliceerd is in jouw sectoren, zodat je het nooit zelf hoeft te onthouden."
+          "description": "Een dagelijkse samenvatting meldt alles wat nieuw gepubliceerd is in uw sectoren, zodat u het nooit zelf hoeft te onthouden."
         },
         {
           "tier": "Pro",
           "title": "Workflow-pipelinebord",
-          "description": "Volg opdrachten die je nastreeft doorheen screening, review, kandidatuur en indiening op één bord."
+          "description": "Volg opdrachten die u nastreeft doorheen screening, review, kandidatuur en indiening op één bord."
         },
         {
           "tier": "Premium",
@@ -72,7 +72,7 @@
         {
           "tier": "Pro",
           "title": "AI-ondersteunde offertevoorbereiding",
-          "description": "Upload een bestek als PDF: TenderProc haalt de vereisten eruit, beoordeelt je fit met een Bieden/Niet-bieden-advies, en schrijft een antwoord op basis van je eigen bedrijfsbewijs."
+          "description": "Upload een bestek als PDF: TenderProc haalt de vereisten eruit, beoordeelt uw fit met een Bieden/Niet-bieden-advies, en schrijft een antwoord op basis van uw eigen bedrijfsbewijs."
         }
       ]
     },
@@ -81,28 +81,28 @@
       "heading": "Van sectorprofiel tot ingediende offerte",
       "steps": [
         {
-          "title": "Stel je sectorprofiel in",
-          "description": "Geef je sector, bedrijfsgrootte en activiteit op bij registratie — dat bepaalt elke matchscore die je te zien krijgt."
+          "title": "Stel uw sectorprofiel in",
+          "description": "Geef uw sector, bedrijfsgrootte en activiteit op bij registratie — dat bepaalt elke matchscore die u te zien krijgt."
         },
         {
           "title": "Krijg elke dag gematchte opdrachten",
-          "description": "Bekijk relevante open Belgische opdrachten zodra ze gepubliceerd worden, gescoord tegenover je profiel, plus een dagelijkse samenvatting zodat niets je ontgaat."
+          "description": "Bekijk relevante open Belgische opdrachten zodra ze gepubliceerd worden, gescoord tegenover uw profiel, plus een dagelijkse samenvatting zodat niets u ontgaat."
         },
         {
           "title": "Volg op en bied met vertrouwen",
-          "description": "Verplaats opdrachten doorheen je pipeline en laat TenderProc je helpen bij het checken van geschiktheid, het in kaart brengen van bewijs en het opstellen van een onderbouwd antwoord."
+          "description": "Verplaats opdrachten doorheen uw pipeline en laat TenderProc u helpen bij het checken van geschiktheid, het in kaart brengen van bewijs en het opstellen van een onderbouwd antwoord."
         }
       ]
     },
     "pricingSection": {
       "eyebrow": "Prijzen",
       "heading": "Eenvoudige, duidelijke plannen",
-      "subheading": "Begin gratis, upgrade wanneer je serieus wilt gaan bieden.",
+      "subheading": "Begin gratis, upgrade wanneer u serieus wilt gaan bieden.",
       "viewFullPricing": "Bekijk alle plandetails"
     },
     "finalCta": {
       "heading": "Klaar om geen opdracht meer te missen?",
-      "subheading": "Stel je profiel in enkele minuten in — geen kaart nodig om te starten met Gratis.",
+      "subheading": "Stel uw profiel in enkele minuten in — geen kaart nodig om te starten met Gratis.",
       "cta": "Gratis registreren"
     },
     "footer": {
@@ -136,17 +136,19 @@
     "goToApp": "Naar de app",
     "logIn": "Inloggen",
     "signUp": "Registreren",
-    "englishOnlyNotice": "Dit document is alleen beschikbaar in het Engels. Is iets onduidelijk? Neem contact met ons op, we helpen je in je eigen taal.",
+    "englishOnlyNotice": "Dit document is ter informatie vertaald. Bij tegenstrijdigheden tussen deze vertaling en de originele Engelse versie is de Engelse versie doorslaggevend.",
     "backToTenderProc": "Terug naar TenderProc",
     "terms": "Gebruiksvoorwaarden",
     "privacy": "Privacyverklaring",
     "refund": "Terugbetalingsbeleid",
-    "contact": "Contact"
+    "contact": "Contact",
+    "eyebrow": "Juridisch",
+    "lastUpdated": "Laatst bijgewerkt: {date}"
   },
   "Contact": {
     "eyebrow": "Contact",
     "heading": "Neem contact op",
-    "subheading": "Vragen over TenderProc? Stuur ons een bericht en we nemen contact met je op.",
+    "subheading": "Vragen over TenderProc? Stuur ons een bericht en we nemen contact met u op.",
     "form": {
       "heading": "Stuur ons een bericht",
       "name": "Naam",
@@ -163,13 +165,13 @@
       "messagePlaceholder": "Hoe kunnen we helpen?",
       "send": "Bericht versturen",
       "sending": "Versturen…",
-      "nameRequired": "Vul je naam in.",
-      "emailRequired": "Vul je e-mailadres in.",
+      "nameRequired": "Vul uw naam in.",
+      "emailRequired": "Vul uw e-mailadres in.",
       "emailInvalid": "Vul een geldig e-mailadres in.",
       "messageRequired": "Vul een bericht in.",
       "genericError": "Er ging iets mis. Probeer het straks opnieuw.",
       "successHeading": "Bericht verzonden",
-      "successBody": "Bedankt voor je bericht — we nemen binnenkort contact met je op."
+      "successBody": "Bedankt voor uw bericht — we nemen binnenkort contact met u op."
     },
     "info": {
       "emailLabel": "Mail ons rechtstreeks"
@@ -180,28 +182,64 @@
         "gettingStarted": {
           "title": "Aan de slag",
           "items": [
-            { "question": "Wat is TenderProc precies?", "answer": "TenderProc is een AI-ondersteund platform voor het vinden en voorbereiden van offertes voor Belgische overheidsopdrachten. Het platform matcht nieuwe opdrachten met jouw bedrijf, filtert ruis eruit (zoals reeds gegunde opdrachten) en helpt je de opdracht te kwalificeren en een offerte voor te bereiden — allemaal op één plek." },
-            { "question": "Hoe werkt de AI-matching?", "answer": "Elke nieuwe opdracht krijgt een matchscore op 100 ten opzichte van jouw bedrijfsprofiel (sectoren, grootte, beschrijving) — zo zie je meteen wat jouw tijd echt waard is." },
-            { "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?", "answer": "Nee — TenderProc is gebouwd om Belgische overheidsopdrachten toegankelijk te maken, ook als je nog nooit hebt ingeschreven. Je stelt een bedrijfsprofiel op en het platform verzorgt screening, het uitlichten van vereisten en geschiktheidscontroles." },
-            { "question": "Welke regio's/sectoren worden gedekt?", "answer": "Belgische overheidsopdrachten — afkomstig van de officiële EU-databank TED, het Belgische BOSA e-Notification-platform en ons eigen netwerk, verspreid over verschillende sectorcategorieën, van bouw en IT tot zorg, catering en consulting." }
+            {
+              "question": "Wat is TenderProc precies?",
+              "answer": "TenderProc is een AI-ondersteund platform voor het vinden en voorbereiden van offertes voor Belgische overheidsopdrachten. Het platform matcht nieuwe opdrachten met uw bedrijf, filtert ruis eruit (zoals reeds gegunde opdrachten) en helpt u de opdracht te kwalificeren en een offerte voor te bereiden — allemaal op één plek."
+            },
+            {
+              "question": "Hoe werkt de AI-matching?",
+              "answer": "Elke nieuwe opdracht krijgt een matchscore op 100 ten opzichte van uw bedrijfsprofiel (sectoren, grootte, beschrijving) — zo ziet u meteen wat uw tijd echt waard is."
+            },
+            {
+              "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?",
+              "answer": "Nee — TenderProc is gebouwd om Belgische overheidsopdrachten toegankelijk te maken, ook als u nog nooit hebt ingeschreven. U stelt een bedrijfsprofiel op en het platform verzorgt screening, het uitlichten van vereisten en geschiktheidscontroles."
+            },
+            {
+              "question": "Welke regio's/sectoren worden gedekt?",
+              "answer": "Belgische overheidsopdrachten — afkomstig van de officiële EU-databank TED, het Belgische BOSA e-Notification-platform en ons eigen netwerk, verspreid over verschillende sectorcategorieën, van bouw en IT tot zorg, catering en consulting."
+            }
           ]
         },
         "pricingTrust": {
           "title": "Prijzen & vertrouwen",
           "items": [
-            { "question": "Hoeveel kost het?", "answer": "Gratis, Pro (€49/maand) en Premium (€79/maand) — bekijk de Prijzenpagina voor wat elk plan bevat." },
-            { "question": "Is er een gratis proefperiode?", "answer": "Er is geen tijdelijke proefperiode, maar het Gratis-plan zelf verloopt nooit en vereist geen kaart — je kunt de opdrachten-detectie voor één sector gratis uitproberen voordat je upgradet." },
-            { "question": "Kan ik op elk moment opzeggen?", "answer": "Ja — je kunt op elk moment opzeggen via de Facturatiepagina. Opzeggen stopt toekomstige verlengingen; je behoudt toegang tot jouw betaalde plan tot het einde van de huidige periode en wordt daarna niet meer gefactureerd." },
-            { "question": "Zijn mijn bedrijfsgegevens veilig/AVG-conform?", "answer": "Ja — TenderProc is by design AVG-conform (voor elk gebruik van jouw gegevens is er een gedocumenteerde rechtsgrond, en jouw rechten als betrokkene onder de AVG worden gerespecteerd), gegevens worden versleuteld verzonden (HTTPS) en toegang is beperkt tot jouw eigen account. Meer details vind je in onze Privacyverklaring." }
+            {
+              "question": "Hoeveel kost het?",
+              "answer": "Gratis, Pro (€49/maand) en Premium (€79/maand) — bekijk de Prijzenpagina voor wat elk plan bevat."
+            },
+            {
+              "question": "Is er een gratis proefperiode?",
+              "answer": "Er is geen tijdelijke proefperiode, maar het Gratis-plan zelf verloopt nooit en vereist geen kaart — u kunt de opdrachten-detectie voor één sector gratis uitproberen voordat u upgradet."
+            },
+            {
+              "question": "Kan ik op elk moment opzeggen?",
+              "answer": "Ja — u kunt op elk moment opzeggen via de Facturatiepagina. Opzeggen stopt toekomstige verlengingen; u behoudt toegang tot uw betaalde plan tot het einde van de huidige periode en wordt daarna niet meer gefactureerd."
+            },
+            {
+              "question": "Zijn mijn bedrijfsgegevens veilig/AVG-conform?",
+              "answer": "Ja — TenderProc is by design AVG-conform (voor elk gebruik van uw gegevens is er een gedocumenteerde rechtsgrond, en uw rechten als betrokkene onder de AVG worden gerespecteerd), gegevens worden versleuteld verzonden (HTTPS) en toegang is beperkt tot uw eigen account. Meer details vindt u in onze Privacyverklaring."
+            }
           ]
         },
         "usingProduct": {
           "title": "Het platform gebruiken",
           "items": [
-            { "question": "Hoe vaak worden nieuwe opdrachten toegevoegd?", "answer": "Opdrachten worden live opgehaald uit de officiële EU-databank TED zodra ze gepubliceerd worden — niet met vertraging via een batchverwerking — en een dagelijkse samenvatting per e-mail meldt je alles wat nieuw is binnen jouw sectoren." },
-            { "question": "Kan ik hulp krijgen bij het voorbereiden van mijn offerte, of alleen kansen vinden?", "answer": "Beide — naast het vinden van kansen omvat Pro ook AI-ondersteunde offertevoorbereiding: upload een PDF van de opdracht en TenderProc haalt de vereisten eruit, beoordeelt jouw geschiktheid met een Bid/No-Bid-advies, en stelt een offerte op basis van jouw eigen bedrijfsgegevens." },
-            { "question": "Welke talen ondersteunt het platform?", "answer": "De app zelf is beschikbaar in het Nederlands, Engels, Frans en Duits, en opdrachten die in andere talen gepubliceerd zijn kunnen voor jou AI-vertaald worden." },
-            { "question": "Wat gebeurt er als ik een deadline-melding mis?", "answer": "Er is nog geen speciale functie voor deadline-herinneringen — de deadline van elke opdracht staat direct op de kaart, en zodra je die toevoegt aan je Workflow-bord kun je hem daar volgen doorheen screening, opstellen en indienen, zodat je niets kwijtraakt van wat je actief opvolgt." }
+            {
+              "question": "Hoe vaak worden nieuwe opdrachten toegevoegd?",
+              "answer": "Opdrachten worden live opgehaald uit de officiële EU-databank TED zodra ze gepubliceerd worden — niet met vertraging via een batchverwerking — en een dagelijkse samenvatting per e-mail meldt u alles wat nieuw is binnen uw sectoren."
+            },
+            {
+              "question": "Kan ik hulp krijgen bij het voorbereiden van mijn offerte, of alleen kansen vinden?",
+              "answer": "Beide — naast het vinden van kansen omvat Pro ook AI-ondersteunde offertevoorbereiding: upload een PDF van de opdracht en TenderProc haalt de vereisten eruit, beoordeelt uw geschiktheid met een Bid/No-Bid-advies, en stelt een offerte op basis van uw eigen bedrijfsgegevens."
+            },
+            {
+              "question": "Welke talen ondersteunt het platform?",
+              "answer": "De app zelf is beschikbaar in het Nederlands, Engels, Frans en Duits, en opdrachten die in andere talen gepubliceerd zijn kunnen voor u AI-vertaald worden."
+            },
+            {
+              "question": "Wat gebeurt er als ik een deadline-melding mis?",
+              "answer": "Er is nog geen speciale functie voor deadline-herinneringen — de deadline van elke opdracht staat direct op de kaart, en zodra u die toevoegt aan uw Workflow-bord kunt u hem daar volgen doorheen screening, opstellen en indienen, zodat u niets kwijtraakt van wat u actief opvolgt."
+            }
           ]
         }
       }
@@ -209,7 +247,7 @@
   },
   "Login": {
     "heading": "Inloggen",
-    "subheading": "Log in om opdrachten te zien, gefilterd op jouw sectoren.",
+    "subheading": "Log in om opdrachten te zien, gefilterd op uw sectoren.",
     "email": "E-mail",
     "password": "Wachtwoord",
     "loggingIn": "Bezig met inloggen…",
@@ -221,10 +259,10 @@
   "Opportunities": {
     "eyebrow": "Bronnen: TED, BOSA, regionale gemeenteraadsgegevens",
     "heading": "Opportuniteiten",
-    "description": "Belgische overheidsopdrachten gematcht aan jouw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen — inclusief berichten die mogelijk al gegund zijn of een onduidelijke status hebben.",
+    "description": "Belgische overheidsopdrachten gematcht aan uw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen — inclusief berichten die mogelijk al gegund zijn of een onduidelijke status hebben.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
-    "noResults": "Geen berichten kwamen overeen met je sectoren of zoekopdracht. Verruim je sectorselectie in de zijbalk.",
+    "noResults": "Geen berichten kwamen overeen met uw sectoren of zoekopdracht. Verruim uw sectorselectie in de zijbalk.",
     "filteringByMatch": "Filteren op match %…",
     "noMatchResults": "Geen opportuniteiten halen deze matchdrempel. Probeer die te verlagen."
   },
@@ -250,7 +288,7 @@
     "heading": "Marktaandeel",
     "disclaimer": "Weerspiegelt enkel gunningen die in onze TED-gegevens zijn vastgelegd, niet de volledige markt.",
     "noData": "Nog niet genoeg gegevens voor deze sector en periode.",
-    "you": "Jij",
+    "you": "U",
     "sharePercent": "{percent}%",
     "totalValue": "Totaal gegunde waarde binnen deze selectie: {value}",
     "windowLabel": "Periode",
@@ -265,8 +303,8 @@
   "FollowedCompanies": {
     "eyebrow": "Bedrijven volgen",
     "heading": "Volgen",
-    "description": "Bedrijven die je volgt — krijg een melding wanneer een van hen een nieuw gunningsbericht wint.",
-    "empty": "Je volgt nog geen bedrijven. Gebruik de knop Volgen naast een bedrijfsnaam op het marktoverzicht.",
+    "description": "Bedrijven die u volgt — krijg een melding wanneer een van hen een nieuw gunningsbericht wint.",
+    "empty": "U volgt nog geen bedrijven. Gebruik de knop Volgen naast een bedrijfsnaam op het marktoverzicht.",
     "followedSince": "Gevolgd sinds {date}",
     "remove": "Verwijderen"
   },
@@ -311,7 +349,7 @@
   "Search": {
     "eyebrow": "Ad-hoc opzoeking · Bron: TED",
     "heading": "Zoeken",
-    "description": "Eenmalige zoekopdrachten over alle werkelijk open Belgische opdrachten, los van je opgeslagen sectoren — filter op trefwoord, CPV-code, waardebereik of deadline.",
+    "description": "Eenmalige zoekopdrachten over alle werkelijk open Belgische opdrachten, los van uw opgeslagen sectoren — filter op trefwoord, CPV-code, waardebereik of deadline.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
     "noResults": "Geen berichten kwamen overeen met die filters.",
@@ -353,7 +391,7 @@
     "signUp": "Registreren",
     "eyebrow": "Prijzen",
     "heading": "Eenvoudige, duidelijke plannen",
-    "subheading": "Begin gratis, upgrade wanneer je serieus wilt gaan bieden.",
+    "subheading": "Begin gratis, upgrade wanneer u serieus wilt gaan bieden.",
     "mostPopular": "Meest gekozen",
     "perMonth": "/maand",
     "getStarted": "Aan de slag",
@@ -418,17 +456,17 @@
   "BillingSuccessPage": {
     "eyebrow": "Abonnement",
     "heading": "Betaling geslaagd",
-    "body": "Bedankt — je abonnement is nu actief. Het kan enkele seconden duren voor je account bijwerkt.",
+    "body": "Bedankt — uw abonnement is nu actief. Het kan enkele seconden duren voor uw account bijwerkt.",
     "cta": "Naar facturatie"
   },
   "BillingPage": {
     "heading": "Facturatie",
     "currentPlan": "Huidig plan",
     "renewsOn": "Verlengt op {date}",
-    "canceled": "Je abonnement is opgezegd. Je hebt toegang tot het Gratis plan.",
-    "paymentFailedHeading": "Je laatste betaling is mislukt",
-    "paymentFailedBody": "Werk je betaalmethode bij om je huidige plan te behouden.",
-    "paymentFailedBodyWithDate": "Werk je betaalmethode bij vóór {date} om je huidige plan te behouden — daarna word je overgezet naar Gratis.",
+    "canceled": "Uw abonnement is opgezegd. U hebt toegang tot het Gratis plan.",
+    "paymentFailedHeading": "Uw laatste betaling is mislukt",
+    "paymentFailedBody": "Werk uw betaalmethode bij om uw huidige plan te behouden.",
+    "paymentFailedBodyWithDate": "Werk uw betaalmethode bij vóór {date} om uw huidige plan te behouden — daarna wordt u overgezet naar Gratis.",
     "tierNames": {
       "FREE": "Gratis",
       "PRO": "Pro",
@@ -442,12 +480,12 @@
     "refundPolicy": "Terugbetalingsbeleid",
     "tokensHeading": "Gratis tokens",
     "tokensRemaining": "{count, plural, one {# token} other {# tokens}} resterend",
-    "tokensResetInfo": "Je saldo wordt elke maand weer aangevuld tot 250 tokens als het daaronder komt. Upgrade naar Pro of Premium voor onbeperkt gebruik."
+    "tokensResetInfo": "Uw saldo wordt elke maand weer aangevuld tot 250 tokens als het daaronder komt. Upgrade naar Pro of Premium voor onbeperkt gebruik."
   },
   "WorkflowPage": {
-    "eyebrow": "Jouw pipeline",
+    "eyebrow": "Uw pipeline",
     "heading": "Workflow",
-    "description": "Volg opdrachten waar je achteraan zit, van eerste screening tot indiening. Voeg opdrachten toe vanuit Opportuniteiten of de detailpagina van een opdracht."
+    "description": "Volg opdrachten waar u achteraan zit, van eerste screening tot indiening. Voeg opdrachten toe vanuit Opportuniteiten of de detailpagina van een opdracht."
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Terug naar open opdrachten",
@@ -485,8 +523,8 @@
     "readingTender": "Opdracht wordt gelezen…",
     "runCheck": "Geschiktheidscontrole uitvoeren",
     "keyRequirements": "Belangrijkste vereisten",
-    "loginRequired": "Meld je gratis aan om de geschiktheidscontrole uit te voeren.",
-    "outOfTokens": "Je gratis tokens voor deze maand zijn op.",
+    "loginRequired": "Meld u gratis aan om de geschiktheidscontrole uit te voeren.",
+    "outOfTokens": "Uw gratis tokens voor deze maand zijn op.",
     "logIn": "Inloggen",
     "upgrade": "Upgraden"
   },
@@ -498,7 +536,7 @@
     "relevantEvidenceFound": "Relevant bewijs gevonden",
     "findingEvidence": "Bewijs zoeken…",
     "findEvidence": "Bewijs zoeken",
-    "clickFindEvidenceHint": "Klik op Bewijs zoeken om te zien welke diensten, certificeringen en referenties van je bedrijf relevant zijn voor deze vereiste.",
+    "clickFindEvidenceHint": "Klik op Bewijs zoeken om te zien welke diensten, certificeringen en referenties van uw bedrijf relevant zijn voor deze vereiste.",
     "noRelevantEvidence": "Geen relevant bedrijfsbewijs gevonden voor deze vereiste.",
     "evidenceMeta": "({type} · {relevance} gelijkenis)",
     "evidenceUsedInDraft": "Bewijs gebruikt in huidig concept",
@@ -510,7 +548,7 @@
     "acceptedCheck": "Geaccepteerd ✓",
     "unsupportedClaims": "{count, plural, one {Onderbouwde claim} other {Onderbouwde claims}}",
     "dismiss": "Negeren",
-    "unsupportedClaimsHint": "Dit kon niet worden geverifieerd aan de hand van je bedrijfskennisbank. Bewerk het concept om het te verwijderen of te herformuleren, of voeg hierboven ondersteunend bewijs toe en genereer opnieuw.",
+    "unsupportedClaimsHint": "Dit kon niet worden geverifieerd aan de hand van uw bedrijfskennisbank. Bewerk het concept om het te verwijderen of te herformuleren, of voeg hierboven ondersteunend bewijs toe en genereer opnieuw.",
     "acceptDraft": "Concept accepteren",
     "edit": "Bewerken",
     "rechecking": "Opnieuw aan het controleren…",
@@ -536,7 +574,7 @@
     "backToBid": "Terug naar offerte",
     "heading": "Controle voor indiening",
     "untitledTender": "Naamloze opdracht",
-    "noReviewYet": "Er is nog geen controle uitgevoerd. Deze controleert je vereistenlijst, documentenlijst en opgestelde antwoorden op alles wat indiening zou kunnen blokkeren.",
+    "noReviewYet": "Er is nog geen controle uitgevoerd. Deze controleert uw vereistenlijst, documentenlijst en opgestelde antwoorden op alles wat indiening zou kunnen blokkeren.",
     "readyToSubmit": "Klaar om in te dienen",
     "notReadyToSubmit": "Nog niet klaar om in te dienen",
     "compliantPercent": "{score}% conform",
@@ -620,7 +658,7 @@
     "duration": "Duur",
     "viewOriginalPdf": "Bekijk origineel pdf",
     "confidence": "Betrouwbaarheid: {level}",
-    "addCompanyProfileBefore": "Voeg je",
+    "addCompanyProfileBefore": "Voeg uw",
     "companyProfile": "bedrijfsprofiel",
     "addCompanyProfileAfter": "toe om een matchscore en bied/niet-bieden-aanbeveling voor deze opdracht te krijgen.",
     "goToBidWorkspace": "Naar offerteruimte",
@@ -630,7 +668,7 @@
     "companyStatus": "Status bedrijf:",
     "possibleMitigation": "Mogelijke oplossing:",
     "evidenceCoverage": "Bewijsdekking",
-    "notMappedYet": "Nog niet in kaart gebracht — klik op Bewijs koppelen aan vereisten om te zien welke diensten, certificeringen en referenties van je bedrijf elke vereiste dekken.",
+    "notMappedYet": "Nog niet in kaart gebracht — klik op Bewijs koppelen aan vereisten om te zien welke diensten, certificeringen en referenties van uw bedrijf elke vereiste dekken.",
     "whyThisMatches": "Waarom dit matcht",
     "positiveFactors": "Positieve factoren",
     "risks": "Risico's",
@@ -651,7 +689,7 @@
   "MyTendersList": {
     "eyebrow": "Geüploade opdrachten · AI-analyse",
     "heading": "Opdrachten",
-    "description": "Upload een opdracht-pdf voor een gestructureerd overzicht: gunningscriteria, vereisten en een bied/niet-bieden-aanbeveling gebaseerd op je bedrijfsprofiel.",
+    "description": "Upload een opdracht-pdf voor een gestructureerd overzicht: gunningscriteria, vereisten en een bied/niet-bieden-aanbeveling gebaseerd op uw bedrijfsprofiel.",
     "empty": "Nog geen opdrachten geüpload. Upload een pdf om te beginnen.",
     "analyzing": "Bezig met analyseren…",
     "deadline": "Deadline",
@@ -702,7 +740,7 @@
   },
   "DocumentsSection": {
     "heading": "Documenten",
-    "subheading": "Ondersteunend bewijs (certificaten, brochures, beleidsdocumenten) dat je kan koppelen aan certificeringen en referenties hierboven.",
+    "subheading": "Ondersteunend bewijs (certificaten, brochures, beleidsdocumenten) dat u kunt koppelen aan certificeringen en referenties hierboven.",
     "nothingUploaded": "Nog niets geüpload.",
     "remove": "Verwijderen",
     "uploading": "Bezig met uploaden…",
@@ -711,8 +749,8 @@
   "CompanyPage": {
     "eyebrow": "Kennisbank",
     "heading": "Bedrijf",
-    "description": "Wat wij echt weten over jouw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
-    "unlockHint": "Sla je bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen."
+    "description": "Wat wij echt weten over uw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
+    "unlockHint": "Sla uw bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen."
   },
   "CompanyCoreForm": {
     "nameRequired": "Bedrijfsnaam is verplicht.",
@@ -737,16 +775,16 @@
     "saved": "Opgeslagen ✓"
   },
   "Signup": {
-    "hydrationFailedBanner": "Een deel van deze pagina kon niet laden, waardoor je aanmelding niet is doorgekomen en er niets is opgeslagen. Dit komt meestal door een advertentie-/contentblokkering of een trage verbinding. Schakel eventuele blokkeringen voor deze site uit, ververs de pagina en probeer het opnieuw.",
+    "hydrationFailedBanner": "Een deel van deze pagina kon niet laden, waardoor uw aanmelding niet is doorgekomen en er niets is opgeslagen. Dit komt meestal door een advertentie-/contentblokkering of een trage verbinding. Schakel eventuele blokkeringen voor deze site uit, ververs de pagina en probeer het opnieuw.",
     "pickSector": "Kies minstens één sector.",
-    "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat je bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
-    "checkEmailHeading": "Controleer je e-mail",
-    "checkEmailBody": "We hebben een bevestigingslink gestuurd naar {email}. Klik erop en log dan in — je bedrijfsprofiel is al opgeslagen.",
-    "checkEmailPlanNote": "Na bevestiging ga je meteen door naar de afrekening voor {plan}.",
+    "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat uw bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
+    "checkEmailHeading": "Controleer uw e-mail",
+    "checkEmailBody": "We hebben een bevestigingslink gestuurd naar {email}. Klik erop en log dan in — uw bedrijfsprofiel is al opgeslagen.",
+    "checkEmailPlanNote": "Na bevestiging gaat u meteen door naar de afrekening voor {plan}.",
     "backToLogin": "Terug naar inloggen",
-    "heading": "Maak je account aan",
-    "signingUpFor": "Je meldt je aan voor {plan} — {price}/maand",
-    "subheading": "Vertel ons over je bedrijf — dit bepaalt welke opdrachten je ziet en de matchscore van elke opdracht.",
+    "heading": "Maak uw account aan",
+    "signingUpFor": "U meldt u aan voor {plan} — {price}/maand",
+    "subheading": "Vertel ons over uw bedrijf — dit bepaalt welke opdrachten u ziet en de matchscore van elke opdracht.",
     "email": "E-mail",
     "password": "Wachtwoord",
     "passwordPlaceholder": "Minstens 6 tekens",
@@ -756,7 +794,7 @@
     "addressPlaceholder": "bv. Antwerpen",
     "companySize": "Bedrijfsgrootte",
     "preferNotToSay": "Liever niet zeggen",
-    "descriptionLabel": "Wat doet je bedrijf?",
+    "descriptionLabel": "Wat doet uw bedrijf?",
     "descriptionPlaceholder": "Een paar zinnen volstaan — dit bepaalt de matchscore van elke opdracht.",
     "sectors": "Sectoren",
     "agreeToTerms": "Ik ga akkoord met de <terms>Gebruiksvoorwaarden</terms> en <privacy>Privacyverklaring</privacy>.",
@@ -764,7 +802,7 @@
     "professionalEmailRequired": "Voor het gratis plan is een professioneel/bedrijfs-e-mailadres vereist — persoonlijke adressen zoals Gmail of Outlook worden niet geaccepteerd. Kies een betaald plan om met elk e-mailadres te registreren.",
     "creatingAccount": "Account wordt aangemaakt…",
     "signUp": "Registreren",
-    "alreadyHaveAccount": "Heb je al een account?",
+    "alreadyHaveAccount": "Hebt u al een account?",
     "logIn": "Inloggen",
     "viewPricing": "Bekijk prijzen"
   },
@@ -776,7 +814,7 @@
       "fileTooLarge": "Bestand is groter dan 20 MB.",
       "aiAnalysisFailed": "AI-analyse mislukt. Probeer het zo opnieuw.",
       "tenderNotFound": "Opdracht niet gevonden.",
-      "needCompanyProfile": "Voeg je bedrijfsprofiel toe om verder te gaan.",
+      "needCompanyProfile": "Voeg uw bedrijfsprofiel toe om verder te gaan.",
       "couldNotMapEvidence": "Kon bewijs momenteel niet koppelen. Probeer het zo opnieuw.",
       "bidNotFound": "Offerte niet gevonden.",
       "missingTenderId": "Opdracht ontbreekt.",
@@ -796,11 +834,11 @@
       "checkoutFailed": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw.",
       "noBillingAccount": "Nog geen facturatieaccount — upgrade eerst naar een betaald plan.",
       "portalFailed": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw.",
-      "insufficientTokens": "Je gratis tokens voor deze maand zijn op. Upgrade voor onbeperkt gebruik."
+      "insufficientTokens": "Uw gratis tokens voor deze maand zijn op. Upgrade voor onbeperkt gebruik."
     },
     "auth": {
       "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",
-      "emailNotConfirmed": "Bevestig je e-mailadres voordat je inlogt.",
+      "emailNotConfirmed": "Bevestig uw e-mailadres voordat u inlogt.",
       "userAlreadyRegistered": "Er bestaat al een account met dit e-mailadres.",
       "passwordTooShort": "Wachtwoord is te kort.",
       "invalidEmail": "Vul een geldig e-mailadres in.",
@@ -810,7 +848,7 @@
   "BidsList": {
     "eyebrow": "Offerteruimte",
     "title": "Offertes",
-    "description": "Opdrachten waarvoor je actief een offerte voorbereidt. Start er een vanaf de pagina van een klaarstaande opdracht.",
+    "description": "Opdrachten waarvoor u actief een offerte voorbereidt. Start er een vanaf de pagina van een klaarstaande opdracht.",
     "emptyBefore": "Nog geen offertes. Open een opdracht onder",
     "tenders": "Opdrachten",
     "emptyAfter": "en klik op Start offerte.",
@@ -818,7 +856,7 @@
     "deadline": "Deadline"
   },
   "Workflow": {
-    "emptyBefore": "Nog niets in je workflow. Voeg een opdracht toe vanuit",
+    "emptyBefore": "Nog niets in uw workflow. Voeg een opdracht toe vanuit",
     "opportunities": "Opportuniteiten",
     "emptyAfter": "om ze hier te volgen.",
     "nothingHere": "Niets hier.",
@@ -967,19 +1005,196 @@
     "bubbleLabel": "Chatondersteuning openen",
     "title": "TenderProc-ondersteuning",
     "greeting": "Hallo! Ik ben de TenderProc-assistent. Stel me gerust een vraag over tender matching, abonnementen of facturatie.",
-    "placeholder": "Typ je bericht…",
+    "placeholder": "Typ uw bericht…",
     "send": "Verzenden",
     "sending": "Verzenden…",
     "close": "Chat sluiten",
     "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur.",
-    "escalateEmailPlaceholder": "Je e-mailadres",
+    "escalateEmailPlaceholder": "Uw e-mailadres",
     "escalateSend": "Naar een medewerker sturen",
     "emailSent": "Bedankt — we reageren binnenkort per e-mail.",
     "emailError": "Verzenden mislukt. Probeer het opnieuw.",
     "errorFallback": "Sorry, er ging iets mis aan onze kant. Probeer het opnieuw, of mail hieronder een medewerker.",
-    "loginRequired": "Meld je gratis aan om met support te chatten.",
-    "outOfTokens": "Je gratis tokens voor deze maand zijn op.",
+    "loginRequired": "Meld u gratis aan om met support te chatten.",
+    "outOfTokens": "Uw gratis tokens voor deze maand zijn op.",
     "logIn": "Inloggen",
     "upgrade": "Upgraden"
+  },
+  "Terms": {
+    "metaTitle": "Gebruiksvoorwaarden — TenderProc",
+    "title": "Gebruiksvoorwaarden",
+    "intro": "Deze gebruiksvoorwaarden (de \"<strong>Voorwaarden</strong>\") regelen de toegang tot en het gebruik van TenderProc (de \"<strong>Dienst</strong>\"), uitgebaat door <strong>{entityName}</strong>, ondernemingsnummer / fiscaal nummer {companyNumber} (\"<strong>TenderProc</strong>\", \"wij\", \"ons\"). Door een account aan te maken of de Dienst te gebruiken, aanvaardt u deze Voorwaarden. Gaat u niet akkoord, gebruik de Dienst dan niet.",
+    "s1": {
+      "h": "1. Wat TenderProc is",
+      "p1": "TenderProc is een B2B-softwaredienst die bedrijven helpt om overheidsopdrachten in België te ontdekken, te screenen en er offertes voor voor te bereiden. De Dienst haalt aankondigingen uit publieke bronnen naar boven, genereert AI-ondersteunde matchscores, geschiktheidscontroles en concept-offertes, en biedt een werkruimte om offertes op te volgen van screening tot indiening.",
+      "p2": "<strong>De Dienst is een hulpmiddel bij besluitvorming, geen vervanging van uw eigen beoordeling of professioneel advies.</strong> Matchscores, geschiktheidscontroles, geëxtraheerde vereisten en door AI opgestelde antwoorden zijn schattingen die door geautomatiseerde verwerking worden gegenereerd en kunnen onvolledig, verouderd of onjuist zijn. U bent zelf en als enige verantwoordelijk voor het onafhankelijk verifiëren van de opdrachtvereisten, termijnen, geschiktheidscriteria en de inhoud van alles wat u bij een aanbestedende overheid indient, vóór u het indient. TenderProc is niet aansprakelijk voor een gemiste termijn, een uitgesloten offerte of een verloren opdracht die het gevolg is van het vertrouwen op de Dienst zonder die onafhankelijke verificatie."
+    },
+    "s2": {
+      "h": "2. Accounts",
+      "p1": "U moet correcte gegevens verstrekken bij het aanmaken van een account en uw inloggegevens vertrouwelijk houden. U bent verantwoordelijk voor alle activiteiten onder uw account. De Dienst is bedoeld voor gebruik door bedrijven en professionals die handelen in een professionele hoedanigheid, niet door consumenten die handelen voor zuiver persoonlijke doeleinden. U moet gemachtigd zijn om te handelen namens het bedrijf dat u registreert."
+    },
+    "s3": {
+      "h": "3. Abonnementen, facturatie en opzegging",
+      "p1": "TenderProc biedt een gratis abonnement en betaalde Pro/Premium-abonnementen, maandelijks gefactureerd. Betaalde abonnementen worden verkocht en geïnd door <strong>Paddle</strong>, onze betaalprovider, die optreedt als <strong>Merchant of Record</strong> voor deze transacties — Paddle is de verkoper van record, verwerkt de betalingen, en int en draagt de toepasselijke btw/verkoopbelasting af. Uw aankoop is ook onderworpen aan Paddles eigen koopvoorwaarden, die u bij het afrekenen worden voorgelegd.",
+      "p2": "Abonnementen worden elke maand automatisch verlengd tot opzegging. U kunt op elk moment opzeggen via de Facturatiepagina in de app; opzegging stopt toekomstige verlengingen, maar beëindigt uw lopende betaalde periode niet vroegtijdig — u behoudt toegang tot het betaalde niveau tot het verstrijkt, waarna uw account overgaat naar het gratis abonnement. Zie ons <refundLink>Terugbetalingsbeleid</refundLink> voor hoe terugbetalingen worden behandeld.",
+      "p3": "Als een betaling mislukt, kunnen wij uw account in een respijtperiode plaatsen waarin toegang tot het betaalde niveau blijft bestaan terwijl u uw betaalmethode bijwerkt; wordt de betaling niet geregeld, dan gaat uw account over naar het gratis abonnement."
+    },
+    "s4": {
+      "h": "4. Aanvaardbaar gebruik",
+      "intro": "U gaat ermee akkoord om niet:",
+      "li1": "de Dienst te gebruiken in strijd met toepasselijke wetgeving, met inbegrip van de wetgeving overheidsopdrachten;",
+      "li2": "opdrachtgegevens of andere inhoud van de Dienst te scrapen, systematisch te extraheren, door te verkopen of te herdistribueren, behalve via functies die wij daarvoor aanbieden;",
+      "li3": "te proberen gebruikslimieten van uw abonnement te omzeilen, of één account te delen tussen niet-gerelateerde bedrijven;",
+      "li4": "inhoud te uploaden waarvoor u niet het recht hebt, of die inbreuk maakt op de rechten van een derde;",
+      "li5": "de werking van de Dienst te verstoren, de beveiliging ervan te testen, of ze te gebruiken om een concurrerend product te bouwen;",
+      "li6": "AI-gegenereerde inhoud van de Dienst zonder nazicht voor te stellen als onafhankelijk geverifieerd feit in een ingediende offerte."
+    },
+    "s5": {
+      "h": "5. Uw inhoud",
+      "p1": "U behoudt de eigendom van de bedrijfsinformatie, documenten en andere inhoud die u uploadt of invoert (\"<strong>Uw Inhoud</strong>\"). U verleent ons een licentie om Uw Inhoud te hosten, te verwerken en te analyseren — met inbegrip van het versturen van relevante fragmenten naar onze AI-verwerkingsprovider — uitsluitend om de Dienst voor u te leveren en te verbeteren. Wij verkopen Uw Inhoud niet en gebruiken ze niet om modellen van derden te trainen, behalve wat beschreven staat in onze <privacyLink>Privacyverklaring</privacyLink>. U bent verantwoordelijk voor het hebben van de rechten op alles wat u uploadt, met inbegrip van referenties, certificaten of documenten van derden die onderaannemers of partners beschrijven."
+    },
+    "s6": {
+      "h": "6. Opdrachtgegevens van derden",
+      "p1": "Aankondigingen en gunningsgegevens in de Dienst zijn afkomstig uit publieke databanken (waaronder TED van de EU en het Belgische e-Procurement/BOSA-platform). Wij hebben geen controle over deze bronnen en garanderen niet dat ze correct, volledig of actueel zijn. Controleer opdrachtdetails altijd aan de hand van de officiële aankondiging en het eigen kanaal van de aanbestedende overheid vooraleer u erop handelt."
+    },
+    "s7": {
+      "h": "7. Intellectuele eigendom",
+      "p1": "De Dienst, de bijhorende software, het ontwerp en het TenderProc-merk zijn eigendom van {entityName} of haar licentiegevers en worden beschermd door het recht op intellectuele eigendom. Niets in deze Voorwaarden draagt de eigendom van de Dienst aan u over; u krijgt een beperkt, niet-exclusief en niet-overdraagbaar recht om ze te gebruiken in overeenstemming met deze Voorwaarden."
+    },
+    "s8": {
+      "h": "8. Vrijwaringen",
+      "p1": "De Dienst wordt geleverd \"zoals ze is\" en \"zoals beschikbaar\". Voor zover wettelijk toegestaan wijzen wij alle garanties af, uitdrukkelijk of impliciet, met inbegrip van geschiktheid voor een bepaald doel en niet-inbreuk. Wij garanderen niet dat de Dienst ononderbroken of foutloos zal werken, of dat AI-resultaten accuraat zullen zijn. Niets in deze sectie beperkt een garantie of recht dat wettelijk niet kan worden uitgesloten."
+    },
+    "s9": {
+      "h": "9. Beperking van aansprakelijkheid",
+      "p1": "Voor zover wettelijk toegestaan is TenderProc niet aansprakelijk voor indirecte, incidentele of gevolgschade, of gederfde winst, met inbegrip van een verloren opdracht, offerte of inkomsten, die voortvloeit uit het gebruik van de Dienst. Onze totale aansprakelijkheid voor een vordering die voortvloeit uit deze Voorwaarden of de Dienst is beperkt tot het bedrag dat u ons hebt betaald in de 12 maanden voorafgaand aan het ontstaan van de vordering. Deze sectie beperkt geen aansprakelijkheid die niet kan worden uitgesloten onder toepasselijk recht (bijvoorbeeld aansprakelijkheid voor onze eigen grove nalatigheid, opzettelijk wangedrag, of overlijden of lichamelijk letsel dat wij veroorzaken)."
+    },
+    "s10": {
+      "h": "10. Beëindiging",
+      "p1": "U kunt op elk moment stoppen met het gebruik van de Dienst en uw account verwijderen. Wij kunnen uw account schorsen of beëindigen wegens schending van deze Voorwaarden, wanbetaling, of indien de wet dit vereist, met kennisgeving waar redelijkerwijs mogelijk. Bepalingen die naar hun aard beëindiging moeten overleven (eigendom, vrijwaringen, beperking van aansprakelijkheid, toepasselijk recht) blijven van kracht."
+    },
+    "s11": {
+      "h": "11. Wijzigingen aan deze Voorwaarden",
+      "p1": "Wij kunnen deze Voorwaarden van tijd tot tijd bijwerken. Bij een materiële wijziging zullen wij redelijke inspanningen leveren om u hiervan op de hoogte te brengen (bijvoorbeeld per e-mail of via een melding in de app) voordat ze in werking treedt. Voortgezet gebruik van de Dienst na de inwerkingtreding van een wijziging betekent dat u de bijgewerkte Voorwaarden aanvaardt."
+    },
+    "s12": {
+      "h": "12. Toepasselijk recht",
+      "p1": "Deze Voorwaarden worden beheerst door het Belgische recht, ongeacht regels van conflictenrecht. Elk geschil dat niet minnelijk wordt opgelost, wordt onderworpen aan de exclusieve bevoegdheid van de Belgische rechtbanken, behalve wanneer het toepasselijke consumentenrecht u het recht geeft om een vordering in te stellen in uw eigen woonplaats."
+    },
+    "s13": {
+      "h": "13. Contact",
+      "p1": "Vragen over deze Voorwaarden: <email>{emailAddress}</email>."
+    }
+  },
+  "Privacy": {
+    "metaTitle": "Privacyverklaring — TenderProc",
+    "title": "Privacyverklaring",
+    "intro": "Deze verklaring legt uit welke persoonsgegevens TenderProc verzamelt, waarom, en welke rechten u daarop hebt op grond van de Algemene Verordening Gegevensbescherming (AVG) van de EU en de Belgische gegevensbeschermingswetgeving. Ze is van toepassing op bezoekers van onze website en gebruikers van de TenderProc-app.",
+    "s1": {
+      "h": "1. Wie verantwoordelijk is voor uw gegevens",
+      "p1": "De verwerkingsverantwoordelijke is <strong>{entityName}</strong>, ondernemingsnummer / fiscaal nummer {companyNumber}. Voor vragen over deze verklaring of om uw rechten uit te oefenen, contacteer ons via <email>{emailAddress}</email>.",
+      "p2": "Wij zijn gevestigd buiten de Europese Unie, maar bieden de Dienst aan bedrijven in België en de EU aan, waardoor deze verklaring en de AVG zelf toch van toepassing zijn op hoe wij uw gegevens verwerken (art. 3, lid 2, AVG)."
+    },
+    "s2": {
+      "h": "2. Wat wij verzamelen",
+      "p1": "<strong>Accountgegevens:</strong> uw e-mailadres en wachtwoord (gehasht opgeslagen door onze authenticatieprovider, Supabase — wij zien het wachtwoord nooit in leesbare vorm).",
+      "p2": "<strong>Bedrijfsprofiel:</strong> bedrijfsnaam, adres, grootte, sectoren, beschrijving, website, aantal werknemers, bediende regio’s en talen — verzameld bij registratie en aanpasbaar op uw Bedrijfspagina.",
+      "p3": "<strong>Kennisbank van uw bedrijf:</strong> de diensten die u aanbiedt, certificaten, eerdere referenties (die contractwaarden kunnen bevatten) en ondersteunende documenten die u uploadt. Dit wordt gebruikt om matchscores en geschiktheidscontroles te genereren en — alleen als u dat kiest — als bronmateriaal voor door AI opgestelde offerteantwoorden.",
+      "p4": "<strong>Opdrachten en offertes:</strong> opdrachten die u uploadt of volgt, de vereisten en gunningscriteria die wij eruit halen, uw offertewerkruimtegegevens (status, checklists, geüploade offertedocumenten, door AI opgestelde antwoordtekst) en, indien u dit registreert, de uitkomst van een offerte, die commercieel gevoelige cijfers kan bevatten zoals de winnende prijs of uw eigen score.",
+      "p5": "<strong>Technische gegevens:</strong> standaard verzoekgegevens (IP-adres, browser-useragent) die ontstaan door het gebruik van een webapp, sessiecookies om u aangemeld te houden, en een cookie die uw taalvoorkeur onthoudt. Wij gebruiken geen advertentie- of analytische trackers van derden."
+    },
+    "s3": {
+      "h": "3. Waarom wij ze verwerken, en op welke rechtsgrond",
+      "li1": "<strong>Levering van de Dienst</strong> — het aanmaken van uw account, het matchen van opdrachten met uw profiel, het uitvoeren van geschiktheidscontroles, het genereren van conceptantwoorden en het beheren van uw offertewerkruimte. Rechtsgrond: uitvoering van onze overeenkomst met u (art. 6, lid 1, b), AVG).",
+      "li2": "<strong>Facturatie</strong> — verwerking van uw abonnement via Paddle, en het bijhouden van registers vereist door boekhoud- en belastingwetgeving. Rechtsgrond: uitvoering van de overeenkomst en wettelijke verplichting (art. 6, lid 1, b) en c), AVG).",
+      "li3": "<strong>Servicemeldingen</strong> — het versturen van de opdrachtendigest per e-mail voor de door u geselecteerde sectoren. Rechtsgrond: gerechtvaardigd belang bij het aanbieden van de functie die u hebt ingesteld (art. 6, lid 1, f), AVG); u kunt dit op elk moment uitschakelen in uw voorkeuren.",
+      "li4": "<strong>Beveiliging en misbruikpreventie</strong> — het beschermen van accounts en de Dienst tegen ongeoorloofde toegang. Rechtsgrond: gerechtvaardigd belang (art. 6, lid 1, f), AVG).",
+      "li5": "<strong>Wettelijke naleving</strong> — het beantwoorden van rechtmatige verzoeken, fiscale en boekhoudkundige registratie. Rechtsgrond: wettelijke verplichting (art. 6, lid 1, c), AVG).",
+      "p1": "AI-ondersteunde resultaten (matchscores, geschiktheidscontroles, opgestelde tekst) worden gegenereerd om u te helpen, niet om beslissingen over u te nemen — TenderProc gebruikt geen geautomatiseerde verwerking om beslissingen te nemen die rechtsgevolgen hebben of u op vergelijkbare wijze wezenlijk treffen in de zin van art. 22 AVG. Een mens — u — beoordeelt en beslist altijd voordat iets bij een aanbestedende overheid wordt ingediend."
+    },
+    "s4": {
+      "h": "4. Met wie wij ze delen",
+      "intro": "Wij delen persoonsgegevens met de volgende verwerkers, elk gebonden door een verwerkersovereenkomst, en enkel voor zover nodig om de Dienst te leveren:",
+      "li1": "<strong>Supabase</strong> — host onze database, authenticatie en bestandsopslag. Projectregio: {supabaseRegion}.",
+      "li2": "<strong>Anthropic</strong> — verwerkt opdracht- en bedrijfstekst die u indient om matchscores, geschiktheidscontroles en conceptantwoorden te genereren. Anthropic is gevestigd in de Verenigde Staten; overdrachten zijn gedekt door standaardcontractbepalingen of een gelijkwaardige waarborg.",
+      "li3": "<strong>Resend</strong> — verzendt de opdrachtendigest en andere transactionele e-mails.",
+      "li4": "<strong>Paddle</strong> — verwerkt betalingen en treedt op als Merchant of Record voor betaalde abonnementen; Paddle ontvangt de facturatiegegevens die nodig zijn om uw betaling te verwerken (Paddle, niet wij, bewaart uw kaartgegevens).",
+      "p1": "Opdracht- en gunningsgegevens die de andere richting op stromen — van de TED-databank van de EU en het Belgische e-Procurement/BOSA-platform naar TenderProc — zijn openbare aanbestedingsgegevens, geen persoonsgegevens van u; wij sturen uw gegevens niet naar deze bronnen.",
+      "p2": "Wij verkopen geen persoonsgegevens en delen ze niet met derden voor hun eigen marketingdoeleinden."
+    },
+    "s5": {
+      "h": "5. Internationale doorgiften",
+      "p1": "Uw gegevens verlaten de EU/EER hier op meer dan één manier, en wij willen daar rechtstreeks over zijn in plaats van het te verbergen: onze database en bestandsopslag (Supabase) worden gehost in {supabaseRegion}, onze AI-verwerkingsprovider (Anthropic) is gevestigd in de Verenigde Staten, en {entityName} zelf, als verwerkingsverantwoordelijke, is gevestigd buiten de EU/EER. Voor elk van deze doorgiften vertrouwen wij op de standaardcontractbepalingen van de Europese Commissie of een ander wettig doorgiftemechanisme erkend onder hoofdstuk V van de AVG om uw gegevens te beschermen. U kunt ons om een kopie van de relevante waarborg vragen door contact met ons op te nemen via <email>{emailAddress}</email>."
+    },
+    "s6": {
+      "h": "6. Hoelang wij ze bewaren",
+      "p1": "Wij bewaren uw account- en werkruimtegegevens zolang uw account actief is. Als u uw account verwijdert, verwijderen of anonimiseren wij uw persoonsgegevens binnen een redelijke termijn, behalve gegevens die wij langer moeten bewaren — bijvoorbeeld facturatie- en factuurregisters, die wij bewaren gedurende de termijn vereist door de Belgische boekhoud- en belastingwetgeving."
+    },
+    "s7": {
+      "h": "7. Uw rechten",
+      "intro": "Onder de AVG hebt u het recht om:",
+      "li1": "toegang te krijgen tot de persoonsgegevens die wij over u bewaren;",
+      "li2": "onjuiste gegevens te laten corrigeren;",
+      "li3": "ons te vragen uw gegevens te verwijderen (onder voorbehoud van onze wettelijke bewaarverplichtingen, bv. voor facturen);",
+      "li4": "bepaalde verwerkingen te beperken of daartegen bezwaar te maken;",
+      "li5": "uw gegevens in een overdraagbaar formaat te ontvangen;",
+      "li6": "uw toestemming op elk moment in te trekken, wanneer de verwerking op toestemming is gebaseerd;",
+      "li7": "een klacht in te dienen bij de Belgische Gegevensbeschermingsautoriteit (Autorité de protection des données / Gegevensbeschermingsautoriteit) of uw eigen EU-toezichthoudende autoriteit.",
+      "p1": "Om een van deze rechten uit te oefenen, contacteer ons via <email>{emailAddress}</email>. Wij kunnen uw identiteit moeten verifiëren voordat wij op een verzoek reageren."
+    },
+    "s8": {
+      "h": "8. Cookies",
+      "p1": "Wij gebruiken enkel strikt noodzakelijke cookies: één om u aangemeld te houden (geplaatst door Supabase-authenticatie) en één om uw taalvoorkeur te onthouden. Wij gebruiken geen advertentie- of analytische cookies van derden. Omdat deze cookies strikt noodzakelijk zijn voor de werking van de Dienst, tonen wij hiervoor geen cookiebanner."
+    },
+    "s9": {
+      "h": "9. Beveiliging",
+      "p1": "Gegevens onderweg zijn versleuteld (HTTPS). Toegang tot uw gegevens binnen de Dienst is beperkt tot uw eigen account via row-level security die op databaseniveau wordt afgedwongen — standaard kan geen enkel ander klantaccount uw gegevens opvragen. Toegang door TenderProc-medewerkers is beperkt tot wat nodig is voor ondersteuning en de werking van de Dienst."
+    },
+    "s10": {
+      "h": "10. Kinderen",
+      "p1": "TenderProc is een business-to-businessdienst en is niet gericht op, of bewust in gebruik door, kinderen."
+    },
+    "s11": {
+      "h": "11. Wijzigingen aan deze verklaring",
+      "p1": "Wij kunnen deze verklaring van tijd tot tijd bijwerken. Bij een materiële wijziging zullen wij redelijke inspanningen leveren om u hiervan op de hoogte te brengen voordat ze in werking treedt."
+    }
+  },
+  "Refund": {
+    "metaTitle": "Terugbetalingsbeleid — TenderProc",
+    "title": "Terugbetalingsbeleid",
+    "s1": {
+      "h": "1. Hoe facturatie werkt",
+      "p1": "Het gratis abonnement wordt nooit gefactureerd. Pro en Premium zijn maandelijkse abonnementen, vooraf gefactureerd en verwerkt door <strong>Paddle</strong>, onze betaalprovider, die optreedt als <strong>Merchant of Record</strong> voor deze aankopen — Paddle is de verkoper van record op uw ontvangstbewijs en de partij die de betaling daadwerkelijk verwerkt."
+    },
+    "s2": {
+      "h": "2. Ons terugbetalingsbeleid",
+      "p1": "Wij bieden geen automatische terugbetalingen aan. Terugbetalingsverzoeken worden <strong>per geval</strong> beoordeeld — mail ons op <email>{emailAddress}</email> met uw accounte-mailadres en de reden van uw verzoek, en wij bekijken het en nemen contact met u op. Wij staan doorgaans open voor verzoeken die snel worden ingediend (bijvoorbeeld kort na een ongewenste verlenging, of wanneer de Dienst voor u echt niet werkte), en wij corrigeren altijd onze eigen fouten — zie hieronder."
+    },
+    "s3": {
+      "h": "3. Kosten die wij altijd terugbetalen",
+      "li1": "dubbele afschrijvingen voor dezelfde factureringsperiode;",
+      "li2": "afschrijvingen veroorzaakt door een geverifieerde technische fout onzerzijds;",
+      "li3": "elke afschrijving die eigenlijk helemaal niet had mogen plaatsvinden — bijvoorbeeld facturatie nadat u al had opgezegd."
+    },
+    "s4": {
+      "h": "4. Opzeggen in plaats van terugbetaling",
+      "p1": "U kunt een abonnement op elk moment opzeggen via de Facturatiepagina in de app. Opzegging stopt toekomstige verlengingen — uw huidige betaalde periode wordt niet terugbetaald, maar u behoudt toegang tot het betaalde niveau tot het einde ervan, en daarna wordt u niet meer gefactureerd."
+    },
+    "s5": {
+      "h": "5. Hoe een goedgekeurde terugbetaling wordt uitbetaald",
+      "p1": "Goedgekeurde terugbetalingen worden door Paddle verwerkt en teruggestort naar uw oorspronkelijke betaalmethode. Afhankelijk van uw bank of kaartuitgever kan het enkele werkdagen duren voordat de terugbetaling op uw afschrift verschijnt."
+    },
+    "s6": {
+      "h": "6. Chargebacks",
+      "p1": "Als er iets mis is met een afschrijving, neem dan eerst contact met ons op — de meeste problemen worden sneller rechtstreeks opgelost dan via een chargeback, en een chargeback kan ertoe leiden dat uw account tijdens het onderzoek wordt opgeschort."
+    },
+    "s7": {
+      "h": "7. Uw wettelijke rechten",
+      "p1": "Niets in dit beleid beperkt een niet-afdwingbaar recht dat u hebt onder toepasselijk consumentenrecht, met inbegrip van elk wettelijk herroepingsrecht voor de aankoop van digitale diensten dat u tijdens het afrekenproces van Paddle wordt gevraagd te erkennen."
+    },
+    "s8": {
+      "h": "8. Contact",
+      "p1": "Terugbetalingsverzoeken en vragen over dit beleid: <email>{emailAddress}</email>."
+    }
   }
 }

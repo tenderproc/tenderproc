@@ -136,12 +136,14 @@
     "goToApp": "Accéder à l'application",
     "logIn": "Se connecter",
     "signUp": "S'inscrire",
-    "englishOnlyNotice": "Ce document n'est disponible qu'en anglais. Si quelque chose n'est pas clair, contactez-nous et nous vous aiderons dans votre langue.",
+    "englishOnlyNotice": "Ce document a été traduit à titre informatif. En cas d'incohérence entre cette traduction et la version originale anglaise, la version anglaise prévaut.",
     "backToTenderProc": "Retour à TenderProc",
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
     "refund": "Politique de remboursement",
-    "contact": "Contact"
+    "contact": "Contact",
+    "eyebrow": "Juridique",
+    "lastUpdated": "Dernière mise à jour : {date}"
   },
   "Contact": {
     "eyebrow": "Contact",
@@ -180,28 +182,64 @@
         "gettingStarted": {
           "title": "Premiers pas",
           "items": [
-            { "question": "Qu'est-ce que TenderProc, exactement ?", "answer": "TenderProc est une plateforme assistée par IA pour trouver et préparer des offres sur les marchés publics belges. Elle met en correspondance les nouveaux marchés avec votre activité, filtre le bruit (comme les marchés déjà attribués) et vous aide à qualifier puis préparer une offre — le tout au même endroit." },
-            { "question": "Comment fonctionne le matching par IA ?", "answer": "Chaque nouveau marché reçoit un score de correspondance sur 100 par rapport à votre profil d'entreprise (secteurs, taille, description) — pour repérer d'abord ce qui vaut vraiment votre temps." },
-            { "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?", "answer": "Non — TenderProc est conçu pour rendre les marchés publics belges accessibles même si vous n'avez jamais soumissionné. Vous configurez un profil d'entreprise, et la plateforme s'occupe du filtrage, de l'extraction des exigences et des vérifications d'éligibilité." },
-            { "question": "Quelles régions/secteurs sont couverts ?", "answer": "Les marchés publics belges — provenant de la base de données officielle TED de l'UE, de la plateforme belge BOSA e-Notification, et de notre propre réseau, répartis sur différentes catégories de secteurs, de la construction et l'IT à la santé, la restauration et le conseil." }
+            {
+              "question": "Qu'est-ce que TenderProc, exactement ?",
+              "answer": "TenderProc est une plateforme assistée par IA pour trouver et préparer des offres sur les marchés publics belges. Elle met en correspondance les nouveaux marchés avec votre activité, filtre le bruit (comme les marchés déjà attribués) et vous aide à qualifier puis préparer une offre — le tout au même endroit."
+            },
+            {
+              "question": "Comment fonctionne le matching par IA ?",
+              "answer": "Chaque nouveau marché reçoit un score de correspondance sur 100 par rapport à votre profil d'entreprise (secteurs, taille, description) — pour repérer d'abord ce qui vaut vraiment votre temps."
+            },
+            {
+              "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?",
+              "answer": "Non — TenderProc est conçu pour rendre les marchés publics belges accessibles même si vous n'avez jamais soumissionné. Vous configurez un profil d'entreprise, et la plateforme s'occupe du filtrage, de l'extraction des exigences et des vérifications d'éligibilité."
+            },
+            {
+              "question": "Quelles régions/secteurs sont couverts ?",
+              "answer": "Les marchés publics belges — provenant de la base de données officielle TED de l'UE, de la plateforme belge BOSA e-Notification, et de notre propre réseau, répartis sur différentes catégories de secteurs, de la construction et l'IT à la santé, la restauration et le conseil."
+            }
           ]
         },
         "pricingTrust": {
           "title": "Tarifs & confiance",
           "items": [
-            { "question": "Combien ça coûte ?", "answer": "Gratuit, Pro (49 €/mois) et Premium (79 €/mois) — consultez la page Tarifs pour le détail de chaque formule." },
-            { "question": "Y a-t-il un essai gratuit ?", "answer": "Il n'y a pas d'essai limité dans le temps, mais la formule Gratuite elle-même n'expire jamais et ne nécessite pas de carte — vous pouvez essayer la découverte de marchés pour un secteur gratuitement avant de passer à une formule supérieure." },
-            { "question": "Puis-je annuler à tout moment ?", "answer": "Oui — vous pouvez annuler à tout moment depuis la page Facturation. L'annulation arrête les renouvellements futurs ; vous conservez l'accès à votre formule payante jusqu'à la fin de la période en cours et n'êtes plus facturé ensuite." },
-            { "question": "Mes données d'entreprise sont-elles sécurisées et conformes au RGPD ?", "answer": "Oui — TenderProc est conforme au RGPD par conception (base légale documentée pour chaque utilisation de vos données, droits des personnes concernées respectés), les données sont chiffrées en transit (HTTPS), et l'accès est limité à votre propre compte. Tous les détails figurent dans notre Politique de confidentialité." }
+            {
+              "question": "Combien ça coûte ?",
+              "answer": "Gratuit, Pro (49 €/mois) et Premium (79 €/mois) — consultez la page Tarifs pour le détail de chaque formule."
+            },
+            {
+              "question": "Y a-t-il un essai gratuit ?",
+              "answer": "Il n'y a pas d'essai limité dans le temps, mais la formule Gratuite elle-même n'expire jamais et ne nécessite pas de carte — vous pouvez essayer la découverte de marchés pour un secteur gratuitement avant de passer à une formule supérieure."
+            },
+            {
+              "question": "Puis-je annuler à tout moment ?",
+              "answer": "Oui — vous pouvez annuler à tout moment depuis la page Facturation. L'annulation arrête les renouvellements futurs ; vous conservez l'accès à votre formule payante jusqu'à la fin de la période en cours et n'êtes plus facturé ensuite."
+            },
+            {
+              "question": "Mes données d'entreprise sont-elles sécurisées et conformes au RGPD ?",
+              "answer": "Oui — TenderProc est conforme au RGPD par conception (base légale documentée pour chaque utilisation de vos données, droits des personnes concernées respectés), les données sont chiffrées en transit (HTTPS), et l'accès est limité à votre propre compte. Tous les détails figurent dans notre Politique de confidentialité."
+            }
           ]
         },
         "usingProduct": {
           "title": "Utiliser la plateforme",
           "items": [
-            { "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?", "answer": "Les marchés sont récupérés en direct depuis la base de données officielle TED de l'UE dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs." },
-            { "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?", "answer": "Les deux — au-delà de la découverte, Pro inclut une préparation d'offre assistée par IA : téléversez un PDF du marché et TenderProc en extrait les exigences, évalue votre adéquation avec une recommandation Go/No-Go, et rédige une réponse fondée sur vos propres preuves d'entreprise." },
-            { "question": "Quelles langues la plateforme prend-elle en charge ?", "answer": "L'application elle-même est disponible en français, néerlandais, anglais et allemand, et les avis de marché publiés dans d'autres langues peuvent être traduits pour vous par IA." },
-            { "question": "Que se passe-t-il si je manque une notification d'échéance ?", "answer": "Il n'y a pas encore de fonctionnalité de rappel d'échéance dédiée — l'échéance de chaque marché est affichée directement sur sa fiche, et une fois que vous l'ajoutez à votre tableau Workflow, vous pouvez la suivre jusqu'à la révision, la rédaction et la soumission, pour ne rien perdre de vue parmi ce que vous poursuivez activement." }
+            {
+              "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?",
+              "answer": "Les marchés sont récupérés en direct depuis la base de données officielle TED de l'UE dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs."
+            },
+            {
+              "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?",
+              "answer": "Les deux — au-delà de la découverte, Pro inclut une préparation d'offre assistée par IA : téléversez un PDF du marché et TenderProc en extrait les exigences, évalue votre adéquation avec une recommandation Go/No-Go, et rédige une réponse fondée sur vos propres preuves d'entreprise."
+            },
+            {
+              "question": "Quelles langues la plateforme prend-elle en charge ?",
+              "answer": "L'application elle-même est disponible en français, néerlandais, anglais et allemand, et les avis de marché publiés dans d'autres langues peuvent être traduits pour vous par IA."
+            },
+            {
+              "question": "Que se passe-t-il si je manque une notification d'échéance ?",
+              "answer": "Il n'y a pas encore de fonctionnalité de rappel d'échéance dédiée — l'échéance de chaque marché est affichée directement sur sa fiche, et une fois que vous l'ajoutez à votre tableau Workflow, vous pouvez la suivre jusqu'à la révision, la rédaction et la soumission, pour ne rien perdre de vue parmi ce que vous poursuivez activement."
+            }
           ]
         }
       }
@@ -981,5 +1019,182 @@
     "outOfTokens": "Vous n'avez plus de jetons gratuits ce mois-ci.",
     "logIn": "Se connecter",
     "upgrade": "Passer à un plan supérieur"
+  },
+  "Terms": {
+    "metaTitle": "Conditions d'utilisation — TenderProc",
+    "title": "Conditions d'utilisation",
+    "intro": "Les présentes conditions d’utilisation (les « <strong>Conditions</strong> ») régissent l’accès à TenderProc et son utilisation (le « <strong>Service</strong> »), exploité par <strong>{entityName}</strong>, immatriculée sous le numéro d’enregistrement commercial / fiscal {companyNumber} (« <strong>TenderProc</strong> », « nous »). En créant un compte ou en utilisant le Service, vous acceptez les présentes Conditions. Si vous n’êtes pas d’accord, n’utilisez pas le Service.",
+    "s1": {
+      "h": "1. Qu'est-ce que TenderProc",
+      "p1": "TenderProc est un service logiciel B2B qui aide les entreprises à découvrir, présélectionner et préparer des offres pour les marchés publics en Belgique. Il fait remonter les avis de marché issus de sources publiques, génère des scores de correspondance assistés par IA, des vérifications d’éligibilité et des projets de réponse, et fournit un espace de travail pour suivre les offres, de la présélection jusqu’au dépôt.",
+      "p2": "<strong>Le Service est un outil d’aide à la décision, et non un substitut à votre propre jugement ou à un avis professionnel.</strong> Les scores de correspondance, les vérifications d’éligibilité, les exigences extraites et les réponses rédigées par IA sont des estimations issues d’un traitement automatisé et peuvent être incomplètes, obsolètes ou erronées. Vous êtes seul responsable de la vérification indépendante des exigences du marché, des délais, des critères d’éligibilité et du contenu de tout document que vous soumettez à un pouvoir adjudicateur avant de le soumettre. TenderProc n’est pas responsable d’un délai manqué, d’une offre disqualifiée ou d’un marché perdu résultant du fait de s’être fié au Service sans cette vérification indépendante."
+    },
+    "s2": {
+      "h": "2. Comptes",
+      "p1": "Vous devez fournir des informations exactes lors de la création d’un compte et garder vos identifiants de connexion confidentiels. Vous êtes responsable de toute activité effectuée depuis votre compte. Le Service est destiné à un usage par des entreprises et des professionnels agissant à titre professionnel, et non par des consommateurs agissant à des fins purement personnelles. Vous devez être habilité à agir pour le compte de l’entreprise que vous inscrivez."
+    },
+    "s3": {
+      "h": "3. Formules, facturation et résiliation",
+      "p1": "TenderProc propose une formule gratuite ainsi que des formules payantes Pro/Premium, facturées mensuellement. Les formules payantes sont vendues et encaissées par <strong>Paddle</strong>, notre prestataire de paiement, qui agit en qualité de <strong>revendeur officiel (Merchant of Record)</strong> pour ces transactions — Paddle est le vendeur officiel, assure le traitement des paiements, et collecte et reverse la TVA/taxe de vente applicable. Votre achat est également soumis aux propres conditions d’achat de Paddle, présentées lors du paiement.",
+      "p2": "Les abonnements se renouvellent automatiquement chaque mois jusqu’à résiliation. Vous pouvez résilier à tout moment depuis la page Facturation de l’application ; la résiliation met fin aux renouvellements futurs mais ne met pas fin par anticipation à votre période payante en cours — vous conservez l’accès à l’offre payante jusqu’à son expiration, puis votre compte repasse à la formule gratuite. Consultez notre <refundLink>Politique de remboursement</refundLink> pour savoir comment les remboursements sont traités.",
+      "p3": "En cas d’échec de paiement, nous pouvons placer votre compte dans une période de grâce pendant laquelle l’accès à l’offre payante se poursuit le temps que vous mettiez à jour votre moyen de paiement ; si le paiement n’est pas régularisé, votre compte repasse à la formule gratuite."
+    },
+    "s4": {
+      "h": "4. Utilisation acceptable",
+      "intro": "Vous acceptez de ne pas :",
+      "li1": "utiliser le Service en violation d’une loi applicable, y compris le droit des marchés publics ;",
+      "li2": "extraire, aspirer systématiquement, revendre ou redistribuer les données de marchés ou tout autre contenu du Service, sauf via les fonctionnalités que nous fournissons à cette fin ;",
+      "li3": "tenter de contourner les limites d’utilisation liées à votre formule, ou partager un même compte entre entreprises non liées ;",
+      "li4": "téléverser un contenu que vous n’avez pas le droit de téléverser, ou qui porte atteinte aux droits d’un tiers ;",
+      "li5": "nuire au fonctionnement du Service, tester sa sécurité, ou l’utiliser pour développer un produit concurrent ;",
+      "li6": "présenter un contenu généré par IA issu du Service comme un fait vérifié de manière indépendante dans une offre déposée, sans relecture."
+    },
+    "s5": {
+      "h": "5. Votre contenu",
+      "p1": "Vous conservez la propriété des informations sur votre entreprise, documents et autres contenus que vous téléversez ou saisissez (« <strong>Votre Contenu</strong> »). Vous nous accordez une licence pour héberger, traiter et analyser Votre Contenu — y compris pour envoyer des extraits pertinents à notre fournisseur de traitement par IA — dans le seul but de vous fournir et d’améliorer le Service. Nous ne vendons pas Votre Contenu et ne l’utilisons pas pour entraîner des modèles tiers au-delà de ce qui est décrit dans notre <privacyLink>Politique de confidentialité</privacyLink>. Vous êtes responsable de disposer des droits sur tout ce que vous téléversez, y compris toute référence, certification ou document de tiers décrivant des sous-traitants ou partenaires."
+    },
+    "s6": {
+      "h": "6. Données de marchés de tiers",
+      "p1": "Les avis de marché et les données d’attribution affichés dans le Service proviennent de bases de données publiques (notamment TED de l’UE et la plateforme belge e-Procurement/BOSA). Nous ne contrôlons pas ces sources et ne garantissons ni leur exactitude, ni leur exhaustivité, ni leur actualité. Vérifiez toujours les détails d’un marché auprès de l’avis officiel et du canal propre du pouvoir adjudicateur avant d’agir sur cette base."
+    },
+    "s7": {
+      "h": "7. Propriété intellectuelle",
+      "p1": "Le Service, ses logiciels, son design et la marque TenderProc appartiennent à {entityName} ou à ses concédants et sont protégés par le droit de la propriété intellectuelle. Rien dans les présentes Conditions ne vous transfère la propriété du Service ; vous obtenez un droit limité, non exclusif et non transférable de l’utiliser conformément aux présentes Conditions."
+    },
+    "s8": {
+      "h": "8. Avertissements",
+      "p1": "Le Service est fourni « en l’état » et « selon disponibilité ». Dans toute la mesure permise par la loi, nous déclinons toute garantie, expresse ou implicite, y compris d’adéquation à un usage particulier et d’absence de contrefaçon. Nous ne garantissons pas que le Service sera ininterrompu, exempt d’erreurs, ni que les résultats produits par l’IA seront exacts. Rien dans la présente section ne limite une garantie ou un droit qui ne peut légalement être exclu."
+    },
+    "s9": {
+      "h": "9. Limitation de responsabilité",
+      "p1": "Dans toute la mesure permise par la loi, TenderProc ne pourra être tenu responsable des dommages indirects, accessoires, consécutifs ou de la perte de profits, y compris la perte d’un marché, d’une offre ou de revenus, résultant de l’utilisation du Service. Notre responsabilité totale pour toute réclamation liée aux présentes Conditions ou au Service est limitée au montant que vous nous avez versé au cours des 12 mois précédant la naissance de la réclamation. La présente section ne limite pas une responsabilité qui ne peut être exclue en vertu du droit applicable (par exemple, notre responsabilité en cas de faute lourde, de faute intentionnelle, ou de décès ou dommage corporel que nous causerions)."
+    },
+    "s10": {
+      "h": "10. Résiliation",
+      "p1": "Vous pouvez cesser d’utiliser le Service et supprimer votre compte à tout moment. Nous pouvons suspendre ou résilier votre compte en cas de violation des présentes Conditions, de non-paiement, ou si la loi l’exige, avec préavis lorsque cela est raisonnablement possible. Les sections qui, de par leur nature, doivent survivre à la résiliation (propriété, avertissements, limitation de responsabilité, droit applicable) y survivent."
+    },
+    "s11": {
+      "h": "11. Modifications des présentes Conditions",
+      "p1": "Nous pouvons mettre à jour les présentes Conditions de temps à autre. En cas de modification substantielle, nous ferons des efforts raisonnables pour vous en informer (par exemple par e-mail ou notification dans l’application) avant son entrée en vigueur. La poursuite de l’utilisation du Service après l’entrée en vigueur d’une modification vaut acceptation des Conditions mises à jour."
+    },
+    "s12": {
+      "h": "12. Droit applicable",
+      "p1": "Les présentes Conditions sont régies par le droit belge, sans égard aux règles de conflit de lois. Tout litige non résolu à l’amiable sera soumis à la compétence exclusive des juridictions belges, sauf lorsque le droit applicable en matière de protection des consommateurs vous donne le droit d’introduire une action dans votre propre lieu de résidence."
+    },
+    "s13": {
+      "h": "13. Contact",
+      "p1": "Questions relatives aux présentes Conditions : <email>{emailAddress}</email>."
+    }
+  },
+  "Privacy": {
+    "metaTitle": "Politique de confidentialité — TenderProc",
+    "title": "Politique de confidentialité",
+    "intro": "Cette politique explique quelles données à caractère personnel TenderProc collecte, pourquoi, et quels droits vous avez sur celles-ci en vertu du Règlement général sur la protection des données de l’UE (RGPD) et du droit belge de la protection des données. Elle s’applique aux visiteurs de notre site web et aux utilisateurs de l’application TenderProc.",
+    "s1": {
+      "h": "1. Qui est responsable de vos données",
+      "p1": "Le responsable du traitement est <strong>{entityName}</strong>, numéro d’enregistrement commercial / fiscal {companyNumber}. Pour toute question concernant la présente politique ou pour exercer vos droits, contactez-nous à l’adresse <email>{emailAddress}</email>.",
+      "p2": "Nous sommes établis en dehors de l’Union européenne, mais nous proposons le Service à des entreprises situées en Belgique et dans l’UE ; la présente politique, ainsi que le RGPD lui-même, s’applique donc à la manière dont nous traitons vos données (art. 3, § 2, du RGPD)."
+    },
+    "s2": {
+      "h": "2. Ce que nous collectons",
+      "p1": "<strong>Données de compte :</strong> votre adresse e-mail et votre mot de passe (stocké haché par notre prestataire d’authentification, Supabase — nous ne voyons jamais le mot de passe en clair).",
+      "p2": "<strong>Profil d’entreprise :</strong> nom de l’entreprise, adresse, taille, secteurs, description, site web, nombre d’employés, régions et langues desservies — collectés lors de l’inscription et modifiables sur votre page Entreprise.",
+      "p3": "<strong>Base de connaissances de l’entreprise :</strong> les services que vous proposez, vos certifications, vos références passées (pouvant inclure des montants de contrats) et les documents justificatifs que vous téléversez. Ces éléments sont utilisés pour générer des scores de correspondance et des vérifications d’éligibilité et, uniquement si vous le choisissez, comme source pour les réponses d’offre rédigées par IA.",
+      "p4": "<strong>Marchés et offres :</strong> les marchés que vous téléversez ou suivez, les exigences et critères d’attribution que nous en extrayons, les données de votre espace de travail d’offres (statut, listes de contrôle, documents d’offre téléversés, texte de réponse rédigé par IA) et, si vous le renseignez, le résultat d’une offre, qui peut inclure des chiffres commercialement sensibles tels que le prix gagnant ou votre propre score.",
+      "p5": "<strong>Données techniques :</strong> données de requête standard (adresse IP, agent utilisateur du navigateur) générées par l’utilisation d’une application web, cookies de session utilisés pour vous maintenir connecté, et un cookie enregistrant votre préférence linguistique. Nous n’utilisons aucun traceur publicitaire ou analytique tiers."
+    },
+    "s3": {
+      "h": "3. Pourquoi nous les traitons, et sur quelle base légale",
+      "li1": "<strong>Fourniture du Service</strong> — création de votre compte, mise en correspondance des marchés avec votre profil, exécution des vérifications d’éligibilité, génération de projets de réponse et gestion de votre espace de travail d’offres. Base légale : exécution de notre contrat avec vous (art. 6, § 1, b), RGPD).",
+      "li2": "<strong>Facturation</strong> — traitement de votre abonnement via Paddle, et conservation des registres requis par le droit comptable et fiscal. Base légale : exécution du contrat et obligation légale (art. 6, § 1, b) et c), RGPD).",
+      "li3": "<strong>Notifications du Service</strong> — envoi de l’e-mail de synthèse des marchés pour les secteurs que vous avez sélectionnés. Base légale : intérêt légitime à faire fonctionner la fonctionnalité que vous avez configurée (art. 6, § 1, f), RGPD) ; vous pouvez la désactiver à tout moment dans vos préférences.",
+      "li4": "<strong>Sécurité et prévention des abus</strong> — protection des comptes et du Service contre tout accès non autorisé. Base légale : intérêt légitime (art. 6, § 1, f), RGPD).",
+      "li5": "<strong>Conformité légale</strong> — réponse aux demandes légales, tenue de registres fiscaux et comptables. Base légale : obligation légale (art. 6, § 1, c), RGPD).",
+      "p1": "Les résultats assistés par IA (scores de correspondance, vérifications d’éligibilité, texte rédigé) sont générés pour vous aider, et non pour prendre des décisions vous concernant — TenderProc n’utilise pas de traitement automatisé pour prendre des décisions produisant des effets juridiques ou vous affectant de manière significative de façon similaire, au sens de l’art. 22 du RGPD. Un être humain — vous — relit et décide toujours avant qu’un document ne soit soumis à un pouvoir adjudicateur."
+    },
+    "s4": {
+      "h": "4. Avec qui nous les partageons",
+      "intro": "Nous partageons les données à caractère personnel avec les sous-traitants suivants, chacun lié par un accord de traitement des données, et uniquement dans la mesure nécessaire à la fourniture du Service :",
+      "li1": "<strong>Supabase</strong> — héberge notre base de données, notre authentification et notre stockage de fichiers. Région du projet : {supabaseRegion}.",
+      "li2": "<strong>Anthropic</strong> — traite le texte des marchés et de votre entreprise que vous soumettez afin de générer des scores de correspondance, des vérifications d’éligibilité et des projets de réponse. Anthropic est basée aux États-Unis ; les transferts sont couverts par les clauses contractuelles types ou une garantie équivalente.",
+      "li3": "<strong>Resend</strong> — envoie l’e-mail de synthèse des marchés et d’autres e-mails transactionnels.",
+      "li4": "<strong>Paddle</strong> — traite les paiements et agit en tant que Merchant of Record pour les abonnements payants ; Paddle reçoit les informations de facturation nécessaires au traitement de votre paiement (c’est Paddle, et non nous, qui détient les données de votre carte).",
+      "p1": "Les données de marchés et d’attribution circulant dans l’autre sens — depuis la base TED de l’UE et la plateforme belge e-Procurement/BOSA vers TenderProc — sont des données de marchés publics, et non vos données personnelles ; nous n’envoyons pas vos données à ces sources.",
+      "p2": "Nous ne vendons pas de données à caractère personnel et ne les partageons pas avec des tiers à des fins de marketing propre."
+    },
+    "s5": {
+      "h": "5. Transferts internationaux",
+      "p1": "Vos données quittent l’UE/EEE de plusieurs manières, et nous préférons être directs à ce sujet plutôt que de le dissimuler : notre base de données et notre stockage de fichiers (Supabase) sont hébergés à {supabaseRegion}, notre prestataire de traitement par IA (Anthropic) est basé aux États-Unis, et {entityName} elle-même, en tant que responsable du traitement, est établie en dehors de l’UE/EEE. Pour chacun de ces transferts, nous nous appuyons sur les clauses contractuelles types de la Commission européenne ou un autre mécanisme de transfert licite reconnu par le chapitre V du RGPD pour protéger vos données. Vous pouvez nous demander une copie de la garantie concernée en nous contactant à <email>{emailAddress}</email>."
+    },
+    "s6": {
+      "h": "6. Durée de conservation",
+      "p1": "Nous conservons les données de votre compte et de votre espace de travail tant que votre compte est actif. Si vous supprimez votre compte, nous supprimons ou anonymisons vos données à caractère personnel dans un délai raisonnable, sauf les données que nous sommes tenus de conserver plus longtemps — par exemple les registres de facturation, que nous conservons pendant la durée requise par le droit comptable et fiscal belge."
+    },
+    "s7": {
+      "h": "7. Vos droits",
+      "intro": "En vertu du RGPD, vous avez le droit de :",
+      "li1": "accéder aux données à caractère personnel que nous détenons à votre sujet ;",
+      "li2": "corriger des données inexactes ;",
+      "li3": "nous demander de supprimer vos données (sous réserve de nos obligations légales de conservation, par exemple pour les factures) ;",
+      "li4": "restreindre ou vous opposer à certains traitements ;",
+      "li5": "recevoir vos données dans un format portable ;",
+      "li6": "retirer votre consentement à tout moment, lorsque le traitement est fondé sur le consentement ;",
+      "li7": "introduire une réclamation auprès de l’Autorité de protection des données belge (Gegevensbeschermingsautoriteit / Autorité de protection des données) ou de votre propre autorité de contrôle de l’UE.",
+      "p1": "Pour exercer l’un de ces droits, contactez-nous à <email>{emailAddress}</email>. Nous pourrions devoir vérifier votre identité avant de traiter une demande."
+    },
+    "s8": {
+      "h": "8. Cookies",
+      "p1": "Nous n’utilisons que des cookies strictement nécessaires : un pour vous maintenir connecté (déposé par l’authentification Supabase) et un pour mémoriser votre préférence linguistique. Nous n’utilisons ni cookies publicitaires ni cookies d’analyse tiers. Ces cookies étant strictement nécessaires au fonctionnement du Service, nous n’affichons pas de bandeau de consentement pour ceux-ci."
+    },
+    "s9": {
+      "h": "9. Sécurité",
+      "p1": "Les données en transit sont chiffrées (HTTPS). L’accès à vos données au sein du Service est limité à votre propre compte grâce à une sécurité au niveau des lignes appliquée au niveau de la base de données — par défaut, aucun autre compte client ne peut interroger vos données. L’accès du personnel de TenderProc est limité à ce qui est nécessaire pour le support et le fonctionnement du Service."
+    },
+    "s10": {
+      "h": "10. Enfants",
+      "p1": "TenderProc est un service interentreprises (B2B) et n’est ni destiné aux enfants, ni sciemment utilisé par eux."
+    },
+    "s11": {
+      "h": "11. Modifications de la présente politique",
+      "p1": "Nous pouvons mettre à jour la présente politique de temps à autre. En cas de modification substantielle, nous ferons des efforts raisonnables pour vous en informer avant son entrée en vigueur."
+    }
+  },
+  "Refund": {
+    "metaTitle": "Politique de remboursement — TenderProc",
+    "title": "Politique de remboursement",
+    "s1": {
+      "h": "1. Fonctionnement de la facturation",
+      "p1": "La formule gratuite n’est jamais facturée. Pro et Premium sont des abonnements mensuels, facturés à l’avance et traités par <strong>Paddle</strong>, notre prestataire de paiement, qui agit en tant que <strong>revendeur officiel (Merchant of Record)</strong> pour ces achats — Paddle est le vendeur officiel figurant sur votre reçu et la partie qui traite effectivement le paiement."
+    },
+    "s2": {
+      "h": "2. Notre politique de remboursement",
+      "p1": "Nous n’offrons pas de remboursements automatiques. Les demandes de remboursement sont examinées <strong>au cas par cas</strong> — écrivez-nous à <email>{emailAddress}</email> en indiquant l’e-mail de votre compte et le motif de votre demande ; nous l’examinerons et reviendrons vers vous. Nous sommes généralement réceptifs aux demandes formulées rapidement (par exemple, peu après un renouvellement non souhaité, ou lorsque le Service ne vous a réellement pas convenu), et nous corrigeons toujours nos propres erreurs — voir ci-dessous."
+    },
+    "s3": {
+      "h": "3. Frais que nous remboursons toujours",
+      "li1": "les doubles facturations pour une même période de facturation ;",
+      "li2": "les facturations causées par une erreur technique vérifiée de notre part ;",
+      "li3": "toute facturation qui n’aurait tout simplement pas dû avoir lieu — par exemple, une facturation après que vous ayez déjà résilié."
+    },
+    "s4": {
+      "h": "4. Résilier plutôt que demander un remboursement",
+      "p1": "Vous pouvez résilier un abonnement à tout moment depuis la page Facturation de l’application. La résiliation met fin aux renouvellements futurs — votre période payante en cours n’est pas remboursée, mais vous conservez l’accès à l’offre payante jusqu’à son terme, et vous ne serez plus facturé par la suite."
+    },
+    "s5": {
+      "h": "5. Comment un remboursement approuvé est versé",
+      "p1": "Les remboursements approuvés sont traités par Paddle et reversés sur votre moyen de paiement d’origine. Selon votre banque ou votre émetteur de carte, le remboursement peut prendre quelques jours ouvrés avant d’apparaître sur votre relevé."
+    },
+    "s6": {
+      "h": "6. Rétrofacturations (chargebacks)",
+      "p1": "Si un problème survient avec une facturation, veuillez d’abord nous contacter — la plupart des problèmes se résolvent plus rapidement directement qu’via une rétrofacturation, et une rétrofacturation peut entraîner la suspension de votre compte le temps de l’instruction."
+    },
+    "s7": {
+      "h": "7. Vos droits légaux",
+      "p1": "Rien dans la présente politique ne limite un droit non susceptible de renonciation dont vous disposez en vertu du droit applicable en matière de protection des consommateurs, y compris tout droit légal de rétractation pour l’achat de services numériques que le processus de paiement de Paddle vous demande de reconnaître au moment de l’achat."
+    },
+    "s8": {
+      "h": "8. Contact",
+      "p1": "Demandes de remboursement et questions relatives à la présente politique : <email>{emailAddress}</email>."
+    }
   }
 }

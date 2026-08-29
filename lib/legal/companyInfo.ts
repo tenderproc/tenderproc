@@ -34,6 +34,8 @@ export const LEGAL_ENTITY = {
 } as const;
 
 export const LEGAL_DATES = {
-  /** Bump whenever terms.tsx/privacy.tsx/refund.tsx content materially changes. */
-  lastUpdated: "17 August 2026",
+  /** Bump whenever terms.tsx/privacy.tsx/refund.tsx content materially changes.
+   * A Date (not a string) so each locale can format it with its own
+   * date-style convention via Intl.DateTimeFormat(INTL_LOCALE[locale], ...). */
+  lastUpdated: new Date("2026-08-17"),
 } as const;

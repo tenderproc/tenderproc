@@ -10,15 +10,15 @@
     },
     "contact": {
       "title": "Kontakt — TenderProc",
-      "description": "Kontaktiere TenderProc oder sieh dir unsere häufig gestellten Fragen an."
+      "description": "Kontaktieren Sie TenderProc oder sehen Sie sich unsere häufig gestellten Fragen an."
     },
     "login": {
       "title": "Anmelden — TenderProc",
-      "description": "Melde dich an, um Ausschreibungen gefiltert nach deinen Branchen zu sehen."
+      "description": "Melden Sie sich an, um Ausschreibungen gefiltert nach Ihren Branchen zu sehen."
     },
     "signup": {
       "title": "Registrieren — TenderProc",
-      "description": "Erstelle dein TenderProc-Konto, um Ausschreibungen zu erhalten, die zu deinem Unternehmen passen."
+      "description": "Erstellen Sie Ihr TenderProc-Konto, um Ausschreibungen zu erhalten, die zu Ihrem Unternehmen passen."
     },
     "pricing": {
       "title": "Preise — TenderProc",
@@ -35,34 +35,34 @@
     "hero": {
       "eyebrow": "Belgien · Öffentliche Ausschreibungen",
       "headline": "KI-gestützte Erkennung öffentlicher Ausschreibungen für belgische KMU",
-      "subheading": "TenderProc gleicht neue belgische Ausschreibungen mit deiner Branche ab, filtert das Rauschen heraus und hilft dir, ein Angebot zu prüfen und vorzubereiten — alles an einem Ort.",
+      "subheading": "TenderProc gleicht neue belgische Ausschreibungen mit Ihrer Branche ab, filtert das Rauschen heraus und hilft Ihnen, ein Angebot zu prüfen und vorzubereiten — alles an einem Ort.",
       "ctaPrimary": "Kostenlos registrieren",
       "ctaSecondary": "Anmelden"
     },
     "problem": {
       "eyebrow": "Das Problem",
       "heading": "Relevante Ausschreibungen gehen im Rauschen unter",
-      "body": "Der belgische Ausschreibungs-Feed veröffentlicht jährlich Tausende Bekanntmachungen, in vier Sprachen, über alle Branchen hinweg. Ihn manuell nach der Handvoll zu durchsuchen, die zu deinem Unternehmen passt, kostet Stunden — und in unseren Tests betraf etwa ein Drittel eines ungefilterten Feeds bereits vergebene Aufträge. Verpasst du die richtige Ausschreibung oder verlierst du Zeit mit den falschen, bietest du auf weniger, als möglich wäre."
+      "body": "Der belgische Ausschreibungs-Feed veröffentlicht jährlich Tausende Bekanntmachungen, in vier Sprachen, über alle Branchen hinweg. Ihn manuell nach der Handvoll zu durchsuchen, die zu Ihrem Unternehmen passt, kostet Stunden — und in unseren Tests betraf etwa ein Drittel eines ungefilterten Feeds bereits vergebene Aufträge. Verpassen Sie die richtige Ausschreibung oder verlieren Sie Zeit mit den falschen, bieten Sie auf weniger, als möglich wäre."
     },
     "features": {
-      "eyebrow": "Was du bekommst",
+      "eyebrow": "Was Sie bekommen",
       "heading": "Alles zwischen Veröffentlichung und Einreichung",
       "subheading": "Erkennung, Prüfung und Angebotsvorbereitung in einem Workflow.",
       "items": [
         {
           "tier": "Pro",
           "title": "KI-Branchenabgleich",
-          "description": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von 100 gegenüber deinem Firmenprofil, damit du zuerst siehst, was sich wirklich lohnt."
+          "description": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von 100 gegenüber Ihrem Firmenprofil, damit Sie zuerst sehen, was sich wirklich lohnt."
         },
         {
           "tier": "Pro",
           "title": "Tägliche E-Mail-Benachrichtigungen",
-          "description": "Eine tägliche Zusammenfassung meldet alles, was neu in deinen Branchen veröffentlicht wurde — du musst nicht selbst dran denken."
+          "description": "Eine tägliche Zusammenfassung meldet alles, was neu in Ihren Branchen veröffentlicht wurde — Sie müssen nicht selbst dran denken."
         },
         {
           "tier": "Pro",
           "title": "Workflow-Pipeline-Board",
-          "description": "Verfolge Ausschreibungen, die du verfolgst, durch Prüfung, Review, Bewerbung und Einreichung auf einem einzigen Board."
+          "description": "Verfolgen Sie Ausschreibungen, die Sie verfolgen, durch Prüfung, Review, Bewerbung und Einreichung auf einem einzigen Board."
         },
         {
           "tier": "Premium",
@@ -72,7 +72,7 @@
         {
           "tier": "Pro",
           "title": "KI-gestützte Angebotsvorbereitung",
-          "description": "Lade eine Ausschreibung als PDF hoch: TenderProc extrahiert die Anforderungen, bewertet deine Eignung mit einer Bieten/Nicht-bieten-Empfehlung und entwirft eine Antwort auf Basis deiner eigenen Firmennachweise."
+          "description": "Laden Sie eine Ausschreibung als PDF hoch: TenderProc extrahiert die Anforderungen, bewertet Ihre Eignung mit einer Bieten/Nicht-bieten-Empfehlung und entwirft eine Antwort auf Basis Ihrer eigenen Firmennachweise."
         }
       ]
     },
@@ -81,28 +81,28 @@
       "heading": "Vom Branchenprofil zum eingereichten Angebot",
       "steps": [
         {
-          "title": "Lege dein Branchenprofil fest",
-          "description": "Gib bei der Registrierung deine Branche, Unternehmensgröße und Tätigkeit an — das bestimmt jede Übereinstimmungsbewertung, die du siehst."
+          "title": "Legen Sie Ihr Branchenprofil fest",
+          "description": "Geben Sie bei der Registrierung Ihre Branche, Unternehmensgröße und Tätigkeit an — das bestimmt jede Übereinstimmungsbewertung, die Sie sehen."
         },
         {
           "title": "Täglich passende Ausschreibungen erhalten",
-          "description": "Sieh relevante offene belgische Ausschreibungen, sobald sie veröffentlicht werden, bewertet anhand deines Profils, plus eine tägliche Zusammenfassung, damit dir nichts entgeht."
+          "description": "Sehen Sie relevante offene belgische Ausschreibungen, sobald sie veröffentlicht werden, bewertet anhand Ihres Profils, plus eine tägliche Zusammenfassung, damit Ihnen nichts entgeht."
         },
         {
           "title": "Verfolgen und mit Zuversicht bieten",
-          "description": "Bewege Ausschreibungen durch deine Pipeline und lass TenderProc dir helfen, die Eignung zu prüfen, Nachweise zuzuordnen und eine fundierte Antwort zu entwerfen."
+          "description": "Bewegen Sie Ausschreibungen durch Ihre Pipeline und lassen Sie sich von TenderProc helfen, die Eignung zu prüfen, Nachweise zuzuordnen und eine fundierte Antwort zu entwerfen."
         }
       ]
     },
     "pricingSection": {
       "eyebrow": "Preise",
       "heading": "Einfache, klare Pläne",
-      "subheading": "Starte kostenlos, upgrade, sobald du ernsthaft bieten willst.",
+      "subheading": "Starten Sie kostenlos, upgraden Sie, sobald Sie ernsthaft bieten möchten.",
       "viewFullPricing": "Alle Plandetails ansehen"
     },
     "finalCta": {
       "heading": "Bereit, keine Ausschreibung mehr zu verpassen?",
-      "subheading": "Richte dein Profil in wenigen Minuten ein — keine Karte nötig, um mit Kostenlos zu starten.",
+      "subheading": "Richten Sie Ihr Profil in wenigen Minuten ein — keine Karte nötig, um mit Kostenlos zu starten.",
       "cta": "Kostenlos registrieren"
     },
     "footer": {
@@ -136,17 +136,19 @@
     "goToApp": "Zur App",
     "logIn": "Anmelden",
     "signUp": "Registrieren",
-    "englishOnlyNotice": "Dieses Dokument ist nur auf Englisch verfügbar. Bei Unklarheiten kontaktieren Sie uns — wir helfen Ihnen in Ihrer Sprache.",
+    "englishOnlyNotice": "Dieses Dokument wurde zu Informationszwecken übersetzt. Bei Widersprüchen zwischen dieser Übersetzung und dem englischen Original ist die englische Fassung maßgeblich.",
     "backToTenderProc": "Zurück zu TenderProc",
     "terms": "Nutzungsbedingungen",
     "privacy": "Datenschutzerklärung",
     "refund": "Rückerstattungsrichtlinie",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "eyebrow": "Rechtliches",
+    "lastUpdated": "Zuletzt aktualisiert: {date}"
   },
   "Contact": {
     "eyebrow": "Kontakt",
-    "heading": "Kontaktiere uns",
-    "subheading": "Fragen zu TenderProc? Schick uns eine Nachricht — wir melden uns bei dir.",
+    "heading": "Kontaktieren Sie uns",
+    "subheading": "Fragen zu TenderProc? Schicken Sie uns eine Nachricht — wir melden uns bei Ihnen.",
     "form": {
       "heading": "Nachricht senden",
       "name": "Name",
@@ -163,16 +165,16 @@
       "messagePlaceholder": "Wie können wir helfen?",
       "send": "Nachricht senden",
       "sending": "Wird gesendet…",
-      "nameRequired": "Bitte gib deinen Namen ein.",
-      "emailRequired": "Bitte gib deine E-Mail-Adresse ein.",
-      "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
-      "messageRequired": "Bitte gib eine Nachricht ein.",
-      "genericError": "Etwas ist schiefgelaufen. Bitte versuche es gleich noch einmal.",
+      "nameRequired": "Bitte geben Sie Ihren Namen ein.",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "messageRequired": "Bitte geben Sie eine Nachricht ein.",
+      "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
       "successHeading": "Nachricht gesendet",
-      "successBody": "Danke für deine Nachricht — wir melden uns in Kürze bei dir."
+      "successBody": "Danke für Ihre Nachricht — wir melden uns in Kürze bei Ihnen."
     },
     "info": {
-      "emailLabel": "Schreib uns direkt"
+      "emailLabel": "Schreiben Sie uns direkt"
     },
     "faq": {
       "heading": "Häufig gestellte Fragen",
@@ -180,28 +182,64 @@
         "gettingStarted": {
           "title": "Erste Schritte",
           "items": [
-            { "question": "Was ist TenderProc genau?", "answer": "TenderProc ist eine KI-gestützte Plattform, um belgische öffentliche Ausschreibungen zu finden und Angebote dafür vorzubereiten. Sie gleicht neue Ausschreibungen mit deinem Unternehmen ab, filtert Rauschen heraus (etwa bereits vergebene Aufträge) und hilft dir, eine Ausschreibung zu qualifizieren und ein Angebot vorzubereiten — alles an einem Ort." },
-            { "question": "Wie funktioniert das KI-Matching?", "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu deinem Unternehmensprofil (Branchen, Größe, Beschreibung) — so siehst du zuerst, was wirklich deine Zeit wert ist." },
-            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "Nein — TenderProc wurde entwickelt, um belgische öffentliche Ausschreibungen zugänglich zu machen, auch wenn du noch nie ein Angebot abgegeben hast. Du legst ein Unternehmensprofil an, und die Plattform übernimmt Screening, das Herausarbeiten von Anforderungen und Eignungsprüfungen." },
-            { "question": "Welche Regionen/Branchen werden abgedeckt?", "answer": "Belgische öffentliche Ausschreibungen — aus der offiziellen EU-Datenbank TED, der belgischen BOSA e-Notification-Plattform und unserem eigenen Netzwerk, über verschiedene Branchenkategorien hinweg, von Bau und IT bis Gesundheitswesen, Catering und Beratung." }
+            {
+              "question": "Was ist TenderProc genau?",
+              "answer": "TenderProc ist eine KI-gestützte Plattform, um belgische öffentliche Ausschreibungen zu finden und Angebote dafür vorzubereiten. Sie gleicht neue Ausschreibungen mit Ihrem Unternehmen ab, filtert Rauschen heraus (etwa bereits vergebene Aufträge) und hilft Ihnen, eine Ausschreibung zu qualifizieren und ein Angebot vorzubereiten — alles an einem Ort."
+            },
+            {
+              "question": "Wie funktioniert das KI-Matching?",
+              "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu Ihrem Unternehmensprofil (Branchen, Größe, Beschreibung) — so sehen Sie zuerst, was wirklich Ihre Zeit wert ist."
+            },
+            {
+              "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?",
+              "answer": "Nein — TenderProc wurde entwickelt, um belgische öffentliche Ausschreibungen zugänglich zu machen, auch wenn Sie noch nie ein Angebot abgegeben haben. Sie legen ein Unternehmensprofil an, und die Plattform übernimmt Screening, das Herausarbeiten von Anforderungen und Eignungsprüfungen."
+            },
+            {
+              "question": "Welche Regionen/Branchen werden abgedeckt?",
+              "answer": "Belgische öffentliche Ausschreibungen — aus der offiziellen EU-Datenbank TED, der belgischen BOSA e-Notification-Plattform und unserem eigenen Netzwerk, über verschiedene Branchenkategorien hinweg, von Bau und IT bis Gesundheitswesen, Catering und Beratung."
+            }
           ]
         },
         "pricingTrust": {
           "title": "Preise & Vertrauen",
           "items": [
-            { "question": "Was kostet es?", "answer": "Kostenlos, Pro (49 €/Monat) und Premium (79 €/Monat) — Details zu den einzelnen Plänen findest du auf der Preisseite." },
-            { "question": "Gibt es eine kostenlose Testphase?", "answer": "Es gibt keine zeitlich begrenzte Testphase, aber der kostenlose Plan selbst läuft nie ab und erfordert keine Kreditkarte — du kannst die Ausschreibungssuche für eine Branche kostenlos ausprobieren, bevor du upgradest." },
-            { "question": "Kann ich jederzeit kündigen?", "answer": "Ja — du kannst jederzeit über die Abrechnungsseite kündigen. Die Kündigung stoppt künftige Verlängerungen; du behältst den Zugang zu deinem bezahlten Plan bis zum Ende des aktuellen Zeitraums und wirst danach nicht mehr belastet." },
-            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "Ja — TenderProc ist von Grund auf DSGVO-konform (dokumentierte Rechtsgrundlage für jede Nutzung deiner Daten, Wahrung der Rechte betroffener Personen), Daten werden bei der Übertragung verschlüsselt (HTTPS), und der Zugriff ist auf dein eigenes Konto beschränkt. Alle Details findest du in unserer Datenschutzerklärung." }
+            {
+              "question": "Was kostet es?",
+              "answer": "Kostenlos, Pro (49 €/Monat) und Premium (79 €/Monat) — Details zu den einzelnen Plänen finden Sie auf der Preisseite."
+            },
+            {
+              "question": "Gibt es eine kostenlose Testphase?",
+              "answer": "Es gibt keine zeitlich begrenzte Testphase, aber der kostenlose Plan selbst läuft nie ab und erfordert keine Kreditkarte — Sie können die Ausschreibungssuche für eine Branche kostenlos ausprobieren, bevor Sie upgraden."
+            },
+            {
+              "question": "Kann ich jederzeit kündigen?",
+              "answer": "Ja — Sie können jederzeit über die Abrechnungsseite kündigen. Die Kündigung stoppt künftige Verlängerungen; Sie behalten den Zugang zu Ihrem bezahlten Plan bis zum Ende des aktuellen Zeitraums und werden danach nicht mehr belastet."
+            },
+            {
+              "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?",
+              "answer": "Ja — TenderProc ist von Grund auf DSGVO-konform (dokumentierte Rechtsgrundlage für jede Nutzung Ihrer Daten, Wahrung der Rechte betroffener Personen), Daten werden bei der Übertragung verschlüsselt (HTTPS), und der Zugriff ist auf Ihr eigenes Konto beschränkt. Alle Details finden Sie in unserer Datenschutzerklärung."
+            }
           ]
         },
         "usingProduct": {
           "title": "Die Plattform nutzen",
           "items": [
-            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "Ausschreibungen werden live aus der offiziellen EU-Datenbank TED abgerufen, sobald sie veröffentlicht werden — ohne Verzögerung durch Stapelverarbeitung —, und eine tägliche Zusammenfassung per E-Mail meldet alles Neue in deinen Branchen." },
-            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "Beides — über die reine Suche hinaus umfasst Pro eine KI-gestützte Angebotsvorbereitung: Lade ein PDF der Ausschreibung hoch, und TenderProc extrahiert die Anforderungen, bewertet deine Eignung mit einer Bid/No-Bid-Empfehlung und entwirft eine Antwort auf Basis deiner eigenen Unternehmensnachweise." },
-            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "Die App selbst ist auf Deutsch, Englisch, Niederländisch und Französisch verfügbar, und Ausschreibungen, die in anderen Sprachen veröffentlicht wurden, können für dich KI-übersetzt werden." },
-            { "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?", "answer": "Es gibt noch keine eigene Funktion für Fristerinnerungen — die Frist jeder Ausschreibung wird direkt auf der Karte angezeigt, und sobald du sie zu deinem Workflow-Board hinzufügst, kannst du sie dort durch Prüfung, Entwurf und Einreichung verfolgen, damit dir nichts verloren geht, was du aktiv verfolgst." }
+            {
+              "question": "Wie oft werden neue Ausschreibungen hinzugefügt?",
+              "answer": "Ausschreibungen werden live aus der offiziellen EU-Datenbank TED abgerufen, sobald sie veröffentlicht werden — ohne Verzögerung durch Stapelverarbeitung —, und eine tägliche Zusammenfassung per E-Mail meldet alles Neue in Ihren Branchen."
+            },
+            {
+              "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?",
+              "answer": "Beides — über die reine Suche hinaus umfasst Pro eine KI-gestützte Angebotsvorbereitung: Laden Sie ein PDF der Ausschreibung hoch, und TenderProc extrahiert die Anforderungen, bewertet Ihre Eignung mit einer Bid/No-Bid-Empfehlung und entwirft eine Antwort auf Basis Ihrer eigenen Unternehmensnachweise."
+            },
+            {
+              "question": "Welche Sprachen unterstützt die Plattform?",
+              "answer": "Die App selbst ist auf Deutsch, Englisch, Niederländisch und Französisch verfügbar, und Ausschreibungen, die in anderen Sprachen veröffentlicht wurden, können für Sie KI-übersetzt werden."
+            },
+            {
+              "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?",
+              "answer": "Es gibt noch keine eigene Funktion für Fristerinnerungen — die Frist jeder Ausschreibung wird direkt auf der Karte angezeigt, und sobald Sie sie zu Ihrem Workflow-Board hinzufügen, können Sie sie dort durch Prüfung, Entwurf und Einreichung verfolgen, damit Ihnen nichts verloren geht, was Sie aktiv verfolgen."
+            }
           ]
         }
       }
@@ -209,7 +247,7 @@
   },
   "Login": {
     "heading": "Anmelden",
-    "subheading": "Melde dich an, um Ausschreibungen nach deinen Branchen gefiltert zu sehen.",
+    "subheading": "Melden Sie sich an, um Ausschreibungen nach Ihren Branchen gefiltert zu sehen.",
     "email": "E-Mail",
     "password": "Passwort",
     "loggingIn": "Anmeldung läuft…",
@@ -221,19 +259,19 @@
   "Opportunities": {
     "eyebrow": "Quellen: TED, BOSA, regionale Gemeinderatsdaten",
     "heading": "Chancen",
-    "description": "Belgische öffentliche Ausschreibungen passend zu deinen Branchen, aus TED, BOSA und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
+    "description": "Belgische öffentliche Ausschreibungen passend zu Ihren Branchen, aus TED, BOSA und regionalen/kommunalen Quellen — einschließlich Bekanntmachungen, die bereits vergeben oder unklaren Status haben können.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
-    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
-    "noResults": "Keine Bekanntmachungen passten zu deinen Branchen oder deiner Suche. Erweitere deine Branchenauswahl in der Seitenleiste.",
+    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
+    "noResults": "Keine Bekanntmachungen passten zu Ihren Branchen oder Ihrer Suche. Erweitern Sie Ihre Branchenauswahl in der Seitenleiste.",
     "filteringByMatch": "Filtern nach Match %…",
-    "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuche, sie zu senken."
+    "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuchen Sie, sie zu senken."
   },
   "Market": {
     "eyebrow": "Letzte 90 Tage · Quelle: TED-Zuschlagsbekanntmachungen",
     "heading": "Marktübersicht",
     "description": "Kürzlich vergebene belgische öffentliche Aufträge — wer hat gewonnen, für wie viel, und von wem. Dies ist eine Momentaufnahme aktueller Zuschläge, kein vollständiges historisches Archiv.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
-    "loadError": "Zuschlagsdaten konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "loadError": "Zuschlagsdaten konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
     "topWinners": "Top-Gewinner nach vergebenem Wert",
     "topBuyers": "Top-Käufer nach Ausgaben",
     "recentAwards": "Aktuelle Zuschläge",
@@ -250,7 +288,7 @@
     "heading": "Marktanteil",
     "disclaimer": "Zeigt nur Zuschläge aus unseren TED-Daten, nicht den gesamten Markt.",
     "noData": "Noch nicht genug Daten für diese Branche und diesen Zeitraum.",
-    "you": "Du",
+    "you": "Sie",
     "sharePercent": "{percent}%",
     "totalValue": "Vergebener Gesamtwert in diesem Bereich: {value}",
     "windowLabel": "Zeitfenster",
@@ -265,8 +303,8 @@
   "FollowedCompanies": {
     "eyebrow": "Unternehmen beobachten",
     "heading": "Beobachtungsliste",
-    "description": "Unternehmen, die du beobachtest — werde benachrichtigt, wenn eines davon eine neu erfasste Zuschlagsbekanntmachung gewinnt.",
-    "empty": "Du beobachtest noch keine Unternehmen. Nutze die Schaltfläche „Beobachten“ neben einem Firmennamen in der Marktübersicht.",
+    "description": "Unternehmen, die Sie beobachten — werden Sie benachrichtigt, wenn eines davon eine neu erfasste Zuschlagsbekanntmachung gewinnt.",
+    "empty": "Sie beobachten noch keine Unternehmen. Nutzen Sie die Schaltfläche „Beobachten“ neben einem Firmennamen in der Marktübersicht.",
     "followedSince": "Beobachtet seit {date}",
     "remove": "Entfernen"
   },
@@ -277,7 +315,7 @@
     "windowLabel": "Zeitfenster",
     "windowMonths": "Nächste {months} Monate",
     "resultCount": "{count, plural, one {# Auftrag} other {# Aufträge}}",
-    "loadError": "Prognosedaten konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "loadError": "Prognosedaten konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
     "noResults": "Keine Aufträge in Ihren Branchen werden voraussichtlich in diesem Zeitfenster neu ausgeschrieben."
   },
   "ForecastCard": {
@@ -311,11 +349,11 @@
   "Search": {
     "eyebrow": "Ad-hoc-Suche · Quelle: TED",
     "heading": "Suche",
-    "description": "Einmalige Suchen über alle tatsächlich offenen belgischen Ausschreibungen, unabhängig von deinen gespeicherten Branchen — filtere nach Stichwort, CPV-Code, Wertebereich oder Frist.",
+    "description": "Einmalige Suchen über alle tatsächlich offenen belgischen Ausschreibungen, unabhängig von Ihren gespeicherten Branchen — filtern Sie nach Stichwort, CPV-Code, Wertebereich oder Frist.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
-    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuche es gleich noch einmal.",
+    "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
     "noResults": "Keine Bekanntmachungen passten zu diesen Filtern.",
-    "prompt": "Gib oben ein Stichwort, einen CPV-Code, einen Wertebereich oder eine Frist ein, um zu suchen."
+    "prompt": "Geben Sie oben ein Stichwort, einen CPV-Code, einen Wertebereich oder eine Frist ein, um zu suchen."
   },
   "AdvancedSearchForm": {
     "keyword": "Stichwort",
@@ -353,7 +391,7 @@
     "signUp": "Registrieren",
     "eyebrow": "Preise",
     "heading": "Einfache, klare Pläne",
-    "subheading": "Starte kostenlos, upgrade, sobald du ernsthaft bieten willst.",
+    "subheading": "Starten Sie kostenlos, upgraden Sie, sobald Sie ernsthaft bieten möchten.",
     "mostPopular": "Am beliebtesten",
     "perMonth": "/Monat",
     "getStarted": "Loslegen",
@@ -445,9 +483,9 @@
     "tokensResetInfo": "Ihr Guthaben wird jeden Monat auf 250 Tokens aufgefüllt, falls es darunter fällt. Upgraden Sie auf Pro oder Premium für unbegrenzte Nutzung."
   },
   "WorkflowPage": {
-    "eyebrow": "Deine Pipeline",
+    "eyebrow": "Ihre Pipeline",
     "heading": "Workflow",
-    "description": "Verfolge Ausschreibungen, die du verfolgst, von der ersten Sichtung bis zur Einreichung. Füge Ausschreibungen über Chancen oder die Detailseite einer Ausschreibung hinzu."
+    "description": "Verfolgen Sie Ausschreibungen, die Sie verfolgen, von der ersten Sichtung bis zur Einreichung. Fügen Sie Ausschreibungen über Chancen oder die Detailseite einer Ausschreibung hinzu."
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Zurück zu offenen Ausschreibungen",
@@ -479,9 +517,9 @@
     "analysisFailed": "Analyse fehlgeschlagen.",
     "somethingWentWrong": "Etwas ist schiefgelaufen.",
     "checkEligibility": "Eignung prüfen",
-    "intro": "Füge unten die Anforderungen der Ausschreibung oder den ESPD-Text ein — oder führe die Prüfung nur anhand der Bekanntmachungs-Metadaten aus.",
-    "pasteTextPlaceholder": "Füge hier den Text des Ausschreibungsdokuments ein (optional)…",
-    "attachFileHint": "oder füge eine Datei als Referenz hinzu (in der Beta noch nicht ausgewertet)",
+    "intro": "Fügen Sie unten die Anforderungen der Ausschreibung oder den ESPD-Text ein — oder führen Sie die Prüfung nur anhand der Bekanntmachungs-Metadaten aus.",
+    "pasteTextPlaceholder": "Fügen Sie hier den Text des Ausschreibungsdokuments ein (optional)…",
+    "attachFileHint": "oder fügen Sie eine Datei als Referenz hinzu (in der Beta noch nicht ausgewertet)",
     "readingTender": "Ausschreibung wird gelesen…",
     "runCheck": "Eignungsprüfung ausführen",
     "keyRequirements": "Wichtigste Anforderungen",
@@ -498,7 +536,7 @@
     "relevantEvidenceFound": "Relevante Nachweise gefunden",
     "findingEvidence": "Nachweise werden gesucht…",
     "findEvidence": "Nachweise suchen",
-    "clickFindEvidenceHint": "Klicke auf Nachweise suchen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen deines Unternehmens für diese Anforderung relevant sind.",
+    "clickFindEvidenceHint": "Klicken Sie auf Nachweise suchen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen Ihres Unternehmens für diese Anforderung relevant sind.",
     "noRelevantEvidence": "Keine relevanten Unternehmensnachweise für diese Anforderung gefunden.",
     "evidenceMeta": "({type} · {relevance} Ähnlichkeit)",
     "evidenceUsedInDraft": "Im aktuellen Entwurf verwendete Nachweise",
@@ -510,7 +548,7 @@
     "acceptedCheck": "Akzeptiert ✓",
     "unsupportedClaims": "{count, plural, one {Unbelegte Behauptung} other {Unbelegte Behauptungen}}",
     "dismiss": "Verwerfen",
-    "unsupportedClaimsHint": "Dies konnte nicht anhand deiner Unternehmenswissensbasis verifiziert werden. Bearbeite den Entwurf, um es zu entfernen oder umzuformulieren, oder füge oben unterstützende Nachweise hinzu und erstelle den Entwurf neu.",
+    "unsupportedClaimsHint": "Dies konnte nicht anhand Ihrer Unternehmenswissensbasis verifiziert werden. Bearbeiten Sie den Entwurf, um es zu entfernen oder umzuformulieren, oder fügen Sie oben unterstützende Nachweise hinzu und erstellen Sie den Entwurf neu.",
     "acceptDraft": "Entwurf akzeptieren",
     "edit": "Bearbeiten",
     "rechecking": "Wird erneut geprüft…",
@@ -536,7 +574,7 @@
     "backToBid": "Zurück zum Angebot",
     "heading": "Prüfung vor Einreichung",
     "untitledTender": "Unbenannte Ausschreibung",
-    "noReviewYet": "Es wurde noch keine Prüfung durchgeführt. Sie prüft deine Anforderungsliste, Dokumentenliste und verfassten Antworten auf alles, was die Einreichung blockieren könnte.",
+    "noReviewYet": "Es wurde noch keine Prüfung durchgeführt. Sie prüft Ihre Anforderungsliste, Dokumentenliste und verfassten Antworten auf alles, was die Einreichung blockieren könnte.",
     "readyToSubmit": "Einreichbereit",
     "notReadyToSubmit": "Noch nicht einreichbereit",
     "compliantPercent": "{score} % konform",
@@ -548,10 +586,10 @@
     "unresolvedClaims": "{count, plural, one {# ungelöste unbelegte Behauptung} other {# ungelöste unbelegte Behauptungen}}",
     "submission": "Einreichung",
     "downloadBidPackage": "Angebotspaket herunterladen",
-    "noDocumentsUploaded": "Noch keine Dokumente hochgeladen — füge sie über die Dokumentenliste im Angebotsbereich hinzu.",
+    "noDocumentsUploaded": "Noch keine Dokumente hochgeladen — fügen Sie sie über die Dokumentenliste im Angebotsbereich hinzu.",
     "officialSubmission": "Offizielle Einreichung",
     "openOfficialPlatform": "Offizielle Einreichungsplattform öffnen",
-    "noSubmissionPlatform": "Für diese Ausschreibung ist kein Link zu einer Einreichungsplattform hinterlegt — reiche direkt über den offiziellen Kanal der Vergabestelle ein."
+    "noSubmissionPlatform": "Für diese Ausschreibung ist kein Link zu einer Einreichungsplattform hinterlegt — reichen Sie direkt über den offiziellen Kanal der Vergabestelle ein."
   },
   "StartBidButton": {
     "couldNotStart": "Angebot konnte nicht gestartet werden.",
@@ -590,7 +628,7 @@
   },
   "DocumentsChecklist": {
     "heading": "Dokumente",
-    "noneExtracted": "Aus dieser Ausschreibung wurden keine erforderlichen Dokumente extrahiert — prüfe stattdessen die Anforderungsliste auf Dokument-Kategorien.",
+    "noneExtracted": "Aus dieser Ausschreibung wurden keine erforderlichen Dokumente extrahiert — prüfen Sie stattdessen die Anforderungsliste auf Dokument-Kategorien.",
     "readyCount": "{ready}/{total} bereit",
     "download": "Herunterladen",
     "uploading": "Wird hochgeladen…",
@@ -612,7 +650,7 @@
   "TenderDetail": {
     "backToTenders": "Zurück zu Ausschreibungen",
     "analyzingTender": "Ausschreibung wird analysiert…",
-    "failedMessage": "Diese Ausschreibung konnte nicht verarbeitet werden. Häufige Ursachen: Die PDF enthält keinen extrahierbaren Text (ein gescanntes Dokument ohne OCR) oder die KI-Analyse ist fehlgeschlagen. Versuche es erneut hochzuladen oder mit einer anderen Datei.",
+    "failedMessage": "Diese Ausschreibung konnte nicht verarbeitet werden. Häufige Ursachen: Die PDF enthält keinen extrahierbaren Text (ein gescanntes Dokument ohne OCR) oder die KI-Analyse ist fehlgeschlagen. Versuchen Sie es erneut hochzuladen oder mit einer anderen Datei.",
     "stillProcessing": "Wird noch verarbeitet — bitte gleich aktualisieren.",
     "authority": "Vergabestelle",
     "deadline": "Frist",
@@ -620,7 +658,7 @@
     "duration": "Laufzeit",
     "viewOriginalPdf": "Original-PDF ansehen",
     "confidence": "Vertrauen: {level}",
-    "addCompanyProfileBefore": "Füge dein",
+    "addCompanyProfileBefore": "Fügen Sie Ihr",
     "companyProfile": "Unternehmensprofil",
     "addCompanyProfileAfter": "hinzu, um eine Übereinstimmungsbewertung und eine Bieten/Nicht-bieten-Empfehlung für diese Ausschreibung zu erhalten.",
     "goToBidWorkspace": "Zum Angebotsbereich",
@@ -630,7 +668,7 @@
     "companyStatus": "Status des Unternehmens:",
     "possibleMitigation": "Mögliche Lösung:",
     "evidenceCoverage": "Nachweisabdeckung",
-    "notMappedYet": "Noch nicht zugeordnet — klicke auf Nachweise den Anforderungen zuordnen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen deines Unternehmens jede Anforderung abdecken.",
+    "notMappedYet": "Noch nicht zugeordnet — klicken Sie auf Nachweise den Anforderungen zuordnen, um zu sehen, welche Dienstleistungen, Zertifizierungen und Referenzen Ihres Unternehmens jede Anforderung abdecken.",
     "whyThisMatches": "Warum das passt",
     "positiveFactors": "Positive Faktoren",
     "risks": "Risiken",
@@ -651,8 +689,8 @@
   "MyTendersList": {
     "eyebrow": "Hochgeladene Ausschreibungen · KI-Analyse",
     "heading": "Ausschreibungen",
-    "description": "Lade eine Ausschreibungs-PDF hoch, um eine strukturierte Aufschlüsselung zu erhalten: Zuschlagskriterien, Anforderungen und eine Bieten/Nicht-bieten-Empfehlung auf Basis deines Unternehmensprofils.",
-    "empty": "Noch keine Ausschreibungen hochgeladen. Lade eine PDF hoch, um loszulegen.",
+    "description": "Laden Sie eine Ausschreibungs-PDF hoch, um eine strukturierte Aufschlüsselung zu erhalten: Zuschlagskriterien, Anforderungen und eine Bieten/Nicht-bieten-Empfehlung auf Basis Ihres Unternehmensprofils.",
+    "empty": "Noch keine Ausschreibungen hochgeladen. Laden Sie eine PDF hoch, um loszulegen.",
     "analyzing": "Wird analysiert…",
     "deadline": "Frist",
     "value": "Wert"
@@ -702,7 +740,7 @@
   },
   "DocumentsSection": {
     "heading": "Dokumente",
-    "subheading": "Belege (Zertifikate, Broschüren, Richtlinien), die du mit Zertifizierungen und Referenzen oben verknüpfen kannst.",
+    "subheading": "Belege (Zertifikate, Broschüren, Richtlinien), die Sie mit Zertifizierungen und Referenzen oben verknüpfen können.",
     "nothingUploaded": "Noch nichts hochgeladen.",
     "remove": "Entfernen",
     "uploading": "Wird hochgeladen…",
@@ -711,8 +749,8 @@
   "CompanyPage": {
     "eyebrow": "Wissensbasis",
     "heading": "Unternehmen",
-    "description": "Was wir wirklich über dein Unternehmen wissen — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
-    "unlockHint": "Speichere dein Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten."
+    "description": "Was wir wirklich über Ihr Unternehmen wissen — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
+    "unlockHint": "Speichern Sie Ihr Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten."
   },
   "CompanyCoreForm": {
     "nameRequired": "Firmenname ist erforderlich.",
@@ -737,16 +775,16 @@
     "saved": "Gespeichert ✓"
   },
   "Signup": {
-    "hydrationFailedBanner": "Ein Teil dieser Seite konnte nicht geladen werden, daher wurde deine Anmeldung nicht übermittelt und nichts gespeichert. Das liegt meist an einem Werbe-/Inhaltsblocker oder einer langsamen Verbindung. Bitte deaktiviere Blocker für diese Seite, lade die Seite neu und versuche es erneut.",
-    "pickSector": "Wähle mindestens eine Branche.",
-    "descriptionRequiredForOther": "„Andere“ entspricht keiner bestimmten Branche — beschreibe oben, was dein Unternehmen macht, damit wir passende Ausschreibungen finden können.",
-    "checkEmailHeading": "Überprüfe deine E-Mail",
-    "checkEmailBody": "Wir haben einen Bestätigungslink an {email} gesendet. Klicke darauf und melde dich dann an — dein Unternehmensprofil ist bereits gespeichert.",
+    "hydrationFailedBanner": "Ein Teil dieser Seite konnte nicht geladen werden, daher wurde Ihre Anmeldung nicht übermittelt und nichts gespeichert. Das liegt meist an einem Werbe-/Inhaltsblocker oder einer langsamen Verbindung. Bitte deaktivieren Sie Blocker für diese Seite, laden Sie die Seite neu und versuchen Sie es erneut.",
+    "pickSector": "Wählen Sie mindestens eine Branche.",
+    "descriptionRequiredForOther": "„Andere“ entspricht keiner bestimmten Branche — beschreiben Sie oben, was Ihr Unternehmen macht, damit wir passende Ausschreibungen finden können.",
+    "checkEmailHeading": "Überprüfen Sie Ihre E-Mail",
+    "checkEmailBody": "Wir haben einen Bestätigungslink an {email} gesendet. Klicken Sie darauf und melden Sie sich dann an — Ihr Unternehmensprofil ist bereits gespeichert.",
     "checkEmailPlanNote": "Nach der Bestätigung geht es direkt weiter zur Kasse für {plan}.",
     "backToLogin": "Zurück zur Anmeldung",
     "heading": "Konto erstellen",
-    "signingUpFor": "Du meldest dich an für {plan} — {price}/Monat",
-    "subheading": "Erzähl uns von deinem Unternehmen — das bestimmt, welche Ausschreibungen du siehst, und die Übereinstimmungsbewertung jeder Ausschreibung.",
+    "signingUpFor": "Sie melden sich an für {plan} — {price}/Monat",
+    "subheading": "Erzählen Sie uns von Ihrem Unternehmen — das bestimmt, welche Ausschreibungen Sie sehen, und die Übereinstimmungsbewertung jeder Ausschreibung.",
     "email": "E-Mail",
     "password": "Passwort",
     "passwordPlaceholder": "Mindestens 6 Zeichen",
@@ -756,7 +794,7 @@
     "addressPlaceholder": "z. B. Antwerpen",
     "companySize": "Unternehmensgröße",
     "preferNotToSay": "Keine Angabe",
-    "descriptionLabel": "Was macht dein Unternehmen?",
+    "descriptionLabel": "Was macht Ihr Unternehmen?",
     "descriptionPlaceholder": "Ein paar Sätze reichen — das bestimmt die Übereinstimmungsbewertung jeder Ausschreibung.",
     "sectors": "Branchen",
     "agreeToTerms": "Ich stimme den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
@@ -764,7 +802,7 @@
     "professionalEmailRequired": "Der kostenlose Plan erfordert eine geschäftliche E-Mail-Adresse — persönliche Adressen wie Gmail oder Outlook werden nicht akzeptiert. Wählen Sie einen kostenpflichtigen Plan, um sich mit einer beliebigen E-Mail-Adresse anzumelden.",
     "creatingAccount": "Konto wird erstellt…",
     "signUp": "Registrieren",
-    "alreadyHaveAccount": "Hast du bereits ein Konto?",
+    "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
     "logIn": "Anmelden",
     "viewPricing": "Preise ansehen"
   },
@@ -774,24 +812,24 @@
       "noFileProvided": "Keine Datei angegeben.",
       "onlyPdfSupported": "In dieser Beta werden nur PDF-Dateien unterstützt.",
       "fileTooLarge": "Datei ist größer als 20 MB.",
-      "aiAnalysisFailed": "KI-Analyse fehlgeschlagen. Versuche es gleich noch einmal.",
+      "aiAnalysisFailed": "KI-Analyse fehlgeschlagen. Versuchen Sie es gleich noch einmal.",
       "tenderNotFound": "Ausschreibung nicht gefunden.",
-      "needCompanyProfile": "Füge dein Unternehmensprofil hinzu, um fortzufahren.",
-      "couldNotMapEvidence": "Nachweise konnten gerade nicht zugeordnet werden. Versuche es gleich noch einmal.",
+      "needCompanyProfile": "Fügen Sie Ihr Unternehmensprofil hinzu, um fortzufahren.",
+      "couldNotMapEvidence": "Nachweise konnten gerade nicht zugeordnet werden. Versuchen Sie es gleich noch einmal.",
       "bidNotFound": "Angebot nicht gefunden.",
       "missingTenderId": "Ausschreibung fehlt.",
-      "serverMisconfigured": "Der Server ist nicht richtig konfiguriert. Bitte versuche es später erneut.",
+      "serverMisconfigured": "Der Server ist nicht richtig konfiguriert. Bitte versuchen Sie es später erneut.",
       "missingTenderInfo": "Ausschreibungsinformationen fehlen.",
-      "analysisFailed": "Analyse fehlgeschlagen. Versuche es gleich noch einmal.",
+      "analysisFailed": "Analyse fehlgeschlagen. Versuchen Sie es gleich noch einmal.",
       "missingDraftText": "Entwurfstext fehlt.",
       "noDraftToRecheck": "Noch kein Entwurf zum erneuten Prüfen.",
       "companyProfileNotFound": "Unternehmensprofil nicht gefunden.",
-      "couldNotRecheckDraft": "Entwurf konnte gerade nicht erneut geprüft werden. Versuche es gleich noch einmal.",
+      "couldNotRecheckDraft": "Entwurf konnte gerade nicht erneut geprüft werden. Versuchen Sie es gleich noch einmal.",
       "requirementNotFound": "Anforderung nicht gefunden.",
-      "couldNotFindEvidence": "Nachweise konnten gerade nicht gefunden werden. Versuche es gleich noch einmal.",
-      "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuche es gleich noch einmal.",
+      "couldNotFindEvidence": "Nachweise konnten gerade nicht gefunden werden. Versuchen Sie es gleich noch einmal.",
+      "couldNotGenerateDraft": "Entwurf konnte gerade nicht erstellt werden. Versuchen Sie es gleich noch einmal.",
       "invalidLocale": "Ungültige Sprache.",
-      "couldNotTranslate": "Diese Ausschreibung konnte gerade nicht übersetzt werden. Versuche es gleich noch einmal.",
+      "couldNotTranslate": "Diese Ausschreibung konnte gerade nicht übersetzt werden. Versuchen Sie es gleich noch einmal.",
       "invalidTier": "Ungültiger Plan.",
       "checkoutFailed": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal.",
       "noBillingAccount": "Noch kein Abrechnungskonto — upgraden Sie zuerst auf einen kostenpflichtigen Plan.",
@@ -800,25 +838,25 @@
     },
     "auth": {
       "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",
-      "emailNotConfirmed": "Bitte bestätige deine E-Mail-Adresse, bevor du dich anmeldest.",
+      "emailNotConfirmed": "Bitte bestätigen Sie Ihre E-Mail-Adresse, bevor Sie sich anmelden.",
       "userAlreadyRegistered": "Es existiert bereits ein Konto mit dieser E-Mail-Adresse.",
       "passwordTooShort": "Das Passwort ist zu kurz.",
-      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
-      "rateLimited": "Zu viele Versuche. Bitte versuche es gleich noch einmal."
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "rateLimited": "Zu viele Versuche. Bitte versuchen Sie es gleich noch einmal."
     }
   },
   "BidsList": {
     "eyebrow": "Angebotsbereich",
     "title": "Angebote",
-    "description": "Ausschreibungen, für die du aktiv ein Angebot vorbereitest. Starte eines über die Seite einer fertigen Ausschreibung.",
-    "emptyBefore": "Noch keine Angebote. Öffne eine Ausschreibung unter",
+    "description": "Ausschreibungen, für die Sie aktiv ein Angebot vorbereiten. Starten Sie eines über die Seite einer fertigen Ausschreibung.",
+    "emptyBefore": "Noch keine Angebote. Öffnen Sie eine Ausschreibung unter",
     "tenders": "Ausschreibungen",
-    "emptyAfter": "und klicke auf Angebot starten.",
+    "emptyAfter": "und klicken Sie auf Angebot starten.",
     "untitledTender": "Unbenannte Ausschreibung",
     "deadline": "Frist"
   },
   "Workflow": {
-    "emptyBefore": "Noch nichts in deinem Workflow. Füge eine Ausschreibung hinzu über",
+    "emptyBefore": "Noch nichts in Ihrem Workflow. Fügen Sie eine Ausschreibung hinzu über",
     "opportunities": "Chancen",
     "emptyAfter": "um sie hier zu verfolgen.",
     "nothingHere": "Nichts hier.",
@@ -981,5 +1019,182 @@
     "outOfTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht.",
     "logIn": "Anmelden",
     "upgrade": "Upgraden"
+  },
+  "Terms": {
+    "metaTitle": "Nutzungsbedingungen — TenderProc",
+    "title": "Nutzungsbedingungen",
+    "intro": "Diese Nutzungsbedingungen (die \"<strong>Bedingungen</strong>\") regeln den Zugang zu und die Nutzung von TenderProc (der \"<strong>Dienst</strong>\"), betrieben von <strong>{entityName}</strong>, Handelsregister-/Steuernummer {companyNumber} (\"<strong>TenderProc</strong>\", \"wir\", \"uns\"). Durch das Erstellen eines Kontos oder die Nutzung des Dienstes stimmen Sie diesen Bedingungen zu. Wenn Sie nicht einverstanden sind, nutzen Sie den Dienst bitte nicht.",
+    "s1": {
+      "h": "1. Was TenderProc ist",
+      "p1": "TenderProc ist ein B2B-Softwaredienst, der Unternehmen dabei unterstützt, öffentliche Ausschreibungen in Belgien zu finden, zu prüfen und Angebote dafür vorzubereiten. Der Dienst stellt Ausschreibungsbekanntmachungen aus öffentlichen Quellen zusammen, erzeugt KI-gestützte Match-Scores, Eignungsprüfungen und Angebotsentwürfe und bietet einen Arbeitsbereich, um Angebote von der Prüfung bis zur Einreichung zu verfolgen.",
+      "p2": "<strong>Der Dienst ist ein Entscheidungsunterstützungs-Tool und kein Ersatz für Ihre eigene Beurteilung oder professionelle Beratung.</strong> Match-Scores, Eignungsprüfungen, extrahierte Anforderungen und KI-generierte Antworten sind automatisiert erzeugte Schätzungen und können unvollständig, veraltet oder falsch sein. Sie sind allein dafür verantwortlich, Ausschreibungsanforderungen, Fristen, Eignungskriterien und den Inhalt aller bei einem öffentlichen Auftraggeber eingereichten Unterlagen unabhängig zu überprüfen, bevor Sie sie einreichen. TenderProc haftet nicht für eine versäumte Frist, ein ausgeschlossenes Angebot oder einen verlorenen Auftrag, die sich daraus ergeben, dass Sie sich ohne diese unabhängige Überprüfung auf den Dienst verlassen haben."
+    },
+    "s2": {
+      "h": "2. Konten",
+      "p1": "Sie müssen bei der Erstellung eines Kontos genaue Angaben machen und Ihre Anmeldedaten vertraulich behandeln. Sie sind für alle Aktivitäten unter Ihrem Konto verantwortlich. Der Dienst ist für die Nutzung durch Unternehmen und Fachleute bestimmt, die in geschäftlicher Eigenschaft handeln, nicht für Verbraucher, die zu rein privaten Zwecken handeln. Sie müssen berechtigt sein, im Namen des von Ihnen registrierten Unternehmens zu handeln."
+    },
+    "s3": {
+      "h": "3. Tarife, Abrechnung und Kündigung",
+      "p1": "TenderProc bietet einen kostenlosen Tarif sowie kostenpflichtige Pro-/Premium-Tarife an, die monatlich abgerechnet werden. Kostenpflichtige Tarife werden von <strong>Paddle</strong>, unserem Zahlungsdienstleister, verkauft und eingezogen, der für diese Transaktionen als <strong>Merchant of Record</strong> auftritt — Paddle ist der rechtliche Verkäufer, wickelt die Zahlungsabwicklung ab und erhebt und führt die anfallende Umsatzsteuer/MwSt. ab. Ihr Kauf unterliegt außerdem Paddles eigenen Käuferbedingungen, die Ihnen beim Checkout vorgelegt werden.",
+      "p2": "Abonnements verlängern sich bis zur Kündigung automatisch jeden Monat. Sie können jederzeit über die Abrechnungsseite in der App kündigen; die Kündigung stoppt künftige Verlängerungen, beendet aber nicht vorzeitig Ihren laufenden bezahlten Zeitraum — Sie behalten den Zugang zur bezahlten Stufe bis zu deren Ablauf, danach wechselt Ihr Konto in den kostenlosen Tarif. Siehe unsere <refundLink>Rückerstattungsrichtlinie</refundLink> für die Handhabung von Rückerstattungen.",
+      "p3": "Schlägt eine Zahlung fehl, können wir Ihr Konto in eine Kulanzfrist versetzen, während der der Zugang zur bezahlten Stufe bestehen bleibt, solange Sie Ihre Zahlungsmethode aktualisieren; wird die Zahlung nicht geklärt, wechselt Ihr Konto in den kostenlosen Tarif."
+    },
+    "s4": {
+      "h": "4. Zulässige Nutzung",
+      "intro": "Sie verpflichten sich, Folgendes zu unterlassen:",
+      "li1": "den Dienst unter Verstoß gegen geltendes Recht zu nutzen, einschließlich des Vergaberechts;",
+      "li2": "Ausschreibungsdaten oder andere Inhalte des Dienstes zu scrapen, systematisch zu extrahieren, weiterzuverkaufen oder weiterzuverbreiten, außer über die dafür von uns bereitgestellten Funktionen;",
+      "li3": "zu versuchen, tarifgebundene Nutzungsgrenzen zu umgehen, oder ein Konto zwischen nicht verbundenen Unternehmen zu teilen;",
+      "li4": "Inhalte hochzuladen, an denen Sie kein Recht haben oder die Rechte Dritter verletzen;",
+      "li5": "den Betrieb des Dienstes zu stören, dessen Sicherheit zu testen oder ihn zur Entwicklung eines konkurrierenden Produkts zu nutzen;",
+      "li6": "von der KI generierte Inhalte des Dienstes ohne Überprüfung als unabhängig verifizierte Tatsache in einem eingereichten Angebot darzustellen."
+    },
+    "s5": {
+      "h": "5. Ihre Inhalte",
+      "p1": "Sie behalten das Eigentum an den Unternehmensinformationen, Dokumenten und sonstigen Inhalten, die Sie hochladen oder eingeben (\"<strong>Ihre Inhalte</strong>\"). Sie räumen uns eine Lizenz ein, Ihre Inhalte zu hosten, zu verarbeiten und zu analysieren — einschließlich der Übermittlung relevanter Auszüge an unseren KI-Verarbeitungsanbieter — allein zu dem Zweck, den Dienst für Sie bereitzustellen und zu verbessern. Wir verkaufen Ihre Inhalte nicht und nutzen sie nicht zum Training von Drittanbietermodellen, außer wie in unserer <privacyLink>Datenschutzerklärung</privacyLink> beschrieben. Sie sind dafür verantwortlich, die Rechte an allem zu besitzen, was Sie hochladen, einschließlich Referenzen, Zertifizierungen oder Dokumenten Dritter, die Subunternehmer oder Partner beschreiben."
+    },
+    "s6": {
+      "h": "6. Ausschreibungsdaten Dritter",
+      "p1": "Ausschreibungsbekanntmachungen und Vergabedaten im Dienst stammen aus öffentlichen Datenbanken (unter anderem TED der EU und der belgischen e-Procurement/BOSA-Plattform). Wir haben keine Kontrolle über diese Quellen und übernehmen keine Gewähr für deren Richtigkeit, Vollständigkeit oder Aktualität. Prüfen Sie Ausschreibungsdetails stets anhand der offiziellen Bekanntmachung und des eigenen Kanals des öffentlichen Auftraggebers, bevor Sie danach handeln."
+    },
+    "s7": {
+      "h": "7. Geistiges Eigentum",
+      "p1": "Der Dienst, seine Software, sein Design und die TenderProc-Marke gehören {entityName} oder deren Lizenzgebern und sind urheber- und markenrechtlich geschützt. Nichts in diesen Bedingungen überträgt Ihnen das Eigentum am Dienst; Sie erhalten ein beschränktes, nicht ausschließliches und nicht übertragbares Recht, ihn gemäß diesen Bedingungen zu nutzen."
+    },
+    "s8": {
+      "h": "8. Haftungsausschlüsse",
+      "p1": "Der Dienst wird \"wie besehen\" und \"wie verfügbar\" bereitgestellt. Soweit gesetzlich zulässig, schließen wir sämtliche ausdrücklichen oder stillschweigenden Gewährleistungen aus, einschließlich der Eignung für einen bestimmten Zweck und der Nichtverletzung von Rechten Dritter. Wir gewährleisten nicht, dass der Dienst unterbrechungsfrei oder fehlerfrei läuft oder dass KI-Ergebnisse zutreffend sind. Nichts in diesem Abschnitt beschränkt eine Gewährleistung oder ein Recht, das gesetzlich nicht ausgeschlossen werden kann."
+    },
+    "s9": {
+      "h": "9. Haftungsbeschränkung",
+      "p1": "Soweit gesetzlich zulässig, haftet TenderProc nicht für indirekte, beiläufig entstandene oder Folgeschäden oder entgangenen Gewinn, einschließlich eines verlorenen Auftrags, eines verlorenen Angebots oder entgangener Einnahmen, die sich aus der Nutzung des Dienstes ergeben. Unsere Gesamthaftung für Ansprüche aus diesen Bedingungen oder dem Dienst ist auf den Betrag begrenzt, den Sie uns in den 12 Monaten vor Entstehen des Anspruchs gezahlt haben. Dieser Abschnitt beschränkt keine Haftung, die nach geltendem Recht nicht ausgeschlossen werden kann (zum Beispiel Haftung für eigene grobe Fahrlässigkeit, vorsätzliches Fehlverhalten oder von uns verursachten Tod oder Körperverletzung)."
+    },
+    "s10": {
+      "h": "10. Kündigung",
+      "p1": "Sie können die Nutzung des Dienstes jederzeit beenden und Ihr Konto löschen. Wir können Ihr Konto bei Verstoß gegen diese Bedingungen, bei Zahlungsverzug oder wenn gesetzlich vorgeschrieben aussetzen oder kündigen, mit vorheriger Mitteilung, soweit vernünftigerweise möglich. Bestimmungen, die ihrer Natur nach eine Kündigung überdauern sollen (Eigentum, Haftungsausschlüsse, Haftungsbeschränkung, anwendbares Recht), bleiben bestehen."
+    },
+    "s11": {
+      "h": "11. Änderungen dieser Bedingungen",
+      "p1": "Wir können diese Bedingungen von Zeit zu Zeit aktualisieren. Bei einer wesentlichen Änderung werden wir uns angemessen bemühen, Sie darüber zu informieren (zum Beispiel per E-Mail oder In-App-Hinweis), bevor sie in Kraft tritt. Die fortgesetzte Nutzung des Dienstes nach Inkrafttreten einer Änderung gilt als Zustimmung zu den aktualisierten Bedingungen."
+    },
+    "s12": {
+      "h": "12. Anwendbares Recht",
+      "p1": "Diese Bedingungen unterliegen belgischem Recht, unter Ausschluss der Kollisionsnormen. Jede nicht gütlich beigelegte Streitigkeit unterliegt der ausschließlichen Zuständigkeit der belgischen Gerichte, außer wenn geltendes Verbraucherschutzrecht Ihnen das Recht einräumt, eine Klage an Ihrem eigenen Wohnsitz zu erheben."
+    },
+    "s13": {
+      "h": "13. Kontakt",
+      "p1": "Fragen zu diesen Bedingungen: <email>{emailAddress}</email>."
+    }
+  },
+  "Privacy": {
+    "metaTitle": "Datenschutzerklärung — TenderProc",
+    "title": "Datenschutzerklärung",
+    "intro": "Diese Erklärung beschreibt, welche personenbezogenen Daten TenderProc erhebt, warum, und welche Rechte Sie daran gemäß der EU-Datenschutz-Grundverordnung (DSGVO) und belgischem Datenschutzrecht haben. Sie gilt für Besucher unserer Website und Nutzer der TenderProc-App.",
+    "s1": {
+      "h": "1. Wer für Ihre Daten verantwortlich ist",
+      "p1": "Verantwortlicher ist <strong>{entityName}</strong>, Handelsregister-/Steuernummer {companyNumber}. Bei Fragen zu dieser Erklärung oder zur Ausübung Ihrer Rechte kontaktieren Sie uns unter <email>{emailAddress}</email>.",
+      "p2": "Wir sind außerhalb der Europäischen Union niedergelassen, bieten den Dienst aber Unternehmen in Belgien und der EU an, sodass diese Erklärung und die DSGVO selbst dennoch für die Verarbeitung Ihrer Daten gelten (Art. 3 Abs. 2 DSGVO)."
+    },
+    "s2": {
+      "h": "2. Was wir erheben",
+      "p1": "<strong>Kontodaten:</strong> Ihre E-Mail-Adresse und Ihr Passwort (gehasht gespeichert von unserem Authentifizierungsanbieter Supabase — wir sehen das Klartext-Passwort nie).",
+      "p2": "<strong>Unternehmensprofil:</strong> Firmenname, Adresse, Größe, Branchen, Beschreibung, Website, Mitarbeiterzahl, bediente Regionen und Sprachen — bei der Registrierung erhoben und auf Ihrer Unternehmensseite bearbeitbar.",
+      "p3": "<strong>Unternehmenswissensdatenbank:</strong> die von Ihnen angebotenen Leistungen, Zertifizierungen, frühere Referenzen (die Auftragswerte enthalten können) sowie von Ihnen hochgeladene Nachweisdokumente. Diese dienen der Erstellung von Match-Scores und Eignungsprüfungen und — nur wenn Sie dies wählen — als Quellmaterial für KI-generierte Angebotstexte.",
+      "p4": "<strong>Ausschreibungen und Angebote:</strong> von Ihnen hochgeladene oder verfolgte Ausschreibungen, die daraus extrahierten Anforderungen und Zuschlagskriterien, Ihre Angebotswerkraum-Daten (Status, Checklisten, hochgeladene Angebotsdokumente, KI-generierter Antworttext) sowie, sofern von Ihnen erfasst, das Ergebnis eines Angebots, das wettbewerblich sensible Angaben wie den Zuschlagspreis oder Ihre eigene Bewertung enthalten kann.",
+      "p5": "<strong>Technische Daten:</strong> Standard-Anfragedaten (IP-Adresse, Browser-User-Agent), die durch die Nutzung einer Web-App entstehen, Sitzungscookies zur Aufrechterhaltung Ihrer Anmeldung sowie ein Cookie, das Ihre Sprachpräferenz speichert. Wir setzen keine Werbe- oder Analyse-Tracker von Drittanbietern ein."
+    },
+    "s3": {
+      "h": "3. Warum wir sie verarbeiten und auf welcher Rechtsgrundlage",
+      "li1": "<strong>Bereitstellung des Dienstes</strong> — Erstellung Ihres Kontos, Abgleich von Ausschreibungen mit Ihrem Profil, Durchführung von Eignungsprüfungen, Erstellung von Angebotsentwürfen und Betrieb Ihres Angebotswerkraums. Rechtsgrundlage: Vertragserfüllung mit Ihnen (Art. 6 Abs. 1 lit. b DSGVO).",
+      "li2": "<strong>Abrechnung</strong> — Abwicklung Ihres Abonnements über Paddle und Führung der nach Handels- und Steuerrecht erforderlichen Aufzeichnungen. Rechtsgrundlage: Vertragserfüllung und rechtliche Verpflichtung (Art. 6 Abs. 1 lit. b und c DSGVO).",
+      "li3": "<strong>Servicebenachrichtigungen</strong> — Versand der Ausschreibungs-Übersichts-E-Mail für die von Ihnen ausgewählten Branchen. Rechtsgrundlage: berechtigtes Interesse am Betrieb der von Ihnen konfigurierten Funktion (Art. 6 Abs. 1 lit. f DSGVO); Sie können dies jederzeit in Ihren Einstellungen deaktivieren.",
+      "li4": "<strong>Sicherheit und Missbrauchsprävention</strong> — Schutz von Konten und dem Dienst vor unbefugtem Zugriff. Rechtsgrundlage: berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO).",
+      "li5": "<strong>Rechtliche Compliance</strong> — Beantwortung rechtmäßiger Anfragen, steuerliche und buchhalterische Aufzeichnungspflichten. Rechtsgrundlage: rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO).",
+      "p1": "KI-gestützte Ergebnisse (Match-Scores, Eignungsprüfungen, entworfener Text) werden erstellt, um Ihnen zu helfen, nicht um Entscheidungen über Sie zu treffen — TenderProc verwendet keine automatisierte Verarbeitung, um Entscheidungen zu treffen, die rechtliche Wirkung entfalten oder Sie in ähnlicher Weise erheblich beeinträchtigen im Sinne von Art. 22 DSGVO. Ein Mensch — Sie — prüft und entscheidet stets, bevor etwas bei einem öffentlichen Auftraggeber eingereicht wird."
+    },
+    "s4": {
+      "h": "4. Mit wem wir sie teilen",
+      "intro": "Wir geben personenbezogene Daten an folgende Auftragsverarbeiter weiter, jeweils gebunden durch einen Auftragsverarbeitungsvertrag, und nur soweit für die Bereitstellung des Dienstes erforderlich:",
+      "li1": "<strong>Supabase</strong> — hostet unsere Datenbank, Authentifizierung und Dateispeicherung. Projektregion: {supabaseRegion}.",
+      "li2": "<strong>Anthropic</strong> — verarbeitet von Ihnen eingereichten Ausschreibungs- und Unternehmenstext, um Match-Scores, Eignungsprüfungen und Angebotsentwürfe zu erzeugen. Anthropic hat seinen Sitz in den USA; Übermittlungen sind durch Standardvertragsklauseln oder eine gleichwertige Garantie abgedeckt.",
+      "li3": "<strong>Resend</strong> — versendet die Ausschreibungs-Übersichts-E-Mail und andere transaktionale E-Mails.",
+      "li4": "<strong>Paddle</strong> — verarbeitet Zahlungen und tritt für kostenpflichtige Abonnements als Merchant of Record auf; Paddle erhält die zur Zahlungsabwicklung erforderlichen Rechnungsdaten (Paddle, nicht wir, speichert Ihre Kartendaten).",
+      "p1": "Ausschreibungs- und Vergabedaten, die in die andere Richtung fließen — von der TED-Datenbank der EU und der belgischen e-Procurement/BOSA-Plattform zu TenderProc — sind öffentliche Vergabedaten, keine personenbezogenen Daten von Ihnen; wir senden Ihre Daten nicht an diese Quellen.",
+      "p2": "Wir verkaufen keine personenbezogenen Daten und geben sie nicht zu eigenen Marketingzwecken an Dritte weiter."
+    },
+    "s5": {
+      "h": "5. Internationale Übermittlungen",
+      "p1": "Ihre Daten verlassen den EWR hier auf mehr als eine Weise, und wir möchten damit offen umgehen, statt es zu verstecken: unsere Datenbank und Dateispeicherung (Supabase) werden in {supabaseRegion} gehostet, unser KI-Verarbeitungsanbieter (Anthropic) hat seinen Sitz in den USA, und {entityName} selbst ist als Verantwortlicher außerhalb des EWR niedergelassen. Für jede dieser Übermittlungen stützen wir uns zum Schutz Ihrer Daten auf die Standardvertragsklauseln der Europäischen Kommission oder einen anderen nach Kapitel V der DSGVO anerkannten rechtmäßigen Übermittlungsmechanismus. Sie können bei uns eine Kopie der jeweiligen Garantie anfordern, indem Sie uns unter <email>{emailAddress}</email> kontaktieren."
+    },
+    "s6": {
+      "h": "6. Wie lange wir sie aufbewahren",
+      "p1": "Wir bewahren Ihre Konto- und Arbeitsbereichsdaten auf, solange Ihr Konto aktiv ist. Löschen Sie Ihr Konto, löschen oder anonymisieren wir Ihre personenbezogenen Daten innerhalb einer angemessenen Frist, außer bei Daten, die wir länger aufbewahren müssen — etwa Abrechnungs- und Rechnungsunterlagen, die wir für die nach belgischem Handels- und Steuerrecht vorgeschriebene Dauer aufbewahren."
+    },
+    "s7": {
+      "h": "7. Ihre Rechte",
+      "intro": "Nach der DSGVO haben Sie das Recht,",
+      "li1": "Auskunft über die von uns über Sie gespeicherten personenbezogenen Daten zu erhalten;",
+      "li2": "unrichtige Daten berichtigen zu lassen;",
+      "li3": "uns zu bitten, Ihre Daten zu löschen (vorbehaltlich unserer gesetzlichen Aufbewahrungspflichten, z. B. für Rechnungen);",
+      "li4": "bestimmte Verarbeitungen einzuschränken oder ihnen zu widersprechen;",
+      "li5": "Ihre Daten in einem übertragbaren Format zu erhalten;",
+      "li6": "eine erteilte Einwilligung jederzeit zu widerrufen, sofern die Verarbeitung auf einer Einwilligung beruht;",
+      "li7": "sich bei der belgischen Datenschutzbehörde (Gegevensbeschermingsautoriteit / Autorité de protection des données) oder Ihrer eigenen EU-Aufsichtsbehörde zu beschweren.",
+      "p1": "Um eines dieser Rechte auszuüben, kontaktieren Sie uns unter <email>{emailAddress}</email>. Wir müssen Ihre Identität möglicherweise überprüfen, bevor wir einer Anfrage nachkommen."
+    },
+    "s8": {
+      "h": "8. Cookies",
+      "p1": "Wir verwenden ausschließlich technisch notwendige Cookies: eines, um Sie angemeldet zu halten (gesetzt von der Supabase-Authentifizierung), und eines, um Ihre Sprachpräferenz zu speichern. Wir verwenden keine Werbe- oder Analyse-Cookies von Drittanbietern. Da diese Cookies für den Betrieb des Dienstes technisch notwendig sind, zeigen wir dafür keinen Cookie-Consent-Banner an."
+    },
+    "s9": {
+      "h": "9. Sicherheit",
+      "p1": "Daten werden während der Übertragung verschlüsselt (HTTPS). Der Zugriff auf Ihre Daten innerhalb des Dienstes ist über eine auf Datenbankebene durchgesetzte Zeilenebenen-Sicherheit auf Ihr eigenes Konto beschränkt — standardmäßig kann kein anderes Kundenkonto Ihre Daten abfragen. Der Zugriff durch TenderProc-Mitarbeiter ist auf das für Support und Betrieb des Dienstes Erforderliche beschränkt."
+    },
+    "s10": {
+      "h": "10. Kinder",
+      "p1": "TenderProc ist ein Business-to-Business-Dienst und richtet sich nicht an Kinder und wird wissentlich nicht von ihnen genutzt."
+    },
+    "s11": {
+      "h": "11. Änderungen dieser Erklärung",
+      "p1": "Wir können diese Erklärung von Zeit zu Zeit aktualisieren. Bei einer wesentlichen Änderung werden wir uns angemessen bemühen, Sie darüber zu informieren, bevor sie in Kraft tritt."
+    }
+  },
+  "Refund": {
+    "metaTitle": "Rückerstattungsrichtlinie — TenderProc",
+    "title": "Rückerstattungsrichtlinie",
+    "s1": {
+      "h": "1. Wie die Abrechnung funktioniert",
+      "p1": "Der kostenlose Tarif wird nie berechnet. Pro und Premium sind monatliche Abonnements, die im Voraus berechnet und von <strong>Paddle</strong>, unserem Zahlungsdienstleister, abgewickelt werden, der für diese Käufe als <strong>Merchant of Record</strong> auftritt — Paddle ist der auf Ihrer Quittung genannte rechtliche Verkäufer und die Partei, die die Zahlung tatsächlich abwickelt."
+    },
+    "s2": {
+      "h": "2. Unsere Rückerstattungsrichtlinie",
+      "p1": "Wir bieten keine automatischen Rückerstattungen an. Rückerstattungsanfragen werden <strong>von Fall zu Fall</strong> geprüft — schreiben Sie uns unter <email>{emailAddress}</email> mit Ihrer Konto-E-Mail-Adresse und dem Grund für die Anfrage, und wir prüfen sie und melden uns bei Ihnen. Wir stehen zeitnah gestellten Anfragen im Allgemeinen aufgeschlossen gegenüber (zum Beispiel kurz nach einer unerwünschten Verlängerung, oder wenn der Dienst für Sie tatsächlich nicht funktioniert hat), und wir korrigieren stets unsere eigenen Fehler — siehe unten."
+    },
+    "s3": {
+      "h": "3. Belastungen, die wir immer erstatten",
+      "li1": "doppelte Belastungen für denselben Abrechnungszeitraum;",
+      "li2": "Belastungen, die durch einen nachgewiesenen technischen Fehler unsererseits verursacht wurden;",
+      "li3": "jede Belastung, die überhaupt nicht hätte erfolgen dürfen — zum Beispiel eine Abrechnung, nachdem Sie bereits gekündigt hatten."
+    },
+    "s4": {
+      "h": "4. Kündigen statt Rückerstattung",
+      "p1": "Sie können ein Abonnement jederzeit über die Abrechnungsseite in der App kündigen. Die Kündigung stoppt künftige Verlängerungen — Ihr laufender bezahlter Zeitraum wird nicht erstattet, aber Sie behalten den Zugang zur bezahlten Stufe bis zu deren Ende und werden danach nicht erneut belastet."
+    },
+    "s5": {
+      "h": "5. Wie eine genehmigte Rückerstattung ausgezahlt wird",
+      "p1": "Genehmigte Rückerstattungen werden von Paddle auf Ihre ursprüngliche Zahlungsmethode zurückgebucht. Je nach Bank oder Kartenanbieter kann es einige Werktage dauern, bis die Rückerstattung auf Ihrer Abrechnung erscheint."
+    },
+    "s6": {
+      "h": "6. Rückbuchungen (Chargebacks)",
+      "p1": "Wenn mit einer Belastung etwas nicht stimmt, kontaktieren Sie uns bitte zuerst — die meisten Probleme lassen sich direkt schneller lösen als über eine Rückbuchung, und eine Rückbuchung kann dazu führen, dass Ihr Konto während der Prüfung gesperrt wird."
+    },
+    "s7": {
+      "h": "7. Ihre gesetzlichen Rechte",
+      "p1": "Nichts in dieser Richtlinie beschränkt ein unverzichtbares Recht, das Ihnen nach geltendem Verbraucherschutzrecht zusteht, einschließlich eines etwaigen gesetzlichen Widerrufsrechts beim Kauf digitaler Dienstleistungen, das Sie im Bestellvorgang von Paddle zum Zeitpunkt des Kaufs bestätigen müssen."
+    },
+    "s8": {
+      "h": "8. Kontakt",
+      "p1": "Rückerstattungsanfragen und Fragen zu dieser Richtlinie: <email>{emailAddress}</email>."
+    }
   }
 }

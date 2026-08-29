@@ -136,12 +136,14 @@
     "goToApp": "Go to app",
     "logIn": "Log in",
     "signUp": "Sign up",
-    "englishOnlyNotice": "This document is only available in English. If anything is unclear, contact us and we'll help in your language.",
+    "englishOnlyNotice": "This document has been translated for convenience. In case of any inconsistency between this translation and the English original, the English version shall prevail.",
     "backToTenderProc": "Back to TenderProc",
     "terms": "Terms of Service",
     "privacy": "Privacy Notice",
     "refund": "Refund Policy",
-    "contact": "Contact"
+    "contact": "Contact",
+    "eyebrow": "Legal",
+    "lastUpdated": "Last updated: {date}"
   },
   "Contact": {
     "eyebrow": "Contact",
@@ -180,28 +182,64 @@
         "gettingStarted": {
           "title": "Getting started",
           "items": [
-            { "question": "What is TenderProc, exactly?", "answer": "TenderProc is an AI-assisted platform for finding and preparing bids on Belgian public tenders. It matches new tenders to your business, screens out noise (like already-awarded notices), and helps you qualify and prepare a bid — all in one workflow." },
-            { "question": "How does the AI matching work?", "answer": "Every new tender gets a match score out of 100 against your company profile (sectors, size, description) — so you see what's actually worth your time first." },
-            { "question": "Do I need experience with public tenders to use this?", "answer": "No — TenderProc is built to make Belgian public procurement approachable even if you've never bid before. You set up a company profile, and the platform handles screening, requirement extraction, and eligibility checks." },
-            { "question": "Which regions/sectors are covered?", "answer": "Belgian public tenders — pulled from the EU's official TED database, Belgium's BOSA e-Notification platform, and our own network, across different sector categories from construction and IT to healthcare, catering, and consulting." }
+            {
+              "question": "What is TenderProc, exactly?",
+              "answer": "TenderProc is an AI-assisted platform for finding and preparing bids on Belgian public tenders. It matches new tenders to your business, screens out noise (like already-awarded notices), and helps you qualify and prepare a bid — all in one workflow."
+            },
+            {
+              "question": "How does the AI matching work?",
+              "answer": "Every new tender gets a match score out of 100 against your company profile (sectors, size, description) — so you see what's actually worth your time first."
+            },
+            {
+              "question": "Do I need experience with public tenders to use this?",
+              "answer": "No — TenderProc is built to make Belgian public procurement approachable even if you've never bid before. You set up a company profile, and the platform handles screening, requirement extraction, and eligibility checks."
+            },
+            {
+              "question": "Which regions/sectors are covered?",
+              "answer": "Belgian public tenders — pulled from the EU's official TED database, Belgium's BOSA e-Notification platform, and our own network, across different sector categories from construction and IT to healthcare, catering, and consulting."
+            }
           ]
         },
         "pricingTrust": {
           "title": "Pricing & trust",
           "items": [
-            { "question": "How much does it cost?", "answer": "Free, Pro (€49/month), and Premium (€79/month) — see the Pricing page for what's included in each." },
-            { "question": "Is there a free trial?", "answer": "There's no time-limited trial, but the Free plan itself never expires and needs no card — you can try tender discovery for one sector at no cost before upgrading." },
-            { "question": "Can I cancel anytime?", "answer": "Yes — cancel anytime from the Billing page. Cancelling stops future renewals; you keep paid-tier access until your current period ends and aren't charged again after that." },
-            { "question": "Is my company data secure/GDPR-compliant?", "answer": "Yes — TenderProc is GDPR-compliant by design (documented legal basis for every use of your data, EU data-subject rights honored), data in transit is encrypted (HTTPS), and access is scoped to your own account. Full details are in our Privacy Notice." }
+            {
+              "question": "How much does it cost?",
+              "answer": "Free, Pro (€49/month), and Premium (€79/month) — see the Pricing page for what's included in each."
+            },
+            {
+              "question": "Is there a free trial?",
+              "answer": "There's no time-limited trial, but the Free plan itself never expires and needs no card — you can try tender discovery for one sector at no cost before upgrading."
+            },
+            {
+              "question": "Can I cancel anytime?",
+              "answer": "Yes — cancel anytime from the Billing page. Cancelling stops future renewals; you keep paid-tier access until your current period ends and aren't charged again after that."
+            },
+            {
+              "question": "Is my company data secure/GDPR-compliant?",
+              "answer": "Yes — TenderProc is GDPR-compliant by design (documented legal basis for every use of your data, EU data-subject rights honored), data in transit is encrypted (HTTPS), and access is scoped to your own account. Full details are in our Privacy Notice."
+            }
           ]
         },
         "usingProduct": {
           "title": "Using the product",
           "items": [
-            { "question": "How often are new tenders added?", "answer": "Tenders are pulled live from the EU's official TED database as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors." },
-            { "question": "Can I get help preparing my actual bid, or just find opportunities?", "answer": "Both — beyond discovery, Pro includes AI-assisted bid preparation: upload a tender PDF and TenderProc extracts requirements, scores your fit with a Bid/No-Bid recommendation, and drafts a response grounded in your own company evidence." },
-            { "question": "What languages does the platform support?", "answer": "The app itself is available in English, Dutch, French, and German, and tender notices published in other languages can be AI-translated for you." },
-            { "question": "What happens if I miss a deadline notification?", "answer": "There isn't a dedicated deadline-reminder feature yet — each tender's deadline is shown right on its card, and once you add it to your Workflow board you can track it there through review, drafting and submission, so nothing you're actively pursuing gets lost." }
+            {
+              "question": "How often are new tenders added?",
+              "answer": "Tenders are pulled live from the EU's official TED database as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors."
+            },
+            {
+              "question": "Can I get help preparing my actual bid, or just find opportunities?",
+              "answer": "Both — beyond discovery, Pro includes AI-assisted bid preparation: upload a tender PDF and TenderProc extracts requirements, scores your fit with a Bid/No-Bid recommendation, and drafts a response grounded in your own company evidence."
+            },
+            {
+              "question": "What languages does the platform support?",
+              "answer": "The app itself is available in English, Dutch, French, and German, and tender notices published in other languages can be AI-translated for you."
+            },
+            {
+              "question": "What happens if I miss a deadline notification?",
+              "answer": "There isn't a dedicated deadline-reminder feature yet — each tender's deadline is shown right on its card, and once you add it to your Workflow board you can track it there through review, drafting and submission, so nothing you're actively pursuing gets lost."
+            }
           ]
         }
       }
@@ -981,5 +1019,182 @@
     "outOfTokens": "You're out of free tokens this month.",
     "logIn": "Log in",
     "upgrade": "Upgrade"
+  },
+  "Terms": {
+    "metaTitle": "Terms of Service — TenderProc",
+    "title": "Terms of Service",
+    "intro": "These Terms of Service (\"<strong>Terms</strong>\") govern access to and use of TenderProc (the \"<strong>Service</strong>\"), operated by <strong>{entityName}</strong>, commercial registration / tax number {companyNumber} (\"<strong>TenderProc</strong>\", \"we\", \"us\"). By creating an account or using the Service, you agree to these Terms. If you don’t agree, don’t use the Service.",
+    "s1": {
+      "h": "1. What TenderProc is",
+      "p1": "TenderProc is a B2B software service that helps businesses discover, screen and prepare bids for public procurement tenders in Belgium. It surfaces tender notices from public sources, generates AI-assisted match scores, eligibility checks and draft bid responses, and provides a workspace to track bids from screening through submission.",
+      "p2": "<strong>The Service is a decision-support tool, not a substitute for your own judgment or professional advice.</strong> Match scores, eligibility checks, extracted requirements and AI-drafted responses are estimates generated by automated processing and may be incomplete, out of date or wrong. You are solely responsible for independently verifying tender requirements, deadlines, eligibility criteria and the content of anything you submit to a contracting authority before you submit it. TenderProc is not liable for a missed deadline, a disqualified bid, or a lost contract that results from relying on the Service without that independent verification."
+    },
+    "s2": {
+      "h": "2. Accounts",
+      "p1": "You must provide accurate information when creating an account and keep your login credentials confidential. You’re responsible for all activity under your account. The Service is intended for use by businesses and professionals acting in a business capacity, not consumers acting for purely personal purposes. You must be authorized to act on behalf of the company you register."
+    },
+    "s3": {
+      "h": "3. Plans, billing and cancellation",
+      "p1": "TenderProc offers a Free plan and paid Pro/Premium plans, billed monthly. Paid plans are sold and collected by <strong>Paddle</strong>, our payment provider, who acts as the <strong>Merchant of Record</strong> for these transactions — Paddle is the seller of record, handles payment processing, and collects and remits applicable sales tax/VAT. Your purchase is also subject to Paddle’s own buyer terms, presented to you at checkout.",
+      "p2": "Subscriptions renew automatically each month until cancelled. You can cancel anytime from the Billing page in the app; cancellation stops future renewals but doesn’t end your current paid period early — you keep paid-tier access until it expires, then your account moves to the Free plan. See our <refundLink>Refund Policy</refundLink> for how refunds are handled.",
+      "p3": "If a payment fails, we may place your account into a grace period during which paid-tier access continues while you update your payment method; if payment isn’t resolved, your account is moved to the Free plan."
+    },
+    "s4": {
+      "h": "4. Acceptable use",
+      "intro": "You agree not to:",
+      "li1": "Use the Service to violate any applicable law, including public procurement law;",
+      "li2": "Scrape, systematically extract, resell, or redistribute tender data or other content from the Service except through features we provide for that purpose;",
+      "li3": "Attempt to circumvent usage limits tied to your plan, or share one account across unrelated businesses;",
+      "li4": "Upload content you don’t have the right to upload, or that infringes a third party’s rights;",
+      "li5": "Interfere with the Service’s operation, probe its security, or use it to build a competing product;",
+      "li6": "Misrepresent AI-generated content from the Service as independently verified fact in a bid submission without review."
+    },
+    "s5": {
+      "h": "5. Your content",
+      "p1": "You retain ownership of the company information, documents and other content you upload or enter (\"<strong>Your Content</strong>\"). You grant us a license to host, process and analyze Your Content — including sending relevant excerpts to our AI processing provider — solely to provide and improve the Service for you. We don’t sell Your Content, and we don’t use it to train third-party models beyond what’s described in our <privacyLink>Privacy Notice</privacyLink>. You’re responsible for having the rights to anything you upload, including any third-party references, certifications, or documents describing subcontractors or partners."
+    },
+    "s6": {
+      "h": "6. Third-party tender data",
+      "p1": "Tender notices and award data shown in the Service are sourced from public databases (including the EU’s TED and Belgium’s e-Procurement/BOSA platform). We don’t control these sources and don’t guarantee their accuracy, completeness, or timeliness. Always confirm tender details against the official notice and the contracting authority’s own channel before acting on them."
+    },
+    "s7": {
+      "h": "7. Intellectual property",
+      "p1": "The Service, its software, design and TenderProc branding are owned by {entityName} or its licensors and are protected by intellectual property law. Nothing in these Terms transfers ownership of the Service to you; you get a limited, non-exclusive, non-transferable right to use it in accordance with these Terms."
+    },
+    "s8": {
+      "h": "8. Disclaimers",
+      "p1": "The Service is provided \"as is\" and \"as available.\" To the fullest extent permitted by law, we disclaim all warranties, express or implied, including fitness for a particular purpose and non-infringement. We don’t warrant that the Service will be uninterrupted, error-free, or that AI outputs will be accurate. Nothing in this section limits any warranty or right that can’t lawfully be excluded."
+    },
+    "s9": {
+      "h": "9. Limitation of liability",
+      "p1": "To the fullest extent permitted by law, TenderProc won’t be liable for indirect, incidental, consequential or lost-profit damages, including a lost contract, lost bid, or lost revenue, arising from use of the Service. Our total liability for any claim arising from these Terms or the Service is limited to the amount you paid us in the 12 months before the claim arose. This section doesn’t limit liability that can’t be excluded under applicable law (for example, liability for our own gross negligence, willful misconduct, or death or personal injury we cause)."
+    },
+    "s10": {
+      "h": "10. Termination",
+      "p1": "You may stop using the Service and delete your account at any time. We may suspend or terminate your account for breach of these Terms, non-payment, or if required by law, with notice where reasonably possible. Sections that by their nature should survive termination (ownership, disclaimers, limitation of liability, governing law) do."
+    },
+    "s11": {
+      "h": "11. Changes to these Terms",
+      "p1": "We may update these Terms from time to time. If a change is material, we’ll make reasonable efforts to notify you (for example, by email or an in-app notice) before it takes effect. Continued use of the Service after a change takes effect means you accept the updated Terms."
+    },
+    "s12": {
+      "h": "12. Governing law",
+      "p1": "These Terms are governed by the laws of {jurisdiction}, without regard to conflict-of-law rules. Any dispute not resolved informally will be subject to the exclusive jurisdiction of the courts of {jurisdiction}, except where applicable consumer-protection law gives you the right to bring a claim in your own place of residence."
+    },
+    "s13": {
+      "h": "13. Contact",
+      "p1": "Questions about these Terms: <email>{emailAddress}</email>."
+    }
+  },
+  "Privacy": {
+    "metaTitle": "Privacy Notice — TenderProc",
+    "title": "Privacy Notice",
+    "intro": "This notice explains what personal data TenderProc collects, why, and what rights you have over it under the EU General Data Protection Regulation (GDPR) and Belgian data protection law. It applies to visitors of our website and users of the TenderProc app.",
+    "s1": {
+      "h": "1. Who is responsible for your data",
+      "p1": "The data controller is <strong>{entityName}</strong>, commercial registration / tax number {companyNumber}. For any question about this notice or to exercise your rights, contact us at <email>{emailAddress}</email>.",
+      "p2": "We’re established outside the European Union but offer the Service to businesses in Belgium and the EU, so this notice, and GDPR itself, still applies to how we handle your data (GDPR Art. 3(2))."
+    },
+    "s2": {
+      "h": "2. What we collect",
+      "p1": "<strong>Account data:</strong> your email address and password (stored hashed by our authentication provider, Supabase — we never see the plaintext password).",
+      "p2": "<strong>Company profile:</strong> company name, address, size, sectors, description, website, employee count, regions served and languages served — collected at signup and editable on your Company page.",
+      "p3": "<strong>Company knowledge base:</strong> the services you offer, certifications, past references (which may include contract values), and supporting documents you upload. This is used to generate match scores and eligibility checks, and — only where you choose to — as source material for AI-drafted bid responses.",
+      "p4": "<strong>Tenders and bids:</strong> tenders you upload or track, the requirements and award criteria we extract from them, your bid workspace data (status, checklists, uploaded bid documents, AI-drafted response text), and — if you record it — the outcome of a bid, which may include competitively sensitive figures like winning price or your own score.",
+      "p5": "<strong>Technical data:</strong> standard request data (IP address, browser user-agent) generated by using a web app, session cookies used to keep you signed in, and a cookie storing your language preference. We don’t run third-party advertising or analytics trackers."
+    },
+    "s3": {
+      "h": "3. Why we process it, and on what legal basis",
+      "li1": "<strong>Providing the Service</strong> — creating your account, matching tenders to your profile, running eligibility checks, generating draft bid responses, and running your bid workspace. Legal basis: performance of our contract with you (Art. 6(1)(b) GDPR).",
+      "li2": "<strong>Billing</strong> — processing your subscription via Paddle, and keeping records required for accounting and tax law. Legal basis: contract performance and legal obligation (Art. 6(1)(b) and (c) GDPR).",
+      "li3": "<strong>Service notifications</strong> — sending the tender digest email for sectors you’ve selected. Legal basis: legitimate interest in operating the feature you configured (Art. 6(1)(f) GDPR); you can turn this off in your preferences at any time.",
+      "li4": "<strong>Security and abuse prevention</strong> — protecting accounts and the Service from unauthorized access. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).",
+      "li5": "<strong>Legal compliance</strong> — responding to lawful requests, tax and accounting record-keeping. Legal basis: legal obligation (Art. 6(1)(c) GDPR).",
+      "p1": "AI-assisted outputs (match scores, eligibility checks, drafted text) are generated to help you, not to make decisions about you — TenderProc doesn’t use automated processing to make decisions that produce legal or similarly significant effects concerning you within the meaning of Art. 22 GDPR. A human — you — always reviews and decides before anything is submitted to a contracting authority."
+    },
+    "s4": {
+      "h": "4. Who we share it with",
+      "intro": "We share personal data with the following processors, each bound by a data processing agreement, and only to the extent needed to provide the Service:",
+      "li1": "<strong>Supabase</strong> — hosts our database, authentication and file storage. Project region: {supabaseRegion}.",
+      "li2": "<strong>Anthropic</strong> — processes tender and company text you submit to generate match scores, eligibility checks, and draft bid responses. Anthropic is based in the United States; transfers are covered by Standard Contractual Clauses or an equivalent safeguard.",
+      "li3": "<strong>Resend</strong> — delivers the tender-digest email and other transactional emails.",
+      "li4": "<strong>Paddle</strong> — processes payments and acts as Merchant of Record for paid subscriptions; Paddle receives the billing details needed to process your payment (Paddle, not us, holds your card details).",
+      "p1": "Tender and award data flowing the other way — from the EU’s TED database and Belgium’s e-Procurement/BOSA platform into TenderProc — is public procurement data, not your personal data; we don’t send your data to these sources.",
+      "p2": "We don’t sell personal data, and we don’t share it with third parties for their own marketing purposes."
+    },
+    "s5": {
+      "h": "5. International transfers",
+      "p1": "Your data leaves the EU/EEA in more than one way here, and we want to be direct about that rather than bury it: our database and file storage (Supabase) are hosted in {supabaseRegion}, our AI processing provider (Anthropic) is based in the United States, and {entityName} itself, as controller, is established outside the EU/EEA. For each of these transfers, we rely on the European Commission’s Standard Contractual Clauses or another lawful transfer mechanism recognized under GDPR Chapter V to protect your data. You can ask us for a copy of the relevant safeguard by contacting us at <email>{emailAddress}</email>."
+    },
+    "s6": {
+      "h": "6. How long we keep it",
+      "p1": "We keep your account and workspace data for as long as your account is active. If you delete your account, we delete or anonymize your personal data within a reasonable period, except data we’re required to keep for longer — for example, billing and invoice records, which we retain for the period required by Belgian accounting and tax law."
+    },
+    "s7": {
+      "h": "7. Your rights",
+      "intro": "Under GDPR, you have the right to:",
+      "li1": "Access the personal data we hold about you;",
+      "li2": "Correct inaccurate data;",
+      "li3": "Ask us to delete your data (subject to our legal retention obligations, e.g. for invoices);",
+      "li4": "Restrict or object to certain processing;",
+      "li5": "Receive your data in a portable format;",
+      "li6": "Withdraw consent at any time, where processing is based on consent;",
+      "li7": "Lodge a complaint with the Belgian Data Protection Authority (Gegevensbeschermingsautoriteit / Autorité de protection des données) or your own EU supervisory authority.",
+      "p1": "To exercise any of these rights, contact us at <email>{emailAddress}</email>. We may need to verify your identity before acting on a request."
+    },
+    "s8": {
+      "h": "8. Cookies",
+      "p1": "We use only strictly necessary cookies: one to keep you signed in (set by Supabase authentication) and one to remember your language preference. We don’t use advertising or third-party analytics cookies. Because these cookies are strictly necessary for the Service to function, we don’t show a cookie consent banner for them."
+    },
+    "s9": {
+      "h": "9. Security",
+      "p1": "Data in transit is encrypted (HTTPS). Access to your data within the Service is scoped to your own account through row-level security enforced at the database layer — by default, no other customer’s account can query your data. Access by TenderProc staff is limited to what’s needed for support and operating the Service."
+    },
+    "s10": {
+      "h": "10. Children",
+      "p1": "TenderProc is a business-to-business service and isn’t directed at, or knowingly used by, children."
+    },
+    "s11": {
+      "h": "11. Changes to this notice",
+      "p1": "We may update this notice from time to time. If a change is material, we’ll make reasonable efforts to notify you before it takes effect."
+    }
+  },
+  "Refund": {
+    "metaTitle": "Refund Policy — TenderProc",
+    "title": "Refund Policy",
+    "s1": {
+      "h": "1. How billing works",
+      "p1": "The Free plan is never billed. Pro and Premium are monthly subscriptions, charged in advance, and processed by <strong>Paddle</strong>, our payment provider, who acts as the <strong>Merchant of Record</strong> for these purchases — Paddle is the seller of record on your receipt and the party that actually processes the charge."
+    },
+    "s2": {
+      "h": "2. Our refund policy",
+      "p1": "We don’t offer automatic refunds. Refund requests are reviewed <strong>case by case</strong> — email us at <email>{emailAddress}</email> with your account email and the reason for the request, and we’ll review it and get back to you. We’re generally receptive to requests raised promptly (for example, shortly after an unwanted renewal, or where the Service genuinely didn’t work for you), and we always correct our own mistakes — see below."
+    },
+    "s3": {
+      "h": "3. Charges we always refund",
+      "li1": "Duplicate charges for the same billing period;",
+      "li2": "Charges caused by a verified technical error on our side;",
+      "li3": "Any charge that shouldn’t have happened at all — for example, billing after you’d already cancelled."
+    },
+    "s4": {
+      "h": "4. Cancelling instead of a refund",
+      "p1": "You can cancel a subscription anytime from the Billing page in the app. Cancelling stops future renewals — your current paid period isn’t refunded, but you keep paid-tier access until it ends, and you’re not charged again after that."
+    },
+    "s5": {
+      "h": "5. How an approved refund is paid",
+      "p1": "Approved refunds are processed by Paddle back to your original payment method. Depending on your bank or card provider, it can take a few business days for the refund to appear on your statement."
+    },
+    "s6": {
+      "h": "6. Chargebacks",
+      "p1": "If something’s wrong with a charge, please contact us first — most issues are resolved faster directly than through a chargeback, and a chargeback can result in your account being suspended while it’s investigated."
+    },
+    "s7": {
+      "h": "7. Your statutory rights",
+      "p1": "Nothing in this policy limits any non-waivable right you have under applicable consumer protection law, including any statutory right of withdrawal for the purchase of digital services that Paddle’s checkout process asks you to acknowledge at the point of purchase."
+    },
+    "s8": {
+      "h": "8. Contact",
+      "p1": "Refund requests and questions about this policy: <email>{emailAddress}</email>."
+    }
   }
 }

@@ -1,198 +1,115 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import LegalHeader from "@/components/legal/LegalHeader";
 import LegalFooter from "@/components/legal/LegalFooter";
 import { legalStyles as s } from "@/components/legal/legalStyles";
 import { LEGAL_ENTITY, LEGAL_DATES } from "@/lib/legal/companyInfo";
+import { INTL_LOCALE, type Locale } from "@/lib/locales";
 
 export const metadata = { title: "Privacy Notice — TenderProc" };
 
-export default function PrivacyPage() {
+const strong = (chunks: React.ReactNode) => <strong className={s.strong}>{chunks}</strong>;
+
+export default async function PrivacyPage() {
+  const t = await getTranslations("Privacy");
+  const tLegal = await getTranslations("Legal");
+  const locale = (await getLocale()) as Locale;
+  const lastUpdated = new Intl.DateTimeFormat(INTL_LOCALE[locale], {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(LEGAL_DATES.lastUpdated);
+
+  // LEGAL_ENTITY.supabaseRegion is the canonical English record ("Singapore
+  // (AWS ap-southeast-1)"); French and German spell/inflect the place name
+  // differently, so translated pages get a locale-appropriate label instead
+  // of the raw English string.
+  const supabaseRegionLabel: Record<Locale, string> = {
+    en: LEGAL_ENTITY.supabaseRegion,
+    fr: "Singapour (AWS ap-southeast-1)",
+    nl: LEGAL_ENTITY.supabaseRegion,
+    de: "Singapur (AWS ap-southeast-1)",
+  };
+
+  const values = {
+    entityName: LEGAL_ENTITY.name,
+    companyNumber: LEGAL_ENTITY.companyNumber,
+    supabaseRegion: supabaseRegionLabel[locale],
+    emailAddress: LEGAL_ENTITY.contactEmail,
+  };
+  const email = (chunks: React.ReactNode) => <a href={`mailto:${LEGAL_ENTITY.contactEmail}`}>{chunks}</a>;
+
   return (
     <div>
       <LegalHeader />
       <main className="max-w-3xl mx-auto px-6 py-16">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">Legal</p>
-        <h1 className="font-display font-bold text-4xl text-ink mt-2 tracking-tight">Privacy Notice</h1>
-        <p className="text-sm text-inkDim mt-3">Last updated: {LEGAL_DATES.lastUpdated}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">{tLegal("eyebrow")}</p>
+        <h1 className="font-display font-bold text-4xl text-ink mt-2 tracking-tight">{t("title")}</h1>
+        <p className="text-sm text-inkDim mt-3">{tLegal("lastUpdated", { date: lastUpdated })}</p>
 
-        <p className={s.p}>
-          This notice explains what personal data TenderProc collects, why, and what rights you have over it under
-          the EU General Data Protection Regulation (GDPR) and Belgian data protection law. It applies to visitors
-          of our website and users of the TenderProc app.
-        </p>
+        <p className={s.p}>{t("intro")}</p>
 
-        <h2 className={s.h2}>1. Who is responsible for your data</h2>
-        <p className={s.p}>
-          The data controller is <strong className={s.strong}>{LEGAL_ENTITY.name}</strong>, commercial registration /
-          tax number {LEGAL_ENTITY.companyNumber}. For any question about this notice or
-          to exercise your rights, contact us at{" "}
-          <a href={`mailto:${LEGAL_ENTITY.contactEmail}`}>{LEGAL_ENTITY.contactEmail}</a>.
-        </p>
-        <p className={s.p}>
-          We&apos;re established outside the European Union but offer the Service to businesses in Belgium and the
-          EU, so this notice, and GDPR itself, still applies to how we handle your data (GDPR Art. 3(2)).
-        </p>
+        <h2 className={s.h2}>{t("s1.h")}</h2>
+        <p className={s.p}>{t.rich("s1.p1", { ...values, strong, email })}</p>
+        <p className={s.p}>{t("s1.p2")}</p>
 
-        <h2 className={s.h2}>2. What we collect</h2>
-        <p className={s.p}>
-          <strong className={s.strong}>Account data:</strong> your email address and password (stored hashed by
-          our authentication provider, Supabase — we never see the plaintext password).
-        </p>
-        <p className={s.p}>
-          <strong className={s.strong}>Company profile:</strong> company name, address, size, sectors, description,
-          website, employee count, regions served and languages served — collected at signup and editable on your
-          Company page.
-        </p>
-        <p className={s.p}>
-          <strong className={s.strong}>Company knowledge base:</strong> the services you offer, certifications,
-          past references (which may include contract values), and supporting documents you upload. This is used
-          to generate match scores and eligibility checks, and — only where you choose to — as source material for
-          AI-drafted bid responses.
-        </p>
-        <p className={s.p}>
-          <strong className={s.strong}>Tenders and bids:</strong> tenders you upload or track, the requirements and
-          award criteria we extract from them, your bid workspace data (status, checklists, uploaded bid
-          documents, AI-drafted response text), and — if you record it — the outcome of a bid, which may include
-          competitively sensitive figures like winning price or your own score.
-        </p>
-        <p className={s.p}>
-          <strong className={s.strong}>Technical data:</strong> standard request data (IP address, browser
-          user-agent) generated by using a web app, session cookies used to keep you signed in, and a cookie
-          storing your language preference. We don&apos;t run third-party advertising or analytics trackers.
-        </p>
+        <h2 className={s.h2}>{t("s2.h")}</h2>
+        <p className={s.p}>{t.rich("s2.p1", { strong })}</p>
+        <p className={s.p}>{t.rich("s2.p2", { strong })}</p>
+        <p className={s.p}>{t.rich("s2.p3", { strong })}</p>
+        <p className={s.p}>{t.rich("s2.p4", { strong })}</p>
+        <p className={s.p}>{t.rich("s2.p5", { strong })}</p>
 
-        <h2 className={s.h2}>3. Why we process it, and on what legal basis</h2>
+        <h2 className={s.h2}>{t("s3.h")}</h2>
         <ul className={s.ul}>
-          <li>
-            <strong className={s.strong}>Providing the Service</strong> — creating your account, matching tenders
-            to your profile, running eligibility checks, generating draft bid responses, and running your bid
-            workspace. Legal basis: performance of our contract with you (Art. 6(1)(b) GDPR).
-          </li>
-          <li>
-            <strong className={s.strong}>Billing</strong> — processing your subscription via Paddle, and keeping
-            records required for accounting and tax law. Legal basis: contract performance and legal obligation
-            (Art. 6(1)(b) and (c) GDPR).
-          </li>
-          <li>
-            <strong className={s.strong}>Service notifications</strong> — sending the tender digest email for
-            sectors you&apos;ve selected. Legal basis: legitimate interest in operating the feature you
-            configured (Art. 6(1)(f) GDPR); you can turn this off in your preferences at any time.
-          </li>
-          <li>
-            <strong className={s.strong}>Security and abuse prevention</strong> — protecting accounts and the
-            Service from unauthorized access. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).
-          </li>
-          <li>
-            <strong className={s.strong}>Legal compliance</strong> — responding to lawful requests, tax and
-            accounting record-keeping. Legal basis: legal obligation (Art. 6(1)(c) GDPR).
-          </li>
+          <li>{t.rich("s3.li1", { strong })}</li>
+          <li>{t.rich("s3.li2", { strong })}</li>
+          <li>{t.rich("s3.li3", { strong })}</li>
+          <li>{t.rich("s3.li4", { strong })}</li>
+          <li>{t.rich("s3.li5", { strong })}</li>
         </ul>
-        <p className={s.p}>
-          AI-assisted outputs (match scores, eligibility checks, drafted text) are generated to help you, not to
-          make decisions about you — TenderProc doesn&apos;t use automated processing to make decisions that
-          produce legal or similarly significant effects concerning you within the meaning of Art. 22 GDPR. A
-          human — you — always reviews and decides before anything is submitted to a contracting authority.
-        </p>
+        <p className={s.p}>{t("s3.p1")}</p>
 
-        <h2 className={s.h2}>4. Who we share it with</h2>
-        <p className={s.p}>
-          We share personal data with the following processors, each bound by a data processing agreement, and
-          only to the extent needed to provide the Service:
-        </p>
+        <h2 className={s.h2}>{t("s4.h")}</h2>
+        <p className={s.p}>{t("s4.intro")}</p>
         <ul className={s.ul}>
-          <li>
-            <strong className={s.strong}>Supabase</strong> — hosts our database, authentication and file storage.
-            Project region: {LEGAL_ENTITY.supabaseRegion}.
-          </li>
-          <li>
-            <strong className={s.strong}>Anthropic</strong> — processes tender and company text you submit to
-            generate match scores, eligibility checks, and draft bid responses. Anthropic is based in the United
-            States; transfers are covered by Standard Contractual Clauses or an equivalent safeguard.
-          </li>
-          <li>
-            <strong className={s.strong}>Resend</strong> — delivers the tender-digest email and other
-            transactional emails.
-          </li>
-          <li>
-            <strong className={s.strong}>Paddle</strong> — processes payments and acts as Merchant of Record for
-            paid subscriptions; Paddle receives the billing details needed to process your payment (Paddle, not
-            us, holds your card details).
-          </li>
+          <li>{t.rich("s4.li1", { ...values, strong })}</li>
+          <li>{t.rich("s4.li2", { strong })}</li>
+          <li>{t.rich("s4.li3", { strong })}</li>
+          <li>{t.rich("s4.li4", { strong })}</li>
         </ul>
-        <p className={s.p}>
-          Tender and award data flowing the other way — from the EU&apos;s TED database and Belgium&apos;s
-          e-Procurement/BOSA platform into TenderProc — is public procurement data, not your personal data; we
-          don&apos;t send your data to these sources.
-        </p>
-        <p className={s.p}>
-          We don&apos;t sell personal data, and we don&apos;t share it with third parties for their own marketing
-          purposes.
-        </p>
+        <p className={s.p}>{t("s4.p1")}</p>
+        <p className={s.p}>{t("s4.p2")}</p>
 
-        <h2 className={s.h2}>5. International transfers</h2>
-        <p className={s.p}>
-          Your data leaves the EU/EEA in more than one way here, and we want to be direct about that rather than
-          bury it: our database and file storage (Supabase) are hosted in {LEGAL_ENTITY.supabaseRegion}, our AI
-          processing provider (Anthropic) is based in the United States, and {LEGAL_ENTITY.name} itself, as
-          controller, is established outside the EU/EEA. For each of these transfers, we rely on the European
-          Commission&apos;s Standard Contractual Clauses or another lawful transfer mechanism recognized under
-          GDPR Chapter V to protect your data. You can ask us for a copy of the relevant safeguard by contacting
-          us at <a href={`mailto:${LEGAL_ENTITY.contactEmail}`}>{LEGAL_ENTITY.contactEmail}</a>.
-        </p>
+        <h2 className={s.h2}>{t("s5.h")}</h2>
+        <p className={s.p}>{t.rich("s5.p1", { ...values, email })}</p>
 
-        <h2 className={s.h2}>6. How long we keep it</h2>
-        <p className={s.p}>
-          We keep your account and workspace data for as long as your account is active. If you delete your
-          account, we delete or anonymize your personal data within a reasonable period, except data we&apos;re
-          required to keep for longer — for example, billing and invoice records, which we retain for the period
-          required by Belgian accounting and tax law.
-        </p>
+        <h2 className={s.h2}>{t("s6.h")}</h2>
+        <p className={s.p}>{t("s6.p1")}</p>
 
-        <h2 className={s.h2}>7. Your rights</h2>
-        <p className={s.p}>Under GDPR, you have the right to:</p>
+        <h2 className={s.h2}>{t("s7.h")}</h2>
+        <p className={s.p}>{t("s7.intro")}</p>
         <ul className={s.ul}>
-          <li>Access the personal data we hold about you;</li>
-          <li>Correct inaccurate data;</li>
-          <li>Ask us to delete your data (subject to our legal retention obligations, e.g. for invoices);</li>
-          <li>Restrict or object to certain processing;</li>
-          <li>Receive your data in a portable format;</li>
-          <li>Withdraw consent at any time, where processing is based on consent;</li>
-          <li>
-            Lodge a complaint with the Belgian Data Protection Authority (Gegevensbeschermingsautoriteit /
-            Autorité de protection des données) or your own EU supervisory authority.
-          </li>
+          <li>{t("s7.li1")}</li>
+          <li>{t("s7.li2")}</li>
+          <li>{t("s7.li3")}</li>
+          <li>{t("s7.li4")}</li>
+          <li>{t("s7.li5")}</li>
+          <li>{t("s7.li6")}</li>
+          <li>{t("s7.li7")}</li>
         </ul>
-        <p className={s.p}>
-          To exercise any of these rights, contact us at{" "}
-          <a href={`mailto:${LEGAL_ENTITY.contactEmail}`}>{LEGAL_ENTITY.contactEmail}</a>. We may need to verify
-          your identity before acting on a request.
-        </p>
+        <p className={s.p}>{t.rich("s7.p1", { ...values, email })}</p>
 
-        <h2 className={s.h2}>8. Cookies</h2>
-        <p className={s.p}>
-          We use only strictly necessary cookies: one to keep you signed in (set by Supabase authentication) and
-          one to remember your language preference. We don&apos;t use advertising or third-party analytics
-          cookies. Because these cookies are strictly necessary for the Service to function, we don&apos;t show a
-          cookie consent banner for them.
-        </p>
+        <h2 className={s.h2}>{t("s8.h")}</h2>
+        <p className={s.p}>{t("s8.p1")}</p>
 
-        <h2 className={s.h2}>9. Security</h2>
-        <p className={s.p}>
-          Data in transit is encrypted (HTTPS). Access to your data within the Service is scoped to your own
-          account through row-level security enforced at the database layer — by default, no other customer&apos;s
-          account can query your data. Access by TenderProc staff is limited to what&apos;s needed for support and
-          operating the Service.
-        </p>
+        <h2 className={s.h2}>{t("s9.h")}</h2>
+        <p className={s.p}>{t("s9.p1")}</p>
 
-        <h2 className={s.h2}>10. Children</h2>
-        <p className={s.p}>
-          TenderProc is a business-to-business service and isn&apos;t directed at, or knowingly used by, children.
-        </p>
+        <h2 className={s.h2}>{t("s10.h")}</h2>
+        <p className={s.p}>{t("s10.p1")}</p>
 
-        <h2 className={s.h2}>11. Changes to this notice</h2>
-        <p className={s.p}>
-          We may update this notice from time to time. If a change is material, we&apos;ll make reasonable efforts
-          to notify you before it takes effect.
-        </p>
+        <h2 className={s.h2}>{t("s11.h")}</h2>
+        <p className={s.p}>{t("s11.p1")}</p>
       </main>
       <LegalFooter />
     </div>

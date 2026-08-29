@@ -5,11 +5,12 @@ import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/locales";
 
 /** Shared chrome for /terms, /privacy, /refund, /contact — public pages,
- * same header pattern as app/pricing/page.tsx. Body content on /terms,
- * /privacy and /refund is English only (see LEGAL_ENTITY / the "English
- * only" notice below each page's <h1>), but the surrounding nav still
- * respects the visitor's locale. /contact is fully translated, so it opts
- * out of the notice via showEnglishNotice={false}. */
+ * same header pattern as app/pricing/page.tsx. /terms, /privacy and /refund
+ * are translated into every supported locale, but English is the
+ * authoritative text — on a non-English locale this renders a disclaimer
+ * below the nav saying the English version prevails in case of
+ * inconsistency (see Legal.englishOnlyNotice). /contact has no legal
+ * force, so it opts out of the disclaimer via showEnglishNotice={false}. */
 export default async function LegalHeader({
   showEnglishNotice = true,
 }: {
