@@ -329,7 +329,8 @@
   "ConfidenceBadge": {
     "confirmed": "Bestätigte Laufzeit",
     "estimated": "Geschätzte Laufzeit",
-    "unknown": "Unbekannte Laufzeit"
+    "unknown": "Unbekannte Laufzeit",
+    "months": "{months, plural, one {# Monat} other {# Monate}}"
   },
   "ForecastDisclaimer": {
     "text": "Prognosen sind Schätzungen auf Basis von Vergabedatum und Vertragslaufzeit, keine Garantie für eine Neuausschreibung."

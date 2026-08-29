@@ -329,7 +329,8 @@
   "ConfidenceBadge": {
     "confirmed": "Bevestigde looptijd",
     "estimated": "Geschatte looptijd",
-    "unknown": "Onbekende looptijd"
+    "unknown": "Onbekende looptijd",
+    "months": "{months, plural, one {# maand} other {# maanden}}"
   },
   "ForecastDisclaimer": {
     "text": "Prognoses zijn schattingen op basis van gunningsdatum en contractduur, geen garantie op heraanbesteding."

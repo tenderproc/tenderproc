@@ -329,7 +329,8 @@
   "ConfidenceBadge": {
     "confirmed": "Confirmed duration",
     "estimated": "Estimated duration",
-    "unknown": "Unknown duration"
+    "unknown": "Unknown duration",
+    "months": "{months, plural, one {# month} other {# months}}"
   },
   "ForecastDisclaimer": {
     "text": "Forecasts are estimates based on award date and contract duration, not guarantees of re-tendering."

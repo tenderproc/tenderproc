@@ -329,7 +329,8 @@
   "ConfidenceBadge": {
     "confirmed": "Durée confirmée",
     "estimated": "Durée estimée",
-    "unknown": "Durée inconnue"
+    "unknown": "Durée inconnue",
+    "months": "{months, plural, one {# mois} other {# mois}}"
   },
   "ForecastDisclaimer": {
     "text": "Les prévisions sont des estimations basées sur la date d'attribution et la durée du contrat, et ne garantissent pas une nouvelle mise en concurrence."

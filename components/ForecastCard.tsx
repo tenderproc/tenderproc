@@ -53,7 +53,7 @@ export default async function ForecastCard({ award }: { award: ForecastAward }) 
             )}
           </p>
           <div className="relative z-10 mt-2">
-            <ConfidenceBadge confidence={award.durationConfidence} />
+            <ConfidenceBadge confidence={award.durationConfidence} months={award.contractDurationMonths} />
           </div>
         </div>
         <div className="text-right shrink-0">

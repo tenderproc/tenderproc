@@ -70,7 +70,7 @@ export default async function ForecastDetailPage({
 
         <div className="mt-6 mb-8">
           <div className="flex items-center gap-2 mb-1">
-            <ConfidenceBadge confidence={award.durationConfidence} />
+            <ConfidenceBadge confidence={award.durationConfidence} months={award.contractDurationMonths} />
             {sector && (
               <span className="text-[10px] font-medium uppercase tracking-wide border border-line rounded-full px-2 py-0.5 text-inkDim">
                 {sector}

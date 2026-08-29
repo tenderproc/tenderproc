@@ -13,8 +13,11 @@ const STYLE: Record<DurationConfidence, string> = {
 
 export default async function ConfidenceBadge({
   confidence,
+  months,
 }: {
   confidence: DurationConfidence;
+  /** contract_awards.contract_duration_months — null when the expiry came from an explicit end date rather than a duration figure. */
+  months?: number | null;
 }) {
   const t = await getTranslations("ConfidenceBadge");
   return (
@@ -22,6 +25,7 @@ export default async function ConfidenceBadge({
       className={`inline-flex items-center text-[10px] font-medium uppercase tracking-wide border rounded-full px-2 py-0.5 ${STYLE[confidence]}`}
     >
       {t(confidence)}
+      {months != null && <> · {t("months", { months })}</>}
     </span>
   );
 }

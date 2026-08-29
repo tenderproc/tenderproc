@@ -194,16 +194,35 @@ export async function GET(req: NextRequest) {
   // this table, so there's nothing for it to change. There's no separate
   // "entering the forecast window" flag column — /forecast queries
   // estimated_expiry_date directly at render time instead of maintaining one.
+  //
+  // Paginated via .range() (ordered by the immutable `id`, so pages stay
+  // stable even as earlier rows' confidence changes mid-pass) and batched
+  // into one upsert per page instead of one UPDATE per row. Both matter:
+  // an unpaginated .select() here silently caps at Supabase's default
+  // 1000-row response limit, so without pagination this only ever recomputed
+  // the same leading ~1000 rows (by id) run after run — 2847/3961 real TED
+  // awards were permanently stuck at duration_confidence "unknown" (and thus
+  // invisible to /forecast) even when their CPV code was covered by the
+  // fallback table, because the recompute pass never reached them.
+  const RECOMPUTE_PAGE_SIZE = 1000;
   let fallbackRecomputed = 0;
-  const { data: fallbackCandidates, error: fallbackFetchError } = await supabase
-    .from("contract_awards")
-    .select("id, award_date, cpv_codes, contract_duration_months, duration_confidence, estimated_expiry_date")
-    .eq("source", "ted")
-    .neq("duration_confidence", "confirmed");
-  if (fallbackFetchError) {
-    errors.push(`fallback recompute fetch: ${fallbackFetchError.message}`);
-  } else {
-    for (const row of fallbackCandidates ?? []) {
+  let recomputeOffset = 0;
+  for (;;) {
+    const { data: fallbackCandidates, error: fallbackFetchError } = await supabase
+      .from("contract_awards")
+      .select("id, award_date, cpv_codes, contract_duration_months, duration_confidence, estimated_expiry_date")
+      .eq("source", "ted")
+      .neq("duration_confidence", "confirmed")
+      .order("id", { ascending: true })
+      .range(recomputeOffset, recomputeOffset + RECOMPUTE_PAGE_SIZE - 1);
+    if (fallbackFetchError) {
+      errors.push(`fallback recompute fetch (offset ${recomputeOffset}): ${fallbackFetchError.message}`);
+      break;
+    }
+
+    const page = fallbackCandidates ?? [];
+    const updates = [];
+    for (const row of page) {
       const next = computeEstimatedExpiry({
         awardDate: row.award_date,
         explicitDurationMonths: null,
@@ -214,23 +233,30 @@ export async function GET(req: NextRequest) {
         next.months !== row.contract_duration_months ||
         next.confidence !== row.duration_confidence ||
         next.expiryDate !== row.estimated_expiry_date;
-      if (!changed) continue;
-
-      const { error: updateError } = await supabase
-        .from("contract_awards")
-        .update({
+      if (changed) {
+        updates.push({
+          id: row.id,
           contract_duration_months: next.months,
           duration_confidence: next.confidence,
           estimated_expiry_date: next.expiryDate,
           updated_at: new Date().toISOString(),
-        })
-        .eq("id", row.id);
-      if (updateError) {
-        errors.push(`fallback recompute row ${row.id}: ${updateError.message}`);
-        continue;
+        });
       }
-      fallbackRecomputed++;
     }
+
+    if (updates.length > 0) {
+      const { error: updateError } = await supabase
+        .from("contract_awards")
+        .upsert(updates, { onConflict: "id" });
+      if (updateError) {
+        errors.push(`fallback recompute update (offset ${recomputeOffset}): ${updateError.message}`);
+      } else {
+        fallbackRecomputed += updates.length;
+      }
+    }
+
+    if (page.length < RECOMPUTE_PAGE_SIZE) break;
+    recomputeOffset += RECOMPUTE_PAGE_SIZE;
   }
 
   return NextResponse.json({
