@@ -3,7 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicClient } from "@/lib/ai/anthropic-provider";
 import { ESCALATE_MARKER, stripEscalationMarker } from "@/lib/supportChat/escalation";
 import { createClient } from "@/lib/supabase/server";
-import { deductTokens, peekTokens, TOKEN_COSTS } from "@/lib/billing/tokens";
+import { deductTokens, peekTokens, TOKEN_COSTS, type TokenStatus } from "@/lib/billing/tokens";
 
 export const runtime = "nodejs";
 
@@ -72,16 +72,22 @@ export async function POST(req: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
-  }
 
-  const tokenStatus = await peekTokens(user.id);
-  if (!tokenStatus.unlimited && tokenStatus.balance < TOKEN_COSTS.CHAT) {
-    return NextResponse.json(
-      { error: "You're out of free tokens this month. Upgrade for unlimited use.", code: "insufficientTokens" },
-      { status: 402 }
-    );
+  // Anonymous visitors can chat without signing in — the bot should attempt
+  // an answer for everyone first, with email escalation as the fallback.
+  // Only signed-in FREE-tier users are metered against their token balance;
+  // anonymous traffic has no persisted rate limit by design (accepted
+  // beta trade-off given low anonymous volume; max_tokens below bounds the
+  // per-request cost).
+  let tokenStatus: TokenStatus | null = null;
+  if (user) {
+    tokenStatus = await peekTokens(user.id);
+    if (!tokenStatus.unlimited && tokenStatus.balance < TOKEN_COSTS.CHAT) {
+      return NextResponse.json(
+        { error: "You're out of free tokens this month. Upgrade for unlimited use.", code: "insufficientTokens" },
+        { status: 402 }
+      );
+    }
   }
 
   const body = await req.json().catch(() => null);
@@ -110,7 +116,7 @@ export async function POST(req: NextRequest) {
     const raw = textBlock && "text" in textBlock ? textBlock.text : "";
     const { text: reply, needsHuman } = stripEscalationMarker(raw);
 
-    if (!tokenStatus.unlimited) await deductTokens(user.id, TOKEN_COSTS.CHAT);
+    if (user && tokenStatus && !tokenStatus.unlimited) await deductTokens(user.id, TOKEN_COSTS.CHAT);
 
     return NextResponse.json({ reply, needsHuman });
   } catch (err) {
