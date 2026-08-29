@@ -370,6 +370,26 @@
     "opening": "Afrekenen wordt geopend…",
     "couldNotStartCheckout": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw."
   },
+  "BetaPromo": {
+    "banner": {
+      "active": "De eerste 20 abonnees krijgen 6 maanden 50% korting — nog {remaining} plekken beschikbaar",
+      "lastSpots": "Nog maar {remaining} plekken beschikbaar met 50% korting voor 6 maanden",
+      "full": "Alle bètaplekken met 50% korting zijn ingevuld"
+    },
+    "checkoutNote": "50% korting gedurende 6 maanden als bèta-abonnee, daarna volledige prijs.",
+    "modal": {
+      "heading7": "Eén week verder — hoe gaat het?",
+      "heading30": "Eén maand verder — hoe gaat het?",
+      "heading90": "Drie maanden verder — hoe gaat het?",
+      "intro": "U bent een van onze eerste bèta-abonnees — een paar minuten feedback helpt ons het juiste te bouwen.",
+      "ratingLabel": "Hoe waarschijnlijk is het dat u TenderProc aanbeveelt aan een ander bedrijf? (1 = onwaarschijnlijk, 5 = zeer waarschijnlijk)",
+      "commentsLabel": "Is er iets wat u ons wilt laten weten?",
+      "commentsPlaceholder": "Wat werkt goed, wat niet, wat ontbreekt…",
+      "submit": "Feedback versturen",
+      "skip": "Niet nu",
+      "thanks": "Bedankt voor uw feedback!"
+    }
+  },
   "BillingSuccessPage": {
     "eyebrow": "Abonnement",
     "heading": "Betaling geslaagd",

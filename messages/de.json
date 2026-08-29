@@ -370,6 +370,26 @@
     "opening": "Kasse wird geöffnet…",
     "couldNotStartCheckout": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal."
   },
+  "BetaPromo": {
+    "banner": {
+      "active": "Die ersten 20 Abonnenten erhalten 6 Monate lang 50% Rabatt — noch {remaining} Plätze frei",
+      "lastSpots": "Nur noch {remaining} Plätze mit 50% Rabatt für 6 Monate",
+      "full": "Alle Beta-Plätze mit 50% Rabatt sind vergeben"
+    },
+    "checkoutNote": "Als Beta-Abonnent 6 Monate lang 50% Rabatt, danach regulärer Preis.",
+    "modal": {
+      "heading7": "Eine Woche später — wie läuft's?",
+      "heading30": "Ein Monat später — wie läuft's?",
+      "heading90": "Drei Monate später — wie läuft's?",
+      "intro": "Sie sind einer unserer ersten Beta-Abonnenten — ein paar Minuten Feedback helfen uns, das Richtige zu bauen.",
+      "ratingLabel": "Wie wahrscheinlich ist es, dass Sie TenderProc einem anderen Unternehmen empfehlen? (1 = unwahrscheinlich, 5 = sehr wahrscheinlich)",
+      "commentsLabel": "Gibt es etwas, das wir wissen sollten?",
+      "commentsPlaceholder": "Was funktioniert, was nicht, was fehlt…",
+      "submit": "Feedback senden",
+      "skip": "Nicht jetzt",
+      "thanks": "Danke für Ihr Feedback!"
+    }
+  },
   "BillingSuccessPage": {
     "eyebrow": "Abonnement",
     "heading": "Zahlung erfolgreich",

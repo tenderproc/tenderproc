@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import SupportChatWidget from "@/components/SupportChatWidget";
+import BetaFeedbackModal from "@/components/betaFeedback/BetaFeedbackModal";
 import "./globals.css";
 
 // One typeface for everything (headings, body, labels) — matches the clean,
@@ -33,6 +34,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
           <SupportChatWidget />
+          <BetaFeedbackModal />
         </NextIntlClientProvider>
       </body>
     </html>

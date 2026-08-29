@@ -4,10 +4,13 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import PricingCards from "@/components/billing/PricingCards";
+import PromoBanner from "@/components/billing/PromoBanner";
 import { getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
 import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
+import { getBetaPromoStatus } from "@/lib/billing/betaPromo";
 import type { Tier as TierName } from "@/lib/billing/types";
 
 export const dynamic = "force-dynamic";
@@ -47,6 +50,11 @@ export default async function PricingPage({
     currentTier = getEffectiveTier(subscription).tier;
     paddleCustomerId = subscription.paddleCustomerId ?? undefined;
   }
+
+  // Read from our own DB rather than Paddle's discount usage directly — the
+  // count needs to reflect in-flight reservations immediately and avoid
+  // rate-limiting Paddle's API on every pricing-page view.
+  const betaPromo = await getBetaPromoStatus(createAdminClient());
 
   return (
     <div>
@@ -94,6 +102,8 @@ export default async function PricingPage({
           </p>
         </div>
 
+        {betaPromo.active && <PromoBanner remaining={betaPromo.remaining} />}
+
         <PricingCards
           paidTiers={PRICING_TIERS}
           countryCode={countryCode}
@@ -101,6 +111,7 @@ export default async function PricingPage({
           user={user ? { id: user.id, email: user.email ?? undefined } : null}
           paddleCustomerId={paddleCustomerId}
           autoOpenPlan={autoOpenPlan}
+          betaPromoActive={betaPromo.active}
         />
       </main>
     </div>

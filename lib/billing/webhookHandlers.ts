@@ -64,6 +64,11 @@ export interface SubscriptionEventData {
   canceledAt: string | null;
   currentBillingPeriod: { endsAt: string } | null;
   items: { price: { id: string } | null }[];
+  /** Non-null while a discount (e.g. the beta feedback promo) is applied —
+   * see lib/billing/betaPromo.ts::isBetaPromoDiscount, checked by the
+   * webhook route after applySubscriptionEvent to confirm a reserved promo
+   * slot. Not used by computeSubscriptionUpsertPlan itself. */
+  discount?: { id: string } | null;
 }
 
 export interface SubscriptionUpsertPlan {

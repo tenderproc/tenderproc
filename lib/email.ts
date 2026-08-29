@@ -151,6 +151,74 @@ export async function sendSupportChatEscalation(submission: SupportChatEscalatio
   }
 }
 
+/** Day 7/30/90 nudge for beta feedback promo subscribers — a reminder only;
+ * the actual feedback is captured in-app via BetaFeedbackModal (see
+ * app/api/beta-feedback/*), not through this email. Sent once per milestone
+ * by app/api/cron/beta-feedback-emails. */
+export async function sendBetaFeedbackReminderEmail(to: string, milestone: 7 | 30 | 90) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.tenderproc.com";
+
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    subject: `Quick favor? ${milestone} days in, we'd love your feedback`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;">
+        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc beta</p>
+        <h1 style="font-size:20px;margin:4px 0 16px;">How's it going so far?</h1>
+        <p style="font-size:14px;color:#333;line-height:1.6;">
+          You're one of our first 20 beta subscribers on the 50%-off promo — thank you.
+          It's been ${milestone} days, and we'd really value a few minutes of your feedback
+          to help shape what we build next.
+        </p>
+        <p style="margin:24px 0;">
+          <a href="${appUrl}/opportunities" style="background:#111;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-size:14px;">
+            Leave feedback in the app
+          </a>
+        </p>
+        <p style="font-size:12px;color:#888;">A short prompt will be waiting for you next time you open TenderProc.</p>
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
+/** Internal alert to every ADMIN_EMAILS address (see app/admin/beta-promo) —
+ * used by monitoring crons that have no other way to surface a problem.
+ * No-ops (does not throw) if ADMIN_EMAILS isn't set, since these are
+ * best-effort alerts, not a user-facing flow whose failure should break
+ * the caller. */
+export async function sendAdminAlertEmail(subject: string, bodyLines: string[]) {
+  const adminEmails = (process.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+  if (adminEmails.length === 0) return;
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+
+  const { error } = await resend.emails.send({
+    from,
+    to: adminEmails,
+    subject: `[TenderProc alert] ${subject}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;">
+        ${bodyLines.map((line) => `<p style="font-size:14px;color:#333;">${escapeHtml(line)}</p>`).join("")}
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
 export interface ContactFormSubmission {
   name: string;
   email: string;

@@ -13,6 +13,7 @@ export default function UpgradeButton({
   email,
   paddleCustomerId,
   autoOpen,
+  betaPromoActive,
 }: {
   tier: "PRO" | "PREMIUM";
   className?: string;
@@ -26,20 +27,45 @@ export default function UpgradeButton({
   /** Opens the checkout once on mount — used when the user already chose
    * this plan before signing up (see PricingCards' autoOpenPlan). */
   autoOpen?: boolean;
+  /** Whether the beta feedback promo still has slots left, per the pricing
+   * page's own server-side check (getBetaPromoStatus). When true, this
+   * component tries to reserve a slot (POST /api/billing/promo/reserve)
+   * before opening checkout; eligibility (already redeemed, promo filled up
+   * in the meantime) is re-checked there, server-side, right before the
+   * discount is actually applied — this flag only decides whether it's
+   * worth attempting that call at all. */
+  betaPromoActive?: boolean;
 }) {
   const t = useTranslations("UpgradeButton");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const autoOpened = useRef(false);
 
+  async function reserveBetaPromoDiscount(): Promise<string | undefined> {
+    try {
+      const res = await fetch("/api/billing/promo/reserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tier }),
+      });
+      if (!res.ok) return undefined; // already redeemed / promo full / not configured — fall through to full price
+      const data = await res.json();
+      return data.discountId as string | undefined;
+    } catch {
+      return undefined; // network hiccup — don't block checkout over the promo
+    }
+  }
+
   async function subscribe() {
     setLoading(true);
     setError(null);
     try {
+      const discountId = betaPromoActive ? await reserveBetaPromoDiscount() : undefined;
       const paddle = await getPaddleClient(paddleCustomerId);
       if (!paddle) throw new Error(t("couldNotStartCheckout"));
       paddle.Checkout.open({
         items: [{ priceId: PADDLE_PRICE_IDS[tier], quantity: 1 }],
+        ...(discountId ? { discountId } : {}),
         customer: email ? { email } : undefined,
         customData: { supabase_user_id: userId },
         settings: {

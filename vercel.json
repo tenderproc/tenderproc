@@ -7,6 +7,14 @@
     {
       "path": "/api/cron/notify",
       "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/beta-feedback-emails",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/beta-promo-expiry-check",
+      "schedule": "0 9 * * *"
     }
   ]
 }

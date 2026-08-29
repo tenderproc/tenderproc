@@ -61,7 +61,14 @@ export async function proxy(req: NextRequest) {
     // supabase-kbo-companies-migration.sql), no user data exposed.
     pathname.startsWith("/api/company-search") ||
     // The locale switcher must work pre-auth too (e.g. from /pricing).
-    pathname.startsWith("/api/locale");
+    pathname.startsWith("/api/locale") ||
+    // BetaFeedbackModal (mounted site-wide in app/layout.tsx) polls this on
+    // every page for every visitor, signed in or not — it does its own
+    // supabase.auth.getUser() check and returns { due: null } for anonymous
+    // callers, so it doesn't need the middleware's session gate too. Left
+    // out of the public list, every signed-out page view would 401 here
+    // before the route's own check ever ran.
+    pathname.startsWith("/api/beta-feedback");
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

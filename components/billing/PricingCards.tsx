@@ -26,6 +26,7 @@ export default function PricingCards({
   user,
   paddleCustomerId,
   autoOpenPlan,
+  betaPromoActive,
 }: {
   paidTiers: PricingTierConfig[];
   /** From `x-vercel-ip-country`. Omitted entirely (not an "unknown"
@@ -42,8 +43,15 @@ export default function PricingCards({
    * (see app/signup/page.tsx) — opens that tier's checkout automatically
    * once, so picking a plan before signing up isn't a wasted click. */
   autoOpenPlan?: "pro" | "premium";
+  /** Whether the beta feedback promo still has slots — from
+   * getBetaPromoStatus (app/pricing/page.tsx). UpgradeButton re-checks
+   * eligibility itself server-side before applying a discount; this only
+   * gates whether it's worth attempting the reservation call and showing
+   * the "50% off for 6 months" note at all. */
+  betaPromoActive?: boolean;
 }) {
   const t = useTranslations("Pricing");
+  const tPromo = useTranslations("BetaPromo");
   const locale = useLocale() as Locale;
   // priceId -> the exact total Paddle quoted (currency-converted for the
   // visitor's country), reformatted with Intl.NumberFormat in the site's
@@ -164,19 +172,25 @@ export default function PricingCards({
             </ul>
 
             {canSubscribe ? (
-              <UpgradeButton
-                tier={card.tierName as "PRO" | "PREMIUM"}
-                userId={user!.id}
-                email={user!.email}
-                paddleCustomerId={paddleCustomerId}
-                label={t("subscribe")}
-                autoOpen={autoOpenPlan === card.key}
-                className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors w-full ${
-                  card.highlighted
-                    ? "bg-accent text-white hover:bg-accentDim"
-                    : "border border-line text-ink hover:bg-paperDim"
-                }`}
-              />
+              <>
+                <UpgradeButton
+                  tier={card.tierName as "PRO" | "PREMIUM"}
+                  userId={user!.id}
+                  email={user!.email}
+                  paddleCustomerId={paddleCustomerId}
+                  label={t("subscribe")}
+                  autoOpen={autoOpenPlan === card.key}
+                  betaPromoActive={betaPromoActive}
+                  className={`mt-6 text-center py-2.5 rounded-doc font-medium transition-colors w-full ${
+                    card.highlighted
+                      ? "bg-accent text-white hover:bg-accentDim"
+                      : "border border-line text-ink hover:bg-paperDim"
+                  }`}
+                />
+                {betaPromoActive && (
+                  <p className="text-xs text-inkDim mt-2 text-center">{tPromo("checkoutNote")}</p>
+                )}
+              </>
             ) : (
               <Link
                 href={user ? "/opportunities" : `/signup?plan=${card.key}`}

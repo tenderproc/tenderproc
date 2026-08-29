@@ -7,12 +7,15 @@ import {
   applyTransactionCompleted,
   logWebhookEvent,
   markEventProcessed,
+  resolveSupabaseUserId,
   SUBSCRIPTION_EVENT_TYPES,
   type SubscriptionEventData,
   type SupabaseLike,
   type TransactionEventData,
 } from "@/lib/billing/webhookHandlers";
 import { createInvoice } from "@/lib/odoo/client";
+import { confirmBetaPromoRedemption, isBetaPromoDiscount } from "@/lib/billing/betaPromo";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -76,8 +79,24 @@ export async function POST(req: NextRequest) {
 
   try {
     if (SUBSCRIPTION_EVENT_TYPES.has(event.eventType)) {
-      const result = await applySubscriptionEvent(supabase, event.data as unknown as SubscriptionEventData);
+      const subscriptionData = event.data as unknown as SubscriptionEventData;
+      const result = await applySubscriptionEvent(supabase, subscriptionData);
       if (rowId) await markEventProcessed(supabase, rowId, result.applied ? undefined : result.reason);
+
+      // Beta feedback promo: if this subscription carries our promo
+      // discount, confirm the user's reserved slot now that Paddle has
+      // actually applied it — see lib/billing/betaPromo.ts. A no-op for
+      // every subscription that isn't on the promo, and idempotent for
+      // retried deliveries of the same event.
+      if (isBetaPromoDiscount(subscriptionData.discount?.id)) {
+        const userId = resolveSupabaseUserId(subscriptionData.customData);
+        if (userId) {
+          await confirmBetaPromoRedemption(adminClient as unknown as SupabaseClient, {
+            userId,
+            paddleSubscriptionId: subscriptionData.id,
+          });
+        }
+      }
     } else if (event.eventType === EventName.TransactionCompleted) {
       const result = await applyTransactionCompleted(
         supabase,
