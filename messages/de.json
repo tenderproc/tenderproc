@@ -372,9 +372,7 @@
   },
   "BetaPromo": {
     "banner": {
-      "active": "Die ersten 20 Abonnenten erhalten 6 Monate lang 50% Rabatt — noch {remaining} Plätze frei",
-      "lastSpots": "Nur noch {remaining} Plätze mit 50% Rabatt für 6 Monate",
-      "full": "Alle Beta-Plätze mit 50% Rabatt sind vergeben"
+      "active": "Nur für kurze Zeit: 6 Monate lang 50% Rabatt als Beta-Abonnent"
     },
     "checkoutNote": "Als Beta-Abonnent 6 Monate lang 50% Rabatt, danach regulärer Preis.",
     "modal": {

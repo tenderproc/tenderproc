@@ -372,9 +372,7 @@
   },
   "BetaPromo": {
     "banner": {
-      "active": "First 20 subscribers get 50% off for 6 months — {remaining} spots left",
-      "lastSpots": "Only {remaining} spots left at 50% off for 6 months",
-      "full": "All 50%-off beta spots have been claimed"
+      "active": "For a limited time only: 50% off for 6 months as a beta subscriber"
     },
     "checkoutNote": "50% off for 6 months as a beta subscriber, then full price.",
     "modal": {

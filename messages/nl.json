@@ -372,9 +372,7 @@
   },
   "BetaPromo": {
     "banner": {
-      "active": "De eerste 20 abonnees krijgen 6 maanden 50% korting — nog {remaining} plekken beschikbaar",
-      "lastSpots": "Nog maar {remaining} plekken beschikbaar met 50% korting voor 6 maanden",
-      "full": "Alle bètaplekken met 50% korting zijn ingevuld"
+      "active": "Voor beperkte tijd: 6 maanden 50% korting als bèta-abonnee"
     },
     "checkoutNote": "50% korting gedurende 6 maanden als bèta-abonnee, daarna volledige prijs.",
     "modal": {

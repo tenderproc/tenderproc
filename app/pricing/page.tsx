@@ -102,7 +102,7 @@ export default async function PricingPage({
           </p>
         </div>
 
-        {betaPromo.active && <PromoBanner remaining={betaPromo.remaining} />}
+        <PromoBanner active={betaPromo.active} />
 
         <PricingCards
           paidTiers={PRICING_TIERS}

@@ -169,7 +169,7 @@ export async function sendBetaFeedbackReminderEmail(to: string, milestone: 7 | 3
         <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc beta</p>
         <h1 style="font-size:20px;margin:4px 0 16px;">How's it going so far?</h1>
         <p style="font-size:14px;color:#333;line-height:1.6;">
-          You're one of our first 20 beta subscribers on the 50%-off promo — thank you.
+          You're one of our beta subscribers on the limited-time 50%-off promo — thank you.
           It's been ${milestone} days, and we'd really value a few minutes of your feedback
           to help shape what we build next.
         </p>
