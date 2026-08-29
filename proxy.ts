@@ -128,9 +128,34 @@ export async function proxy(req: NextRequest) {
 
   // Always call getUser() (not getSession()) in middleware — it revalidates
   // the token against Supabase instead of trusting a possibly-stale cookie.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // This is a network call out to Supabase from the Edge runtime, and it can
+  // fail transiently (regional latency, a cold connection, a brief Supabase
+  // blip) independently of whether the visitor is actually logged in. Left
+  // unguarded, that throws out of the middleware entirely, which Vercel
+  // surfaces as a 503 for the *whole request* — including RSC/navigation
+  // fetches, so a client-side <Link> click silently goes nowhere with no
+  // error shown (this is what broke click-through into /my-tenders/[id]).
+  // Every protected page and API route already re-validates the session
+  // itself server-side (see e.g. app/my-tenders/page.tsx's own
+  // `if (!user) redirect(...)`), so it's safe to fail open here on a
+  // genuine infra error and let that independent check decide instead of
+  // 503ing the whole app on a hiccup that has nothing to do with auth.
+  let user: Awaited<ReturnType<typeof supabase.auth.getUser>>["data"]["user"] = null;
+  let authCheckFailed = false;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      user = (await supabase.auth.getUser()).data.user;
+      authCheckFailed = false;
+      break;
+    } catch (err) {
+      authCheckFailed = true;
+      if (attempt === 0) continue;
+      console.error("proxy: supabase.auth.getUser() failed twice, failing open", err);
+    }
+  }
+  if (authCheckFailed) {
+    return withLocaleCookie(response);
+  }
 
   if (!user && !isPublic) {
     // API routes are called via fetch(), which follows a redirect
