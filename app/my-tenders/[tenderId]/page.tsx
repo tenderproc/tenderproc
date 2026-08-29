@@ -167,7 +167,7 @@ export default async function TenderDetailPage({
             <TenderStatusBadge status={tender.status} />
           </div>
           <h1 className="font-display font-bold text-3xl text-ink leading-tight tracking-tight">
-            {tender.title || t("analyzingTender")}
+            {tender.title || (tender.status === "FAILED" ? t("analysisFailed") : t("analyzingTender"))}
           </h1>
 
           {tender.status === "FAILED" && (

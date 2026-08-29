@@ -196,7 +196,7 @@
             },
             {
               "question": "Quelles régions/secteurs sont couverts ?",
-              "answer": "Les marchés publics belges — provenant de la base de données officielle TED de l'UE, de la plateforme belge BOSA e-Notification, et de notre propre réseau, répartis sur différentes catégories de secteurs, de la construction et l'IT à la santé, la restauration et le conseil."
+              "answer": "Les marchés publics belges, à l'échelle nationale, dans des secteurs allant de la construction et l'IT à la santé, la restauration et le conseil. Au-dessus du seuil de publication européen, nous couvrons toute la Belgique via la base TED de l'UE et la plateforme belge BOSA e-Notification. En dessous de ce seuil, la couverture provient des décisions des conseils communaux et varie actuellement selon la région — la plus complète en Wallonie, partielle en Flandre, pas encore disponible à Bruxelles. Nous étendons activement cette couverture."
             }
           ]
         },
@@ -650,6 +650,7 @@
   "TenderDetail": {
     "backToTenders": "Retour aux marchés",
     "analyzingTender": "Analyse du marché en cours…",
+    "analysisFailed": "Échec de l'analyse",
     "failedMessage": "Ce marché n'a pas pu être traité. Causes courantes : le PDF ne contient pas de texte extractible (un document scanné sans OCR) ou l'analyse IA a échoué. Essayez de le retélécharger, ou un autre fichier.",
     "stillProcessing": "Encore en traitement — actualisez dans un instant.",
     "authority": "Pouvoir adjudicateur",
@@ -692,6 +693,7 @@
     "description": "Téléchargez un PDF de marché pour obtenir une analyse structurée : critères d'attribution, exigences, et une recommandation Soumissionner/Ne pas soumissionner basée sur le profil de votre entreprise.",
     "empty": "Aucun marché téléchargé pour l'instant. Téléchargez un PDF pour commencer.",
     "analyzing": "Analyse en cours…",
+    "analysisFailed": "Échec de l'analyse",
     "deadline": "Échéance",
     "value": "Valeur"
   },

@@ -196,7 +196,7 @@
             },
             {
               "question": "Welche Regionen/Branchen werden abgedeckt?",
-              "answer": "Belgische öffentliche Ausschreibungen — aus der offiziellen EU-Datenbank TED, der belgischen BOSA e-Notification-Plattform und unserem eigenen Netzwerk, über verschiedene Branchenkategorien hinweg, von Bau und IT bis Gesundheitswesen, Catering und Beratung."
+              "answer": "Belgische öffentliche Ausschreibungen, landesweit, über Branchen von Bau und IT bis Gesundheitswesen, Catering und Beratung. Oberhalb der EU-Veröffentlichungsschwelle decken wir ganz Belgien über die EU-Datenbank TED und die belgische BOSA e-Notification-Plattform ab. Unterhalb dieser Schwelle stammt die Abdeckung aus Gemeinderatsbeschlüssen und ist derzeit regional unterschiedlich — am stärksten in Wallonien, teilweise in Flandern, für Brüssel noch nicht verfügbar. Wir bauen dies aktiv weiter aus."
             }
           ]
         },
@@ -650,6 +650,7 @@
   "TenderDetail": {
     "backToTenders": "Zurück zu Ausschreibungen",
     "analyzingTender": "Ausschreibung wird analysiert…",
+    "analysisFailed": "Analyse fehlgeschlagen",
     "failedMessage": "Diese Ausschreibung konnte nicht verarbeitet werden. Häufige Ursachen: Die PDF enthält keinen extrahierbaren Text (ein gescanntes Dokument ohne OCR) oder die KI-Analyse ist fehlgeschlagen. Versuchen Sie es erneut hochzuladen oder mit einer anderen Datei.",
     "stillProcessing": "Wird noch verarbeitet — bitte gleich aktualisieren.",
     "authority": "Vergabestelle",
@@ -692,6 +693,7 @@
     "description": "Laden Sie eine Ausschreibungs-PDF hoch, um eine strukturierte Aufschlüsselung zu erhalten: Zuschlagskriterien, Anforderungen und eine Bieten/Nicht-bieten-Empfehlung auf Basis Ihres Unternehmensprofils.",
     "empty": "Noch keine Ausschreibungen hochgeladen. Laden Sie eine PDF hoch, um loszulegen.",
     "analyzing": "Wird analysiert…",
+    "analysisFailed": "Analyse fehlgeschlagen",
     "deadline": "Frist",
     "value": "Wert"
   },

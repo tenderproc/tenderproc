@@ -196,7 +196,7 @@
             },
             {
               "question": "Which regions/sectors are covered?",
-              "answer": "Belgian public tenders — pulled from the EU's official TED database, Belgium's BOSA e-Notification platform, and our own network, across different sector categories from construction and IT to healthcare, catering, and consulting."
+              "answer": "Belgian public tenders nationwide, across sectors from construction and IT to healthcare, catering, and consulting. Above the EU publication threshold, we cover all of Belgium via the EU's TED database and Belgium's BOSA e-Notification platform. Below that threshold, coverage comes from regional council-decision data and currently varies by region — strongest in Wallonia, partial in Flanders, not yet available for Brussels. We're actively expanding this."
             }
           ]
         },
@@ -650,6 +650,7 @@
   "TenderDetail": {
     "backToTenders": "Back to tenders",
     "analyzingTender": "Analyzing tender…",
+    "analysisFailed": "Analysis failed",
     "failedMessage": "This tender couldn't be processed. Common causes: the PDF has no extractable text (a scanned document without OCR) or the AI analysis failed. Try re-uploading, or a different file.",
     "stillProcessing": "Still processing — refresh in a moment.",
     "authority": "Authority",
@@ -692,6 +693,7 @@
     "description": "Upload a tender PDF to get a structured breakdown: award criteria, requirements, and a Bid/No-Bid recommendation grounded in your company profile.",
     "empty": "No tenders uploaded yet. Upload a PDF to get started.",
     "analyzing": "Analyzing…",
+    "analysisFailed": "Analysis failed",
     "deadline": "Deadline",
     "value": "Value"
   },

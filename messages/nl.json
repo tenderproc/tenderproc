@@ -196,7 +196,7 @@
             },
             {
               "question": "Welke regio's/sectoren worden gedekt?",
-              "answer": "Belgische overheidsopdrachten — afkomstig van de officiële EU-databank TED, het Belgische BOSA e-Notification-platform en ons eigen netwerk, verspreid over verschillende sectorcategorieën, van bouw en IT tot zorg, catering en consulting."
+              "answer": "Belgische overheidsopdrachten, landelijk, over sectoren van bouw en IT tot zorg, catering en consulting. Boven de EU-publicatiedrempel dekken we heel België via de EU-databank TED en het Belgische BOSA e-Notification-platform. Onder die drempel komt de dekking uit gemeenteraadsbesluiten en verschilt die momenteel per regio — het sterkst in Wallonië, gedeeltelijk in Vlaanderen, nog niet beschikbaar voor Brussel. We breiden dit actief uit."
             }
           ]
         },
@@ -650,6 +650,7 @@
   "TenderDetail": {
     "backToTenders": "Terug naar opdrachten",
     "analyzingTender": "Opdracht wordt geanalyseerd…",
+    "analysisFailed": "Analyse mislukt",
     "failedMessage": "Deze opdracht kon niet worden verwerkt. Veelvoorkomende oorzaken: de pdf bevat geen extraheerbare tekst (een gescand document zonder OCR) of de AI-analyse is mislukt. Probeer opnieuw te uploaden, of een ander bestand.",
     "stillProcessing": "Nog bezig met verwerken — ververs zo dadelijk.",
     "authority": "Aanbestedende overheid",
@@ -692,6 +693,7 @@
     "description": "Upload een opdracht-pdf voor een gestructureerd overzicht: gunningscriteria, vereisten en een bied/niet-bieden-aanbeveling gebaseerd op uw bedrijfsprofiel.",
     "empty": "Nog geen opdrachten geüpload. Upload een pdf om te beginnen.",
     "analyzing": "Bezig met analyseren…",
+    "analysisFailed": "Analyse mislukt",
     "deadline": "Deadline",
     "value": "Waarde"
   },
