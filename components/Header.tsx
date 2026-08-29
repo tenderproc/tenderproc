@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import SignOutButton from "./SignOutButton";
 import PrimaryNav from "./PrimaryNav";
 import LocaleSwitcher from "./LocaleSwitcher";
+import MobileMenu from "./MobileMenu";
 
 export default async function Header() {
   const t = await getTranslations("Header");
@@ -18,8 +19,8 @@ export default async function Header() {
             Beta
           </span>
         </Link>
-        <nav className="text-sm text-inkDim flex items-center gap-5">
-          <span className="hidden sm:inline">{t("tagline")}</span>
+        <nav className="hidden md:flex text-sm text-inkDim items-center gap-5">
+          <span className="hidden lg:inline">{t("tagline")}</span>
           <LocaleSwitcher />
           <Link href="/pricing" className="hover:text-ink transition-colors">
             {t("pricing")}
@@ -32,6 +33,7 @@ export default async function Header() {
           </Link>
           <SignOutButton />
         </nav>
+        <MobileMenu />
       </div>
       <PrimaryNav />
     </header>

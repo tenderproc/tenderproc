@@ -29,7 +29,9 @@
     "tagline": "Belgium · Public tenders",
     "pricing": "Pricing",
     "billing": "Billing",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
   },
   "Landing": {
     "hero": {

@@ -29,7 +29,9 @@
     "tagline": "België · Overheidsopdrachten",
     "pricing": "Prijzen",
     "billing": "Facturatie",
-    "signOut": "Afmelden"
+    "signOut": "Afmelden",
+    "menuOpen": "Menu openen",
+    "menuClose": "Menu sluiten"
   },
   "Landing": {
     "hero": {

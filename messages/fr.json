@@ -29,7 +29,9 @@
     "tagline": "Belgique · Marchés publics",
     "pricing": "Tarifs",
     "billing": "Facturation",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu"
   },
   "Landing": {
     "hero": {

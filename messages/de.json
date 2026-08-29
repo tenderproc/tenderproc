@@ -29,7 +29,9 @@
     "tagline": "Belgien · Öffentliche Ausschreibungen",
     "pricing": "Preise",
     "billing": "Abrechnung",
-    "signOut": "Abmelden"
+    "signOut": "Abmelden",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen"
   },
   "Landing": {
     "hero": {

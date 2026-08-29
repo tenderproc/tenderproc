@@ -26,14 +26,14 @@ export default async function LegalHeader({
 
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper">
-      <div className="max-w-3xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div className="max-w-3xl mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-y-2">
         <Link href="/" className="flex items-center gap-2">
           <span className="font-display font-semibold text-xl text-ink tracking-tight">TenderProc</span>
           <span className="text-[11px] font-medium uppercase tracking-wide text-accent bg-accent/10 border border-accent/25 rounded-full px-2 py-0.5">
             Beta
           </span>
         </Link>
-        <nav className="text-sm text-inkDim flex items-center gap-5">
+        <nav className="text-sm text-inkDim flex items-center gap-3 sm:gap-5">
           <LocaleSwitcher />
           <Link href="/pricing" className="hover:text-ink transition-colors">
             {tHeader("pricing")}

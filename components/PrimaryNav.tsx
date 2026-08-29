@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-const TABS = [
+export const TABS = [
   { href: "/opportunities", key: "opportunities" },
   { href: "/workflow", key: "workflow" },
   { href: "/search", key: "search" },
@@ -20,7 +20,7 @@ export default function PrimaryNav() {
   const t = useTranslations("Nav");
 
   return (
-    <nav className="max-w-6xl mx-auto px-6 flex items-center gap-1 border-t border-line -mb-px overflow-x-auto">
+    <nav className="hidden md:flex max-w-6xl mx-auto px-6 items-center gap-1 border-t border-line -mb-px overflow-x-auto">
       {TABS.map((tab) => {
         const active = pathname === tab.href || pathname.startsWith(`${tab.href}/`);
         return (
