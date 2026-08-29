@@ -1,19 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { unmarshalWebhook, EventName } from "@/lib/billing/paddle";
+import { unmarshalWebhook } from "@/lib/billing/paddle";
 import { clientIpFromHeaders, isAllowedPaddleWebhookIp } from "@/lib/billing/paddleIpAllowlist";
 import {
   applySubscriptionEvent,
-  applyTransactionCompleted,
   logWebhookEvent,
   markEventProcessed,
   resolveSupabaseUserId,
   SUBSCRIPTION_EVENT_TYPES,
   type SubscriptionEventData,
   type SupabaseLike,
-  type TransactionEventData,
 } from "@/lib/billing/webhookHandlers";
-import { createInvoice } from "@/lib/odoo/client";
 import { confirmBetaPromoRedemption, isBetaPromoDiscount } from "@/lib/billing/betaPromo";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -97,32 +94,6 @@ export async function POST(req: NextRequest) {
           });
         }
       }
-    } else if (event.eventType === EventName.TransactionCompleted) {
-      const result = await applyTransactionCompleted(
-        supabase,
-        event.data as unknown as TransactionEventData,
-        async ({ paddleTransactionId, userId, amountTotal, amountTax, currency }) => {
-          const { data: userData } = await supabase.auth.admin.getUserById(userId);
-          const { data: profile } = await supabase
-            .from("profiles")
-            .select("company_name")
-            .eq("id", userId)
-            .maybeSingle();
-          const email = userData.user?.email;
-          if (!email) throw new Error(`No email on file for user ${userId} — cannot invoice.`);
-
-          return createInvoice({
-            partnerName: (profile?.company_name as string | undefined) || email,
-            partnerEmail: email,
-            amountTotal,
-            amountTax,
-            currency,
-            description: "TenderProc subscription",
-            paddleTransactionId,
-          });
-        }
-      );
-      if (rowId) await markEventProcessed(supabase, rowId, result.invoiced ? undefined : result.reason);
     } else {
       // Recognized-but-not-acted-on, or entirely unrecognized — either way,
       // logged above is enough; mark processed so it doesn't look stuck.
@@ -133,8 +104,8 @@ export async function POST(req: NextRequest) {
     if (rowId) await markEventProcessed(supabase, rowId, message);
     // Signature was valid and the event is durably logged — acknowledge
     // it (200) rather than making Paddle retry forever. Failures surface
-    // via billing_webhook_events.processed = false / odoo_invoice_log for
-    // a human to check, not via retry storms.
+    // via billing_webhook_events.processed = false for a human to check,
+    // not via retry storms.
     return NextResponse.json({ ok: false, error: message });
   }
 

@@ -49,19 +49,3 @@ alter table public.billing_webhook_events enable row level security;
 -- No policies: service-role only, never read/written by any user session.
 create unique index billing_webhook_events_paddle_event_id_idx
   on public.billing_webhook_events (paddle_event_id) where paddle_event_id is not null;
-
--- Odoo invoice creation outcome per Paddle transaction — lets the webhook
--- handler stay idempotent (don't double-invoice on a webhook retry) and
--- gives an operator something to check when "the payment worked but no
--- Odoo invoice appeared" comes up.
-create table public.odoo_invoice_log (
-  id uuid primary key default gen_random_uuid(),
-  paddle_transaction_id text not null unique,
-  user_id uuid references auth.users(id) on delete set null,
-  odoo_invoice_id integer,
-  status text not null default 'pending' check (status in ('pending','created','failed')),
-  error text,
-  created_at timestamptz not null default now()
-);
-alter table public.odoo_invoice_log enable row level security;
--- No policies: service-role only.
