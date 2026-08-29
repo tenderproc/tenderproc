@@ -261,7 +261,7 @@
   "Opportunities": {
     "eyebrow": "Bronnen: TED, BOSA, regionale gemeenteraadsgegevens",
     "heading": "Opportuniteiten",
-    "description": "Belgische overheidsopdrachten gematcht aan uw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen — inclusief berichten die mogelijk al gegund zijn of een onduidelijke status hebben.",
+    "description": "Belgische overheidsopdrachten gematcht aan uw sectoren, uit TED, BOSA en regionale/gemeentelijke bronnen.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
     "noResults": "Geen berichten kwamen overeen met uw sectoren of zoekopdracht. Verruim uw sectorselectie in de zijbalk.",
