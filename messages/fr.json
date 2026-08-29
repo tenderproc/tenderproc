@@ -1,4 +1,30 @@
 {
+  "Metadata": {
+    "default": {
+      "title": "TenderProc — Bêta",
+      "description": "Veille de marchés publics assistée par IA pour les PME belges."
+    },
+    "home": {
+      "title": "TenderProc — La veille de marchés publics assistée par IA pour les PME belges",
+      "description": "Veille de marchés publics assistée par IA pour les PME belges."
+    },
+    "contact": {
+      "title": "Contact — TenderProc",
+      "description": "Contactez TenderProc ou consultez notre foire aux questions."
+    },
+    "login": {
+      "title": "Se connecter — TenderProc",
+      "description": "Connectez-vous pour voir les marchés filtrés selon vos secteurs."
+    },
+    "signup": {
+      "title": "S'inscrire — TenderProc",
+      "description": "Créez votre compte TenderProc pour recevoir des marchés adaptés à votre activité."
+    },
+    "pricing": {
+      "title": "Tarifs — TenderProc",
+      "description": "Des formules simples et transparentes pour la veille de marchés publics assistée par IA en Belgique."
+    }
+  },
   "Header": {
     "tagline": "Belgique · Marchés publics",
     "pricing": "Tarifs",
@@ -175,7 +201,7 @@
             { "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?", "answer": "Les marchés sont récupérés en direct depuis la base de données officielle TED de l'UE dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs." },
             { "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?", "answer": "Les deux — au-delà de la découverte, Pro inclut une préparation d'offre assistée par IA : téléversez un PDF du marché et TenderProc en extrait les exigences, évalue votre adéquation avec une recommandation Go/No-Go, et rédige une réponse fondée sur vos propres preuves d'entreprise." },
             { "question": "Quelles langues la plateforme prend-elle en charge ?", "answer": "L'application elle-même est disponible en français, néerlandais, anglais et allemand, et les avis de marché publiés dans d'autres langues peuvent être traduits pour vous par IA." },
-            { "question": "Que se passe-t-il si je manque une notification d'échéance ?", "answer": "[TODO: answer]" }
+            { "question": "Que se passe-t-il si je manque une notification d'échéance ?", "answer": "Il n'y a pas encore de fonctionnalité de rappel d'échéance dédiée — l'échéance de chaque marché est affichée directement sur sa fiche, et une fois que vous l'ajoutez à votre tableau Workflow, vous pouvez la suivre jusqu'à la révision, la rédaction et la soumission, pour ne rien perdre de vue parmi ce que vous poursuivez activement." }
           ]
         }
       }

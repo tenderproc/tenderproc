@@ -16,10 +16,10 @@ import type { Tier as TierName } from "@/lib/billing/types";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Pricing — TenderProc",
-  description: "Simple, straightforward plans for AI-assisted public tender discovery in Belgium.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata.pricing");
+  return { title: t("title"), description: t("description") };
+}
 
 export default async function PricingPage({
   searchParams,

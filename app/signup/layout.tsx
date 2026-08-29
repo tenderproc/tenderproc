@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Sign up — TenderProc",
-  description: "Create your TenderProc account to get tenders matched to your business.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata.signup");
+  return { title: t("title"), description: t("description") };
+}
 
 export default function SignupLayout({ children }: { children: React.ReactNode }) {
   return children;

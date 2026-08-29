@@ -1,4 +1,30 @@
 {
+  "Metadata": {
+    "default": {
+      "title": "TenderProc — Beta",
+      "description": "KI-gestützte Prüfung öffentlicher Ausschreibungen für belgische KMU."
+    },
+    "home": {
+      "title": "TenderProc — KI-gestützte Erkennung öffentlicher Ausschreibungen für belgische KMU",
+      "description": "KI-gestützte Prüfung öffentlicher Ausschreibungen für belgische KMU."
+    },
+    "contact": {
+      "title": "Kontakt — TenderProc",
+      "description": "Kontaktiere TenderProc oder sieh dir unsere häufig gestellten Fragen an."
+    },
+    "login": {
+      "title": "Anmelden — TenderProc",
+      "description": "Melde dich an, um Ausschreibungen gefiltert nach deinen Branchen zu sehen."
+    },
+    "signup": {
+      "title": "Registrieren — TenderProc",
+      "description": "Erstelle dein TenderProc-Konto, um Ausschreibungen zu erhalten, die zu deinem Unternehmen passen."
+    },
+    "pricing": {
+      "title": "Preise — TenderProc",
+      "description": "Einfache, transparente Pläne für die KI-gestützte Erkennung öffentlicher Ausschreibungen in Belgien."
+    }
+  },
   "Header": {
     "tagline": "Belgien · Öffentliche Ausschreibungen",
     "pricing": "Preise",
@@ -119,8 +145,8 @@
   },
   "Contact": {
     "eyebrow": "Kontakt",
-    "heading": "Kontaktieren Sie uns",
-    "subheading": "Fragen zu TenderProc? Senden Sie uns eine Nachricht — wir melden uns bei Ihnen.",
+    "heading": "Kontaktiere uns",
+    "subheading": "Fragen zu TenderProc? Schick uns eine Nachricht — wir melden uns bei dir.",
     "form": {
       "heading": "Nachricht senden",
       "name": "Name",
@@ -137,16 +163,16 @@
       "messagePlaceholder": "Wie können wir helfen?",
       "send": "Nachricht senden",
       "sending": "Wird gesendet…",
-      "nameRequired": "Bitte geben Sie Ihren Namen ein.",
-      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
-      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-      "messageRequired": "Bitte geben Sie eine Nachricht ein.",
-      "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es gleich noch einmal.",
+      "nameRequired": "Bitte gib deinen Namen ein.",
+      "emailRequired": "Bitte gib deine E-Mail-Adresse ein.",
+      "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "messageRequired": "Bitte gib eine Nachricht ein.",
+      "genericError": "Etwas ist schiefgelaufen. Bitte versuche es gleich noch einmal.",
       "successHeading": "Nachricht gesendet",
-      "successBody": "Danke für Ihre Nachricht — wir melden uns in Kürze bei Ihnen."
+      "successBody": "Danke für deine Nachricht — wir melden uns in Kürze bei dir."
     },
     "info": {
-      "emailLabel": "Schreiben Sie uns direkt"
+      "emailLabel": "Schreib uns direkt"
     },
     "faq": {
       "heading": "Häufig gestellte Fragen",
@@ -154,28 +180,28 @@
         "gettingStarted": {
           "title": "Erste Schritte",
           "items": [
-            { "question": "Was ist TenderProc genau?", "answer": "TenderProc ist eine KI-gestützte Plattform, um belgische öffentliche Ausschreibungen zu finden und Angebote dafür vorzubereiten. Sie gleicht neue Ausschreibungen mit Ihrem Unternehmen ab, filtert Rauschen heraus (etwa bereits vergebene Aufträge) und hilft Ihnen, eine Ausschreibung zu qualifizieren und ein Angebot vorzubereiten — alles an einem Ort." },
-            { "question": "Wie funktioniert das KI-Matching?", "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu Ihrem Unternehmensprofil (Branchen, Größe, Beschreibung) — so sehen Sie zuerst, was wirklich Ihre Zeit wert ist." },
-            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "Nein — TenderProc wurde entwickelt, um belgische öffentliche Ausschreibungen zugänglich zu machen, auch wenn Sie noch nie ein Angebot abgegeben haben. Sie legen ein Unternehmensprofil an, und die Plattform übernimmt Screening, das Herausarbeiten von Anforderungen und Eignungsprüfungen." },
+            { "question": "Was ist TenderProc genau?", "answer": "TenderProc ist eine KI-gestützte Plattform, um belgische öffentliche Ausschreibungen zu finden und Angebote dafür vorzubereiten. Sie gleicht neue Ausschreibungen mit deinem Unternehmen ab, filtert Rauschen heraus (etwa bereits vergebene Aufträge) und hilft dir, eine Ausschreibung zu qualifizieren und ein Angebot vorzubereiten — alles an einem Ort." },
+            { "question": "Wie funktioniert das KI-Matching?", "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu deinem Unternehmensprofil (Branchen, Größe, Beschreibung) — so siehst du zuerst, was wirklich deine Zeit wert ist." },
+            { "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?", "answer": "Nein — TenderProc wurde entwickelt, um belgische öffentliche Ausschreibungen zugänglich zu machen, auch wenn du noch nie ein Angebot abgegeben hast. Du legst ein Unternehmensprofil an, und die Plattform übernimmt Screening, das Herausarbeiten von Anforderungen und Eignungsprüfungen." },
             { "question": "Welche Regionen/Branchen werden abgedeckt?", "answer": "Belgische öffentliche Ausschreibungen — aus der offiziellen EU-Datenbank TED, der belgischen BOSA e-Notification-Plattform und unserem eigenen Netzwerk, über verschiedene Branchenkategorien hinweg, von Bau und IT bis Gesundheitswesen, Catering und Beratung." }
           ]
         },
         "pricingTrust": {
           "title": "Preise & Vertrauen",
           "items": [
-            { "question": "Was kostet es?", "answer": "Kostenlos, Pro (49 €/Monat) und Premium (79 €/Monat) — Details zu den einzelnen Plänen finden Sie auf der Preisseite." },
-            { "question": "Gibt es eine kostenlose Testphase?", "answer": "Es gibt keine zeitlich begrenzte Testphase, aber der kostenlose Plan selbst läuft nie ab und erfordert keine Kreditkarte — Sie können die Ausschreibungssuche für eine Branche kostenlos ausprobieren, bevor Sie upgraden." },
-            { "question": "Kann ich jederzeit kündigen?", "answer": "Ja — Sie können jederzeit über die Abrechnungsseite kündigen. Die Kündigung stoppt künftige Verlängerungen; Sie behalten den Zugang zu Ihrem bezahlten Plan bis zum Ende des aktuellen Zeitraums und werden danach nicht mehr belastet." },
-            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "Ja — TenderProc ist von Grund auf DSGVO-konform (dokumentierte Rechtsgrundlage für jede Nutzung Ihrer Daten, Wahrung der Rechte betroffener Personen), Daten werden bei der Übertragung verschlüsselt (HTTPS), und der Zugriff ist auf Ihr eigenes Konto beschränkt. Alle Details finden Sie in unserer Datenschutzerklärung." }
+            { "question": "Was kostet es?", "answer": "Kostenlos, Pro (49 €/Monat) und Premium (79 €/Monat) — Details zu den einzelnen Plänen findest du auf der Preisseite." },
+            { "question": "Gibt es eine kostenlose Testphase?", "answer": "Es gibt keine zeitlich begrenzte Testphase, aber der kostenlose Plan selbst läuft nie ab und erfordert keine Kreditkarte — du kannst die Ausschreibungssuche für eine Branche kostenlos ausprobieren, bevor du upgradest." },
+            { "question": "Kann ich jederzeit kündigen?", "answer": "Ja — du kannst jederzeit über die Abrechnungsseite kündigen. Die Kündigung stoppt künftige Verlängerungen; du behältst den Zugang zu deinem bezahlten Plan bis zum Ende des aktuellen Zeitraums und wirst danach nicht mehr belastet." },
+            { "question": "Sind meine Unternehmensdaten sicher/DSGVO-konform?", "answer": "Ja — TenderProc ist von Grund auf DSGVO-konform (dokumentierte Rechtsgrundlage für jede Nutzung deiner Daten, Wahrung der Rechte betroffener Personen), Daten werden bei der Übertragung verschlüsselt (HTTPS), und der Zugriff ist auf dein eigenes Konto beschränkt. Alle Details findest du in unserer Datenschutzerklärung." }
           ]
         },
         "usingProduct": {
           "title": "Die Plattform nutzen",
           "items": [
-            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "Ausschreibungen werden live aus der offiziellen EU-Datenbank TED abgerufen, sobald sie veröffentlicht werden — ohne Verzögerung durch Stapelverarbeitung —, und eine tägliche Zusammenfassung per E-Mail meldet alles Neue in Ihren Branchen." },
-            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "Beides — über die reine Suche hinaus umfasst Pro eine KI-gestützte Angebotsvorbereitung: Laden Sie ein PDF der Ausschreibung hoch, und TenderProc extrahiert die Anforderungen, bewertet Ihre Eignung mit einer Bid/No-Bid-Empfehlung und entwirft eine Antwort auf Basis Ihrer eigenen Unternehmensnachweise." },
-            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "Die App selbst ist auf Deutsch, Englisch, Niederländisch und Französisch verfügbar, und Ausschreibungen, die in anderen Sprachen veröffentlicht wurden, können für Sie KI-übersetzt werden." },
-            { "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?", "answer": "[TODO: answer]" }
+            { "question": "Wie oft werden neue Ausschreibungen hinzugefügt?", "answer": "Ausschreibungen werden live aus der offiziellen EU-Datenbank TED abgerufen, sobald sie veröffentlicht werden — ohne Verzögerung durch Stapelverarbeitung —, und eine tägliche Zusammenfassung per E-Mail meldet alles Neue in deinen Branchen." },
+            { "question": "Kann ich Hilfe bei der Vorbereitung meines Angebots bekommen, oder nur Chancen finden?", "answer": "Beides — über die reine Suche hinaus umfasst Pro eine KI-gestützte Angebotsvorbereitung: Lade ein PDF der Ausschreibung hoch, und TenderProc extrahiert die Anforderungen, bewertet deine Eignung mit einer Bid/No-Bid-Empfehlung und entwirft eine Antwort auf Basis deiner eigenen Unternehmensnachweise." },
+            { "question": "Welche Sprachen unterstützt die Plattform?", "answer": "Die App selbst ist auf Deutsch, Englisch, Niederländisch und Französisch verfügbar, und Ausschreibungen, die in anderen Sprachen veröffentlicht wurden, können für dich KI-übersetzt werden." },
+            { "question": "Was passiert, wenn ich eine Fristbenachrichtigung verpasse?", "answer": "Es gibt noch keine eigene Funktion für Fristerinnerungen — die Frist jeder Ausschreibung wird direkt auf der Karte angezeigt, und sobald du sie zu deinem Workflow-Board hinzufügst, kannst du sie dort durch Prüfung, Entwurf und Einreichung verfolgen, damit dir nichts verloren geht, was du aktiv verfolgst." }
           ]
         }
       }

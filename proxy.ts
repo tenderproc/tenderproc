@@ -40,6 +40,13 @@ export async function proxy(req: NextRequest) {
     // marketing footer/nav for visitors who haven't signed up yet.
     pathname.startsWith("/contact") ||
     pathname.startsWith("/api/contact") ||
+    // Tender detail pages are meant as shareable direct links (see the
+    // "PublicTenderDetail" i18n namespace and app/tenders/[id]/page.tsx,
+    // which already branches its data-fetching on `if (user)` and never
+    // fetches profile/match-score data for anonymous visitors). Writes
+    // (AddToWorkflowButton, UploadAnalyzer's /api/analyze) independently
+    // require a session regardless of this page-level gate.
+    pathname.startsWith("/tenders") ||
     // Support chat widget is rendered site-wide, including the pre-auth
     // marketing pages above — it must work for signed-out visitors too.
     pathname.startsWith("/api/chat") ||
@@ -75,6 +82,30 @@ export async function proxy(req: NextRequest) {
     // out of the public list, every signed-out page view would 401 here
     // before the route's own check ever ran.
     pathname.startsWith("/api/beta-feedback");
+
+  // Every real page route that still requires a session — used below so an
+  // unmatched path (typo, stale link, bot probe) falls through to Next's own
+  // 404 instead of being redirected to /login. Without this, any garbage URL
+  // returns a 200 "log in" page, which is both confusing (looks like the
+  // path exists) and bad for SEO (soft-404s are indexable). Keep this in
+  // sync with app/'s top-level route directories (/tenders is deliberately
+  // excluded — see isPublic above).
+  const PROTECTED_PAGE_PREFIXES = [
+    "/admin",
+    "/bids",
+    "/billing",
+    "/company",
+    "/dashboard",
+    "/forecast",
+    "/market",
+    "/my-tenders",
+    "/opportunities",
+    "/search",
+    "/workflow",
+  ];
+  const isKnownProtectedPage = PROTECTED_PAGE_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(prefix + "/")
+  );
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -112,6 +143,12 @@ export async function proxy(req: NextRequest) {
       return withLocaleCookie(
         NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 })
       );
+    }
+    if (!isKnownProtectedPage) {
+      // Not a route this app actually serves — let it fall through
+      // unauthenticated so Next.js's own routing returns a real 404 instead
+      // of a misleading "log in" page.
+      return withLocaleCookie(response);
     }
     const url = req.nextUrl.clone();
     url.pathname = "/login";

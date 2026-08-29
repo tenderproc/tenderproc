@@ -1,4 +1,30 @@
 {
+  "Metadata": {
+    "default": {
+      "title": "TenderProc — Beta",
+      "description": "AI-assisted public tender screening for Belgian SMEs."
+    },
+    "home": {
+      "title": "TenderProc — AI-assisted public tender discovery for Belgian SMEs",
+      "description": "AI-assisted public tender screening for Belgian SMEs."
+    },
+    "contact": {
+      "title": "Contact — TenderProc",
+      "description": "Get in touch with TenderProc, or check our frequently asked questions."
+    },
+    "login": {
+      "title": "Log in — TenderProc",
+      "description": "Log in to see tenders filtered to your sectors."
+    },
+    "signup": {
+      "title": "Sign up — TenderProc",
+      "description": "Create your TenderProc account to get tenders matched to your business."
+    },
+    "pricing": {
+      "title": "Pricing — TenderProc",
+      "description": "Simple, straightforward plans for AI-assisted public tender discovery in Belgium."
+    }
+  },
   "Header": {
     "tagline": "Belgium · Public tenders",
     "pricing": "Pricing",
@@ -175,7 +201,7 @@
             { "question": "How often are new tenders added?", "answer": "Tenders are pulled live from the EU's official TED database as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors." },
             { "question": "Can I get help preparing my actual bid, or just find opportunities?", "answer": "Both — beyond discovery, Pro includes AI-assisted bid preparation: upload a tender PDF and TenderProc extracts requirements, scores your fit with a Bid/No-Bid recommendation, and drafts a response grounded in your own company evidence." },
             { "question": "What languages does the platform support?", "answer": "The app itself is available in English, Dutch, French, and German, and tender notices published in other languages can be AI-translated for you." },
-            { "question": "What happens if I miss a deadline notification?", "answer": "[TODO: answer]" }
+            { "question": "What happens if I miss a deadline notification?", "answer": "There isn't a dedicated deadline-reminder feature yet — each tender's deadline is shown right on its card, and once you add it to your Workflow board you can track it there through review, drafting and submission, so nothing you're actively pursuing gets lost." }
           ]
         }
       }

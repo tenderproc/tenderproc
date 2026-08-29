@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import SupportChatWidget from "@/components/SupportChatWidget";
 import BetaFeedbackModal from "@/components/betaFeedback/BetaFeedbackModal";
 import "./globals.css";
@@ -15,10 +15,10 @@ const inter = Inter({
   variable: "--font-display",
 });
 
-export const metadata: Metadata = {
-  title: "TenderProc — Beta",
-  description: "AI-assisted public tender screening for Belgian SMEs.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata.default");
+  return { title: t("title"), description: t("description") };
+}
 
 export default async function RootLayout({
   children,
