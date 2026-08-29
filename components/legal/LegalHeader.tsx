@@ -4,12 +4,19 @@ import { createClient } from "@/lib/supabase/server";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/locales";
 
-/** Shared chrome for /terms, /privacy, /refund — public pages, same header
- * pattern as app/pricing/page.tsx. Body content on these pages is English
- * only (see LEGAL_ENTITY / the "English only" notice below each page's
- * <h1>), but the surrounding nav still respects the visitor's locale. */
-export default async function LegalHeader() {
+/** Shared chrome for /terms, /privacy, /refund, /contact — public pages,
+ * same header pattern as app/pricing/page.tsx. Body content on /terms,
+ * /privacy and /refund is English only (see LEGAL_ENTITY / the "English
+ * only" notice below each page's <h1>), but the surrounding nav still
+ * respects the visitor's locale. /contact is fully translated, so it opts
+ * out of the notice via showEnglishNotice={false}. */
+export default async function LegalHeader({
+  showEnglishNotice = true,
+}: {
+  showEnglishNotice?: boolean;
+}) {
   const t = await getTranslations("Legal");
+  const tHeader = await getTranslations("Header");
   const locale = (await getLocale()) as Locale;
   const supabase = await createClient();
   const {
@@ -27,6 +34,9 @@ export default async function LegalHeader() {
         </Link>
         <nav className="text-sm text-inkDim flex items-center gap-5">
           <LocaleSwitcher />
+          <Link href="/pricing" className="hover:text-ink transition-colors">
+            {tHeader("pricing")}
+          </Link>
           {user ? (
             <Link href="/opportunities" className="hover:text-ink transition-colors">
               {t("goToApp")} →
@@ -46,7 +56,7 @@ export default async function LegalHeader() {
           )}
         </nav>
       </div>
-      {locale !== DEFAULT_LOCALE && (
+      {showEnglishNotice && locale !== DEFAULT_LOCALE && (
         <div className="bg-paperDim border-t border-line">
           <div className="max-w-3xl mx-auto px-6 py-2">
             <p className="text-xs text-inkDim">{t("englishOnlyNotice")}</p>

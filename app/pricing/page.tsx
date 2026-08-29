@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import LegalFooter from "@/components/legal/LegalFooter";
 import PricingCards from "@/components/billing/PricingCards";
 import PromoBanner from "@/components/billing/PromoBanner";
 import { getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
@@ -28,6 +29,7 @@ export default async function PricingPage({
   const params = await searchParams;
   const autoOpenPlan = params.plan === "pro" || params.plan === "premium" ? params.plan : undefined;
   const t = await getTranslations("Pricing");
+  const tLegal = await getTranslations("Legal");
   const supabase = await createClient();
   const {
     data: { user },
@@ -68,6 +70,9 @@ export default async function PricingPage({
           </Link>
           <nav className="text-sm text-inkDim flex items-center gap-5">
             <LocaleSwitcher />
+            <Link href="/contact" className="hover:text-ink transition-colors">
+              {tLegal("contact")}
+            </Link>
             {user ? (
               <Link href="/opportunities" className="hover:text-ink transition-colors">
                 {t("goToApp")} →
@@ -114,6 +119,7 @@ export default async function PricingPage({
           betaPromoActive={betaPromo.active}
         />
       </main>
+      <LegalFooter />
     </div>
   );
 }

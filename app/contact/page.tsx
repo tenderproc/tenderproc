@@ -27,7 +27,7 @@ export default async function ContactPage() {
 
   return (
     <div>
-      <LegalHeader />
+      <LegalHeader showEnglishNotice={false} />
       <main className="max-w-5xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">{t("eyebrow")}</p>
