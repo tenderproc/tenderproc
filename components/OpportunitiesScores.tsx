@@ -58,16 +58,19 @@ export default function OpportunitiesScores({
           ? MATCH_BAND_MIN_SCORE.possible
           : null;
 
+  const shouldFetch = enabled && tenders.length > 0;
+  const tendersKey = tenders.map((t) => t.publicationNumber).join(",");
+
   const [scores, setScores] = useState<Record<string, MatchScore>>({});
-  const [loading, setLoading] = useState(enabled && tenders.length > 0);
+  // Tracks which tendersKey the current `scores` reflect, so `loading` can be
+  // derived during render instead of toggled via a setState call in the
+  // effect body (which trips react-hooks/set-state-in-effect).
+  const [completedKey, setCompletedKey] = useState<string | null>(null);
+  const loading = shouldFetch && completedKey !== tendersKey;
 
   useEffect(() => {
-    if (!enabled || tenders.length === 0) {
-      setLoading(false);
-      return;
-    }
+    if (!shouldFetch) return;
     let cancelled = false;
-    setLoading(true);
     fetch("/api/opportunities/scores", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -75,20 +78,23 @@ export default function OpportunitiesScores({
     })
       .then((res) => (res.ok ? res.json() : { scores: {} }))
       .then((data) => {
-        if (!cancelled) setScores(data.scores ?? {});
+        if (!cancelled) {
+          setScores(data.scores ?? {});
+          setCompletedKey(tendersKey);
+        }
       })
       .catch(() => {
-        if (!cancelled) setScores({});
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setScores({});
+          setCompletedKey(tendersKey);
+        }
       });
     return () => {
       cancelled = true;
     };
     // Re-fetch only when the actual set of tenders on the page changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enabled, tenders.map((t) => t.publicationNumber).join(",")]);
+  }, [shouldFetch, tendersKey]);
 
   const matchedCount =
     minScore !== null
