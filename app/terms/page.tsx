@@ -17,8 +17,8 @@ export default function TermsPage() {
         <p className={s.p}>
           These Terms of Service (&quot;<strong className={s.strong}>Terms</strong>&quot;) govern access to and use
           of TenderProc (the &quot;<strong className={s.strong}>Service</strong>&quot;), operated by{" "}
-          <strong className={s.strong}>{LEGAL_ENTITY.name}</strong>, {LEGAL_ENTITY.address}, commercial
-          registration / tax number {LEGAL_ENTITY.companyNumber} (&quot;
+          <strong className={s.strong}>{LEGAL_ENTITY.name}</strong>, commercial registration / tax number{" "}
+          {LEGAL_ENTITY.companyNumber} (&quot;
           <strong className={s.strong}>TenderProc</strong>&quot;,
           &quot;we&quot;, &quot;us&quot;). By creating an account or using the Service, you agree to these Terms.
           If you don&apos;t agree, don&apos;t use the Service.

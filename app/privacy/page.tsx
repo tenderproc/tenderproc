@@ -22,8 +22,8 @@ export default function PrivacyPage() {
 
         <h2 className={s.h2}>1. Who is responsible for your data</h2>
         <p className={s.p}>
-          The data controller is <strong className={s.strong}>{LEGAL_ENTITY.name}</strong>, {LEGAL_ENTITY.address},
-          commercial registration / tax number {LEGAL_ENTITY.companyNumber}. For any question about this notice or
+          The data controller is <strong className={s.strong}>{LEGAL_ENTITY.name}</strong>, commercial registration /
+          tax number {LEGAL_ENTITY.companyNumber}. For any question about this notice or
           to exercise your rights, contact us at{" "}
           <a href={`mailto:${LEGAL_ENTITY.contactEmail}`}>{LEGAL_ENTITY.contactEmail}</a>.
         </p>
