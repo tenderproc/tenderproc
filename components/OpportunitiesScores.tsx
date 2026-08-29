@@ -4,18 +4,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TenderNotice } from "@/lib/types";
-import { MatchScore } from "@/lib/scoring";
+import { MatchScore, MATCH_BAND_MIN_SCORE } from "@/lib/scoring";
 
 interface ScoreContextValue {
   scores: Record<string, MatchScore>;
   loading: boolean;
+  minScore: number | null;
 }
 
-const ScoreContext = createContext<ScoreContextValue>({ scores: {}, loading: false });
+const ScoreContext = createContext<ScoreContextValue>({ scores: {}, loading: false, minScore: null });
 
 export function useMatchScore(publicationNumber: string): ScoreContextValue & { score?: MatchScore } {
-  const { scores, loading } = useContext(ScoreContext);
-  return { scores, loading, score: scores[publicationNumber] };
+  const { scores, loading, minScore } = useContext(ScoreContext);
+  return { scores, loading, minScore, score: scores[publicationNumber] };
 }
 
 // Fetches match scores for the given tenders in the background after the
@@ -30,16 +31,32 @@ export function useMatchScore(publicationNumber: string): ScoreContextValue & { 
 export default function OpportunitiesScores({
   tenders,
   enabled,
+  defaultFilter,
   children,
 }: {
   tenders: TenderNotice[];
   enabled: boolean;
+  // True when the user has a sector/profile signal (see hasProfileSignal in
+  // lib/scoring.ts). Sets the "screens out the noise" pitch's implicit
+  // default: with no explicit `minScore` in the URL, weak matches (below the
+  // "possible" band) are filtered out of the primary feed rather than
+  // defaulting to unfiltered "Any" — otherwise sector-filtered users land on
+  // a feed where obviously-irrelevant, AI-flagged-as-weak notices can sit at
+  // the top just because nothing acts on the score by default.
+  defaultFilter: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslations("Opportunities");
   const searchParams = useSearchParams();
   const minScoreParam = searchParams.get("minScore");
-  const minScore = minScoreParam ? Number(minScoreParam) : null;
+  const minScore =
+    minScoreParam === "any"
+      ? null
+      : minScoreParam
+        ? Number(minScoreParam)
+        : defaultFilter
+          ? MATCH_BAND_MIN_SCORE.possible
+          : null;
 
   const [scores, setScores] = useState<Record<string, MatchScore>>({});
   const [loading, setLoading] = useState(enabled && tenders.length > 0);
@@ -82,7 +99,7 @@ export default function OpportunitiesScores({
       : tenders.length;
 
   return (
-    <ScoreContext.Provider value={{ scores, loading }}>
+    <ScoreContext.Provider value={{ scores, loading, minScore }}>
       {minScore !== null && loading && (
         <p className="text-sm text-inkDim mb-4">{t("filteringByMatch")}</p>
       )}

@@ -14,14 +14,21 @@ export default function SearchFilters({
   const params = useSearchParams();
   const [keyword, setKeyword] = useState(params.get("q") ?? "");
   const [cpv, setCpv] = useState(params.get("cpv") ?? "");
-  const [minScore, setMinScore] = useState(params.get("minScore") ?? "");
+  // Mirrors the default applied server-side in OpportunitiesScores when no
+  // `minScore` param is present: a user with a sector/profile signal gets
+  // weak matches filtered out of the primary feed by default, not "Any".
+  // "any" is a real, distinct value (not "") so an explicit opt-out survives
+  // being written to the URL — see OpportunitiesScores for the other half.
+  const [minScore, setMinScore] = useState(
+    params.get("minScore") ?? (showMatchFilter ? "40" : "any")
+  );
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const next = new URLSearchParams();
     if (keyword) next.set("q", keyword);
     if (cpv) next.set("cpv", cpv);
-    if (minScore) next.set("minScore", minScore);
+    if (showMatchFilter) next.set("minScore", minScore);
     router.push(`/opportunities?${next.toString()}`);
   }
 
@@ -46,7 +53,7 @@ export default function SearchFilters({
           aria-label={t("matchFilterAny")}
           className="w-52 border border-line rounded-doc px-3 py-2 bg-white text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
         >
-          <option value="">{t("matchFilterAny")}</option>
+          <option value="any">{t("matchFilterAny")}</option>
           <option value="40">{t("matchFilterPossible")}</option>
           <option value="65">{t("matchFilterGood")}</option>
           <option value="85">{t("matchFilterStrong")}</option>

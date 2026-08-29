@@ -147,7 +147,7 @@ export default async function OpportunitiesPage({
             </div>
           )}
 
-          <OpportunitiesScores tenders={tenders} enabled={Boolean(user)}>
+          <OpportunitiesScores tenders={tenders} enabled={Boolean(user)} defaultFilter={showMatchFilter}>
             <div>
               {tenders.map((tender) => (
                 <MatchFilterGate key={tender.publicationNumber} publicationNumber={tender.publicationNumber}>

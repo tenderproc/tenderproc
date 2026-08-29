@@ -85,7 +85,10 @@ export default async function SearchPage({
           </div>
         )}
 
-        <OpportunitiesScores tenders={tenders} enabled={Boolean(user)}>
+        {/* Manual keyword/CPV search: no minScore filter UI or MatchFilterGate
+            here (unlike /opportunities), so the default-filter behavior
+            doesn't apply — this page just shows scores inline. */}
+        <OpportunitiesScores tenders={tenders} enabled={Boolean(user)} defaultFilter={false}>
           <div>
             {tenders.map((tender) => (
               <TenderCard key={tender.publicationNumber} tender={tender} />
