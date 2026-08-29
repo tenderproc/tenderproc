@@ -12,6 +12,34 @@ export default function UploadTenderButton() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  async function upload(file: File, confirmDuplicate: boolean) {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (confirmDuplicate) formData.append("confirmDuplicate", "true");
+    const res = await fetch("/api/tenders/upload", { method: "POST", body: formData });
+    const data = await res.json();
+    if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("uploadFailed")));
+
+    if (data.duplicate) {
+      const proceed = window.confirm(
+        t("duplicateConfirm", {
+          fileName: file.name,
+          date: new Date(data.existingUploadedAt).toLocaleDateString(),
+          title: data.existingTitle || t("duplicateUntitled"),
+        })
+      );
+      if (!proceed) {
+        setUploading(false);
+        return;
+      }
+      await upload(file, true);
+      return;
+    }
+
+    router.push(`/my-tenders/${data.id}`);
+    router.refresh();
+  }
+
   async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     e.target.value = "";
@@ -20,13 +48,7 @@ export default function UploadTenderButton() {
     setUploading(true);
     setError(null);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/tenders/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(apiErrorMessage(data, tApiError, t("uploadFailed")));
-      router.push(`/my-tenders/${data.id}`);
-      router.refresh();
+      await upload(file, false);
     } catch (err) {
       setError(err instanceof Error ? err.message : t("uploadFailed"));
       setUploading(false);

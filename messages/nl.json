@@ -685,7 +685,9 @@
   "UploadTenderButton": {
     "uploadFailed": "Upload mislukt.",
     "uploadingAndAnalyzing": "Bezig met uploaden & analyseren… (tot een minuut)",
-    "uploadTender": "Opdracht uploaden"
+    "uploadTender": "Opdracht uploaden",
+    "duplicateConfirm": "U heeft \"{fileName}\" al geüpload op {date} als \"{title}\". Toch opnieuw uploaden?",
+    "duplicateUntitled": "een opdracht zonder titel"
   },
   "MyTendersList": {
     "eyebrow": "Geüploade opdrachten · AI-analyse",

@@ -33,6 +33,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "File is larger than 20MB.", code: "fileTooLarge" }, { status: 400 });
   }
 
+  const confirmDuplicate = formData.get("confirmDuplicate") === "true";
+  if (!confirmDuplicate) {
+    // Same file name + size previously uploaded by this user (RLS on
+    // tender_documents already scopes this query to their own rows — see
+    // the "manage own tender documents" policy in
+    // supabase-phase1-migration.sql). A soft warning, not a hard block: a
+    // legitimately re-issued tender can share a filename with an old one.
+    const { data: existingDoc } = await supabase
+      .from("tender_documents")
+      .select("file_name, uploaded_at, tenders(title, status)")
+      .eq("file_name", file.name)
+      .eq("file_size_bytes", file.size)
+      .order("uploaded_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (existingDoc) {
+      const existingTender = Array.isArray(existingDoc.tenders)
+        ? existingDoc.tenders[0]
+        : existingDoc.tenders;
+      return NextResponse.json({
+        duplicate: true,
+        existingTitle: existingTender?.title ?? null,
+        existingStatus: existingTender?.status ?? null,
+        existingUploadedAt: existingDoc.uploaded_at,
+      });
+    }
+  }
+
   const buffer = Buffer.from(await file.arrayBuffer());
 
   // Create the tender row up front (status PROCESSING) so the client can

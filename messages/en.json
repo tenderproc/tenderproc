@@ -685,7 +685,9 @@
   "UploadTenderButton": {
     "uploadFailed": "Upload failed.",
     "uploadingAndAnalyzing": "Uploading & analyzing… (up to a minute)",
-    "uploadTender": "Upload tender"
+    "uploadTender": "Upload tender",
+    "duplicateConfirm": "You already uploaded \"{fileName}\" on {date} as \"{title}\". Upload it again anyway?",
+    "duplicateUntitled": "an untitled tender"
   },
   "MyTendersList": {
     "eyebrow": "Uploaded tenders · AI analysis",

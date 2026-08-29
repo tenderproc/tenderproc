@@ -685,7 +685,9 @@
   "UploadTenderButton": {
     "uploadFailed": "Upload fehlgeschlagen.",
     "uploadingAndAnalyzing": "Wird hochgeladen & analysiert… (bis zu einer Minute)",
-    "uploadTender": "Ausschreibung hochladen"
+    "uploadTender": "Ausschreibung hochladen",
+    "duplicateConfirm": "Sie haben \"{fileName}\" bereits am {date} als \"{title}\" hochgeladen. Trotzdem erneut hochladen?",
+    "duplicateUntitled": "eine Ausschreibung ohne Titel"
   },
   "MyTendersList": {
     "eyebrow": "Hochgeladene Ausschreibungen · KI-Analyse",

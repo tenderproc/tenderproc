@@ -685,7 +685,9 @@
   "UploadTenderButton": {
     "uploadFailed": "Échec du téléversement.",
     "uploadingAndAnalyzing": "Téléversement et analyse… (jusqu'à une minute)",
-    "uploadTender": "Téléverser un marché"
+    "uploadTender": "Téléverser un marché",
+    "duplicateConfirm": "Vous avez déjà téléversé \"{fileName}\" le {date} sous le nom \"{title}\". Le téléverser à nouveau quand même ?",
+    "duplicateUntitled": "un marché sans titre"
   },
   "MyTendersList": {
     "eyebrow": "Marchés téléchargés · Analyse IA",
