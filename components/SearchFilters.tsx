@@ -29,7 +29,14 @@ export default function SearchFilters({
     if (keyword) next.set("q", keyword);
     if (cpv) next.set("cpv", cpv);
     if (showMatchFilter) next.set("minScore", minScore);
+    // router.push() alone can leave the previous render's tender list on
+    // screen: this route is a Client Component boundary already mounted at
+    // /opportunities, and a query-string-only navigation doesn't reliably
+    // force the server component above (which does the actual TED/BOSA/
+    // external keyword filtering) to re-run and replace its output. A
+    // follow-up router.refresh() forces that re-render against the new URL.
     router.push(`/opportunities?${next.toString()}`);
+    router.refresh();
   }
 
   return (
