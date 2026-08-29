@@ -90,6 +90,7 @@ export default function AdvancedSearchForm() {
         </label>
         <input
           type="date"
+          lang="nl-BE"
           value={deadlineAfter}
           onChange={(e) => setDeadlineAfter(e.target.value)}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
@@ -101,6 +102,7 @@ export default function AdvancedSearchForm() {
         </label>
         <input
           type="date"
+          lang="nl-BE"
           value={deadlineBefore}
           onChange={(e) => setDeadlineBefore(e.target.value)}
           className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
