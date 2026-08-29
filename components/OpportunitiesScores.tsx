@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { TenderNotice } from "@/lib/types";
 import { MatchScore, MATCH_BAND_MIN_SCORE } from "@/lib/scoring";
 
@@ -47,6 +47,7 @@ export default function OpportunitiesScores({
   children: React.ReactNode;
 }) {
   const t = useTranslations("Opportunities");
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const minScoreParam = searchParams.get("minScore");
   const minScore =
@@ -59,7 +60,10 @@ export default function OpportunitiesScores({
           : null;
 
   const shouldFetch = enabled && tenders.length > 0;
-  const tendersKey = tenders.map((t) => t.publicationNumber).join(",");
+  // Locale is part of the key so switching the UI language re-fetches scores
+  // in the new language instead of leaving the previous language's summaries
+  // on screen (see scoreTenders' language instruction in lib/scoring.ts).
+  const tendersKey = `${locale}:${tenders.map((t) => t.publicationNumber).join(",")}`;
 
   const [scores, setScores] = useState<Record<string, MatchScore>>({});
   // Tracks which tendersKey the current `scores` reflect, so `loading` can be
@@ -74,7 +78,7 @@ export default function OpportunitiesScores({
     fetch("/api/opportunities/scores", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tenders }),
+      body: JSON.stringify({ tenders, locale }),
     })
       .then((res) => (res.ok ? res.json() : { scores: {} }))
       .then((data) => {

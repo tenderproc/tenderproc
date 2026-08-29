@@ -4,6 +4,7 @@ import { getSavedCompanyProfile } from "@/lib/companyProfile";
 import { getMatchScores } from "@/lib/matchScoreCache";
 import { hasProfileSignal } from "@/lib/scoring";
 import { TenderNotice } from "@/lib/types";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/locales";
 
 // Split out from the Opportunities page render (see app/opportunities/page.tsx)
 // so a batch of uncached AI match scores never blocks the tender list from
@@ -23,12 +24,13 @@ export async function POST(req: NextRequest) {
   if (tenders.length === 0) {
     return NextResponse.json({ scores: {} });
   }
+  const locale = isLocale(body?.locale) ? body.locale : DEFAULT_LOCALE;
 
   const { profile } = await getSavedCompanyProfile(supabase, user.id);
   if (!hasProfileSignal(profile)) {
     return NextResponse.json({ scores: {} });
   }
 
-  const scores = await getMatchScores(supabase, user.id, tenders, profile);
+  const scores = await getMatchScores(supabase, user.id, tenders, profile, locale);
   return NextResponse.json({ scores });
 }

@@ -1,6 +1,7 @@
 import { createClient } from "./supabase/server";
 import { CompanyProfile, MatchScore, hasProfileSignal, profileHash, scoreTenders } from "./scoring";
 import { TenderNotice } from "./types";
+import type { Locale } from "./locales";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -18,11 +19,12 @@ export async function getMatchScores(
   supabase: SupabaseServerClient,
   userId: string,
   tenders: TenderNotice[],
-  profile: CompanyProfile
+  profile: CompanyProfile,
+  locale: Locale
 ): Promise<Record<string, MatchScore>> {
   if (tenders.length === 0 || !hasProfileSignal(profile)) return {};
 
-  const hash = profileHash(profile);
+  const hash = profileHash(profile, locale);
   const publicationNumbers = tenders.map((t) => t.publicationNumber);
 
   const { data: cached } = await supabase
@@ -52,7 +54,7 @@ export async function getMatchScores(
     for (let i = 0; i < missing.length; i += CHUNK_SIZE) {
       chunks.push(missing.slice(i, i + CHUNK_SIZE));
     }
-    const chunkResults = await Promise.all(chunks.map((chunk) => scoreTenders(chunk, profile)));
+    const chunkResults = await Promise.all(chunks.map((chunk) => scoreTenders(chunk, profile, locale)));
     const fresh = chunkResults.flat();
     if (fresh.length > 0) {
       await supabase.from("tender_scores").upsert(

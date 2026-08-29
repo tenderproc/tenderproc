@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { getAnthropicClient } from "./ai/anthropic-provider";
 import { TenderNotice } from "./types";
+import { LOCALE_ENGLISH_NAME, type Locale } from "./locales";
 
 export interface CompanyProfile {
   sectors: string[];
@@ -28,13 +29,20 @@ export function hasProfileSignal(profile: CompanyProfile): boolean {
   );
 }
 
-// Changes to any of these should invalidate cached scores.
-export function profileHash(profile: CompanyProfile): string {
+// Changes to any of these should invalidate cached scores. `locale` is
+// included so switching the UI language re-scores into that language rather
+// than serving a cached English (or other-locale) summary/criteria — see
+// scoreTenders' language instruction below. tender_scores has no separate
+// locale column (upsert is keyed on user_id+publication_number only), so this
+// means only the most-recently-viewed locale's score stays cached per tender;
+// acceptable for a beta rather than a migration to add multi-locale caching.
+export function profileHash(profile: CompanyProfile, locale: Locale): string {
   const stable = JSON.stringify({
     sectors: [...profile.sectors].sort(),
     description: profile.description.trim(),
     address: profile.address.trim(),
     companySize: profile.companySize.trim(),
+    locale,
   });
   return createHash("sha256").update(stable).digest("hex").slice(0, 16);
 }
@@ -107,12 +115,19 @@ fabricate confidence.`;
 
 export async function scoreTenders(
   tenders: TenderNotice[],
-  profile: CompanyProfile
+  profile: CompanyProfile,
+  locale: Locale
 ): Promise<MatchScore[]> {
   if (tenders.length === 0) return [];
   if (!process.env.ANTHROPIC_API_KEY) return [];
 
   const client = getAnthropicClient();
+  // The prompt's own JSON example is in English; without this the model
+  // defaults to English for free-text fields regardless of UI locale.
+  const system =
+    locale === "en"
+      ? SYSTEM_PROMPT
+      : `${SYSTEM_PROMPT}\n\nWrite the "summary" text and every criterion "label" in ${LOCALE_ENGLISH_NAME[locale]}, even though the example above is in English. Field names and the true/false "met" values stay as specified.`;
 
   const profileText = `Company profile:
 Sectors: ${profile.sectors.join(", ") || "not specified"}
@@ -135,7 +150,7 @@ Deadline: ${t.deadline ?? "unknown"}`
     const message = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 4000,
-      system: SYSTEM_PROMPT,
+      system,
       messages: [
         { role: "user", content: `${profileText}\n\nTenders:\n\n${tendersText}` },
       ],

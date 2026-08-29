@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import UploadAnalyzer from "@/components/UploadAnalyzer";
 import AddToWorkflowButton from "@/components/AddToWorkflowButton";
@@ -9,6 +9,8 @@ import TenderDocumentLinks from "@/components/tenders/TenderDocumentLinks";
 import { getTenderById } from "@/lib/tenders/getTenderById";
 import { createClient } from "@/lib/supabase/server";
 import { getMatchScores } from "@/lib/matchScoreCache";
+import { getSavedCompanyProfile } from "@/lib/companyProfile";
+import type { Locale } from "@/lib/locales";
 
 export const dynamic = "force-dynamic";
 
@@ -19,27 +21,31 @@ export default async function TenderDetailPage({
 }) {
   const { id } = await params;
   const t = await getTranslations("PublicTenderDetail");
+  const locale = (await getLocale()) as Locale;
 
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  // getSavedCompanyProfile reads the current schema's singular `language`
+  // column (see supabase-language-filter-single-select-migration.sql, which
+  // dropped the old plural `languages` column this page used to hand-roll a
+  // query against — that query silently failed for every user, since its
+  // error was never checked, so this page always rendered as if the user
+  // had no company profile at all: default title-language priority and no
+  // match score, regardless of their real sectors/language preference).
   let languageKeys: string[] | undefined;
   let sectors: string[] = [];
   let companyDescription = "";
   let address = "";
   let companySize = "";
   if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("sectors, languages, company_description, address, company_size")
-      .eq("id", user.id)
-      .maybeSingle();
-    languageKeys = profile?.languages?.length ? profile.languages : undefined;
-    sectors = profile?.sectors ?? [];
-    companyDescription = profile?.company_description ?? "";
-    address = profile?.address ?? "";
-    companySize = profile?.company_size ?? "";
+    const saved = await getSavedCompanyProfile(supabase, user.id);
+    languageKeys = saved.savedLanguage ? [saved.savedLanguage] : undefined;
+    sectors = saved.savedSectors;
+    companyDescription = saved.profile.description;
+    address = saved.profile.address;
+    companySize = saved.profile.companySize;
   }
 
   const tender = await getTenderById(decodeURIComponent(id), languageKeys);
@@ -47,13 +53,19 @@ export default async function TenderDetailPage({
 
   let score = undefined;
   if (user) {
-    const scores = await getMatchScores(supabase, user.id, [tender], {
-      sectors,
-      languages: languageKeys ?? [],
-      description: companyDescription,
-      address,
-      companySize,
-    });
+    const scores = await getMatchScores(
+      supabase,
+      user.id,
+      [tender],
+      {
+        sectors,
+        languages: languageKeys ?? [],
+        description: companyDescription,
+        address,
+        companySize,
+      },
+      locale
+    );
     score = scores[tender.publicationNumber];
   }
 
