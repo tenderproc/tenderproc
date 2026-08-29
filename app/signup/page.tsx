@@ -29,6 +29,11 @@ export default function SignupPage() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const planDisplay = plan ? PLAN_DISPLAY[plan] : undefined;
+  // Set only by the /api/signup-fallback redirect — see that route for why:
+  // it's the marker that the form's real onSubmit handler never attached
+  // (a content blocker or failed chunk load broke hydration) and the
+  // browser fell back to a plain HTML form submission instead.
+  const hydrationFailed = searchParams.get("hydrationFailed") === "1";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -187,8 +192,16 @@ export default function SignupPage() {
           )}
         </div>
 
+        {hydrationFailed && (
+          <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp mb-6">
+            {t("hydrationFailedBanner")}
+          </div>
+        )}
+
         <form
           onSubmit={onSubmit}
+          method="post"
+          action="/api/signup-fallback"
           className="border border-line bg-white rounded-2xl p-6 space-y-5"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

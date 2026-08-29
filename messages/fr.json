@@ -710,6 +710,7 @@
     "saved": "Enregistré ✓"
   },
   "Signup": {
+    "hydrationFailedBanner": "Une partie de cette page n'a pas pu se charger, votre inscription n'a donc pas abouti et rien n'a été enregistré. C'est généralement dû à un bloqueur de contenu/publicités ou à une connexion lente. Désactivez tout bloqueur de contenu pour ce site, actualisez la page, puis réessayez.",
     "pickSector": "Choisissez au moins un secteur.",
     "descriptionRequiredForOther": "« Autre » ne correspond à aucun secteur précis — décrivez votre activité ci-dessus pour que nous puissions trouver des marchés pertinents.",
     "checkEmailHeading": "Vérifiez votre e-mail",

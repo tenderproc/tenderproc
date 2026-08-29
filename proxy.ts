@@ -60,6 +60,12 @@ export async function proxy(req: NextRequest) {
     // before any session exists. Read-only public KBO register data (see
     // supabase-kbo-companies-migration.sql), no user data exposed.
     pathname.startsWith("/api/company-search") ||
+    // Native <form> fallback target for /signup (see app/signup/page.tsx):
+    // only reached when the page's client JS never hydrated, so there's no
+    // session cookie to check — gating it here would 401 the exact visitor
+    // it exists to help, hiding the "your browser blocked part of this
+    // page" banner it's supposed to show instead.
+    pathname.startsWith("/api/signup-fallback") ||
     // The locale switcher must work pre-auth too (e.g. from /pricing).
     pathname.startsWith("/api/locale") ||
     // BetaFeedbackModal (mounted site-wide in app/layout.tsx) polls this on

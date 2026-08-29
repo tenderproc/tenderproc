@@ -710,6 +710,7 @@
     "saved": "Opgeslagen ✓"
   },
   "Signup": {
+    "hydrationFailedBanner": "Een deel van deze pagina kon niet laden, waardoor je aanmelding niet is doorgekomen en er niets is opgeslagen. Dit komt meestal door een advertentie-/contentblokkering of een trage verbinding. Schakel eventuele blokkeringen voor deze site uit, ververs de pagina en probeer het opnieuw.",
     "pickSector": "Kies minstens één sector.",
     "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat je bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
     "checkEmailHeading": "Controleer je e-mail",

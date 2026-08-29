@@ -710,6 +710,7 @@
     "saved": "Gespeichert ✓"
   },
   "Signup": {
+    "hydrationFailedBanner": "Ein Teil dieser Seite konnte nicht geladen werden, daher wurde deine Anmeldung nicht übermittelt und nichts gespeichert. Das liegt meist an einem Werbe-/Inhaltsblocker oder einer langsamen Verbindung. Bitte deaktiviere Blocker für diese Seite, lade die Seite neu und versuche es erneut.",
     "pickSector": "Wähle mindestens eine Branche.",
     "descriptionRequiredForOther": "„Andere“ entspricht keiner bestimmten Branche — beschreibe oben, was dein Unternehmen macht, damit wir passende Ausschreibungen finden können.",
     "checkEmailHeading": "Überprüfe deine E-Mail",
