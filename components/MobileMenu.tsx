@@ -11,13 +11,15 @@ import LocaleSwitcher from "./LocaleSwitcher";
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const t = useTranslations("Nav");
   const tHeader = useTranslations("Header");
   const tLegal = useTranslations("Legal");
 
-  useEffect(() => {
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!open) return;
