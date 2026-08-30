@@ -25,6 +25,16 @@ export async function POST(
     );
   }
 
+  const { data: bid } = await supabase
+    .from("bids")
+    .select("id")
+    .eq("id", bidId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (!bid) {
+    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
+  }
+
   const { data: requirement } = await supabase
     .from("bid_requirements")
     .select("title, description, category, mandatory")

@@ -32,6 +32,16 @@ export async function POST(
     return NextResponse.json({ error: "Missing draftText.", code: "missingDraftText" }, { status: 400 });
   }
 
+  const { data: bid } = await supabase
+    .from("bids")
+    .select("id")
+    .eq("id", bidId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (!bid) {
+    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
+  }
+
   const { data: response } = await supabase
     .from("bid_responses")
     .select("id")

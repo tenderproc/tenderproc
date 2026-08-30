@@ -38,6 +38,16 @@ export async function POST(
       )
     : [];
 
+  const { data: bid } = await supabase
+    .from("bids")
+    .select("id, tender_id")
+    .eq("id", bidId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (!bid) {
+    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
+  }
+
   const { data: requirement } = await supabase
     .from("bid_requirements")
     .select("id, title, description, category, mandatory, status")
@@ -46,15 +56,6 @@ export async function POST(
     .maybeSingle();
   if (!requirement) {
     return NextResponse.json({ error: "Requirement not found.", code: "requirementNotFound" }, { status: 404 });
-  }
-
-  const { data: bid } = await supabase
-    .from("bids")
-    .select("id, tender_id")
-    .eq("id", bidId)
-    .maybeSingle();
-  if (!bid) {
-    return NextResponse.json({ error: "Bid not found.", code: "bidNotFound" }, { status: 404 });
   }
 
   const { data: tender } = await supabase
