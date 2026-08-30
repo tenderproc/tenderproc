@@ -151,7 +151,14 @@ export async function searchBelgianTenders(
   const clauses = ["buyer-country=BEL"];
   if (params.keyword) {
     const escaped = params.keyword.replace(/"/g, '\\"');
-    clauses.push(`FT~"${escaped}"`);
+    // FT~ (used previously) is TED's whole-document full-text index, which
+    // also covers metadata like the CPV taxonomy's own descriptive labels —
+    // e.g. CPV division 39's official label bundles in "produits de
+    // nettoyage" alongside furniture/appliances, so FT~"nettoyage" matched
+    // completely unrelated furniture, HVAC, even VR/XR equipment notices
+    // whose own title/description never mention cleaning. Scoping to the
+    // two fields actually shown to the user keeps matches explainable.
+    clauses.push(`(notice-title~"${escaped}" OR description-proc~"${escaped}")`);
   }
   if (params.cpv) {
     clauses.push(`classification-cpv=${params.cpv}`);
@@ -339,7 +346,11 @@ export async function searchAwardedTenders(
   const clauses = ["buyer-country=BEL", "notice-type=can-standard", `publication-date>=${sinceStr}`];
   if (params.keyword) {
     const escaped = params.keyword.replace(/"/g, '\\"');
-    clauses.push(`FT~"${escaped}"`);
+    // See the matching comment in searchBelgianTenders: FT~ matches TED's
+    // whole-document index (including CPV taxonomy labels), not just the
+    // visible title/description — scoping to those two fields avoids
+    // unrelated matches.
+    clauses.push(`(notice-title~"${escaped}" OR description-proc~"${escaped}")`);
   }
   const query = `${clauses.join(" AND ")} SORT BY publication-date DESC`;
 
