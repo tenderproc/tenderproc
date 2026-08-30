@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAIProvider } from "@/lib/ai";
 import { getCompanyKnowledge } from "@/lib/company/knowledge";
 import { RequirementCategory } from "@/lib/ai/types";
+import { FEATURES, getViewerTier, hasFeature } from "@/lib/billing/tiers";
 
 const WARNING_PENALTY = 3;
 
@@ -14,6 +15,14 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ bidId: str
   } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
+  }
+
+  const { tier } = await getViewerTier(supabase, user.id);
+  if (!hasFeature(tier, FEATURES.BID_WORKSPACE)) {
+    return NextResponse.json(
+      { error: "Bid workspace requires a Pro plan. Upgrade to run a compliance review.", code: "bidWorkspaceGated" },
+      { status: 402 }
+    );
   }
 
   const { data: bid } = await supabase

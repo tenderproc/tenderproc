@@ -14,7 +14,10 @@
  * "was this created before I downgraded" bookkeeping.
  */
 import { createAdminClient } from "@/lib/supabase/admin";
+import type { createClient } from "@/lib/supabase/server";
 import type { EffectiveTier, Tier, UserSubscription } from "./types";
+
+type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
 /** Feature keys features gate on. Add to this as real features ship —
  * incumbent-screening and forecasting aren't built yet (see README), so
@@ -143,4 +146,22 @@ export function getEffectiveTier(sub: UserSubscription, now: Date = new Date()):
 export async function getUserTier(userId: string): Promise<EffectiveTier> {
   const sub = await getUserSubscription(userId);
   return getEffectiveTier(sub);
+}
+
+/** Same lookup as `getUserTier`, but via the caller's own RLS-scoped
+ * server client instead of the admin client — for the common case of a
+ * page/route gating the *current* session's own user. Duplicated inline in
+ * a few pages (market, workflow) before this existed; new bid-workspace
+ * gating uses this instead of re-duplicating it again. */
+export async function getViewerTier(
+  supabase: SupabaseServerClient,
+  userId: string
+): Promise<{ tier: Tier; paddleCustomerId: string | null }> {
+  const { data: subRow } = await supabase
+    .from("subscriptions")
+    .select(SUBSCRIPTION_COLUMNS)
+    .eq("user_id", userId)
+    .maybeSingle();
+  const subscription = rowToUserSubscription(subRow);
+  return { tier: getEffectiveTier(subscription).tier, paddleCustomerId: subscription.paddleCustomerId };
 }

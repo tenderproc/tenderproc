@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { FEATURES, getViewerTier, hasFeature } from "@/lib/billing/tiers";
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -26,7 +27,9 @@ export async function POST(req: NextRequest) {
   }
 
   // Idempotent: if a bid already exists for this tender, just return it
-  // rather than erroring on the unique constraint.
+  // rather than erroring on the unique constraint. Checked before the tier
+  // gate below so a Free user who downgraded after starting this bid can
+  // still get back into it — only *starting a new one* is gated.
   const { data: existing } = await supabase
     .from("bids")
     .select("id")
@@ -34,6 +37,14 @@ export async function POST(req: NextRequest) {
     .maybeSingle();
   if (existing) {
     return NextResponse.json({ id: existing.id });
+  }
+
+  const { tier } = await getViewerTier(supabase, user.id);
+  if (!hasFeature(tier, FEATURES.BID_WORKSPACE)) {
+    return NextResponse.json(
+      { error: "Bid workspace requires a Pro plan. Upgrade to start preparing bids.", code: "bidWorkspaceGated" },
+      { status: 402 }
+    );
   }
 
   const { data: company } = await supabase

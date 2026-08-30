@@ -864,7 +864,8 @@
       "checkoutFailed": "Der Bezahlvorgang konnte gerade nicht gestartet werden. Bitte versuchen Sie es gleich noch einmal.",
       "noBillingAccount": "Noch kein Abrechnungskonto — upgraden Sie zuerst auf einen kostenpflichtigen Plan.",
       "portalFailed": "Das Abrechnungsportal konnte gerade nicht geöffnet werden. Bitte versuchen Sie es gleich noch einmal.",
-      "insufficientTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht. Upgraden Sie für unbegrenzte Nutzung."
+      "insufficientTokens": "Ihre kostenlosen Tokens für diesen Monat sind aufgebraucht. Upgraden Sie für unbegrenzte Nutzung.",
+      "bidWorkspaceGated": "Der Angebots-Arbeitsbereich erfordert einen Pro-Plan. Upgraden Sie, um mit der Angebotsvorbereitung zu beginnen."
     },
     "auth": {
       "invalidCredentials": "Falsche E-Mail-Adresse oder falsches Passwort.",

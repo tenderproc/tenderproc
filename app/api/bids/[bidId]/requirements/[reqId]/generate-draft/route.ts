@@ -4,6 +4,7 @@ import { getAIProvider } from "@/lib/ai";
 import { EvidenceType } from "@/lib/ai/types";
 import { getCompanyKnowledge } from "@/lib/company/knowledge";
 import { resolveEvidenceList } from "@/lib/company/evidence";
+import { FEATURES, getViewerTier, hasFeature } from "@/lib/billing/tiers";
 
 const EVIDENCE_TYPES: EvidenceType[] = ["service", "certification", "reference"];
 
@@ -18,6 +19,14 @@ export async function POST(
   } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
+  }
+
+  const { tier } = await getViewerTier(supabase, user.id);
+  if (!hasFeature(tier, FEATURES.BID_WORKSPACE)) {
+    return NextResponse.json(
+      { error: "Bid workspace requires a Pro plan. Upgrade to generate AI drafts.", code: "bidWorkspaceGated" },
+      { status: 402 }
+    );
   }
 
   const body = await req.json();

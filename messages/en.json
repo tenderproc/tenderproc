@@ -864,7 +864,8 @@
       "checkoutFailed": "Could not start checkout right now. Try again in a moment.",
       "noBillingAccount": "No billing account yet — upgrade to a paid plan first.",
       "portalFailed": "Could not open the billing portal right now. Try again in a moment.",
-      "insufficientTokens": "You're out of free tokens this month. Upgrade for unlimited use."
+      "insufficientTokens": "You're out of free tokens this month. Upgrade for unlimited use.",
+      "bidWorkspaceGated": "Bid workspace requires a Pro plan. Upgrade to start preparing bids."
     },
     "auth": {
       "invalidCredentials": "Incorrect email or password.",

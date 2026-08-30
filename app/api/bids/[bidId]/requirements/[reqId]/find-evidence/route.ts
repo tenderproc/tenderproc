@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getAIProvider } from "@/lib/ai";
 import { getCompanyKnowledge } from "@/lib/company/knowledge";
+import { FEATURES, getViewerTier, hasFeature } from "@/lib/billing/tiers";
 
 export async function POST(
   req: NextRequest,
@@ -14,6 +15,14 @@ export async function POST(
   } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 });
+  }
+
+  const { tier } = await getViewerTier(supabase, user.id);
+  if (!hasFeature(tier, FEATURES.BID_WORKSPACE)) {
+    return NextResponse.json(
+      { error: "Bid workspace requires a Pro plan. Upgrade to find matching evidence.", code: "bidWorkspaceGated" },
+      { status: 402 }
+    );
   }
 
   const { data: requirement } = await supabase

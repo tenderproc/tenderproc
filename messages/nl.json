@@ -864,7 +864,8 @@
       "checkoutFailed": "Kon het afrekenen nu niet starten. Probeer het straks opnieuw.",
       "noBillingAccount": "Nog geen facturatieaccount — upgrade eerst naar een betaald plan.",
       "portalFailed": "Kon het facturatieportaal nu niet openen. Probeer het straks opnieuw.",
-      "insufficientTokens": "Uw gratis tokens voor deze maand zijn op. Upgrade voor onbeperkt gebruik."
+      "insufficientTokens": "Uw gratis tokens voor deze maand zijn op. Upgrade voor onbeperkt gebruik.",
+      "bidWorkspaceGated": "De biedingswerkruimte vereist een Pro-abonnement. Upgrade om met het voorbereiden van biedingen te beginnen."
     },
     "auth": {
       "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",

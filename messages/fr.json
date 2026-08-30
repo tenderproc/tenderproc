@@ -864,7 +864,8 @@
       "checkoutFailed": "Impossible de démarrer le paiement pour le moment. Réessayez dans un instant.",
       "noBillingAccount": "Pas encore de compte de facturation — passez d'abord à un plan payant.",
       "portalFailed": "Impossible d'ouvrir le portail de facturation pour le moment. Réessayez dans un instant.",
-      "insufficientTokens": "Vous n'avez plus de jetons gratuits ce mois-ci. Passez à un plan supérieur pour une utilisation illimitée."
+      "insufficientTokens": "Vous n'avez plus de jetons gratuits ce mois-ci. Passez à un plan supérieur pour une utilisation illimitée.",
+      "bidWorkspaceGated": "L'espace de travail des offres nécessite un forfait Pro. Passez à un forfait supérieur pour commencer à préparer vos offres."
     },
     "auth": {
       "invalidCredentials": "E-mail ou mot de passe incorrect.",
