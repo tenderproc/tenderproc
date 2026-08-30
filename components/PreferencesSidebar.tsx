@@ -11,10 +11,16 @@ export default function PreferencesSidebar({
   userId,
   initialSectors,
   initialLanguage,
+  sectorLimit,
 }: {
   userId: string;
   initialSectors: string[];
   initialLanguage: string | null;
+  /** Free plan's sector cap ("/pricing": "Opportunities feed for 1 sector"),
+   * or null for unlimited (Pro/Premium). The server page already applies
+   * this to what's actually queried — this only keeps the checkboxes from
+   * letting a Free user select more than they'll get results for. */
+  sectorLimit: number | null;
 }) {
   const t = useTranslations("PreferencesSidebar");
   const tSector = useTranslations("Enums.sector");
@@ -61,8 +67,14 @@ export default function PreferencesSidebar({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectors, language]);
 
+  const atSectorLimit = sectorLimit !== null && sectors.length >= sectorLimit;
+
   function toggleSector(key: string) {
-    setSectors((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+    setSectors((prev) => {
+      if (prev.includes(key)) return prev.filter((k) => k !== key);
+      if (sectorLimit !== null && prev.length >= sectorLimit) return prev;
+      return [...prev, key];
+    });
   }
 
   return (
@@ -79,21 +91,36 @@ export default function PreferencesSidebar({
           </svg>
         </summary>
         <div className="space-y-1">
-          {SECTORS.map((sector) => (
-            <label
-              key={sector.key}
-              className="flex items-start gap-2 text-[13px] leading-snug text-ink cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="accent-accent mt-0.5 h-3.5 w-3.5 shrink-0"
-                checked={sectors.includes(sector.key)}
-                onChange={() => toggleSector(sector.key)}
-              />
-              {tSector(sector.key)}
-            </label>
-          ))}
+          {SECTORS.map((sector) => {
+            const checked = sectors.includes(sector.key);
+            const disabled = !checked && atSectorLimit;
+            return (
+              <label
+                key={sector.key}
+                className={`flex items-start gap-2 text-[13px] leading-snug text-ink ${
+                  disabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  className="accent-accent mt-0.5 h-3.5 w-3.5 shrink-0"
+                  checked={checked}
+                  disabled={disabled}
+                  onChange={() => toggleSector(sector.key)}
+                />
+                {tSector(sector.key)}
+              </label>
+            );
+          })}
         </div>
+        {sectorLimit !== null && (
+          <p className="text-[11px] text-inkDim mt-2">
+            {t("sectorLimitFree", { limit: sectorLimit })}{" "}
+            <a href="/pricing" className="underline hover:text-ink transition-colors">
+              {t("sectorLimitUpgrade")}
+            </a>
+          </p>
+        )}
       </details>
 
       <details className="group" open>

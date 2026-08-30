@@ -37,7 +37,7 @@ type TokenRow = {
  * `new Date(y, m+1, d)` advance would silently drift any user whose
  * topup day is the 29th-31st onto a different day once it first crosses a
  * shorter month. */
-function addMonthClamped(d: Date): Date {
+export function addMonthClamped(d: Date): Date {
   const day = d.getDate();
   const next = new Date(d.getFullYear(), d.getMonth() + 1, 1, d.getHours(), d.getMinutes(), d.getSeconds());
   const daysInNextMonth = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();

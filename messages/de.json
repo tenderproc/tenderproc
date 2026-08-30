@@ -269,11 +269,14 @@
     "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuchen Sie, sie zu senken."
   },
   "Market": {
-    "eyebrow": "Letzte 90 Tage · Quelle: TED-Zuschlagsbekanntmachungen",
+    "eyebrow": "Quelle: TED-Zuschlagsbekanntmachungen",
     "heading": "Marktübersicht",
     "description": "Kürzlich vergebene belgische öffentliche Aufträge — wer hat gewonnen, für wie viel, und von wem. Dies ist eine Momentaufnahme aktueller Zuschläge, kein vollständiges historisches Archiv.",
+    "paywallDescription": "Upgraden Sie auf Premium, um die Marktübersicht und Zuschlagsanalysen zu sehen.",
     "couldNotReachTed": "TED konnte nicht erreicht werden.",
     "loadError": "Zuschlagsdaten konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
+    "recentActivityHeading": "Aktuelle Aktivität",
+    "windowNote": "Letzte 90 Tage",
     "topWinners": "Top-Gewinner nach vergebenem Wert",
     "topBuyers": "Top-Käufer nach Ausgaben",
     "recentAwards": "Aktuelle Zuschläge",
@@ -408,7 +411,8 @@
           "Chancen-Feed für 1 Branche",
           "Manuelle Suche",
           "Ausschreibungs-Detailseiten",
-          "KI-Matching & Chat (1.000 kostenlose Tokens)"
+          "KI-Matching & Chat (1.000 kostenlose Tokens)",
+          "KI-Eignungsprüfung für hochgeladene Ausschreibungen (3/Monat)"
         ]
       },
       "pro": {
@@ -417,7 +421,7 @@
         "features": [
           "Chancen-Feed, alle Branchen",
           "KI-Übereinstimmungsbewertungen für jede Ausschreibung",
-          "KI-gestützte Angebotsvorbereitung",
+          "KI-gestützte Angebotsvorbereitung (unbegrenzte Eignungsprüfungen)",
           "Workflow-Pipeline-Board",
           "Tägliche E-Mail-Benachrichtigungen"
         ]
@@ -428,7 +432,6 @@
         "features": [
           "Alles aus Pro",
           "Marktübersicht & Zuschlagsanalysen",
-          "KI-Eignungsprüfungen",
           "Priorisierter Support"
         ]
       }
@@ -488,7 +491,15 @@
   "WorkflowPage": {
     "eyebrow": "Ihre Pipeline",
     "heading": "Workflow",
-    "description": "Verfolgen Sie Ausschreibungen, die Sie verfolgen, von der ersten Sichtung bis zur Einreichung. Fügen Sie Ausschreibungen über Chancen oder die Detailseite einer Ausschreibung hinzu."
+    "description": "Verfolgen Sie Ausschreibungen, die Sie verfolgen, von der ersten Sichtung bis zur Einreichung. Fügen Sie Ausschreibungen über Chancen oder die Detailseite einer Ausschreibung hinzu.",
+    "paywallDescription": "Upgraden Sie auf Pro, um Ausschreibungen auf Ihrem Workflow-Board zu verfolgen."
+  },
+  "UpgradePaywall": {
+    "premiumFeature": "Premium-Funktion",
+    "proFeature": "Pro-Funktion",
+    "upgradeToPro": "Auf Pro upgraden",
+    "upgradeToPremium": "Auf Premium upgraden",
+    "logIn": "Zum Upgrade anmelden"
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Zurück zu offenen Ausschreibungen",
@@ -655,6 +666,12 @@
     "analyzingTender": "Ausschreibung wird analysiert…",
     "analysisFailed": "Analyse fehlgeschlagen",
     "failedMessage": "Diese Ausschreibung konnte nicht verarbeitet werden. Häufige Ursachen: Die PDF enthält keinen extrahierbaren Text (ein gescanntes Dokument ohne OCR) oder die KI-Analyse ist fehlgeschlagen. Versuchen Sie es erneut hochzuladen oder mit einer anderen Datei.",
+    "retryAnalysis": "Analyse erneut versuchen",
+    "retrying": "Erneuter Versuch…",
+    "retryFailed": "Diese Ausschreibung konnte gerade nicht erneut versucht werden. Versuchen Sie es gleich noch einmal.",
+    "deleteTender": "Löschen",
+    "deleteConfirm": "Diese Ausschreibung und ihre gesamte Analyse löschen? Dies kann nicht rückgängig gemacht werden.",
+    "deleting": "Wird gelöscht…",
     "stillProcessing": "Wird noch verarbeitet — bitte gleich aktualisieren.",
     "authority": "Vergabestelle",
     "deadline": "Frist",
@@ -690,7 +707,8 @@
     "uploadingAndAnalyzing": "Wird hochgeladen & analysiert… (bis zu einer Minute)",
     "uploadTender": "Ausschreibung hochladen",
     "duplicateConfirm": "Sie haben \"{fileName}\" bereits am {date} als \"{title}\" hochgeladen. Trotzdem erneut hochladen?",
-    "duplicateUntitled": "eine Ausschreibung ohne Titel"
+    "duplicateUntitled": "eine Ausschreibung ohne Titel",
+    "upgrade": "Upgrade"
   },
   "MyTendersList": {
     "eyebrow": "Hochgeladene Ausschreibungen · KI-Analyse",
@@ -816,11 +834,16 @@
   "Errors": {
     "api": {
       "notAuthenticated": "Nicht angemeldet.",
+      "uploadQuotaExceeded": "Sie haben diesen Monat alle kostenlosen Ausschreibungsanalysen aufgebraucht. Upgraden Sie für unbegrenzte Nutzung.",
       "noFileProvided": "Keine Datei angegeben.",
       "onlyPdfSupported": "In dieser Beta werden nur PDF-Dateien unterstützt.",
       "fileTooLarge": "Datei ist größer als 20 MB.",
       "aiAnalysisFailed": "KI-Analyse fehlgeschlagen. Versuchen Sie es gleich noch einmal.",
       "tenderNotFound": "Ausschreibung nicht gefunden.",
+      "notFailed": "Nur eine fehlgeschlagene Ausschreibung kann erneut versucht werden.",
+      "noDocumentToRetry": "Keine gespeicherte Datei zum erneuten Versuch. Löschen Sie diese Ausschreibung und laden Sie sie erneut hoch.",
+      "downloadFailed": "Die gespeicherte Datei konnte nicht erneut heruntergeladen werden. Versuchen Sie es gleich noch einmal.",
+      "deleteFailed": "Diese Ausschreibung konnte gerade nicht gelöscht werden. Versuchen Sie es gleich noch einmal.",
       "needCompanyProfile": "Fügen Sie Ihr Unternehmensprofil hinzu, um fortzufahren.",
       "couldNotMapEvidence": "Nachweise konnten gerade nicht zugeordnet werden. Versuchen Sie es gleich noch einmal.",
       "bidNotFound": "Angebot nicht gefunden.",
@@ -876,7 +899,9 @@
     "languages": "Sprachen",
     "allLanguages": "Alle Sprachen",
     "saving": "Wird gespeichert…",
-    "filtering": "Ergebnisse werden aktualisiert…"
+    "filtering": "Ergebnisse werden aktualisiert…",
+    "sectorLimitFree": "Der kostenlose Plan ist auf {limit} Branche beschränkt.",
+    "sectorLimitUpgrade": "Upgraden für alle Branchen"
   },
   "Enums": {
     "matchLabel": {

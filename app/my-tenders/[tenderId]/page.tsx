@@ -7,6 +7,7 @@ import { MatchScorePill, RecommendationPill } from "@/components/tenders/BidMatc
 import StartBidButton from "@/components/tenders/StartBidButton";
 import MapEvidenceButton from "@/components/tenders/MapEvidenceButton";
 import TranslateTenderButton from "@/components/tenders/TranslateTenderButton";
+import FailedTenderActions from "@/components/tenders/FailedTenderActions";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requirementCategoryLabel } from "@/lib/requirementCategory";
@@ -173,6 +174,7 @@ export default async function TenderDetailPage({
           {tender.status === "FAILED" && (
             <div className="mt-4 border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
               {t("failedMessage")}
+              <FailedTenderActions tenderId={tender.id} />
             </div>
           )}
 

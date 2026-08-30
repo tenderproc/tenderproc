@@ -269,11 +269,14 @@
     "noMatchResults": "Geen opportuniteiten halen deze matchdrempel. Probeer die te verlagen."
   },
   "Market": {
-    "eyebrow": "Laatste 90 dagen · Bron: TED-gunningsberichten",
+    "eyebrow": "Bron: TED-gunningsberichten",
     "heading": "Marktoverzicht",
     "description": "Recent gegunde Belgische overheidsopdrachten — wie won, voor hoeveel, en van wie. Dit is een momentopname van recente gunningen, geen volledig historisch archief.",
+    "paywallDescription": "Upgrade naar Premium voor marktoverzicht en gunningsanalyses.",
     "couldNotReachTed": "Kon TED niet bereiken.",
     "loadError": "Kon momenteel geen gunningsgegevens laden ({loadError}). Probeer het zo opnieuw.",
+    "recentActivityHeading": "Recente activiteit",
+    "windowNote": "Laatste 90 dagen",
     "topWinners": "Topwinnaars naar gegunde waarde",
     "topBuyers": "Topkopers naar uitgaven",
     "recentAwards": "Recente gunningen",
@@ -408,7 +411,8 @@
           "Opportuniteiten-feed voor 1 sector",
           "Handmatig zoeken",
           "Detailpagina's van opdrachten",
-          "AI-matchscore & chat (1.000 gratis tokens)"
+          "AI-matchscore & chat (1.000 gratis tokens)",
+          "AI-geschiktheidsanalyse op geüploade opdrachten (3/maand)"
         ]
       },
       "pro": {
@@ -417,7 +421,7 @@
         "features": [
           "Opportuniteiten-feed, alle sectoren",
           "AI-matchscores op elke opdracht",
-          "AI-ondersteunde offertevoorbereiding",
+          "AI-ondersteunde offertevoorbereiding (onbeperkte geschiktheidsanalyses)",
           "Workflow-pipelinebord",
           "Dagelijkse e-mailmeldingen"
         ]
@@ -428,7 +432,6 @@
         "features": [
           "Alles van Pro",
           "Marktoverzicht & gunningsanalyses",
-          "AI-geschiktheidscontroles",
           "Prioritaire ondersteuning"
         ]
       }
@@ -488,7 +491,15 @@
   "WorkflowPage": {
     "eyebrow": "Uw pipeline",
     "heading": "Workflow",
-    "description": "Volg opdrachten waar u achteraan zit, van eerste screening tot indiening. Voeg opdrachten toe vanuit Opportuniteiten of de detailpagina van een opdracht."
+    "description": "Volg opdrachten waar u achteraan zit, van eerste screening tot indiening. Voeg opdrachten toe vanuit Opportuniteiten of de detailpagina van een opdracht.",
+    "paywallDescription": "Upgrade naar Pro om opdrachten te volgen op uw workflowbord."
+  },
+  "UpgradePaywall": {
+    "premiumFeature": "Premium-functie",
+    "proFeature": "Pro-functie",
+    "upgradeToPro": "Upgraden naar Pro",
+    "upgradeToPremium": "Upgraden naar Premium",
+    "logIn": "Log in om te upgraden"
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Terug naar open opdrachten",
@@ -655,6 +666,12 @@
     "analyzingTender": "Opdracht wordt geanalyseerd…",
     "analysisFailed": "Analyse mislukt",
     "failedMessage": "Deze opdracht kon niet worden verwerkt. Veelvoorkomende oorzaken: de pdf bevat geen extraheerbare tekst (een gescand document zonder OCR) of de AI-analyse is mislukt. Probeer opnieuw te uploaden, of een ander bestand.",
+    "retryAnalysis": "Analyse opnieuw proberen",
+    "retrying": "Opnieuw proberen…",
+    "retryFailed": "Deze opdracht kon niet opnieuw worden geprobeerd. Probeer het zo dadelijk nog eens.",
+    "deleteTender": "Verwijderen",
+    "deleteConfirm": "Deze opdracht en alle analyse verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    "deleting": "Bezig met verwijderen…",
     "stillProcessing": "Nog bezig met verwerken — ververs zo dadelijk.",
     "authority": "Aanbestedende overheid",
     "deadline": "Deadline",
@@ -690,7 +707,8 @@
     "uploadingAndAnalyzing": "Bezig met uploaden & analyseren… (tot een minuut)",
     "uploadTender": "Opdracht uploaden",
     "duplicateConfirm": "U heeft \"{fileName}\" al geüpload op {date} als \"{title}\". Toch opnieuw uploaden?",
-    "duplicateUntitled": "een opdracht zonder titel"
+    "duplicateUntitled": "een opdracht zonder titel",
+    "upgrade": "Upgraden"
   },
   "MyTendersList": {
     "eyebrow": "Geüploade opdrachten · AI-analyse",
@@ -816,11 +834,16 @@
   "Errors": {
     "api": {
       "notAuthenticated": "Niet ingelogd.",
+      "uploadQuotaExceeded": "U heeft deze maand al uw gratis opdrachtanalyses gebruikt. Upgrade voor onbeperkt gebruik.",
       "noFileProvided": "Geen bestand opgegeven.",
       "onlyPdfSupported": "Alleen pdf-bestanden worden ondersteund in deze bèta.",
       "fileTooLarge": "Bestand is groter dan 20 MB.",
       "aiAnalysisFailed": "AI-analyse mislukt. Probeer het zo opnieuw.",
       "tenderNotFound": "Opdracht niet gevonden.",
+      "notFailed": "Alleen een mislukte opdracht kan opnieuw worden geprobeerd.",
+      "noDocumentToRetry": "Geen opgeslagen bestand om opnieuw te proberen. Verwijder deze opdracht en upload opnieuw.",
+      "downloadFailed": "Het opgeslagen bestand kon niet opnieuw worden gedownload. Probeer het zo dadelijk nog eens.",
+      "deleteFailed": "Deze opdracht kon niet worden verwijderd. Probeer het zo dadelijk nog eens.",
       "needCompanyProfile": "Voeg uw bedrijfsprofiel toe om verder te gaan.",
       "couldNotMapEvidence": "Kon bewijs momenteel niet koppelen. Probeer het zo opnieuw.",
       "bidNotFound": "Offerte niet gevonden.",
@@ -876,7 +899,9 @@
     "languages": "Talen",
     "allLanguages": "Alle talen",
     "saving": "Bezig met opslaan…",
-    "filtering": "Resultaten worden bijgewerkt…"
+    "filtering": "Resultaten worden bijgewerkt…",
+    "sectorLimitFree": "Het gratis plan is beperkt tot {limit} sector.",
+    "sectorLimitUpgrade": "Upgrade voor alle sectoren"
   },
   "Enums": {
     "matchLabel": {

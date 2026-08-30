@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import MarketSubNav from "@/components/MarketSubNav";
 import MarketShareSection from "@/components/MarketShareSection";
 import FollowCompanyButton from "@/components/FollowCompanyButton";
+import UpgradePaywall from "@/components/billing/UpgradePaywall";
 import { searchAwardedTenders } from "@/lib/ted";
 import { AwardedTender } from "@/lib/types";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";
@@ -13,6 +14,7 @@ import { mapRowToMarketShareAward } from "@/lib/marketShare/types";
 import { computeMarketShare } from "@/lib/marketShare/compute";
 import { normalizeCompanyName } from "@/lib/companies/normalize";
 import { resolveMarketShareWindowMonths, marketShareWindowSince } from "@/lib/marketShare/window";
+import { FEATURES, getEffectiveTier, hasFeature, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +47,51 @@ export default async function MarketPage({
   const t = await getTranslations("Market");
   const locale = (await getLocale()) as Locale;
 
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let tier: "FREE" | "PRO" | "PREMIUM" = "FREE";
+  let paddleCustomerId: string | null = null;
+  if (user) {
+    const { data: subRow } = await supabase
+      .from("subscriptions")
+      .select(SUBSCRIPTION_COLUMNS)
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const effective = getEffectiveTier(rowToUserSubscription(subRow));
+    tier = effective.tier;
+    paddleCustomerId = rowToUserSubscription(subRow).paddleCustomerId;
+  }
+
+  if (!hasFeature(tier, FEATURES.MARKET_OVERVIEW)) {
+    return (
+      <div>
+        <Header />
+        <main className="max-w-6xl mx-auto px-6 py-10">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
+              {t("eyebrow")}
+            </p>
+            <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
+              {t("heading")}
+            </h1>
+          </div>
+          <MarketSubNav active="overview" />
+          <div className="mt-8">
+            <UpgradePaywall
+              requiredTier="PREMIUM"
+              description={t("paywallDescription")}
+              user={user ? { id: user.id, email: user.email, paddleCustomerId } : null}
+              loginNext="/market"
+            />
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   function formatDate(d: string | null) {
     if (!d) return "—";
     const date = new Date(d);
@@ -75,11 +122,6 @@ export default async function MarketPage({
   // the ingested contract_awards table via the service-role client, same
   // pattern as app/forecast/page.tsx, since it needs real history (12mo+)
   // rather than a live 90-day snapshot.
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   let savedSectors: string[] = [];
   let ownNormalizedName: string | null = null;
   if (user) {
@@ -148,6 +190,13 @@ export default async function MarketPage({
 
         {!loadError && (
           <>
+            <h2 className="font-display font-semibold text-xl text-ink mb-1">
+              {t("recentActivityHeading")}
+            </h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim mb-3">
+              {t("windowNote")}
+            </p>
+
             <div className="grid sm:grid-cols-2 gap-4 mb-10">
               <RollupPanel title={t("topWinners")} rows={topWinners} formatEur={formatEur} t={t} />
               <RollupPanel title={t("topBuyers")} rows={topBuyers} formatEur={formatEur} t={t} />

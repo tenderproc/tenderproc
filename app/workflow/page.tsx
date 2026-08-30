@@ -1,8 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import WorkflowBoard from "@/components/WorkflowBoard";
+import UpgradePaywall from "@/components/billing/UpgradePaywall";
 import { getTenderById } from "@/lib/tenders/getTenderById";
 import { createClient } from "@/lib/supabase/server";
+import { FEATURES, getEffectiveTier, hasFeature, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
 
 export const dynamic = "force-dynamic";
 
@@ -13,8 +15,22 @@ export default async function WorkflowPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let cards: { pipelineId: string; stage: string; tender: Awaited<ReturnType<typeof getTenderById>> }[] = [];
+  let tier: "FREE" | "PRO" | "PREMIUM" = "FREE";
+  let paddleCustomerId: string | null = null;
   if (user) {
+    const { data: subRow } = await supabase
+      .from("subscriptions")
+      .select(SUBSCRIPTION_COLUMNS)
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const subscription = rowToUserSubscription(subRow);
+    tier = getEffectiveTier(subscription).tier;
+    paddleCustomerId = subscription.paddleCustomerId;
+  }
+  const gated = !hasFeature(tier, FEATURES.BID_WORKSPACE);
+
+  let cards: { pipelineId: string; stage: string; tender: Awaited<ReturnType<typeof getTenderById>> }[] = [];
+  if (user && !gated) {
     const { data: items } = await supabase
       .from("pipeline_items")
       .select("id, publication_number, stage")
@@ -46,7 +62,16 @@ export default async function WorkflowPage() {
           </p>
         </div>
 
-        <WorkflowBoard cards={cards} />
+        {gated ? (
+          <UpgradePaywall
+            requiredTier="PRO"
+            description={t("paywallDescription")}
+            user={user ? { id: user.id, email: user.email, paddleCustomerId } : null}
+            loginNext="/workflow"
+          />
+        ) : (
+          <WorkflowBoard cards={cards} />
+        )}
       </main>
     </div>
   );

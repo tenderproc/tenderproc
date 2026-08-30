@@ -269,11 +269,14 @@
     "noMatchResults": "Aucune opportunité n'atteint ce seuil de correspondance. Essayez de l'abaisser."
   },
   "Market": {
-    "eyebrow": "90 derniers jours · Source : avis d'attribution TED",
+    "eyebrow": "Source : avis d'attribution TED",
     "heading": "Aperçu du marché",
     "description": "Marchés publics belges récemment attribués — qui a gagné, pour quel montant, et de la part de qui. Il s'agit d'un instantané des attributions récentes, pas d'une archive historique complète.",
+    "paywallDescription": "Passez à Premium pour accéder à l'aperçu du marché et aux analyses d'attribution.",
     "couldNotReachTed": "Impossible de contacter TED.",
     "loadError": "Impossible de charger les données d'attribution pour le moment ({loadError}). Réessayez dans un instant.",
+    "recentActivityHeading": "Activité récente",
+    "windowNote": "90 derniers jours",
     "topWinners": "Meilleurs gagnants par valeur attribuée",
     "topBuyers": "Principaux acheteurs par dépenses",
     "recentAwards": "Attributions récentes",
@@ -408,7 +411,8 @@
           "Flux d'opportunités pour 1 secteur",
           "Recherche manuelle",
           "Pages de détail des marchés",
-          "Score de correspondance IA & chat (1 000 jetons gratuits)"
+          "Score de correspondance IA & chat (1 000 jetons gratuits)",
+          "Analyse d'éligibilité IA sur les marchés importés (3/mois)"
         ]
       },
       "pro": {
@@ -417,7 +421,7 @@
         "features": [
           "Flux d'opportunités, tous secteurs",
           "Scores de correspondance IA sur chaque marché",
-          "Préparation d'offre assistée par IA",
+          "Préparation d'offre assistée par IA (analyses d'éligibilité illimitées)",
           "Tableau de suivi",
           "Notifications e-mail quotidiennes"
         ]
@@ -428,7 +432,6 @@
         "features": [
           "Tout ce qui est inclus dans Pro",
           "Aperçu du marché & analyses d'attribution",
-          "Vérifications d'éligibilité par IA",
           "Support prioritaire"
         ]
       }
@@ -488,7 +491,15 @@
   "WorkflowPage": {
     "eyebrow": "Votre pipeline",
     "heading": "Suivi",
-    "description": "Suivez les marchés que vous poursuivez, de la première sélection jusqu'à la soumission. Ajoutez des marchés depuis Opportunités ou la page de détail d'un marché."
+    "description": "Suivez les marchés que vous poursuivez, de la première sélection jusqu'à la soumission. Ajoutez des marchés depuis Opportunités ou la page de détail d'un marché.",
+    "paywallDescription": "Passez à Pro pour suivre vos marchés sur votre tableau de workflow."
+  },
+  "UpgradePaywall": {
+    "premiumFeature": "Fonctionnalité Premium",
+    "proFeature": "Fonctionnalité Pro",
+    "upgradeToPro": "Passer à Pro",
+    "upgradeToPremium": "Passer à Premium",
+    "logIn": "Connectez-vous pour mettre à niveau"
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Retour aux marchés ouverts",
@@ -655,6 +666,12 @@
     "analyzingTender": "Analyse du marché en cours…",
     "analysisFailed": "Échec de l'analyse",
     "failedMessage": "Ce marché n'a pas pu être traité. Causes courantes : le PDF ne contient pas de texte extractible (un document scanné sans OCR) ou l'analyse IA a échoué. Essayez de le retélécharger, ou un autre fichier.",
+    "retryAnalysis": "Réessayer l'analyse",
+    "retrying": "Nouvelle tentative…",
+    "retryFailed": "Impossible de relancer ce marché pour le moment. Réessayez dans un instant.",
+    "deleteTender": "Supprimer",
+    "deleteConfirm": "Supprimer ce marché et toute son analyse ? Cette action est irréversible.",
+    "deleting": "Suppression…",
     "stillProcessing": "Encore en traitement — actualisez dans un instant.",
     "authority": "Pouvoir adjudicateur",
     "deadline": "Échéance",
@@ -690,7 +707,8 @@
     "uploadingAndAnalyzing": "Téléversement et analyse… (jusqu'à une minute)",
     "uploadTender": "Téléverser un marché",
     "duplicateConfirm": "Vous avez déjà téléversé \"{fileName}\" le {date} sous le nom \"{title}\". Le téléverser à nouveau quand même ?",
-    "duplicateUntitled": "un marché sans titre"
+    "duplicateUntitled": "un marché sans titre",
+    "upgrade": "Mettre à niveau"
   },
   "MyTendersList": {
     "eyebrow": "Marchés téléchargés · Analyse IA",
@@ -816,11 +834,16 @@
   "Errors": {
     "api": {
       "notAuthenticated": "Non authentifié.",
+      "uploadQuotaExceeded": "Vous avez utilisé toutes vos analyses de marchés gratuites ce mois-ci. Passez à un forfait supérieur pour un usage illimité.",
       "noFileProvided": "Aucun fichier fourni.",
       "onlyPdfSupported": "Seuls les fichiers PDF sont pris en charge dans cette bêta.",
       "fileTooLarge": "Le fichier dépasse 20 Mo.",
       "aiAnalysisFailed": "L'analyse IA a échoué. Réessayez dans un instant.",
       "tenderNotFound": "Marché introuvable.",
+      "notFailed": "Seul un marché en échec peut être relancé.",
+      "noDocumentToRetry": "Aucun fichier enregistré à relancer. Supprimez ce marché et téléchargez-le à nouveau.",
+      "downloadFailed": "Impossible de retélécharger le fichier enregistré. Réessayez dans un instant.",
+      "deleteFailed": "Impossible de supprimer ce marché pour le moment. Réessayez dans un instant.",
       "needCompanyProfile": "Ajoutez le profil de votre entreprise pour continuer.",
       "couldNotMapEvidence": "Impossible d'associer les preuves pour le moment. Réessayez dans un instant.",
       "bidNotFound": "Offre introuvable.",
@@ -876,7 +899,9 @@
     "languages": "Langues",
     "allLanguages": "Toutes les langues",
     "saving": "Enregistrement…",
-    "filtering": "Mise à jour des résultats…"
+    "filtering": "Mise à jour des résultats…",
+    "sectorLimitFree": "Le forfait gratuit est limité à {limit} secteur.",
+    "sectorLimitUpgrade": "Passez à un forfait supérieur pour tous les secteurs"
   },
   "Enums": {
     "matchLabel": {

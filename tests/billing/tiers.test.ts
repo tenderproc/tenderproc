@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getEffectiveTier } from "@/lib/billing/tiers";
+import { FEATURES, FREE_SECTOR_LIMIT, getEffectiveTier, hasFeature } from "@/lib/billing/tiers";
 import type { UserSubscription } from "@/lib/billing/types";
 
 function sub(overrides: Partial<UserSubscription>): UserSubscription {
@@ -58,5 +58,25 @@ describe("getEffectiveTier", () => {
   it("trialing subscription keeps its tier", () => {
     const result = getEffectiveTier(sub({ tier: "PREMIUM", status: "trialing" }));
     expect(result).toEqual({ tier: "PREMIUM", status: "trialing", inGracePeriod: false });
+  });
+});
+
+describe("hasFeature", () => {
+  it("MARKET_OVERVIEW is Premium-only, per /pricing", () => {
+    expect(hasFeature("FREE", FEATURES.MARKET_OVERVIEW)).toBe(false);
+    expect(hasFeature("PRO", FEATURES.MARKET_OVERVIEW)).toBe(false);
+    expect(hasFeature("PREMIUM", FEATURES.MARKET_OVERVIEW)).toBe(true);
+  });
+
+  it("BID_WORKSPACE (the Workflow board) is Pro and up, per /pricing", () => {
+    expect(hasFeature("FREE", FEATURES.BID_WORKSPACE)).toBe(false);
+    expect(hasFeature("PRO", FEATURES.BID_WORKSPACE)).toBe(true);
+    expect(hasFeature("PREMIUM", FEATURES.BID_WORKSPACE)).toBe(true);
+  });
+});
+
+describe("FREE_SECTOR_LIMIT", () => {
+  it("matches /pricing's \"Opportunities feed for 1 sector\"", () => {
+    expect(FREE_SECTOR_LIMIT).toBe(1);
   });
 });

@@ -269,11 +269,14 @@
     "noMatchResults": "No opportunities meet that match threshold. Try lowering it."
   },
   "Market": {
-    "eyebrow": "Last 90 days · Source: TED contract award notices",
+    "eyebrow": "Source: TED contract award notices",
     "heading": "Market overview",
     "description": "Recently-awarded Belgian public contracts — who won, for how much, and from whom. This is a snapshot of recent awards, not a full historical archive.",
+    "paywallDescription": "Upgrade to Premium to see market overview and award analytics.",
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load award data right now ({loadError}). Try again in a moment.",
+    "recentActivityHeading": "Recent activity",
+    "windowNote": "Last 90 days",
     "topWinners": "Top winners by awarded value",
     "topBuyers": "Top buyers by spend",
     "recentAwards": "Recent awards",
@@ -408,7 +411,8 @@
           "Opportunities feed for 1 sector",
           "Manual search",
           "Tender detail pages",
-          "AI match scoring & chat (1,000 free tokens)"
+          "AI match scoring & chat (1,000 free tokens)",
+          "AI eligibility analysis on tender uploads (3/month)"
         ]
       },
       "pro": {
@@ -417,7 +421,7 @@
         "features": [
           "Opportunities feed, all sectors",
           "AI match scores on every tender",
-          "AI-assisted bid preparation",
+          "AI-assisted bid preparation (unlimited eligibility analyses)",
           "Workflow pipeline board",
           "Daily email notifications"
         ]
@@ -428,7 +432,6 @@
         "features": [
           "Everything in Pro",
           "Market overview & award analytics",
-          "AI eligibility checks",
           "Priority support"
         ]
       }
@@ -488,7 +491,15 @@
   "WorkflowPage": {
     "eyebrow": "Your pipeline",
     "heading": "Workflow",
-    "description": "Track tenders you're pursuing from first screening through submission. Add tenders from Opportunities or a tender's detail page."
+    "description": "Track tenders you're pursuing from first screening through submission. Add tenders from Opportunities or a tender's detail page.",
+    "paywallDescription": "Upgrade to Pro to track tenders through your workflow board."
+  },
+  "UpgradePaywall": {
+    "premiumFeature": "Premium feature",
+    "proFeature": "Pro feature",
+    "upgradeToPro": "Upgrade to Pro",
+    "upgradeToPremium": "Upgrade to Premium",
+    "logIn": "Log in to upgrade"
   },
   "PublicTenderDetail": {
     "backToOpenTenders": "Back to open tenders",
@@ -655,6 +666,12 @@
     "analyzingTender": "Analyzing tender…",
     "analysisFailed": "Analysis failed",
     "failedMessage": "This tender couldn't be processed. Common causes: the PDF has no extractable text (a scanned document without OCR) or the AI analysis failed. Try re-uploading, or a different file.",
+    "retryAnalysis": "Retry analysis",
+    "retrying": "Retrying…",
+    "retryFailed": "Could not retry this tender right now. Try again in a moment.",
+    "deleteTender": "Delete",
+    "deleteConfirm": "Delete this tender and all its analysis? This can't be undone.",
+    "deleting": "Deleting…",
     "stillProcessing": "Still processing — refresh in a moment.",
     "authority": "Authority",
     "deadline": "Deadline",
@@ -690,7 +707,8 @@
     "uploadingAndAnalyzing": "Uploading & analyzing… (up to a minute)",
     "uploadTender": "Upload tender",
     "duplicateConfirm": "You already uploaded \"{fileName}\" on {date} as \"{title}\". Upload it again anyway?",
-    "duplicateUntitled": "an untitled tender"
+    "duplicateUntitled": "an untitled tender",
+    "upgrade": "Upgrade"
   },
   "MyTendersList": {
     "eyebrow": "Uploaded tenders · AI analysis",
@@ -816,11 +834,16 @@
   "Errors": {
     "api": {
       "notAuthenticated": "Not authenticated.",
+      "uploadQuotaExceeded": "You've used all your free tender analyses this month. Upgrade for unlimited use.",
       "noFileProvided": "No file provided.",
       "onlyPdfSupported": "Only PDF files are supported in this beta.",
       "fileTooLarge": "File is larger than 20MB.",
       "aiAnalysisFailed": "AI analysis failed. Try again in a moment.",
       "tenderNotFound": "Tender not found.",
+      "notFailed": "Only a failed tender can be retried.",
+      "noDocumentToRetry": "No stored file to retry from. Delete this tender and upload again.",
+      "downloadFailed": "Could not re-download the stored file. Try again in a moment.",
+      "deleteFailed": "Could not delete this tender right now. Try again in a moment.",
       "needCompanyProfile": "Add your company profile before continuing.",
       "couldNotMapEvidence": "Could not map evidence right now. Try again in a moment.",
       "bidNotFound": "Bid not found.",
@@ -876,7 +899,9 @@
     "languages": "Languages",
     "allLanguages": "All languages",
     "saving": "Saving…",
-    "filtering": "Updating results…"
+    "filtering": "Updating results…",
+    "sectorLimitFree": "Free plan is limited to {limit} sector.",
+    "sectorLimitUpgrade": "Upgrade for all sectors"
   },
   "Enums": {
     "matchLabel": {

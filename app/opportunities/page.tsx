@@ -12,6 +12,7 @@ import { sectorsToCpvPrefixes } from "@/lib/sectors";
 import { createClient } from "@/lib/supabase/server";
 import { getSavedCompanyProfile } from "@/lib/companyProfile";
 import { hasProfileSignal } from "@/lib/scoring";
+import { FREE_SECTOR_LIMIT, getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
 
 export const dynamic = "force-dynamic";
 
@@ -31,11 +32,20 @@ export default async function OpportunitiesPage({
   let savedSectors: string[] = [];
   let savedLanguage: string | null = null;
   let showMatchFilter = false;
+  let tier: "FREE" | "PRO" | "PREMIUM" = "FREE";
   if (user) {
-    const saved = await getSavedCompanyProfile(supabase, user.id);
-    savedSectors = saved.savedSectors;
+    const [saved, { data: subRow }] = await Promise.all([
+      getSavedCompanyProfile(supabase, user.id),
+      supabase.from("subscriptions").select(SUBSCRIPTION_COLUMNS).eq("user_id", user.id).maybeSingle(),
+    ]);
     savedLanguage = saved.savedLanguage;
     showMatchFilter = hasProfileSignal(saved.profile);
+    tier = getEffectiveTier(rowToUserSubscription(subRow)).tier;
+    // "/pricing": Free is capped to 1 sector. Capping what's *applied* here
+    // (rather than what's stored in `profiles.sectors`) is enough on its
+    // own — a Free user with more sectors saved from before, or saved
+    // directly via the client, just has the extras ignored.
+    savedSectors = tier === "FREE" ? saved.savedSectors.slice(0, FREE_SECTOR_LIMIT) : saved.savedSectors;
   }
 
   // A manual CPV search overrides the saved sector default. The sidebar's
@@ -117,6 +127,7 @@ export default async function OpportunitiesPage({
             userId={user.id}
             initialSectors={savedSectors}
             initialLanguage={savedLanguage}
+            sectorLimit={tier === "FREE" ? FREE_SECTOR_LIMIT : null}
           />
         )}
 

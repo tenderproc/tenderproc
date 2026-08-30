@@ -25,6 +25,7 @@ export const FEATURES = {
   BID_WORKSPACE: "bid_workspace",
   INCUMBENT_SCREENING: "incumbent_screening",
   TENDER_FORECASTING: "tender_forecasting",
+  MARKET_OVERVIEW: "market_overview",
 } as const;
 export type FeatureKey = (typeof FEATURES)[keyof typeof FEATURES];
 
@@ -36,8 +37,15 @@ const TIER_FEATURES: Record<Tier, Set<FeatureKey>> = {
     FEATURES.BID_WORKSPACE,
     FEATURES.INCUMBENT_SCREENING,
     FEATURES.TENDER_FORECASTING,
+    FEATURES.MARKET_OVERVIEW,
   ]),
 };
+
+/** Free tier's Opportunities-feed sector cap ("/pricing": "Opportunities
+ * feed for 1 sector"). Not a `FeatureKey` — it's a count, not a
+ * present/absent flag, so app/opportunities/page.tsx and app/market/page.tsx
+ * apply it directly rather than through `hasFeature`. */
+export const FREE_SECTOR_LIMIT = 1;
 
 export function hasFeature(tier: Tier, feature: FeatureKey): boolean {
   return TIER_FEATURES[tier].has(feature);
