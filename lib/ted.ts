@@ -186,8 +186,14 @@ export async function searchBelgianTenders(
       paginationMode: "ITERATION",
     }),
     // Notices don't change second-to-second; cache briefly to avoid
-    // hammering TED on every dashboard load during the beta.
-    next: { revalidate: 900 },
+    // hammering TED on every dashboard load during the beta. Keyword
+    // searches are user-typed and highly variable, so they skip the cache
+    // entirely instead: reusing it here risks Next's Data Cache serving a
+    // stale response — from a *different* query — when a background
+    // revalidation fetch fails (Next falls back to the last-cached response
+    // silently rather than surfacing the error), which is how a TED 503 on
+    // one keyword search turned into unrelated results with no visible error.
+    ...(params.keyword ? { cache: "no-store" as const } : { next: { revalidate: 900 } }),
   });
 
   if (!res.ok) {
@@ -353,7 +359,10 @@ export async function searchAwardedTenders(
       checkQuerySyntax: false,
       paginationMode: "ITERATION",
     }),
-    next: { revalidate: 900 },
+    // See the matching comment in searchBelgianTenders: keyword queries skip
+    // the cache so a transient TED failure can't surface as stale,
+    // wrong-query results instead of a visible error.
+    ...(params.keyword ? { cache: "no-store" as const } : { next: { revalidate: 900 } }),
   });
 
   if (!res.ok) {
