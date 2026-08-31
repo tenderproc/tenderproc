@@ -191,7 +191,11 @@
             },
             {
               "question": "Comment fonctionne le matching par IA ?",
-              "answer": "Chaque nouveau marché reçoit un score de correspondance sur 100 par rapport à votre profil d'entreprise (secteurs, taille, description) — pour repérer d'abord ce qui vaut vraiment votre temps."
+              "answer": "C'est le score léger calculé automatiquement pour chaque marché de votre flux : chacun reçoit un score de correspondance de 0 à 100 par rapport à votre profil d'entreprise (secteurs, taille, description), pour trier et filtrer au lieu de tout lire. C'est distinct de la préparation d'offre assistée par IA, qui effectue une analyse plus approfondie une fois que vous êtes prêt à agir sur un marché précis."
+            },
+            {
+              "question": "Que fait la préparation d'offre assistée par IA ?",
+              "answer": "Une fois que vous téléversez le PDF d'un marché, l'IA extrait les exigences et les critères d'attribution, vous donne une recommandation Bid/No-Bid avec un score d'adéquation, et rédige une réponse basée sur les projets antérieurs et les preuves de votre profil d'entreprise — elle ne revendiquera jamais une expérience que vous n'avez pas renseignée. Vous pouvez aussi discuter avec l'IA au sujet d'un marché précis pour des questions de suivi."
             },
             {
               "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?",

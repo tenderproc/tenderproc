@@ -191,7 +191,11 @@
             },
             {
               "question": "How does the AI matching work?",
-              "answer": "Every new tender gets a match score out of 100 against your company profile (sectors, size, description) — so you see what's actually worth your time first."
+              "answer": "This is the lightweight scoring that runs automatically on every tender in your feed: each one gets a 0–100 match score against your company profile (sectors, size, description), so you can sort and filter instead of reading everything. It's separate from AI-assisted bid preparation, which does a deeper analysis once you're ready to act on a specific tender."
+            },
+            {
+              "question": "What does AI-assisted bid preparation do?",
+              "answer": "Once you upload a tender PDF, the AI extracts the requirements and award criteria, gives you a Bid/No-Bid recommendation with a fit score, and drafts a response grounded in the past projects and evidence in your company profile — it will never claim experience you haven't listed. You can also chat with the AI about a specific tender for follow-up questions."
             },
             {
               "question": "Do I need experience with public tenders to use this?",

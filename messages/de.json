@@ -191,7 +191,11 @@
             },
             {
               "question": "Wie funktioniert das KI-Matching?",
-              "answer": "Jede neue Ausschreibung erhält eine Übereinstimmungsbewertung von bis zu 100 im Vergleich zu Ihrem Unternehmensprofil (Branchen, Größe, Beschreibung) — so sehen Sie zuerst, was wirklich Ihre Zeit wert ist."
+              "answer": "Das ist die leichte Bewertung, die automatisch für jede Ausschreibung in Ihrem Feed berechnet wird: Jede erhält eine Übereinstimmungsbewertung von 0 bis 100 im Vergleich zu Ihrem Unternehmensprofil (Branchen, Größe, Beschreibung), damit Sie sortieren und filtern können, statt alles zu lesen. Das ist etwas anderes als die KI-gestützte Angebotsvorbereitung, die eine tiefere Analyse durchführt, sobald Sie bei einer bestimmten Ausschreibung aktiv werden möchten."
+            },
+            {
+              "question": "Was macht die KI-gestützte Angebotsvorbereitung?",
+              "answer": "Sobald Sie eine Ausschreibungs-PDF hochladen, extrahiert die KI die Anforderungen und Zuschlagskriterien, gibt Ihnen eine Bid/No-Bid-Empfehlung mit einer Eignungsbewertung und entwirft eine Antwort auf Basis der früheren Projekte und Nachweise in Ihrem Unternehmensprofil — sie wird nie Erfahrung beanspruchen, die Sie nicht angegeben haben. Sie können außerdem für Rückfragen zu einer bestimmten Ausschreibung mit der KI chatten."
             },
             {
               "question": "Brauche ich Erfahrung mit öffentlichen Ausschreibungen, um die Plattform zu nutzen?",

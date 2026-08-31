@@ -191,7 +191,11 @@
             },
             {
               "question": "Hoe werkt de AI-matching?",
-              "answer": "Elke nieuwe opdracht krijgt een matchscore op 100 ten opzichte van uw bedrijfsprofiel (sectoren, grootte, beschrijving) — zo ziet u meteen wat uw tijd echt waard is."
+              "answer": "Dit is de lichte score die automatisch wordt berekend voor elke opdracht in uw feed: elke opdracht krijgt een matchscore van 0 tot 100 ten opzichte van uw bedrijfsprofiel (sectoren, grootte, beschrijving), zodat u kunt sorteren en filteren in plaats van alles te moeten doorlezen. Dit is iets anders dan AI-ondersteunde offertevoorbereiding, die een diepere analyse maakt zodra u met een specifieke opdracht aan de slag wilt."
+            },
+            {
+              "question": "Wat doet AI-ondersteunde offertevoorbereiding?",
+              "answer": "Zodra u een PDF van een opdracht uploadt, haalt de AI de vereisten en gunningscriteria eruit, geeft u een Bid/No-Bid-advies met een geschiktheidsscore, en stelt een offerteontwerp op dat gebaseerd is op de eerdere projecten en het bewijsmateriaal in uw bedrijfsprofiel — het claimt nooit ervaring die u niet hebt opgegeven. U kunt ook met de AI chatten over een specifieke opdracht voor vervolgvragen."
             },
             {
               "question": "Heb ik ervaring met overheidsopdrachten nodig om het platform te gebruiken?",
