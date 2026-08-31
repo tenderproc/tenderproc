@@ -72,41 +72,35 @@ interface ExternalOpportunityRow {
  */
 
 /**
- * Exclusion 7: a Wallonia/Flanders council-decision record with no
- * `deadline` isn't itself something a company can bid into — it's the
- * commune's internal authorization to go start a procurement, not the
- * published notice with a real submission window (see
- * [[project_tenderproc_opportunities_missing_deadlines]] / a live example:
- * a Walhain road-works decision surfaced in Opportunities while the actual
- * biddable notice, with a real deadline, only existed as a separate BOSA
- * record days later). At user's explicit request 2026-08-23: only records
- * with a genuine deadline count as an "actual tender" here.
+ * UPDATE 2026-08-31 — the deadline-required gate that used to live here
+ * (excluding any row without a present-and-future `deadline`, added
+ * 2026-08-23 after a Walhain road-works decision surfaced in Opportunities
+ * while the actual biddable notice only existed as a separate BOSA record
+ * days later — see [[project_tenderproc_opportunities_missing_deadlines]])
+ * has been removed. It predates `bid_status` classification (added
+ * 2026-08-25, see supabase-external-opportunities-bid-status-migration.sql)
+ * and nobody revisited whether it was still needed once that column existed
+ * — it wasn't: `bid_status = 'open_call'` already answers the exact question
+ * the deadline gate existed to answer ("is this a live call, not just an
+ * internal authorization to go start one"), more directly than "does the
+ * text happen to state an absolute date". Stacked together, the two gates
+ * left this feed at zero rows in practice: wallonia_conseilcommunal never
+ * has a `deadline` at all (structural — see push_to_supabase.py in the
+ * sibling scraper project, that source has no description text to extract
+ * one from), and wallonia_deliberations/flanders_gelinkt_notuleren's
+ * extraction is deliberately conservative (only an explicit absolute date
+ * in specific prose, ~2% hit rate by design — extract_deadline.py's own
+ * docstring), so surviving rows aged past "future" faster than new ones
+ * with a stated date arrived.
  *
- * Originally implemented as a general "deadline present" condition when
- * none of the three regional scrapers extracted one at all (structural
- * limitation, not a bug) — that excluded 100% of external_opportunities
- * rows. Since then, wallonia_deliberations gained real deadline extraction
- * (extract_deadline.py in the sibling scraper project, parses an explicit
- * absolute date like "la date limite de dépôt des offres est fixée au 30
- * juin 2026 à 12h00" out of the decision's own prose — confirmed live
- * 2026-08-23 against 21 real matches, each manually checked against source
- * text). A present-but-already-passed deadline is exactly as non-biddable
- * as no deadline at all — same "no closed tenders" principle as
- * [[project_tenderproc_bosa_stale_deadline_filter]]'s BOSA fix — so this
- * now checks both presence AND recency, kept general (not source-specific)
- * for the same forward-compatibility reason as before.
- *
- * Applied client-side (see the `.filter()` below) rather than as a query
- * clause — chaining one more `.not()` onto this builder pushed TypeScript's
- * type-checker over its recursion limit ("Type instantiation is excessively
- * deep"), a known supabase-js issue with long fluent chains, not a logic
- * problem with the filter itself.
+ * `deadline` is now purely informational — shown when extracted (still
+ * genuinely useful when present), rendered as "—" by TenderCard.tsx when
+ * not. This pipeline exists specifically to surface sub-threshold
+ * procurement that never reaches BOSA/TED at all (see
+ * [[project_tenderproc_gelinkt_notuleren_source]]), so a row with no listed
+ * deadline is still a real lead worth a company contacting the buyer about,
+ * not something to hide.
  */
-function hasNoUsableDeadline(deadline: string | null): boolean {
-  if (deadline == null) return true;
-  const deadlineMs = new Date(deadline).getTime();
-  return isNaN(deadlineMs) || deadlineMs <= Date.now();
-}
 
 export async function getExternalOpportunities(): Promise<TenderNotice[]> {
   const supabase = createAdminClient();
@@ -124,9 +118,7 @@ export async function getExternalOpportunities(): Promise<TenderNotice[]> {
     throw new Error(`external_opportunities query failed: ${error.message}`);
   }
 
-  return ((data as ExternalOpportunityRow[] | null) ?? [])
-    .filter((row) => !hasNoUsableDeadline(row.deadline))
-    .map(rowToTenderNotice);
+  return ((data as ExternalOpportunityRow[] | null) ?? []).map(rowToTenderNotice);
 }
 
 export function rowToTenderNotice(row: ExternalOpportunityRow): TenderNotice {
