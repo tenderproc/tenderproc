@@ -32,12 +32,31 @@ export async function GET(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  const { data: profiles, error: profilesError } = await supabase
+  // Sectors now come from companies.sector_keys, the same source
+  // Opportunities/matching reads (see lib/companyProfile.ts) — this used
+  // to read profiles.sectors directly and would have drifted stale once
+  // that stopped being the source of truth. `language` stays a separate
+  // profiles-only preference (unrelated to matching), joined in below by
+  // user id since companies/profiles have no direct FK relationship for
+  // PostgREST to embed.
+  const { data: companies, error: companiesError } = await supabase
+    .from("companies")
+    .select("user_id, sector_keys");
+  if (companiesError) {
+    return NextResponse.json({ error: companiesError.message }, { status: 500 });
+  }
+  const { data: profileLanguages, error: profilesError } = await supabase
     .from("profiles")
-    .select("id, sectors, languages");
+    .select("id, language");
   if (profilesError) {
     return NextResponse.json({ error: profilesError.message }, { status: 500 });
   }
+  const languageByUserId = new Map((profileLanguages ?? []).map((p) => [p.id as string, p.language as string | null]));
+  const profiles = (companies ?? []).map((c) => ({
+    id: c.user_id as string,
+    sectors: (c.sector_keys as string[] | null) ?? [],
+    languages: languageByUserId.get(c.user_id as string) ? [languageByUserId.get(c.user_id as string) as string] : [],
+  }));
 
   const { data: pendingMatches, error: matchesError } = await supabase
     .from("company_follow_matches")

@@ -26,12 +26,17 @@ export default async function ForecastPage({
 
   let savedSectors: string[] = [];
   if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("sectors")
-      .eq("id", user.id)
+    // Reads companies.sector_keys directly rather than going through
+    // getSavedCompanyProfile() (this page only needs the sector list, not
+    // the full CompanyProfile) — but must read the same source that page
+    // does, so this stays in sync with Opportunities/matching. See
+    // lib/companyProfile.ts.
+    const { data: company } = await supabase
+      .from("companies")
+      .select("sector_keys")
+      .eq("user_id", user.id)
       .maybeSingle();
-    savedSectors = profile?.sectors ?? [];
+    savedSectors = company?.sector_keys ?? [];
   }
 
   const windowMonths = resolveForecastWindowMonths(params.months);

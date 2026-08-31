@@ -126,10 +126,13 @@ export default async function MarketPage({
   let ownNormalizedName: string | null = null;
   if (user) {
     const [{ data: profile }, { data: company }] = await Promise.all([
-      supabase.from("profiles").select("sectors, company_name").eq("id", user.id).maybeSingle(),
-      supabase.from("companies").select("name").eq("user_id", user.id).maybeSingle(),
+      supabase.from("profiles").select("company_name").eq("id", user.id).maybeSingle(),
+      supabase.from("companies").select("name, sector_keys").eq("user_id", user.id).maybeSingle(),
     ]);
-    savedSectors = profile?.sectors ?? [];
+    // Sectors: companies.sector_keys is the source of truth now (same as
+    // Opportunities/Forecast) — no profiles fallback needed here since the
+    // backfill migration guarantees every user has a companies row.
+    savedSectors = company?.sector_keys ?? [];
     const ownName = company?.name ?? profile?.company_name ?? null;
     ownNormalizedName = ownName ? normalizeCompanyName(ownName) || null : null;
   }

@@ -31,18 +31,44 @@ export async function POST(req: NextRequest) {
   // user has a session to authenticate a normal RLS-protected write, so it's
   // reachable with just a user id. Restricting it to a one-time insert means
   // it can seed a fresh profile but never overwrite one that already exists.
+  const cleanCompanyName = typeof companyName === "string" ? companyName.trim().slice(0, 200) : "";
+  const cleanAddress = typeof address === "string" ? address.trim().slice(0, 300) : "";
+  const cleanCompanySize = typeof companySize === "string" ? companySize.trim().slice(0, 50) : "";
+  const cleanDescription = typeof description === "string" ? description.trim().slice(0, 2000) : "";
+
   const { error } = await admin.from("profiles").insert({
     id: userId,
-    company_name: typeof companyName === "string" ? companyName.slice(0, 200) : "",
+    company_name: cleanCompanyName,
     company_number: typeof companyNumber === "string" ? companyNumber.slice(0, 20) : null,
-    address: typeof address === "string" ? address.slice(0, 300) : "",
+    address: cleanAddress,
     sectors: cleanSectors,
-    company_size: typeof companySize === "string" ? companySize.slice(0, 50) : "",
-    company_description: typeof description === "string" ? description.slice(0, 2000) : "",
+    company_size: cleanCompanySize,
+    company_description: cleanDescription,
   });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
+
+  // Also seed `companies` — the richer profile that drives AI matching
+  // (see lib/companyProfile.ts) as well as /company's knowledge base.
+  // `companies.name` is NOT NULL, unlike profiles.company_name, so this
+  // needs a non-empty fallback even though the signup form doesn't
+  // strictly require a company name. Best-effort: a signup should never
+  // fail because this second insert had trouble, since `profiles` above
+  // already succeeded and the app is usable without it (the /company page
+  // fallback-blends from `profiles` if this row is ever missing).
+  const { error: companyError } = await admin.from("companies").insert({
+    user_id: userId,
+    name: cleanCompanyName || (typeof email === "string" ? email.split("@")[0] : "New company"),
+    description: cleanDescription || null,
+    company_size: cleanCompanySize || null,
+    sector_keys: cleanSectors,
+    regions_served: cleanAddress ? [cleanAddress] : [],
+  });
+  if (companyError) {
+    console.error("signup-profile: failed to seed companies row (non-fatal)", companyError);
+  }
+
   return NextResponse.json({ ok: true });
 }

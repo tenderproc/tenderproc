@@ -48,13 +48,29 @@ export default function PreferencesSidebar({
       setSaving(true);
       setError(null);
       const supabase = createClient();
-      const { error } = await supabase.from("profiles").upsert({
-        id: userId,
-        sectors,
-        language,
-        updated_at: new Date().toISOString(),
-      });
+      const now = new Date().toISOString();
+      // Sectors go to companies.sector_keys — the same field Opportunities
+      // matching reads (see lib/companyProfile.ts) — not profiles.sectors,
+      // which is no longer read by anything. Plain .update(), not
+      // .upsert(): every user is guaranteed a companies row by the backfill
+      // migration + signup seeding, and companies.name is NOT NULL, so an
+      // upsert here without a name would fail on the (never-taken) insert
+      // path for a user who somehow lacked a row.
+      //
+      // sectorLimit is re-applied here (not just at read time in
+      // app/opportunities/page.tsx) so a Free-tier account can't end up
+      // storing more sectors than its plan allows via this write path —
+      // still bypassable by a direct API call, but closes the normal-UI gap.
+      const cappedSectors = sectorLimit !== null ? sectors.slice(0, sectorLimit) : sectors;
+      const [{ error: companyError }, { error: profileError }] = await Promise.all([
+        supabase
+          .from("companies")
+          .update({ sector_keys: cappedSectors, updated_at: now })
+          .eq("user_id", userId),
+        supabase.from("profiles").upsert({ id: userId, language, updated_at: now }),
+      ]);
       setSaving(false);
+      const error = companyError ?? profileError;
       if (error) {
         setError(error.message);
         return;
