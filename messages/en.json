@@ -267,7 +267,10 @@
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
     "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar.",
     "filteringByMatch": "Filtering by match %…",
-    "noMatchResults": "No opportunities meet that match threshold. Try lowering it."
+    "noMatchResults": "No opportunities meet that match threshold. Try lowering it.",
+    "onboardingText": "New to public tenders? A tender is a contract a public authority awards to a business through a competitive process.",
+    "onboardingLinkLabel": "Complete your profile to see how well you match.",
+    "onboardingDismissLabel": "Dismiss"
   },
   "Market": {
     "eyebrow": "Source: TED contract award notices",

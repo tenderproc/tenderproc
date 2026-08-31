@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
+import OnboardingBanner from "@/components/OnboardingBanner";
 import SearchFilters from "@/components/SearchFilters";
 import TenderCard from "@/components/TenderCard";
 import PreferencesSidebar from "@/components/PreferencesSidebar";
@@ -143,6 +144,8 @@ export default async function OpportunitiesPage({
               {t("description")}
             </p>
           </div>
+
+          {user && !showMatchFilter && <OnboardingBanner userId={user.id} />}
 
           <SearchFilters showMatchFilter={showMatchFilter} />
 

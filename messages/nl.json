@@ -267,7 +267,10 @@
     "loadError": "Kon momenteel geen opdrachten laden ({loadError}). Probeer het zo opnieuw.",
     "noResults": "Geen berichten kwamen overeen met uw sectoren of zoekopdracht. Verruim uw sectorselectie in de zijbalk.",
     "filteringByMatch": "Filteren op match %…",
-    "noMatchResults": "Geen opportuniteiten halen deze matchdrempel. Probeer die te verlagen."
+    "noMatchResults": "Geen opportuniteiten halen deze matchdrempel. Probeer die te verlagen.",
+    "onboardingText": "Nieuw hier? Een overheidsopdracht is een contract dat een overheidsinstantie via een concurrentieprocedure aan een bedrijf toekent.",
+    "onboardingLinkLabel": "Vul uw profiel aan om te zien hoe goed u past.",
+    "onboardingDismissLabel": "Sluiten"
   },
   "Market": {
     "eyebrow": "Bron: TED-gunningsberichten",

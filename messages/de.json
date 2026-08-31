@@ -267,7 +267,10 @@
     "loadError": "Ausschreibungen konnten gerade nicht geladen werden ({loadError}). Versuchen Sie es gleich noch einmal.",
     "noResults": "Keine Bekanntmachungen passten zu Ihren Branchen oder Ihrer Suche. Erweitern Sie Ihre Branchenauswahl in der Seitenleiste.",
     "filteringByMatch": "Filtern nach Match %…",
-    "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuchen Sie, sie zu senken."
+    "noMatchResults": "Keine Chancen erreichen diese Match-Schwelle. Versuchen Sie, sie zu senken.",
+    "onboardingText": "Neu hier? Eine öffentliche Ausschreibung ist ein Auftrag, den eine Behörde im Rahmen eines Wettbewerbsverfahrens an ein Unternehmen vergibt.",
+    "onboardingLinkLabel": "Vervollständigen Sie Ihr Profil, um zu sehen, wie gut Sie passen.",
+    "onboardingDismissLabel": "Schließen"
   },
   "Market": {
     "eyebrow": "Quelle: TED-Zuschlagsbekanntmachungen",

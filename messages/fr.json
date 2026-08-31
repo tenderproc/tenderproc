@@ -267,7 +267,10 @@
     "loadError": "Impossible de charger les marchés pour le moment ({loadError}). Réessayez dans un instant.",
     "noResults": "Aucun avis ne correspond à vos secteurs ou à votre recherche. Essayez d'élargir votre sélection de secteurs dans la barre latérale.",
     "filteringByMatch": "Filtrage par % de correspondance…",
-    "noMatchResults": "Aucune opportunité n'atteint ce seuil de correspondance. Essayez de l'abaisser."
+    "noMatchResults": "Aucune opportunité n'atteint ce seuil de correspondance. Essayez de l'abaisser.",
+    "onboardingText": "Nouveau ici ? Un marché public est un contrat qu'une administration publique attribue à une entreprise à l'issue d'une procédure de mise en concurrence.",
+    "onboardingLinkLabel": "Complétez votre profil pour voir votre niveau de correspondance.",
+    "onboardingDismissLabel": "Fermer"
   },
   "Market": {
     "eyebrow": "Source : avis d'attribution TED",
