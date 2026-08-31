@@ -733,27 +733,87 @@ function toArray(v: unknown): string[] {
 }
 
 // The official EU "procurement-procedure-type" codelist (source:
-// https://github.com/OP-TED/eForms-SDK/blob/develop/codelists/procurement-procedure-type.gc,
-// English labels) — TED's procedure-type field returns these raw codes,
-// untranslated, same as BOSA's own procedure_type. An unmapped code falls
-// back to the raw value in the UI rather than guessing a label, per this
+// https://github.com/OP-TED/eForms-SDK/blob/develop/codelists/procurement-procedure-type.gc)
+// — TED's procedure-type field returns these raw codes, untranslated, same
+// as BOSA's own procedure_type. fr/nl/de labels are the codelist's own
+// official translations (not machine/AI-translated — these are legal
+// procurement terms, so accuracy matters more than brevity), fetched
+// directly from that source. English keeps this codebase's existing,
+// slightly shortened phrasing rather than the codelist's more verbose
+// English (e.g. "with prior call for competition" vs the source's "with
+// prior publication of a call for competition") since that was already
+// reviewed and shipped — only fr/nl/de were previously untranslated
+// (showing raw English on the FR/NL/DE UI). An unmapped code falls back to
+// the raw value in the UI rather than guessing a label, per this
 // codebase's never-fabricate-a-translation rule.
-export const PROCEDURE_TYPE_LABELS: Record<string, string> = {
-  "comp-dial": "Competitive dialogue",
-  "comp-tend": "Competitive tendering",
-  "exp-int-rail": "Request for expression of interest (rail)",
-  innovation: "Innovation partnership",
-  "neg-w-call": "Negotiated with prior call for competition",
-  "neg-wo-call": "Negotiated without prior call for competition",
-  open: "Open procedure",
-  "oth-mult": "Other multiple-stage procedure",
-  "oth-single": "Other single-stage procedure",
-  restricted: "Restricted procedure",
+export const PROCEDURE_TYPE_LABELS: Record<string, Record<"en" | "fr" | "nl" | "de", string>> = {
+  "comp-dial": {
+    en: "Competitive dialogue",
+    fr: "Dialogue compétitif",
+    nl: "Concurrentiegerichte dialoog",
+    de: "Wettbewerblicher Dialog",
+  },
+  "comp-tend": {
+    en: "Competitive tendering",
+    fr: "Mise en concurrence (article 5, paragraphe 3, du règlement (CE) nº 1370/2007)",
+    nl: "Openbare aanbesteding (artikel 5, lid 3, van Verordening (EG) nr. 1370/2007)",
+    de: "Wettbewerbliche Vergabeverfahren (Artikel 5 Absatz 3 der Verordnung (EG) Nr. 1370/2007)",
+  },
+  "exp-int-rail": {
+    en: "Request for expression of interest (rail)",
+    fr: "Appel à manifestation d'intérêt (uniquement pour le transport par chemin de fer)",
+    nl: "Verzoek om blijken van belangstelling (alleen voor spoorvervoer)",
+    de: "Aufruf zur Interessenbekundung (nur für die Schiene)",
+  },
+  innovation: {
+    en: "Innovation partnership",
+    fr: "Partenariat d'innovation",
+    nl: "Innovatiepartnerschap",
+    de: "Innovationspartnerschaften",
+  },
+  "neg-w-call": {
+    en: "Negotiated with prior call for competition",
+    fr: "Négociée avec publication préalable d'un appel à la concurrence",
+    nl: "Onderhandelingsprocedure met voorafgaande oproep tot mededinging",
+    de: "Verhandlungsverfahren mit vorheriger Veröffentlichung eines Aufrufs zum Wettbewerb",
+  },
+  "neg-wo-call": {
+    en: "Negotiated without prior call for competition",
+    fr: "Négociée sans mise en concurrence préalable",
+    nl: "Onderhandelingsprocedure zonder voorafgaande oproep tot mededinging",
+    de: "Verhandlungsverfahren ohne Aufruf zum Wettbewerb",
+  },
+  open: {
+    en: "Open procedure",
+    fr: "Procédure ouverte",
+    nl: "Openbare procedure",
+    de: "Offenes Verfahren",
+  },
+  "oth-mult": {
+    en: "Other multiple-stage procedure",
+    fr: "Autre procédure en plusieurs étapes",
+    nl: "Andere procedure in meerdere fasen",
+    de: "Sonstiges zweistufiges Verfahren",
+  },
+  "oth-single": {
+    en: "Other single-stage procedure",
+    fr: "Autre procédure en une seule étape",
+    nl: "Andere procedure in één fase",
+    de: "Sonstiges einstufiges Verfahren",
+  },
+  restricted: {
+    en: "Restricted procedure",
+    fr: "Procédure restreinte",
+    nl: "Niet-openbare procedure",
+    de: "Nichtoffenes Verfahren",
+  },
 };
 
-export function mapProcedureType(code: string | null): string | null {
+export function mapProcedureType(code: string | null, locale: "en" | "fr" | "nl" | "de" = "en"): string | null {
   if (!code) return null;
-  return PROCEDURE_TYPE_LABELS[code] ?? code;
+  const entry = PROCEDURE_TYPE_LABELS[code];
+  if (!entry) return code;
+  return entry[locale] ?? entry.en;
 }
 
 // NUTS2 = Belgian provinces + Brussels-Capital — stable, decades-old EU

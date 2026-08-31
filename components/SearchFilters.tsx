@@ -51,6 +51,7 @@ export default function SearchFilters({
         value={cpv}
         onChange={(e) => setCpv(e.target.value)}
         placeholder={t("cpvPlaceholder")}
+        title={t("cpvTooltip")}
         className="w-48 border border-line rounded-doc px-3 py-2 bg-white text-sm focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
       {showMatchFilter && (

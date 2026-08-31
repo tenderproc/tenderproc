@@ -377,6 +377,7 @@
   "SearchFilters": {
     "keywordPlaceholder": "Stichwort — z. B. Reinigungsdienste",
     "cpvPlaceholder": "CPV-Code — z. B. 90910000",
+    "cpvTooltip": "CPV (Gemeinsames Vokabular für öffentliche Aufträge) ist das EU-Standardsystem zur Klassifizierung des Auftragsgegenstands — jeder Code steht für eine bestimmte Kategorie von Lieferungen, Dienstleistungen oder Bauleistungen.",
     "matchFilterAny": "Beliebige Match %",
     "matchFilterPossible": "Mögliche Übereinstimmung und höher (40 %+)",
     "matchFilterGood": "Gute Übereinstimmung und höher (65 %+)",
@@ -534,6 +535,7 @@
     "somethingWentWrong": "Etwas ist schiefgelaufen.",
     "checkEligibility": "Eignung prüfen",
     "intro": "Fügen Sie unten die Anforderungen der Ausschreibung oder den ESPD-Text ein — oder führen Sie die Prüfung nur anhand der Bekanntmachungs-Metadaten aus.",
+    "dumeHint": "Die ESPD (auch EEE, Einheitliche Europäische Eigenerklärung) ist das Standardformular, mit dem Bieter selbst erklären, dass sie die Grundanforderungen einer Ausschreibung erfüllen — Sie benötigen es nicht, um diese Prüfung durchzuführen, nur falls Sie es bereits haben.",
     "pasteTextPlaceholder": "Fügen Sie hier den Text des Ausschreibungsdokuments ein (optional)…",
     "attachFileHint": "oder fügen Sie eine Datei als Referenz hinzu (in der Beta noch nicht ausgewertet)",
     "readingTender": "Ausschreibung wird gelesen…",

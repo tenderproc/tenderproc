@@ -377,6 +377,7 @@
   "SearchFilters": {
     "keywordPlaceholder": "Keyword — e.g. cleaning services",
     "cpvPlaceholder": "CPV code — e.g. 90910000",
+    "cpvTooltip": "CPV (Common Procurement Vocabulary) is the EU's standard code system for classifying what a tender is for — each code identifies a specific category of goods, services, or works.",
     "matchFilterAny": "Any match %",
     "matchFilterPossible": "Possible match & up (40%+)",
     "matchFilterGood": "Good match & up (65%+)",
@@ -534,6 +535,7 @@
     "somethingWentWrong": "Something went wrong.",
     "checkEligibility": "Check eligibility",
     "intro": "Paste the tender's requirements or ESPD text below — or just run the check on the notice metadata alone.",
+    "dumeHint": "ESPD (European Single Procurement Document) is the standard self-declaration form bidders fill in to confirm they meet a tender's basic requirements — you don't need one to run this check, only if you have it.",
     "pasteTextPlaceholder": "Paste the tender document text here (optional)…",
     "attachFileHint": "or attach a file for reference (not parsed yet in beta)",
     "readingTender": "Reading the tender…",

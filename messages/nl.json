@@ -377,6 +377,7 @@
   "SearchFilters": {
     "keywordPlaceholder": "Trefwoord — bv. schoonmaakdiensten",
     "cpvPlaceholder": "CPV-code — bv. 90910000",
+    "cpvTooltip": "CPV (gemeenschappelijke woordenlijst overheidsopdrachten) is het standaard EU-codesysteem om te classificeren waar een opdracht over gaat — elke code staat voor een specifieke categorie leveringen, diensten of werken.",
     "matchFilterAny": "Elke match %",
     "matchFilterPossible": "Mogelijke match en hoger (40%+)",
     "matchFilterGood": "Goede match en hoger (65%+)",
@@ -534,6 +535,7 @@
     "somethingWentWrong": "Er is iets misgegaan.",
     "checkEligibility": "Geschiktheid controleren",
     "intro": "Plak hieronder de vereisten of ESPD-tekst van de opdracht — of voer de controle uit op enkel de metadata van het bericht.",
+    "dumeHint": "Het ESPD (ook wel UEA, Uniform Europees Aanbestedingsdocument) is het standaardformulier waarmee inschrijvers zelf verklaren dat ze aan de basisvereisten van een opdracht voldoen — u heeft dit niet nodig om deze controle uit te voeren, enkel als u het al heeft.",
     "pasteTextPlaceholder": "Plak hier de tekst van het opdrachtdocument (optioneel)…",
     "attachFileHint": "of voeg een bestand toe ter referentie (nog niet verwerkt in bèta)",
     "readingTender": "Opdracht wordt gelezen…",

@@ -377,6 +377,7 @@
   "SearchFilters": {
     "keywordPlaceholder": "Mot-clé — p. ex. services de nettoyage",
     "cpvPlaceholder": "Code CPV — p. ex. 90910000",
+    "cpvTooltip": "Le CPV (vocabulaire commun pour les marchés publics) est le système de codes standard de l'UE pour classifier l'objet d'un marché — chaque code identifie une catégorie précise de fournitures, services ou travaux.",
     "matchFilterAny": "Toute correspondance",
     "matchFilterPossible": "Correspondance possible et plus (40 %+)",
     "matchFilterGood": "Bonne correspondance et plus (65 %+)",
@@ -534,6 +535,7 @@
     "somethingWentWrong": "Une erreur s'est produite.",
     "checkEligibility": "Vérifier l'éligibilité",
     "intro": "Collez ci-dessous les exigences du marché ou le texte du DUME — ou lancez simplement la vérification sur les métadonnées de l'avis uniquement.",
+    "dumeHint": "Le DUME (Document Unique de Marché Européen) est le formulaire standard d'auto-déclaration que les soumissionnaires remplissent pour confirmer qu'ils répondent aux exigences de base d'un marché — vous n'en avez pas besoin pour lancer cette vérification, seulement si vous l'avez déjà.",
     "pasteTextPlaceholder": "Collez ici le texte du document du marché (optionnel)…",
     "attachFileHint": "ou joignez un fichier pour référence (pas encore analysé en bêta)",
     "readingTender": "Lecture du marché…",

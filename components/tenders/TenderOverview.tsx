@@ -38,7 +38,7 @@ export default async function TenderOverview({
   }
 
   const status = tenderStatus(tender.deadline);
-  const procedureTypeLabel = mapProcedureType(tender.procedureType);
+  const procedureTypeLabel = mapProcedureType(tender.procedureType, locale);
   const sector = sectorLabelForCpv(tender.cpvCodes, tSector);
 
   const facts: { label: string; value: string | null }[] = [

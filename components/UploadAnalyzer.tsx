@@ -63,7 +63,8 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
   return (
     <div className="border border-line rounded-2xl p-6 bg-white">
       <h2 className="font-display font-semibold text-xl text-ink mb-1">{t("checkEligibility")}</h2>
-      <p className="text-sm text-inkDim mb-4">{t("intro")}</p>
+      <p className="text-sm text-inkDim mb-1">{t("intro")}</p>
+      <p className="text-xs text-inkDim mb-4">{t("dumeHint")}</p>
 
       <textarea
         value={pastedText}
