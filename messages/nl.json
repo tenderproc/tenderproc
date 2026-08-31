@@ -1037,7 +1037,7 @@
   "SupportChat": {
     "bubbleLabel": "Chatondersteuning openen",
     "title": "TenderProc-ondersteuning",
-    "greeting": "Hallo! Ik ben de TenderProc-assistent. Stel me gerust een vraag over tender matching, abonnementen of facturatie.",
+    "greeting": "Hallo, waarmee kan ik u helpen?",
     "placeholder": "Typ uw bericht…",
     "send": "Verzenden",
     "sending": "Verzenden…",

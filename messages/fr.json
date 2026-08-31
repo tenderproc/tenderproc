@@ -1037,7 +1037,7 @@
   "SupportChat": {
     "bubbleLabel": "Ouvrir le chat d'assistance",
     "title": "Assistance TenderProc",
-    "greeting": "Bonjour ! Je suis l'assistant TenderProc. Posez-moi vos questions sur la mise en correspondance des marchés, les formules ou la facturation.",
+    "greeting": "Bonjour, comment puis-je vous aider ?",
     "placeholder": "Écrivez votre message…",
     "send": "Envoyer",
     "sending": "Envoi…",
