@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { SECTORS } from "@/lib/sectors";
 import { isFreeEmailDomain } from "@/lib/freeEmailDomains";
+import { stripHtmlTags } from "@/lib/sanitize";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -31,10 +32,16 @@ export async function POST(req: NextRequest) {
   // user has a session to authenticate a normal RLS-protected write, so it's
   // reachable with just a user id. Restricting it to a one-time insert means
   // it can seed a fresh profile but never overwrite one that already exists.
-  const cleanCompanyName = typeof companyName === "string" ? companyName.trim().slice(0, 200) : "";
-  const cleanAddress = typeof address === "string" ? address.trim().slice(0, 300) : "";
-  const cleanCompanySize = typeof companySize === "string" ? companySize.trim().slice(0, 50) : "";
-  const cleanDescription = typeof description === "string" ? description.trim().slice(0, 2000) : "";
+  // stripHtmlTags: defense-in-depth against script-tag payloads — see
+  // supabase-company-text-sanitization-migration.sql, which found and
+  // cleaned up a live XSS probe stored via this exact route. This is the
+  // only writer of profiles.company_description/address in the codebase,
+  // so it's the one place that needs the app-code version of the same
+  // sanitization the companies-table trigger applies at the DB level.
+  const cleanCompanyName = typeof companyName === "string" ? stripHtmlTags(companyName.trim()).slice(0, 200) : "";
+  const cleanAddress = typeof address === "string" ? stripHtmlTags(address.trim()).slice(0, 300) : "";
+  const cleanCompanySize = typeof companySize === "string" ? stripHtmlTags(companySize.trim()).slice(0, 50) : "";
+  const cleanDescription = typeof description === "string" ? stripHtmlTags(description.trim()).slice(0, 2000) : "";
 
   const { error } = await admin.from("profiles").insert({
     id: userId,
