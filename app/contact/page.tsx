@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import LegalHeader from "@/components/legal/LegalHeader";
 import LegalFooter from "@/components/legal/LegalFooter";
@@ -40,7 +41,9 @@ export default async function ContactPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          <ContactForm />
+          <Suspense fallback={null}>
+            <ContactForm />
+          </Suspense>
 
           <div className="border border-line bg-paperDim rounded-2xl p-6 space-y-2">
             <p className="text-xs font-medium uppercase tracking-wide text-inkDim">{t("info.emailLabel")}</p>

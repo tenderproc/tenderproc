@@ -161,7 +161,8 @@
         "general": "General question",
         "pricing": "Pricing",
         "technical": "Technical issue",
-        "partnership": "Partnership"
+        "partnership": "Partnership",
+        "multiCompany": "Managing multiple companies"
       },
       "message": "Message",
       "messagePlaceholder": "How can we help?",
@@ -776,7 +777,9 @@
     "eyebrow": "Knowledge base",
     "heading": "Company",
     "description": "What we actually know about your business — services, certifications, and references. Used to match uploaded tenders and, later, to draft bid responses grounded only in what's entered here.",
-    "unlockHint": "Save your company profile above to unlock services, certifications, references, and documents."
+    "unlockHint": "Save your company profile above to unlock services, certifications, references, and documents.",
+    "multiCompanyHint": "Managing more than one company? TenderProc currently supports one company per account — get in touch and we'll help set up multi-company access.",
+    "multiCompanyCta": "Contact us"
   },
   "CompanyCoreForm": {
     "nameRequired": "Company name is required.",

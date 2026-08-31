@@ -1,9 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-const REASON_KEYS = ["general", "pricing", "technical", "partnership"] as const;
+const REASON_KEYS = ["general", "pricing", "technical", "partnership", "multiCompany"] as const;
+
+function isReasonKey(v: string | null): v is (typeof REASON_KEYS)[number] {
+  return REASON_KEYS.includes(v as (typeof REASON_KEYS)[number]);
+}
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -17,10 +22,14 @@ interface FieldErrors {
 
 export default function ContactForm() {
   const t = useTranslations("Contact.form");
+  const searchParams = useSearchParams();
+  const initialReason = searchParams.get("reason");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [reason, setReason] = useState<(typeof REASON_KEYS)[number]>("general");
+  const [reason, setReason] = useState<(typeof REASON_KEYS)[number]>(
+    isReasonKey(initialReason) ? initialReason : "general"
+  );
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);

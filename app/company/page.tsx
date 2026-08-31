@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import CompanyCoreForm from "@/components/company/CompanyCoreForm";
@@ -97,6 +98,16 @@ export default async function CompanyPage() {
           <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
             {t("description")}
           </p>
+        </div>
+
+        <div className="mb-6 border border-line bg-paperDim rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-inkDim">{t("multiCompanyHint")}</p>
+          <Link
+            href="/contact?reason=multiCompany"
+            className="shrink-0 text-sm font-medium text-accent hover:text-accentDim transition-colors"
+          >
+            {t("multiCompanyCta")} →
+          </Link>
         </div>
 
         <div className="space-y-6">

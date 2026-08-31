@@ -161,7 +161,8 @@
         "general": "Question générale",
         "pricing": "Tarifs",
         "technical": "Problème technique",
-        "partnership": "Partenariat"
+        "partnership": "Partenariat",
+        "multiCompany": "Gestion de plusieurs entreprises"
       },
       "message": "Message",
       "messagePlaceholder": "Comment pouvons-nous vous aider ?",
@@ -776,7 +777,9 @@
     "eyebrow": "Base de connaissances",
     "heading": "Entreprise",
     "description": "Ce que nous savons réellement de votre entreprise — services, certifications et références. Utilisé pour faire correspondre les marchés téléchargés et, plus tard, pour rédiger des réponses d'offres basées uniquement sur ce qui est saisi ici.",
-    "unlockHint": "Enregistrez le profil de votre entreprise ci-dessus pour débloquer les services, certifications, références et documents."
+    "unlockHint": "Enregistrez le profil de votre entreprise ci-dessus pour débloquer les services, certifications, références et documents.",
+    "multiCompanyHint": "Vous gérez plusieurs entreprises ? TenderProc prend actuellement en charge une seule entreprise par compte — contactez-nous pour configurer l'accès multi-entreprises.",
+    "multiCompanyCta": "Nous contacter"
   },
   "CompanyCoreForm": {
     "nameRequired": "Le nom de l'entreprise est requis.",

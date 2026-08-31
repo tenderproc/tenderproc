@@ -161,7 +161,8 @@
         "general": "Allgemeine Frage",
         "pricing": "Preise",
         "technical": "Technisches Problem",
-        "partnership": "Partnerschaft"
+        "partnership": "Partnerschaft",
+        "multiCompany": "Verwaltung mehrerer Unternehmen"
       },
       "message": "Nachricht",
       "messagePlaceholder": "Wie können wir helfen?",
@@ -776,7 +777,9 @@
     "eyebrow": "Wissensbasis",
     "heading": "Unternehmen",
     "description": "Was wir wirklich über Ihr Unternehmen wissen — Dienstleistungen, Zertifizierungen und Referenzen. Wird verwendet, um hochgeladene Ausschreibungen abzugleichen und später Angebotsantworten zu verfassen, die ausschließlich auf hier eingegebenen Informationen basieren.",
-    "unlockHint": "Speichern Sie Ihr Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten."
+    "unlockHint": "Speichern Sie Ihr Unternehmensprofil oben, um Dienstleistungen, Zertifizierungen, Referenzen und Dokumente freizuschalten.",
+    "multiCompanyHint": "Verwalten Sie mehrere Unternehmen? TenderProc unterstützt derzeit ein Unternehmen pro Konto — kontaktieren Sie uns, wir richten den Zugang für mehrere Unternehmen ein.",
+    "multiCompanyCta": "Kontaktieren Sie uns"
   },
   "CompanyCoreForm": {
     "nameRequired": "Firmenname ist erforderlich.",

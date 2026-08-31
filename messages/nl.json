@@ -161,7 +161,8 @@
         "general": "Algemene vraag",
         "pricing": "Prijzen",
         "technical": "Technisch probleem",
-        "partnership": "Samenwerking"
+        "partnership": "Samenwerking",
+        "multiCompany": "Meerdere bedrijven beheren"
       },
       "message": "Bericht",
       "messagePlaceholder": "Hoe kunnen we helpen?",
@@ -776,7 +777,9 @@
     "eyebrow": "Kennisbank",
     "heading": "Bedrijf",
     "description": "Wat wij echt weten over uw bedrijf — diensten, certificeringen en referenties. Wordt gebruikt om geüploade opdrachten te matchen en later om offerteantwoorden op te stellen, uitsluitend gebaseerd op wat hier is ingevuld.",
-    "unlockHint": "Sla uw bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen."
+    "unlockHint": "Sla uw bedrijfsprofiel hierboven op om diensten, certificeringen, referenties en documenten te ontgrendelen.",
+    "multiCompanyHint": "Beheert u meerdere bedrijven? TenderProc ondersteunt momenteel één bedrijf per account — neem contact met ons op en we helpen u met toegang voor meerdere bedrijven.",
+    "multiCompanyCta": "Contacteer ons"
   },
   "CompanyCoreForm": {
     "nameRequired": "Bedrijfsnaam is verplicht.",
