@@ -34,7 +34,7 @@ export const SECTORS: Sector[] = [
   // it, so selecting it alone shows every open Belgian tender unfiltered,
   // relying on the AI match score (which reads that description) for
   // relevance instead of a CPV filter that has nothing to match against.
-  { key: "other", label: "Other — show me everything", cpvPrefixes: [] },
+  { key: "other", label: "Other", cpvPrefixes: [] },
 ];
 
 export function sectorsToCpvPrefixes(keys: string[]): string[] {
