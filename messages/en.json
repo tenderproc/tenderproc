@@ -127,7 +127,7 @@
     "search": "Search",
     "market": "Market overview",
     "forecast": "Forecast",
-    "tenders": "Tenders",
+    "tenders": "AI Analysis",
     "bids": "Bids",
     "company": "My profile"
   },
@@ -400,6 +400,7 @@
     "subheading": "Start free, upgrade when you're ready to bid seriously.",
     "mostPopular": "Most popular",
     "perMonth": "/month",
+    "vatIncluded": "Incl. VAT ({rate}%)",
     "getStarted": "Get started",
     "subscribe": "Subscribe",
     "priceUnavailable": "Price unavailable",

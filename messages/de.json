@@ -127,7 +127,7 @@
     "search": "Suche",
     "market": "Marktübersicht",
     "forecast": "Prognose",
-    "tenders": "Ausschreibungen",
+    "tenders": "KI-Analyse",
     "bids": "Angebote",
     "company": "Mein Profil"
   },
@@ -400,6 +400,7 @@
     "subheading": "Starten Sie kostenlos, upgraden Sie, sobald Sie ernsthaft bieten möchten.",
     "mostPopular": "Am beliebtesten",
     "perMonth": "/Monat",
+    "vatIncluded": "Inkl. MwSt. ({rate}%)",
     "getStarted": "Loslegen",
     "subscribe": "Abonnieren",
     "priceUnavailable": "Preis nicht verfügbar",

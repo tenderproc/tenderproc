@@ -127,7 +127,7 @@
     "search": "Recherche",
     "market": "Aperçu du marché",
     "forecast": "Prévisions",
-    "tenders": "Marchés",
+    "tenders": "Analyse IA",
     "bids": "Offres",
     "company": "Mon profil"
   },
@@ -400,6 +400,7 @@
     "subheading": "Commencez gratuitement, passez à la vitesse supérieure quand vous êtes prêt à soumissionner sérieusement.",
     "mostPopular": "Le plus populaire",
     "perMonth": "/mois",
+    "vatIncluded": "TVA incluse ({rate} %)",
     "getStarted": "Commencer",
     "subscribe": "S'abonner",
     "priceUnavailable": "Prix indisponible",

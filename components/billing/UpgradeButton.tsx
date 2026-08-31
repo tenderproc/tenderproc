@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { getPaddleClient } from "@/lib/paddleClient";
+import { getPaddleClient, onPaddleCheckoutEvent } from "@/lib/paddleClient";
 import { PADDLE_PRICE_IDS } from "@/lib/paddle";
 
 export default function UpgradeButton({
@@ -63,16 +63,45 @@ export default function UpgradeButton({
       const discountId = betaPromoActive ? await reserveBetaPromoDiscount() : undefined;
       const paddle = await getPaddleClient(paddleCustomerId);
       if (!paddle) throw new Error(t("couldNotStartCheckout"));
-      paddle.Checkout.open({
-        items: [{ priceId: PADDLE_PRICE_IDS[tier], quantity: 1 }],
-        ...(discountId ? { discountId } : {}),
-        customer: email ? { email } : undefined,
-        customData: { supabase_user_id: userId },
-        settings: {
-          displayMode: "overlay",
-          variant: "one-page",
-          successUrl: `${window.location.origin}/billing/success`,
-        },
+
+      // Checkout.open() resolves as soon as the overlay starts opening, not
+      // once it's actually loaded and visible — on a slow connection the
+      // overlay's own assets can take many seconds, during which the button
+      // would otherwise silently drop back to normal and look inert (see
+      // the QA audit's persona 2 finding: 20-30s of no feedback on a
+      // throttled connection). Keep the loading state until Paddle reports
+      // the checkout actually loaded (or failed/closed), with a timeout as
+      // a safety net in case neither event ever arrives.
+      await new Promise<void>((resolve) => {
+        let settled = false;
+        const timer = setTimeout(finish, 20000);
+        const unsubscribe = onPaddleCheckoutEvent((event) => {
+          if (
+            event.name === "checkout.loaded" ||
+            event.name === "checkout.error" ||
+            event.name === "checkout.closed"
+          ) {
+            finish();
+          }
+        });
+        function finish() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          unsubscribe();
+          resolve();
+        }
+        paddle.Checkout.open({
+          items: [{ priceId: PADDLE_PRICE_IDS[tier], quantity: 1 }],
+          ...(discountId ? { discountId } : {}),
+          customer: email ? { email } : undefined,
+          customData: { supabase_user_id: userId },
+          settings: {
+            displayMode: "overlay",
+            variant: "one-page",
+            successUrl: `${window.location.origin}/billing/success`,
+          },
+        });
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : t("couldNotStartCheckout"));

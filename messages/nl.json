@@ -127,7 +127,7 @@
     "search": "Zoeken",
     "market": "Marktoverzicht",
     "forecast": "Prognose",
-    "tenders": "Opdrachten",
+    "tenders": "AI-analyse",
     "bids": "Offertes",
     "company": "Mijn profiel"
   },
@@ -400,6 +400,7 @@
     "subheading": "Begin gratis, upgrade wanneer u serieus wilt gaan bieden.",
     "mostPopular": "Meest gekozen",
     "perMonth": "/maand",
+    "vatIncluded": "Incl. btw ({rate}%)",
     "getStarted": "Aan de slag",
     "subscribe": "Abonneren",
     "priceUnavailable": "Prijs niet beschikbaar",

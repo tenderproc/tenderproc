@@ -67,6 +67,12 @@ export default function PricingCards({
   // are 2 decimal places, some are 0 or 3), so it's derived from Intl's
   // own resolved fraction digits for the currency rather than assumed.
   const [formattedTotals, setFormattedTotals] = useState<Record<string, string> | null>(null);
+  // Paddle.PricePreview's totals.total is always tax-inclusive (subtotal +
+  // tax = total, and total is what formattedTotals/formattedPrice render) —
+  // so a non-zero taxRate here is real, Paddle-computed data, not a guess
+  // about the account's own tax configuration. Previously the price had no
+  // VAT/tax labeling at all (QA audit finding).
+  const [taxRates, setTaxRates] = useState<Record<string, string> | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -87,12 +93,15 @@ export default function PricingCards({
         });
         const minorUnitDigits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
         const next: Record<string, string> = {};
+        const nextTaxRates: Record<string, string> = {};
         for (const item of response.data.details.lineItems) {
           const minorUnits = Number(item.totals.total);
           const amount = minorUnits / 10 ** minorUnitDigits;
           next[item.price.id] = Number.isFinite(amount) ? formatter.format(amount) : item.formattedTotals.total;
+          if (Number(item.taxRate) > 0) nextTaxRates[item.price.id] = item.taxRate;
         }
         setFormattedTotals(next);
+        setTaxRates(nextTaxRates);
       } catch {
         // Swallowed — the basePrice fallback already covers this case in
         // the render below, no separate error UI needed.
@@ -161,6 +170,11 @@ export default function PricingCards({
                 <span className="text-sm text-inkDim">{t("priceUnavailable")}</span>
               )}
             </p>
+            {card.priceId && taxRates?.[card.priceId] && (
+              <p className="text-xs text-inkDim -mt-1">
+                {t("vatIncluded", { rate: Math.round(Number(taxRates[card.priceId]) * 100) })}
+              </p>
+            )}
 
             <ul className="mt-6 space-y-2 flex-1">
               {(t.raw(`tiers.${card.key}.features`) as string[]).map((f, i) => (
