@@ -8,6 +8,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import LegalFooter from "@/components/legal/LegalFooter";
 import PricingCards from "@/components/billing/PricingCards";
+import PricingMobileMenu from "@/components/billing/PricingMobileMenu";
 import PromoBanner from "@/components/billing/PromoBanner";
 import { getEffectiveTier, rowToUserSubscription, SUBSCRIPTION_COLUMNS } from "@/lib/billing/tiers";
 import { PRICING_TIERS } from "@/lib/billing/pricingTiers";
@@ -68,7 +69,7 @@ export default async function PricingPage({
               Beta
             </span>
           </Link>
-          <nav className="text-sm text-inkDim flex items-center gap-5">
+          <nav className="hidden md:flex text-sm text-inkDim items-center gap-5">
             <LocaleSwitcher />
             <Link href="/contact" className="hover:text-ink transition-colors">
               {tLegal("contact")}
@@ -91,6 +92,7 @@ export default async function PricingPage({
               </>
             )}
           </nav>
+          <PricingMobileMenu isLoggedIn={Boolean(user)} />
         </div>
       </header>
 

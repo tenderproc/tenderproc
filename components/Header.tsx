@@ -5,10 +5,27 @@ import SignOutButton from "./SignOutButton";
 import PrimaryNav from "./PrimaryNav";
 import LocaleSwitcher from "./LocaleSwitcher";
 import MobileMenu from "./MobileMenu";
+import { createClient } from "@/lib/supabase/server";
+import { peekTokens } from "@/lib/billing/tokens";
 
 export default async function Header() {
   const t = await getTranslations("Header");
   const tLegal = await getTranslations("Legal");
+  const tBilling = await getTranslations("BillingPage");
+
+  // Free-tier users have no other persistent way to see how close they are
+  // to the monthly AI token ceiling before hitting it (previously only
+  // visible on the Billing page itself — see the QA audit's "no visible
+  // quota indicator" finding). PRO/PREMIUM are unlimited and never see this.
+  let tokenBadge: string | null = null;
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    const status = await peekTokens(user.id);
+    if (!status.unlimited) tokenBadge = tBilling("tokensRemaining", { count: status.balance });
+  }
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-paper">
@@ -21,6 +38,11 @@ export default async function Header() {
         </Link>
         <nav className="hidden md:flex text-sm text-inkDim items-center gap-5">
           <span className="hidden lg:inline">{t("tagline")}</span>
+          {tokenBadge && (
+            <Link href="/billing" className="text-xs text-inkDim hover:text-ink transition-colors">
+              {tokenBadge}
+            </Link>
+          )}
           <LocaleSwitcher />
           <Link href="/pricing" className="hover:text-ink transition-colors">
             {t("pricing")}
@@ -33,7 +55,7 @@ export default async function Header() {
           </Link>
           <SignOutButton />
         </nav>
-        <MobileMenu />
+        <MobileMenu tokenBadge={tokenBadge} />
       </div>
       <PrimaryNav />
     </header>

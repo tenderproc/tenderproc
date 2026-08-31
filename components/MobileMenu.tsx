@@ -8,7 +8,7 @@ import { TABS } from "./PrimaryNav";
 import SignOutButton from "./SignOutButton";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-export default function MobileMenu() {
+export default function MobileMenu({ tokenBadge }: { tokenBadge?: string | null }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -99,6 +99,15 @@ export default function MobileMenu() {
               </Link>
 
               <div className="my-2 border-t border-line" />
+
+              {tokenBadge && (
+                <Link
+                  href="/billing"
+                  className="px-5 py-3 text-sm text-inkDim hover:text-ink hover:bg-paperDim transition-colors"
+                >
+                  {tokenBadge}
+                </Link>
+              )}
 
               <div className="px-5 py-2">
                 <LocaleSwitcher />
