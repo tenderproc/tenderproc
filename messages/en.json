@@ -800,7 +800,7 @@
     "saved": "Saved ✓"
   },
   "Signup": {
-    "hydrationFailedBanner": "Part of this page failed to load, so your submission didn't go through and nothing was saved. This is usually caused by a content/ad blocker or a slow connection. Please disable any content blockers for this site, refresh the page, and try again.",
+    "hydrationFailedBanner": "Your connection was too slow to finish loading the page before you submitted. We've kept what you entered below — please re-enter your password and submit again.",
     "pickSector": "Pick at least one sector.",
     "descriptionRequiredForOther": "\"Other\" doesn't map to a specific sector, so we need a description of your business to find relevant tenders — please fill that in above.",
     "checkEmailHeading": "Check your email",

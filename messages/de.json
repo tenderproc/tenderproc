@@ -800,7 +800,7 @@
     "saved": "Gespeichert ✓"
   },
   "Signup": {
-    "hydrationFailedBanner": "Ein Teil dieser Seite konnte nicht geladen werden, daher wurde Ihre Anmeldung nicht übermittelt und nichts gespeichert. Das liegt meist an einem Werbe-/Inhaltsblocker oder einer langsamen Verbindung. Bitte deaktivieren Sie Blocker für diese Seite, laden Sie die Seite neu und versuchen Sie es erneut.",
+    "hydrationFailedBanner": "Ihre Verbindung war zu langsam, um die Seite vollständig zu laden, bevor Sie das Formular abgeschickt haben. Wir haben Ihre Eingaben unten gespeichert — bitte geben Sie Ihr Passwort erneut ein und senden Sie das Formular noch einmal ab.",
     "pickSector": "Wählen Sie mindestens eine Branche.",
     "descriptionRequiredForOther": "„Andere“ entspricht keiner bestimmten Branche — beschreiben Sie oben, was Ihr Unternehmen macht, damit wir passende Ausschreibungen finden können.",
     "checkEmailHeading": "Überprüfen Sie Ihre E-Mail",

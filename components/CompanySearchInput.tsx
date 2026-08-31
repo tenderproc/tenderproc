@@ -15,6 +15,9 @@ type Props = {
   className: string;
   placeholder?: string;
   required?: boolean;
+  /** Forwarded to the underlying input so a native (non-JS) form submission
+   * — e.g. signup's hydration-failure fallback — still carries this field. */
+  name?: string;
 };
 
 // Search-as-you-type over Belgium's KBO company register (app/api/company-search),
@@ -22,7 +25,7 @@ type Props = {
 // instead of free-typing a name. Selecting a result doesn't lock the field —
 // it's still a plain text input underneath, so free typing (e.g. a company
 // not yet in the KBO import) stays possible.
-export default function CompanySearchInput({ value, onChange, onSelect, className, placeholder, required }: Props) {
+export default function CompanySearchInput({ value, onChange, onSelect, className, placeholder, required, name }: Props) {
   const [results, setResults] = useState<CompanyMatch[]>([]);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,6 +64,7 @@ export default function CompanySearchInput({ value, onChange, onSelect, classNam
   return (
     <div ref={containerRef} className="relative">
       <input
+        name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => results.length > 0 && setOpen(true)}

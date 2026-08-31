@@ -800,7 +800,7 @@
     "saved": "Opgeslagen ✓"
   },
   "Signup": {
-    "hydrationFailedBanner": "Een deel van deze pagina kon niet laden, waardoor uw aanmelding niet is doorgekomen en er niets is opgeslagen. Dit komt meestal door een advertentie-/contentblokkering of een trage verbinding. Schakel eventuele blokkeringen voor deze site uit, ververs de pagina en probeer het opnieuw.",
+    "hydrationFailedBanner": "Uw verbinding was te traag om de pagina volledig te laden voordat u verzond. We hebben bewaard wat u had ingevuld — voer hieronder opnieuw uw wachtwoord in en verstuur het formulier nogmaals.",
     "pickSector": "Kies minstens één sector.",
     "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat uw bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
     "checkEmailHeading": "Controleer uw e-mail",

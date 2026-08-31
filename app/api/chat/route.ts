@@ -3,7 +3,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicClient } from "@/lib/ai/anthropic-provider";
 import { ESCALATE_MARKER, stripEscalationMarker } from "@/lib/supportChat/escalation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { deductTokens, peekTokens, TOKEN_COSTS, type TokenStatus } from "@/lib/billing/tokens";
+import { getBetaPromoStatus } from "@/lib/billing/betaPromo";
 
 export const runtime = "nodejs";
 
@@ -14,7 +16,7 @@ const MODEL = "claude-sonnet-4-6";
 const MAX_HISTORY_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 4000;
 
-const SYSTEM_PROMPT = `You are the support assistant for TenderProc (tenderproc.com), an AI-assisted tender-matching platform that helps small and medium-sized businesses (SMEs) in Belgium find, evaluate, and bid on public tenders.
+const BASE_SYSTEM_PROMPT = `You are the support assistant for TenderProc (tenderproc.com), an AI-assisted tender-matching platform that helps small and medium-sized businesses (SMEs) in Belgium find, evaluate, and bid on public tenders.
 
 ## What TenderProc does
 - Scans public tender notices (including from publicprocurement.be) and matches them to a company's profile.
@@ -23,9 +25,9 @@ const SYSTEM_PROMPT = `You are the support assistant for TenderProc (tenderproc.
 - Helps draft and review bid responses, and flags compliance risks before submission.
 
 ## Plans
-- **Free** — Opportunities feed for 1 sector, manual search, tender detail pages.
-- **Pro (€49/month)** — Opportunities feed for all sectors, AI match scores on every tender, the workflow pipeline board to track bids, daily email notifications.
-- **Premium (€79/month)** — Everything in Pro, plus market overview & award analytics, AI eligibility checks, and priority support.
+- **Free** — Opportunities feed for 1 sector, manual search, tender detail pages, AI eligibility analysis on tender uploads (3/month).
+- **Pro (€49/month)** — Opportunities feed for all sectors, AI match scores on every tender, unlimited AI eligibility analysis, the workflow pipeline board to track bids, daily email notifications.
+- **Premium (€79/month)** — Everything in Pro, plus market overview & award analytics, and priority support.
 
 ## Common questions you should be able to answer
 - **How tender matching works**: TenderProc scores tenders against the company's profile (services, certifications, references) using AI, surfacing the best-fit opportunities and flagging requirement gaps.
@@ -37,9 +39,28 @@ const SYSTEM_PROMPT = `You are the support assistant for TenderProc (tenderproc.
 Helpful, concise, and professional. Prefer short, direct answers over long ones. Write in plain conversational sentences only — this reply is shown as plain text in a chat bubble, so never use markdown formatting (no **bold**, headers, or backticks). Use plain dashes for short lists if needed.
 
 ## When you can't help
-Human operators are available 9 AM–5 PM Brussels time. If you cannot resolve the user's question, don't have the information needed, or the user explicitly asks to speak with a person, say so clearly, mention the operator hours, and let them know they can tap "Talk to a person" below to reach the TenderProc team.
+There is no WhatsApp, phone, or live-chat handoff to a human — the only escalation channel is an email field that appears in this widget once you decide the user needs a human (see below); a person from the TenderProc team follows up by email, 9 AM–5 PM Brussels time. If you cannot resolve the user's question, don't have the information needed, or the user explicitly asks to speak with a person (including if they ask for WhatsApp or a phone number, which don't exist), say so clearly and directly — don't imply a live or instant channel exists — mention the operator hours, and let them know they can enter their email in the field that will appear below so the team can follow up.
 
 When — and only when — you decide the user needs a human per the paragraph above, end your entire reply with the exact literal text ${ESCALATE_MARKER} and nothing after it. Never mention or explain this marker to the user; it is stripped before they see your reply. Do not include it for questions you can answer yourself.`;
+
+/** Appends live beta-promo status so the bot never quotes a hardcoded promo
+ * fact that goes stale once the promo ends or fills up — read the same way
+ * the pricing page banner does (getBetaPromoStatus), not duplicated here. */
+async function buildSystemPrompt(): Promise<string> {
+  try {
+    const admin = createAdminClient();
+    const promo = await getBetaPromoStatus(admin);
+    if (promo.active) {
+      return `${BASE_SYSTEM_PROMPT}
+
+## Current promotion
+There is an active beta promotion right now: 50% off Pro or Premium for the first 6 months, limited to the first 20 subscribers overall (${promo.remaining} slot${promo.remaining === 1 ? "" : "s"} remaining). It's shown on the pricing page and applied automatically at checkout — mention it if the user asks about discounts or pricing.`;
+    }
+  } catch (err) {
+    console.error("Could not read beta promo status for chat system prompt:", err);
+  }
+  return BASE_SYSTEM_PROMPT;
+}
 
 type ChatRole = "user" | "assistant";
 
@@ -105,10 +126,11 @@ export async function POST(req: NextRequest) {
   const client = getAnthropicClient();
 
   try {
+    const systemPrompt = await buildSystemPrompt();
     const response = await client.messages.create({
       model: MODEL,
       max_tokens: 1000,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages,
     });
 

@@ -34,14 +34,22 @@ export default function SignupPage() {
   // (a content blocker or failed chunk load broke hydration) and the
   // browser fell back to a plain HTML form submission instead.
   const hydrationFailed = searchParams.get("hydrationFailed") === "1";
-  const [email, setEmail] = useState("");
+  // Only set when signup-fallback/route.ts recovered a native form
+  // submission (see that file) — never includes the password field, which
+  // is deliberately excluded from the native fallback's `name` attributes
+  // so it never round-trips through a redirect URL.
+  const recovered = (key: string) => (hydrationFailed ? (searchParams.get(`r_${key}`) ?? "") : "");
+  const [email, setEmail] = useState(() => recovered("email"));
   const [password, setPassword] = useState("");
-  const [companyName, setCompanyName] = useState("");
+  const [companyName, setCompanyName] = useState(() => recovered("company"));
   const [companyNumber, setCompanyNumber] = useState<string | null>(null);
-  const [address, setAddress] = useState("");
-  const [sectors, setSectors] = useState<string[]>([]);
-  const [companySize, setCompanySize] = useState("");
-  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState(() => recovered("address"));
+  const [sectors, setSectors] = useState<string[]>(() => {
+    const raw = recovered("sectors");
+    return raw ? raw.split(",").filter(Boolean) : [];
+  });
+  const [companySize, setCompanySize] = useState(() => recovered("size"));
+  const [description, setDescription] = useState(() => recovered("description"));
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -211,6 +219,7 @@ export default function SignupPage() {
               </label>
               <input
                 type="email"
+                name="r_email"
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -223,6 +232,10 @@ export default function SignupPage() {
               <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("password")}
               </label>
+              {/* Deliberately no `name` attribute: this field must never be
+                  carried through the native-fallback redirect URL in
+                  signup-fallback/route.ts — see the `recovered()` helper
+                  above and that route's comments. */}
               <input
                 type="password"
                 value={password}
@@ -241,6 +254,7 @@ export default function SignupPage() {
                 {t("companyName")}
               </label>
               <CompanySearchInput
+                name="r_company"
                 value={companyName}
                 onChange={handleCompanyNameChange}
                 onSelect={handleCompanySelect}
@@ -254,6 +268,7 @@ export default function SignupPage() {
                 {t("address")}
               </label>
               <input
+                name="r_address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
@@ -268,6 +283,7 @@ export default function SignupPage() {
               {t("companySize")}
             </label>
             <select
+              name="r_size"
               value={companySize}
               onChange={(e) => setCompanySize(e.target.value)}
               className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
@@ -286,6 +302,7 @@ export default function SignupPage() {
               {t("descriptionLabel")}
             </label>
             <textarea
+              name="r_description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
@@ -306,6 +323,8 @@ export default function SignupPage() {
                 >
                   <input
                     type="checkbox"
+                    name="r_sectors"
+                    value={sector.key}
                     className="accent-accent"
                     checked={sectors.includes(sector.key)}
                     onChange={() => toggleSector(sector.key)}

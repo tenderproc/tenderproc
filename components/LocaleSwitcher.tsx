@@ -48,7 +48,12 @@ export default function LocaleSwitcher() {
             className="fixed inset-0 z-10 cursor-default"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-2 z-20 min-w-36 border border-line bg-paper rounded-doc shadow-xs overflow-hidden">
+          {/* left-anchored on narrow screens (this switcher sits near the
+              left edge of the mobile header, and right-0 alone pushed the
+              menu mostly off-screen there — measured at left:-99px on a
+              390px viewport), right-anchored again from sm: up where the
+              switcher sits near the right edge instead. */}
+          <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 z-20 min-w-36 border border-line bg-paper rounded-doc shadow-xs overflow-hidden">
             {LOCALES.map((code) => (
               <button
                 key={code}
