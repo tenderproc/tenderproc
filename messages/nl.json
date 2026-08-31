@@ -216,7 +216,7 @@
             },
             {
               "question": "Is er een gratis proefperiode?",
-              "answer": "Er is geen tijdelijke proefperiode, maar het Gratis-plan zelf verloopt nooit en vereist geen kaart — u kunt de opdrachten-detectie voor één sector gratis uitproberen voordat u upgradet."
+              "answer": "Er is geen tijdelijke proefperiode, maar het Gratis-plan zelf verloopt nooit en vereist geen kaart — u kunt de opdrachtendetectie voor één sector gratis uitproberen voordat u upgradet."
             },
             {
               "question": "Kan ik op elk moment opzeggen?",
@@ -244,8 +244,8 @@
               "answer": "De app zelf is beschikbaar in het Nederlands, Engels, Frans en Duits, en opdrachten die in andere talen gepubliceerd zijn kunnen voor u AI-vertaald worden."
             },
             {
-              "question": "Wat gebeurt er als ik een deadline-melding mis?",
-              "answer": "Er is nog geen speciale functie voor deadline-herinneringen — de deadline van elke opdracht staat direct op de kaart, en zodra u die toevoegt aan uw Workflow-bord kunt u hem daar volgen doorheen screening, opstellen en indienen, zodat u niets kwijtraakt van wat u actief opvolgt."
+              "question": "Wat gebeurt er als ik een deadlinemelding mis?",
+              "answer": "Er is nog geen speciale functie voor deadlineherinneringen — de deadline van elke opdracht staat direct op de kaart, en zodra u die toevoegt aan uw Workflow-bord kunt u hem daar volgen doorheen screening, opstellen en indienen, zodat u niets kwijtraakt van wat u actief opvolgt."
             }
           ]
         }
