@@ -199,7 +199,7 @@
             },
             {
               "question": "Dois-je avoir de l'expérience avec les marchés publics pour utiliser la plateforme ?",
-              "answer": "Non — TenderProc est conçu pour rendre les marchés publics belges accessibles même si vous n'avez jamais soumissionné. Vous configurez un profil d'entreprise, et la plateforme s'occupe du filtrage, de l'extraction des exigences et des vérifications d'éligibilité."
+              "answer": "Non — TenderProc est conçu pour rendre les marchés publics belges accessibles même si tout cela est complètement nouveau pour vous. Vous configurez un profil d'entreprise, et la plateforme s'occupe du filtrage, de l'extraction des exigences et des vérifications d'éligibilité."
             },
             {
               "question": "Quelles régions/secteurs sont couverts ?",
@@ -233,7 +233,7 @@
           "items": [
             {
               "question": "À quelle fréquence de nouveaux marchés sont-ils ajoutés ?",
-              "answer": "Les marchés sont récupérés en direct depuis la base de données officielle TED de l'UE dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs."
+              "answer": "Les marchés sont récupérés en direct dès leur publication — sans délai de traitement par lot — et un résumé quotidien par e-mail signale tout ce qui est nouveau dans vos secteurs."
             },
             {
               "question": "Puis-je obtenir de l'aide pour préparer mon offre, ou seulement trouver des opportunités ?",

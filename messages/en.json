@@ -199,7 +199,7 @@
             },
             {
               "question": "Do I need experience with public tenders to use this?",
-              "answer": "No — TenderProc is built to make Belgian public procurement approachable even if you've never bid before. You set up a company profile, and the platform handles screening, requirement extraction, and eligibility checks."
+              "answer": "No — TenderProc is built to make Belgian public procurement approachable even if all of this is completely new to you. You set up a company profile, and the platform handles screening, requirement extraction, and eligibility checks."
             },
             {
               "question": "Which regions/sectors are covered?",
@@ -233,7 +233,7 @@
           "items": [
             {
               "question": "How often are new tenders added?",
-              "answer": "Tenders are pulled live from the EU's official TED database as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors."
+              "answer": "Tenders are pulled live as they're published — not on a batch delay — plus a daily digest email flags anything new in your sectors."
             },
             {
               "question": "Can I get help preparing my actual bid, or just find opportunities?",
