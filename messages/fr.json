@@ -203,7 +203,7 @@
             },
             {
               "question": "Quelles régions/secteurs sont couverts ?",
-              "answer": "Les marchés publics belges, à l'échelle nationale, dans des secteurs allant de la construction et l'IT à la santé, la restauration et le conseil. Au-dessus du seuil de publication européen, nous couvrons toute la Belgique via la base TED de l'UE et la plateforme belge BOSA e-Notification. En dessous de ce seuil, la couverture provient des décisions des conseils communaux et varie actuellement selon la région — la plus complète en Wallonie, partielle en Flandre, pas encore disponible à Bruxelles. Nous étendons activement cette couverture."
+              "answer": "Les marchés publics belges, à l'échelle nationale, dans des secteurs allant de la construction et l'IT à la santé, la restauration et le conseil. Au-dessus du seuil de publication européen, nous couvrons toute la Belgique via le canal de publication européen et la plateforme belge BOSA e-Notification. En dessous de ce seuil, la couverture provient des décisions des conseils communaux et varie actuellement selon la région — la plus complète en Wallonie, partielle en Flandre, pas encore disponible à Bruxelles. Nous étendons activement cette couverture."
             }
           ]
         },
