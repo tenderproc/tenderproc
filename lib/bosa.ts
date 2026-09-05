@@ -455,6 +455,11 @@ export async function searchBosaTenders(
      * below), not merely used for display priority. A notice with no
      * titleLanguages on file is excluded, same as TED's version. */
     filterLanguageKeys?: string[];
+    /** Same contract as lib/ted.ts's cpvPrefixes (lib/sectors.ts's SECTORS
+     * flattened), matched against each notice's cpvMainCode. Unlike TED, the
+     * BOSA search endpoint's query shape has no documented CPV/OR support, so
+     * this is applied client-side, same as filterLanguageKeys below. */
+    cpvPrefixes?: string[];
   } = {}
 ): Promise<TenderNotice[]> {
   const displayLimit = params.limit ?? 30;
@@ -472,7 +477,7 @@ export async function searchBosaTenders(
   // search with onlyOpenCalls:true returned 30/30 results with a past
   // deadline, none actually biddable — so the deadline must also still be
   // in the future, not merely present.
-  const needsOverfetch = params.onlyOpenCalls || params.filterLanguageKeys?.length;
+  const needsOverfetch = params.onlyOpenCalls || params.filterLanguageKeys?.length || params.cpvPrefixes?.length;
   const pageSize = needsOverfetch ? Math.max(displayLimit * 3, 90) : displayLimit;
   const doFetch = async (forceRefresh: boolean) =>
     fetch(BOSA_SEARCH_URL, {
@@ -563,6 +568,11 @@ export async function searchBosaTenders(
       };
     })
     .filter((t): t is TenderNotice => t !== null);
+
+  if (params.cpvPrefixes?.length) {
+    const prefixes = params.cpvPrefixes;
+    notices = notices.filter((t) => t.cpvCodes.some((code) => prefixes.some((p) => code.startsWith(p))));
+  }
 
   if (params.filterLanguageKeys?.length) {
     const wanted = params.filterLanguageKeys;

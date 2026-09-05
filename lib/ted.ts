@@ -100,9 +100,10 @@ export interface TedSearchParams {
   /**
    * CPV division/group prefixes (e.g. "45" for construction) to filter to —
    * used for sector-based preferences, as opposed to `cpv`'s single exact
-   * match. TED's query language doesn't reliably support OR/prefix matching
-   * on classification-cpv, so this is applied client-side after fetching a
-   * larger batch rather than added to the query.
+   * match. Pushed into the query itself as a `(classification-cpv=X* OR ...)`
+   * group, same technique fetchHistoricalAwardsPage already uses — confirmed
+   * to work server-side, so this doesn't need the overfetch-then-filter
+   * treatment onlyOpenCalls/filterLanguageKeys get below.
    */
   cpvPrefixes?: string[];
   /**
@@ -163,6 +164,10 @@ export async function searchBelgianTenders(
   if (params.cpv) {
     clauses.push(`classification-cpv=${params.cpv}`);
   }
+  if (params.cpvPrefixes?.length) {
+    const cpvClause = params.cpvPrefixes.map((p) => `classification-cpv=${p}*`).join(" OR ");
+    clauses.push(`(${cpvClause})`);
+  }
   if (params.deadlineAfter) {
     clauses.push(`deadline-receipt-request>=${toYyyymmdd(params.deadlineAfter)}`);
   }
@@ -173,7 +178,6 @@ export async function searchBelgianTenders(
 
   const displayLimit = params.limit ?? 30;
   const needsOverfetch =
-    params.cpvPrefixes?.length ||
     params.onlyOpenCalls ||
     params.valueMin != null ||
     params.valueMax != null ||
@@ -232,13 +236,6 @@ export async function searchBelgianTenders(
       url: `https://ted.europa.eu/en/notice/-/detail/${pubNumber}`,
     };
   });
-
-  if (params.cpvPrefixes?.length) {
-    const prefixes = params.cpvPrefixes;
-    notices = notices.filter((t) =>
-      t.cpvCodes.some((code) => prefixes.some((p) => code.startsWith(p)))
-    );
-  }
 
   if (params.valueMin != null) {
     const min = params.valueMin;
