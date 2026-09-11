@@ -134,6 +134,9 @@
   "LocaleSwitcher": {
     "label": "Taal"
   },
+  "Accessibility": {
+    "skipToContent": "Ga naar de hoofdinhoud"
+  },
   "Legal": {
     "goToApp": "Naar de app",
     "logIn": "Inloggen",
@@ -816,6 +819,10 @@
   },
   "Signup": {
     "hydrationFailedBanner": "Uw verbinding was te traag om de pagina volledig te laden voordat u verzond. We hebben bewaard wat u had ingevuld — voer hieronder opnieuw uw wachtwoord in en verstuur het formulier nogmaals.",
+    "emailRequired": "Voer uw e-mailadres in.",
+    "passwordRequiredField": "Voer een wachtwoord in.",
+    "companyNameRequired": "Voer uw bedrijfsnaam in.",
+    "addressRequired": "Voer uw adres in.",
     "pickSector": "Kies minstens één sector.",
     "descriptionRequiredForOther": "\"Anders\" komt niet overeen met een specifieke sector — beschrijf hierboven wat uw bedrijf doet, zodat we relevante opdrachten kunnen vinden.",
     "checkEmailHeading": "Controleer uw e-mail",
@@ -1058,6 +1065,7 @@
     "sending": "Verzenden…",
     "close": "Chat sluiten",
     "operatorHours": "Medewerkers zijn bereikbaar van 9 tot 17 uur.",
+    "escalateHeading": "Bereik een medewerker per e-mail",
     "escalateEmailPlaceholder": "Uw e-mailadres",
     "escalateSend": "Naar een medewerker sturen",
     "emailSent": "Bedankt — we reageren binnenkort per e-mail.",

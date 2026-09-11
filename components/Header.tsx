@@ -10,6 +10,7 @@ import { peekTokens } from "@/lib/billing/tokens";
 
 export default async function Header() {
   const t = await getTranslations("Header");
+  const tA11y = await getTranslations("Accessibility");
   const tLegal = await getTranslations("Legal");
   const tBilling = await getTranslations("BillingPage");
 
@@ -28,7 +29,19 @@ export default async function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-paper">
+    <>
+      {/* First focusable element on every page that renders this Header —
+          lets keyboard/screen-reader users bypass the logo, token badge,
+          locale switcher, and nav links below and jump straight to
+          `#main-content` (see the QA audit's "no skip-to-content link,
+          WCAG 2.4.1" finding). Visually hidden until it receives focus. */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-4 focus:py-2 focus:rounded-doc focus:text-sm focus:font-medium"
+      >
+        {tA11y("skipToContent")}
+      </a>
+      <header className="sticky top-0 z-20 border-b border-line bg-paper">
       <div className="max-w-6xl mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-y-2">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/tenderproc-logo.svg" alt="TenderProc" width={165} height={52} priority />
@@ -58,6 +71,7 @@ export default async function Header() {
         <MobileMenu tokenBadge={tokenBadge} />
       </div>
       <PrimaryNav />
-    </header>
+      </header>
+    </>
   );
 }

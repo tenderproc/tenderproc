@@ -73,6 +73,33 @@ export default function SignupPage() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // Manual required-field checks replace native browser validation (see
+    // `noValidate` on the <form> below) — native constraint-validation
+    // tooltips are rendered in the *browser's* UI language, not the page's,
+    // so a French-localized form could still pop up an English "Please
+    // fill out this field" bubble (see the QA audit's French-only-persona
+    // finding). This also gives the error an accessible name via
+    // role="alert" below, which native tooltips don't reliably provide.
+    if (!email.trim()) {
+      setError(t("emailRequired"));
+      document.getElementById("signup-email")?.focus();
+      return;
+    }
+    if (!password) {
+      setError(t("passwordRequiredField"));
+      document.getElementById("signup-password")?.focus();
+      return;
+    }
+    if (!companyName.trim()) {
+      setError(t("companyNameRequired"));
+      document.getElementById("signup-company")?.focus();
+      return;
+    }
+    if (!address.trim()) {
+      setError(t("addressRequired"));
+      document.getElementById("signup-address")?.focus();
+      return;
+    }
     if (sectors.length === 0) {
       setError(t("pickSector"));
       return;
@@ -210,14 +237,16 @@ export default function SignupPage() {
           onSubmit={onSubmit}
           method="post"
           action="/api/signup-fallback"
+          noValidate
           className="border border-line bg-white rounded-2xl p-6 space-y-5"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+              <label htmlFor="signup-email" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("email")}
               </label>
               <input
+                id="signup-email"
                 type="email"
                 name="r_email"
                 autoFocus
@@ -225,11 +254,10 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder="you@company.be"
-                required
               />
             </div>
             <div>
-              <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+              <label htmlFor="signup-password" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("password")}
               </label>
               {/* Deliberately no `name` attribute: this field must never be
@@ -237,52 +265,53 @@ export default function SignupPage() {
                   signup-fallback/route.ts — see the `recovered()` helper
                   above and that route's comments. */}
               <input
+                id="signup-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("passwordPlaceholder")}
                 minLength={6}
-                required
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+              <label htmlFor="signup-company" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("companyName")}
               </label>
               <CompanySearchInput
+                id="signup-company"
                 name="r_company"
                 value={companyName}
                 onChange={handleCompanyNameChange}
                 onSelect={handleCompanySelect}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("companyNamePlaceholder")}
-                required
               />
             </div>
             <div>
-              <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+              <label htmlFor="signup-address" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
                 {t("address")}
               </label>
               <input
+                id="signup-address"
                 name="r_address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className="w-full border border-line rounded-doc px-3 py-2 bg-paper focus:outline-hidden focus:ring-2 focus:ring-accent/40 focus:border-accent"
                 placeholder={t("addressPlaceholder")}
-                required
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+            <label htmlFor="signup-size" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
               {t("companySize")}
             </label>
             <select
+              id="signup-size"
               name="r_size"
               value={companySize}
               onChange={(e) => setCompanySize(e.target.value)}
@@ -298,10 +327,11 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
+            <label htmlFor="signup-description" className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-1">
               {t("descriptionLabel")}
             </label>
             <textarea
+              id="signup-description"
               name="r_description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -311,10 +341,14 @@ export default function SignupPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-2">
+          {/* fieldset/legend is the standard accessible grouping for a set
+              of checkboxes describing one choice ("which sectors") — a bare
+              <label> here (the previous markup) has no single control to
+              attach to and isn't announced as a group by screen readers. */}
+          <fieldset className="border-0 p-0 m-0">
+            <legend className="block text-xs font-medium uppercase tracking-wide text-inkDim mb-2">
               {t("sectors")}
-            </label>
+            </legend>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
               {SECTORS.map((sector) => (
                 <label
@@ -333,7 +367,7 @@ export default function SignupPage() {
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           <label className="flex items-start gap-2 text-sm text-ink cursor-pointer">
             <input
@@ -358,7 +392,11 @@ export default function SignupPage() {
             </span>
           </label>
 
-          {error && <p className="text-sm text-stamp">{error}</p>}
+          {error && (
+            <p role="alert" className="text-sm text-stamp">
+              {error}
+            </p>
+          )}
 
           <button
             disabled={loading}

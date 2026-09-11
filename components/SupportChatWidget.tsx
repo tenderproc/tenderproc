@@ -19,6 +19,8 @@ export default function SupportChatWidget() {
   const [escalateEmail, setEscalateEmail] = useState("");
   const [escalateStatus, setEscalateStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const listRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const bubbleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     saveConversation(messages);
@@ -27,6 +29,54 @@ export default function SupportChatWidget() {
   useEffect(() => {
     if (open) listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [messages, sending, open]);
+
+  // Trap Tab/Shift+Tab within the open dialog and let Escape close it.
+  // Previously the panel's own content sat before the toggle button in DOM
+  // order, so the very next Tab after opening escaped straight past the
+  // dialog into the rest of the page's nav/footer — reaching the message
+  // input required tabbing through the entire site first (see the QA
+  // audit's accessibility-persona finding).
+  useEffect(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    function getFocusable(): HTMLElement[] {
+      return Array.from(
+        panel!.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        bubbleRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    // Move focus into the dialog itself on open (its own close button is
+    // the first focusable element) rather than leaving it on the toggle,
+    // which sits functionally "outside" the panel's own tab cycle below.
+    getFocusable()[0]?.focus();
+
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   async function sendMessage() {
     const text = input.trim();
@@ -96,6 +146,7 @@ export default function SupportChatWidget() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {open && (
         <div
+          ref={panelRef}
           role="dialog"
           aria-label={t("title")}
           className="w-[360px] max-w-[calc(100vw-3rem)] h-[520px] max-h-[calc(100vh-8rem)] flex flex-col bg-paper border border-line rounded-doc shadow-lg overflow-hidden"
@@ -145,7 +196,13 @@ export default function SupportChatWidget() {
           )}
 
           {!accessBlocked && needsHuman && (
-            <div className="px-4 pb-3">
+            // border-t + extra top padding visually separates this
+            // escalation row from the chat input row directly below it —
+            // the two were previously stacked closely enough that typed
+            // follow-ups landed in the wrong field (see the QA audit's
+            // existing-customer-persona finding).
+            <div className="px-4 pt-3 pb-3 border-t border-line">
+              <p className="text-xs font-medium text-inkDim mb-2">{t("escalateHeading")}</p>
               {escalateStatus === "sent" ? (
                 <p className="text-sm text-ink text-center py-2">{t("emailSent")}</p>
               ) : (
@@ -203,6 +260,7 @@ export default function SupportChatWidget() {
       )}
 
       <button
+        ref={bubbleRef}
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-label={open ? t("close") : t("bubbleLabel")}

@@ -52,7 +52,7 @@ export default async function SearchPage({
   return (
     <div>
       <Header />
-      <main className="max-w-6xl mx-auto px-6 py-10">
+      <main id="main-content" className="max-w-6xl mx-auto px-6 py-10">
         <div className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
             {t("eyebrow")}

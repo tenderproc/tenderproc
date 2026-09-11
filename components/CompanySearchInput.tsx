@@ -18,6 +18,9 @@ type Props = {
   /** Forwarded to the underlying input so a native (non-JS) form submission
    * — e.g. signup's hydration-failure fallback — still carries this field. */
   name?: string;
+  /** Forwarded to the underlying input so a `<label htmlFor>` in the parent
+   * form can be programmatically associated with it. */
+  id?: string;
 };
 
 // Search-as-you-type over Belgium's KBO company register (app/api/company-search),
@@ -25,7 +28,7 @@ type Props = {
 // instead of free-typing a name. Selecting a result doesn't lock the field —
 // it's still a plain text input underneath, so free typing (e.g. a company
 // not yet in the KBO import) stays possible.
-export default function CompanySearchInput({ value, onChange, onSelect, className, placeholder, required, name }: Props) {
+export default function CompanySearchInput({ value, onChange, onSelect, className, placeholder, required, name, id }: Props) {
   const [results, setResults] = useState<CompanyMatch[]>([]);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,6 +67,7 @@ export default function CompanySearchInput({ value, onChange, onSelect, classNam
   return (
     <div ref={containerRef} className="relative">
       <input
+        id={id}
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}

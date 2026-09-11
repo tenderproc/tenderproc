@@ -25,12 +25,22 @@ export default async function LandingPage() {
   const t = await getTranslations("Landing");
   const tPricing = await getTranslations("Pricing");
   const tLegal = await getTranslations("Legal");
+  const tA11y = await getTranslations("Accessibility");
 
   const features = t.raw("features.items") as { tier: string; title: string; description: string }[];
   const steps = t.raw("howItWorks.steps") as { title: string; description: string }[];
 
   return (
     <div>
+      {/* Same skip-to-content pattern as components/Header.tsx — the
+          homepage has its own header markup instead of reusing that
+          component, so it needs its own copy of the link. */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:text-white focus:px-4 focus:py-2 focus:rounded-doc focus:text-sm focus:font-medium"
+      >
+        {tA11y("skipToContent")}
+      </a>
       {/* Header */}
       <header className="sticky top-0 z-10 border-b border-line bg-paper">
         <div className="max-w-6xl mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-y-2">
@@ -61,7 +71,7 @@ export default async function LandingPage() {
         </div>
       </header>
 
-      <main>
+      <main id="main-content">
         {/* Hero */}
         <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">

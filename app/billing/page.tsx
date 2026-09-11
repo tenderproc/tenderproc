@@ -43,7 +43,7 @@ export default async function BillingPage() {
   return (
     <div>
       <Header />
-      <main className="max-w-2xl mx-auto px-6 py-16">
+      <main id="main-content" className="max-w-2xl mx-auto px-6 py-16">
         <h1 className="font-display font-bold text-3xl text-ink tracking-tight">{t("heading")}</h1>
 
         {effective.inGracePeriod && (

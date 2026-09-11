@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/locales";
 import FlagIcon from "@/components/FlagIcon";
 
@@ -12,6 +12,23 @@ export default function LocaleSwitcher() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Escape should dismiss the open dropdown and return focus to the toggle,
+  // matching standard popup keyboard behavior — previously only the
+  // click-outside handler below could close it (see the QA audit's
+  // accessibility-persona finding).
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   async function selectLocale(next: Locale) {
     setOpen(false);
@@ -29,8 +46,11 @@ export default function LocaleSwitcher() {
   return (
     <div className="relative">
       <button
+        ref={toggleRef}
         type="button"
         aria-label={t("label")}
+        aria-haspopup="listbox"
+        aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         disabled={pending}
         className="flex items-center gap-1 hover:text-ink transition-colors disabled:opacity-50"

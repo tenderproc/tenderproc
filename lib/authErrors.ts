@@ -9,6 +9,13 @@ const KNOWN_PATTERNS: { match: RegExp; code: string }[] = [
   { match: /password should be at least/i, code: "passwordTooShort" },
   { match: /unable to validate email address/i, code: "invalidEmail" },
   { match: /rate limit/i, code: "rateLimited" },
+  // Supabase's over_email_send_rate_limit error text doesn't contain the
+  // phrase "rate limit" at all ("For security purposes, you can only
+  // request this after N seconds.") — without this second pattern it fell
+  // through untranslated and was shown to the user verbatim (see the QA
+  // audit's race-condition-persona finding, reproduced via two tabs
+  // signing up with the same email).
+  { match: /for security purposes.*only request this after/i, code: "rateLimited" },
 ];
 
 export function authErrorMessage(rawMessage: string, t: (key: string) => string): string {

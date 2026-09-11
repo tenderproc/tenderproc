@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { getPaddleClient, onPaddleCheckoutEvent } from "@/lib/paddleClient";
 import { PADDLE_PRICE_IDS } from "@/lib/paddle";
 
@@ -37,6 +37,13 @@ export default function UpgradeButton({
   betaPromoActive?: boolean;
 }) {
   const t = useTranslations("UpgradeButton");
+  // Paddle.js locale codes match this app's own ('en'/'fr'/'nl'/'de') —
+  // without this, Checkout.open() falls back to Paddle's own default and
+  // the overlay (including its error states) renders in English regardless
+  // of the site's active language (see the QA audit's French-only-persona
+  // finding: the checkout error was the one place English leaked through
+  // on an otherwise fully-French run).
+  const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const autoOpened = useRef(false);
@@ -111,6 +118,7 @@ export default function UpgradeButton({
             displayMode: "overlay",
             variant: "one-page",
             successUrl: `${window.location.origin}/billing/success`,
+            locale,
           },
         });
       });

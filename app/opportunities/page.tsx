@@ -150,7 +150,7 @@ export default async function OpportunitiesPage({
   return (
     <div>
       <Header />
-      <main className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-8">
+      <main id="main-content" className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-8">
         {user && (
           <PreferencesSidebar
             userId={user.id}

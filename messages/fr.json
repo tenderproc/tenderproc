@@ -134,6 +134,9 @@
   "LocaleSwitcher": {
     "label": "Langue"
   },
+  "Accessibility": {
+    "skipToContent": "Aller au contenu principal"
+  },
   "Legal": {
     "goToApp": "Accéder à l'application",
     "logIn": "Se connecter",
@@ -816,6 +819,10 @@
   },
   "Signup": {
     "hydrationFailedBanner": "Votre connexion était trop lente pour charger complètement la page avant votre envoi. Nous avons conservé ce que vous aviez saisi ci-dessous — veuillez ressaisir votre mot de passe et valider à nouveau.",
+    "emailRequired": "Veuillez saisir votre adresse e-mail.",
+    "passwordRequiredField": "Veuillez saisir un mot de passe.",
+    "companyNameRequired": "Veuillez saisir le nom de votre entreprise.",
+    "addressRequired": "Veuillez saisir votre adresse.",
     "pickSector": "Choisissez au moins un secteur.",
     "descriptionRequiredForOther": "« Autre » ne correspond à aucun secteur précis — décrivez votre activité ci-dessus pour que nous puissions trouver des marchés pertinents.",
     "checkEmailHeading": "Vérifiez votre e-mail",
@@ -1058,6 +1065,7 @@
     "sending": "Envoi…",
     "close": "Fermer le chat",
     "operatorHours": "Les opérateurs sont disponibles de 9h à 17h.",
+    "escalateHeading": "Contacter une personne par e-mail",
     "escalateEmailPlaceholder": "Votre e-mail",
     "escalateSend": "Envoyer à une personne",
     "emailSent": "Merci — nous répondrons par e-mail sous peu.",
