@@ -33,7 +33,7 @@ export default async function TenderCard({ tender }: { tender: TenderNotice }) {
 
       <div className="flex items-start justify-between gap-6">
         <div className="min-w-0">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-inkDim mb-1">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-inkDim mb-1 break-all">
             {t("refPublished", {
               ref: tender.publicationNumber,
               date: formatDate(tender.publicationDate),

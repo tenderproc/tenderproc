@@ -10,7 +10,7 @@ export default async function LegalFooter() {
         <Link href="/" className="text-sm text-inkDim hover:text-ink transition-colors">
           ← {t("backToTenderProc")}
         </Link>
-        <nav className="flex items-center gap-5 text-sm text-inkDim">
+        <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-inkDim">
           <Link href="/terms" className="hover:text-ink transition-colors">
             {t("terms")}
           </Link>
