@@ -31,6 +31,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ scores: {} });
   }
 
-  const scores = await getMatchScores(supabase, user.id, tenders, profile, locale);
-  return NextResponse.json({ scores });
+  const { scores, failed } = await getMatchScores(supabase, user.id, tenders, profile, locale);
+  return NextResponse.json({ scores, scoringFailed: failed });
 }

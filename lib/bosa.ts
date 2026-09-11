@@ -140,22 +140,35 @@ async function getWorkspaceDetail(workspaceId: string): Promise<Record<string, u
   return res.json();
 }
 
-/** The most recent version carrying the eForms UBL notice, plus its own metadata. */
+/**
+ * The most recent version carrying the eForms UBL notice, plus its own
+ * metadata. Explicitly ranks by activation/dispatch date rather than
+ * trusting `versions`' array order — confirmed live 2026-09-10 that just
+ * taking the first entry with xmlContent picked a *stale* version (an older
+ * deadline/title than the search-listing JSON's own top-level fields, which
+ * always reflect the current state), causing the detail page to disagree
+ * with the feed for the same tender. Versions with no parseable date lose
+ * to any dated version and, among themselves, fall back to array order.
+ */
 function findNoticeVersion(
   detail: Record<string, unknown>
-): { xmlContent: string | null; publicationDate: string | null } | null {
+): { xmlContent: string; publicationDate: string | null } | null {
   const versions = (detail.versions as Record<string, unknown>[] | undefined) ?? [];
+  let best: { xmlContent: string; publicationDate: string | null } | null = null;
+  let bestMs = -Infinity;
   for (const version of versions) {
     const notice = (version.notice as Record<string, unknown> | undefined) ?? {};
-    if (typeof notice.xmlContent === "string" && notice.xmlContent) {
-      return {
-        xmlContent: notice.xmlContent,
-        publicationDate:
-          (version.activationDate as string | undefined) ?? (version.dispatchDate as string | undefined) ?? null,
-      };
+    if (typeof notice.xmlContent !== "string" || !notice.xmlContent) continue;
+    const publicationDate =
+      (version.activationDate as string | undefined) ?? (version.dispatchDate as string | undefined) ?? null;
+    const parsedMs = publicationDate ? new Date(publicationDate).getTime() : NaN;
+    const effectiveMs = isNaN(parsedMs) ? -Infinity : parsedMs;
+    if (effectiveMs >= bestMs) {
+      best = { xmlContent: notice.xmlContent, publicationDate };
+      bestMs = effectiveMs;
     }
   }
-  return null;
+  return best;
 }
 
 function localName(tag: string): string {

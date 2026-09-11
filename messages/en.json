@@ -270,8 +270,10 @@
     "couldNotReachTed": "Couldn't reach TED.",
     "loadError": "Couldn't load tenders right now ({loadError}). Try again in a moment.",
     "noResults": "No notices matched your sectors or search. Try widening your sector selection in the sidebar.",
+    "noSectorSelected": "Pick a sector in the sidebar to see your matched feed, or upgrade for the all-sectors view.",
     "filteringByMatch": "Filtering by match %…",
     "noMatchResults": "No opportunities meet that match threshold. Try lowering it.",
+    "matchingUnavailable": "Match scoring is temporarily unavailable. Showing unfiltered results — try again shortly.",
     "onboardingText": "New to public tenders? A tender is a contract a public authority awards to a business through a competitive process.",
     "onboardingLinkLabel": "Complete your profile to see how well you match.",
     "onboardingDismissLabel": "Dismiss"

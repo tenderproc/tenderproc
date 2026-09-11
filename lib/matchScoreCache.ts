@@ -12,6 +12,14 @@ interface ScoreRow {
   criteria: MatchScore["criteria"];
 }
 
+export interface MatchScoreResult {
+  scores: Record<string, MatchScore>;
+  // True when at least one chunk of tenders needed scoring but the AI call
+  // failed — lets callers tell "the AI is down" apart from "the AI ran and
+  // found nothing", which look identical if you only look at `scores`.
+  failed: boolean;
+}
+
 // Looks up cached scores keyed by (user, tender, profile fingerprint); scores
 // any tenders missing from the cache in a single batched AI call, then
 // persists the result so repeat page loads don't re-score for free.
@@ -21,8 +29,8 @@ export async function getMatchScores(
   tenders: TenderNotice[],
   profile: CompanyProfile,
   locale: Locale
-): Promise<Record<string, MatchScore>> {
-  if (tenders.length === 0 || !hasProfileSignal(profile)) return {};
+): Promise<MatchScoreResult> {
+  if (tenders.length === 0 || !hasProfileSignal(profile)) return { scores: {}, failed: false };
 
   const hash = profileHash(profile, locale);
   const publicationNumbers = tenders.map((t) => t.publicationNumber);
@@ -44,6 +52,7 @@ export async function getMatchScores(
     };
   }
 
+  let failed = false;
   const missing = tenders.filter((t) => !scores[t.publicationNumber]);
   if (missing.length > 0) {
     // Chunked so a single call's JSON output (score + summary + criteria per
@@ -54,7 +63,15 @@ export async function getMatchScores(
     for (let i = 0; i < missing.length; i += CHUNK_SIZE) {
       chunks.push(missing.slice(i, i + CHUNK_SIZE));
     }
-    const chunkResults = await Promise.all(chunks.map((chunk) => scoreTenders(chunk, profile, locale)));
+    const chunkResults = await Promise.all(
+      chunks.map((chunk) =>
+        scoreTenders(chunk, profile, locale).catch((err) => {
+          console.error("getMatchScores: a chunk failed to score", err);
+          failed = true;
+          return [] as MatchScore[];
+        })
+      )
+    );
     const fresh = chunkResults.flat();
     if (fresh.length > 0) {
       await supabase.from("tender_scores").upsert(
@@ -73,5 +90,5 @@ export async function getMatchScores(
     }
   }
 
-  return scores;
+  return { scores, failed };
 }

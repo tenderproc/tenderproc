@@ -219,6 +219,7 @@ export async function searchBelgianTenders(
     rawNotices = rawNotices.filter((n) => isOpenCallNotice(firstValue(n["notice-type"])));
   }
 
+  const now = Date.now();
   let notices = rawNotices.map((n): TenderNotice => {
     const pubNumber = n["publication-number"] ?? n.publicationNumber ?? "unknown";
     const value = extractValue(n);
@@ -236,6 +237,21 @@ export async function searchBelgianTenders(
       url: `https://ted.europa.eu/en/notice/-/detail/${pubNumber}`,
     };
   });
+
+  if (params.onlyOpenCalls) {
+    // isOpenCallNotice above only checks TED's notice-*type* (award vs. call
+    // for tenders) — it says nothing about whether the deadline itself has
+    // already passed. TED's "ACTIVE" scope doesn't guarantee that either, so
+    // a long-closed cn-* notice can still come back (confirmed live
+    // 2026-09-10: a "copieur" search returned notices with deadlines up to
+    // 11 months in the past). Mirrors lib/bosa.ts's identical fix for the
+    // same class of bug.
+    notices = notices.filter((t) => {
+      if (!t.deadline) return false;
+      const deadlineMs = new Date(t.deadline).getTime();
+      return !isNaN(deadlineMs) && deadlineMs > now;
+    });
+  }
 
   if (params.valueMin != null) {
     const min = params.valueMin;

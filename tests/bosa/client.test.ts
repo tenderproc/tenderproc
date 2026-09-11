@@ -194,6 +194,57 @@ describe("getBosaTenderById", () => {
     expect(tender?.documentUrls).toEqual([`${BASE_URL}/publication-workspaces/ws-1/documents`]);
   });
 
+  it("picks the version with the latest activation date, not just the first in array order", async () => {
+    // Regression test: confirmed live 2026-09-10 that BOSA:ea00faf1-...
+    // showed a stale deadline/title on its detail page (from an older
+    // version) while the feed listing showed the current ones — because
+    // findNoticeVersion used to just return the first version with
+    // xmlContent, trusting array order rather than ranking by date.
+    stubEnvAndToken({
+      workspace: () =>
+        ({
+          ok: true,
+          status: 200,
+          json: async () => ({
+            organisationNames: [{ language: "NL", text: "Test org" }],
+            versions: [
+              { activationDate: "2026-08-06", notice: { xmlContent: SINGLE_LANG_XML } },
+              { activationDate: "2026-09-10", notice: { xmlContent: MULTI_LANG_XML } },
+            ],
+          }),
+        }) as unknown as Response,
+    });
+
+    const { getBosaTenderById } = await import("@/lib/bosa");
+    const tender = await getBosaTenderById("ws-1");
+
+    expect(tender?.title).toBe("Aankoop van motoren");
+    expect(tender?.publicationDate).toBe("2026-09-10");
+  });
+
+  it("still picks the latest-dated version when it appears first in array order", async () => {
+    stubEnvAndToken({
+      workspace: () =>
+        ({
+          ok: true,
+          status: 200,
+          json: async () => ({
+            organisationNames: [{ language: "NL", text: "Test org" }],
+            versions: [
+              { activationDate: "2026-09-10", notice: { xmlContent: MULTI_LANG_XML } },
+              { activationDate: "2026-08-06", notice: { xmlContent: SINGLE_LANG_XML } },
+            ],
+          }),
+        }) as unknown as Response,
+    });
+
+    const { getBosaTenderById } = await import("@/lib/bosa");
+    const tender = await getBosaTenderById("ws-1");
+
+    expect(tender?.title).toBe("Aankoop van motoren");
+    expect(tender?.publicationDate).toBe("2026-09-10");
+  });
+
   it("returns null for a 404 (workspace not found)", async () => {
     stubEnvAndToken({
       workspace: () => ({ ok: false, status: 404 } as Response),

@@ -10,13 +10,23 @@ interface ScoreContextValue {
   scores: Record<string, MatchScore>;
   loading: boolean;
   minScore: number | null;
+  // True once the fetch has completed and the AI scoring itself failed
+  // (network error, or the API's scoringFailed flag) — distinct from
+  // "completed with zero/low-scoring results", which looks identical if you
+  // only look at `scores`.
+  failed: boolean;
 }
 
-const ScoreContext = createContext<ScoreContextValue>({ scores: {}, loading: false, minScore: null });
+const ScoreContext = createContext<ScoreContextValue>({
+  scores: {},
+  loading: false,
+  minScore: null,
+  failed: false,
+});
 
 export function useMatchScore(publicationNumber: string): ScoreContextValue & { score?: MatchScore } {
-  const { scores, loading, minScore } = useContext(ScoreContext);
-  return { scores, loading, minScore, score: scores[publicationNumber] };
+  const { scores, loading, minScore, failed } = useContext(ScoreContext);
+  return { scores, loading, minScore, failed, score: scores[publicationNumber] };
 }
 
 // Fetches match scores for the given tenders in the background after the
@@ -66,6 +76,7 @@ export default function OpportunitiesScores({
   const tendersKey = `${locale}:${tenders.map((t) => t.publicationNumber).join(",")}`;
 
   const [scores, setScores] = useState<Record<string, MatchScore>>({});
+  const [failed, setFailed] = useState(false);
   // Tracks which tendersKey the current `scores` reflect, so `loading` can be
   // derived during render instead of toggled via a setState call in the
   // effect body (which trips react-hooks/set-state-in-effect).
@@ -80,16 +91,18 @@ export default function OpportunitiesScores({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tenders, locale }),
     })
-      .then((res) => (res.ok ? res.json() : { scores: {} }))
+      .then((res) => (res.ok ? res.json() : { scores: {}, scoringFailed: true }))
       .then((data) => {
         if (!cancelled) {
           setScores(data.scores ?? {});
+          setFailed(Boolean(data.scoringFailed));
           setCompletedKey(tendersKey);
         }
       })
       .catch(() => {
         if (!cancelled) {
           setScores({});
+          setFailed(true);
           setCompletedKey(tendersKey);
         }
       });
@@ -109,11 +122,16 @@ export default function OpportunitiesScores({
       : tenders.length;
 
   return (
-    <ScoreContext.Provider value={{ scores, loading, minScore }}>
+    <ScoreContext.Provider value={{ scores, loading, minScore, failed }}>
       {minScore !== null && loading && (
         <p className="text-sm text-inkDim mb-4">{t("filteringByMatch")}</p>
       )}
-      {minScore !== null && !loading && matchedCount === 0 && tenders.length > 0 && (
+      {minScore !== null && !loading && failed && tenders.length > 0 && (
+        <div className="border border-line rounded-2xl p-8 text-center mb-4">
+          <p className="text-inkDim">{t("matchingUnavailable")}</p>
+        </div>
+      )}
+      {minScore !== null && !loading && !failed && matchedCount === 0 && tenders.length > 0 && (
         <div className="border border-line rounded-2xl p-8 text-center mb-4">
           <p className="text-inkDim">{t("noMatchResults")}</p>
         </div>

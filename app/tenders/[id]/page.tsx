@@ -53,7 +53,7 @@ export default async function TenderDetailPage({
 
   let score = undefined;
   if (user) {
-    const scores = await getMatchScores(
+    const { scores } = await getMatchScores(
       supabase,
       user.id,
       [tender],

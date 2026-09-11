@@ -14,11 +14,15 @@ export default function MatchFilterGate({
   publicationNumber: string;
   children: React.ReactNode;
 }) {
-  const { score, loading, minScore } = useMatchScore(publicationNumber);
+  const { score, loading, minScore, failed } = useMatchScore(publicationNumber);
 
   if (minScore !== null) {
     if (loading) return null;
-    if (!score || score.score < minScore) return null;
+    // When scoring itself failed, fall back to showing everything rather than
+    // hiding every card for lack of a score — see OpportunitiesScores.tsx's
+    // "matchingUnavailable" banner, which tells the user why nothing is
+    // filtered right now.
+    if (!failed && (!score || score.score < minScore)) return null;
   }
 
   return <>{children}</>;

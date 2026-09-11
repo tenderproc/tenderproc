@@ -33,6 +33,7 @@ export default async function OpportunitiesPage({
   let savedSectors: string[] = [];
   let savedLanguage: string | null = null;
   let showMatchFilter = false;
+  let showOnboarding = false;
   let tier: "FREE" | "PRO" | "PREMIUM" = "FREE";
   if (user) {
     const [saved, { data: subRow }] = await Promise.all([
@@ -41,6 +42,15 @@ export default async function OpportunitiesPage({
     ]);
     savedLanguage = saved.savedLanguage;
     showMatchFilter = hasProfileSignal(saved.profile);
+    // Deliberately narrower than showMatchFilter/hasProfileSignal above:
+    // signup already requires picking >=1 sector, so hasProfileSignal's
+    // `sectors.length > 0` clause is true for nearly every real account from
+    // the moment it exists — gating the onboarding banner on it suppressed
+    // the banner for essentially its entire target audience (confirmed live
+    // 2026-09-10, commit 3e7a6b1). This checks the richer profile fields
+    // (description/address) that signup does NOT collect, so the banner
+    // still shows until the user has actually filled in /company.
+    showOnboarding = !saved.profile.description.trim() && !saved.profile.address.trim();
     tier = getEffectiveTier(rowToUserSubscription(subRow)).tier;
     // "/pricing": Free is capped to 1 sector. Capping what's *applied* here
     // (rather than what's stored in `profiles.sectors`) is enough on its
@@ -61,6 +71,18 @@ export default async function OpportunitiesPage({
   const languageKeys = savedLanguage ? [savedLanguage] : undefined;
   const filterLanguageKeys = savedLanguage ? [savedLanguage] : undefined;
 
+  // "/pricing" sells "Opportunities feed, all sectors" as a Pro/Premium
+  // feature ("Opportunities feed for 1 sector" on Free) — an unfiltered feed
+  // is the thing being paid for. Signup already requires picking >=1 sector
+  // (see the "pickSector" validation), so a Free user only ever reaches zero
+  // saved sectors by unchecking their one sector in the sidebar (confirmed
+  // live 2026-09-10: doing so silently unlocks the full unfiltered feed,
+  // bypassing the paywall). A manual keyword/CPV search intentionally
+  // overrides the sector filter for everyone, so this only guards the
+  // default (no q/cpv) feed.
+  const freeNoSectorSelected =
+    tier === "FREE" && !params.q && !params.cpv && savedSectors.length === 0 && Boolean(user);
+
   // TED, BOSA, and the three regional Wallonia/Flanders sources are fetched
   // independently and merged here rather than behind one shared function,
   // since they have three different freshness models: TED and BOSA are
@@ -69,19 +91,25 @@ export default async function OpportunitiesPage({
   // source's failure is independent (Promise.allSettled): if e.g. BOSA's
   // API is briefly down, TED and regional results still render rather
   // than the whole page erroring out.
-  const [tedResult, bosaResult, externalResult] = await Promise.allSettled([
-    searchBelgianTenders({
-      keyword: params.q,
-      cpv: params.cpv,
-      cpvPrefixes,
-      languageKeys,
-      filterLanguageKeys,
-      onlyOpenCalls: true,
-      limit: 50,
-    }),
-    searchBosaTenders({ keyword: params.q, limit: 50, onlyOpenCalls: true, filterLanguageKeys, cpvPrefixes }),
-    getExternalOpportunities(),
-  ]);
+  const [tedResult, bosaResult, externalResult] = freeNoSectorSelected
+    ? [
+        { status: "fulfilled" as const, value: [] },
+        { status: "fulfilled" as const, value: [] },
+        { status: "fulfilled" as const, value: [] },
+      ]
+    : await Promise.allSettled([
+        searchBelgianTenders({
+          keyword: params.q,
+          cpv: params.cpv,
+          cpvPrefixes,
+          languageKeys,
+          filterLanguageKeys,
+          onlyOpenCalls: true,
+          limit: 50,
+        }),
+        searchBosaTenders({ keyword: params.q, limit: 50, onlyOpenCalls: true, filterLanguageKeys, cpvPrefixes }),
+        getExternalOpportunities(),
+      ]);
 
   const loadErrors: string[] = [];
   const tedTenders = tedResult.status === "fulfilled" ? tedResult.value : [];
@@ -145,7 +173,7 @@ export default async function OpportunitiesPage({
             </p>
           </div>
 
-          {user && !showMatchFilter && <OnboardingBanner userId={user.id} />}
+          {user && showOnboarding && <OnboardingBanner userId={user.id} />}
 
           <SearchFilters showMatchFilter={showMatchFilter} />
 
@@ -155,7 +183,13 @@ export default async function OpportunitiesPage({
             </div>
           )}
 
-          {!loadError && tenders.length === 0 && (
+          {!loadError && freeNoSectorSelected && (
+            <div className="border border-line rounded-2xl p-8 text-center">
+              <p className="text-inkDim">{t("noSectorSelected")}</p>
+            </div>
+          )}
+
+          {!loadError && !freeNoSectorSelected && tenders.length === 0 && (
             <div className="border border-line rounded-2xl p-8 text-center">
               <p className="text-inkDim">{t("noResults")}</p>
             </div>

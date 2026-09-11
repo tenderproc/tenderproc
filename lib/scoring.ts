@@ -113,13 +113,16 @@ same order given:
 Score conservatively when the company description is vague or missing — don't
 fabricate confidence.`;
 
+// Throws (rather than swallowing) when the AI call or its response can't be
+// used, so callers can tell "scoring is unavailable" apart from "scoring
+// succeeded and found nothing" — see getMatchScores in lib/matchScoreCache.ts.
 export async function scoreTenders(
   tenders: TenderNotice[],
   profile: CompanyProfile,
   locale: Locale
 ): Promise<MatchScore[]> {
   if (tenders.length === 0) return [];
-  if (!process.env.ANTHROPIC_API_KEY) return [];
+  if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY is not configured");
 
   const client = getAnthropicClient();
   // The prompt's own JSON example is in English; without this the model
@@ -146,39 +149,34 @@ Deadline: ${t.deadline ?? "unknown"}`
     )
     .join("\n\n");
 
-  try {
-    const message = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 4000,
-      system,
-      messages: [
-        { role: "user", content: `${profileText}\n\nTenders:\n\n${tendersText}` },
-      ],
-    });
+  const message = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 4000,
+    system,
+    messages: [
+      { role: "user", content: `${profileText}\n\nTenders:\n\n${tendersText}` },
+    ],
+  });
 
-    const textBlock = message.content.find((b) => b.type === "text");
-    const raw = textBlock && "text" in textBlock ? textBlock.text : "[]";
-    const cleaned = raw.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(cleaned);
-    if (!Array.isArray(parsed)) return [];
+  const textBlock = message.content.find((b) => b.type === "text");
+  const raw = textBlock && "text" in textBlock ? textBlock.text : "[]";
+  const cleaned = raw.replace(/```json|```/g, "").trim();
+  const parsed = JSON.parse(cleaned);
+  if (!Array.isArray(parsed)) throw new Error("scoreTenders: model response was not a JSON array");
 
-    return parsed
-      .filter((p) => typeof p?.publicationNumber === "string" && typeof p?.score === "number")
-      .map((p) => ({
-        publicationNumber: p.publicationNumber,
-        score: Math.max(0, Math.min(100, Math.round(p.score))),
-        summary: typeof p.summary === "string" ? p.summary : "",
-        criteria: Array.isArray(p.criteria)
-          ? p.criteria
-              .filter((c: unknown) => typeof (c as { label?: unknown })?.label === "string")
-              .map((c: { label: string; met: boolean }) => ({
-                label: c.label,
-                met: Boolean(c.met),
-              }))
-          : [],
-      }));
-  } catch (err) {
-    console.error("scoreTenders failed", err);
-    return [];
-  }
+  return parsed
+    .filter((p) => typeof p?.publicationNumber === "string" && typeof p?.score === "number")
+    .map((p) => ({
+      publicationNumber: p.publicationNumber,
+      score: Math.max(0, Math.min(100, Math.round(p.score))),
+      summary: typeof p.summary === "string" ? p.summary : "",
+      criteria: Array.isArray(p.criteria)
+        ? p.criteria
+            .filter((c: unknown) => typeof (c as { label?: unknown })?.label === "string")
+            .map((c: { label: string; met: boolean }) => ({
+              label: c.label,
+              met: Boolean(c.met),
+            }))
+        : [],
+    }));
 }
