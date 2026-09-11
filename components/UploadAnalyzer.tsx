@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { EligibilityResult, TenderNotice } from "@/lib/types";
@@ -16,6 +16,14 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
   const [error, setError] = useState<string | null>(null);
   const [errorAction, setErrorAction] = useState<{ href: string; label: string } | null>(null);
   const [result, setResult] = useState<EligibilityResult | null>(null);
+  // See UpgradeButton.tsx's identical guard: the button is visually ready
+  // before its onClick handler actually attaches post-hydration (measured
+  // 8.8s on this exact page under a throttled mobile connection, 2026-09-10)
+  // — during that window a tap fired zero requests and showed no feedback.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -84,8 +92,8 @@ export default function UploadAnalyzer({ tender }: { tender: TenderNotice }) {
 
       <button
         onClick={runAnalysis}
-        disabled={loading}
-        className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50"
+        disabled={loading || !mounted}
+        className="bg-accent text-white px-5 py-2.5 rounded-doc font-medium shadow-xs hover:bg-accentDim transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? t("readingTender") : t("runCheck")}
       </button>

@@ -40,6 +40,17 @@ export default function UpgradeButton({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const autoOpened = useRef(false);
+  // The button is server-rendered and visually ready before React actually
+  // attaches its onClick handler — on a slow connection that gap measured
+  // 6.7s live (2026-09-10, throttled 150kbps mobile retest), during which a
+  // tap is silently swallowed with zero feedback. `mounted` only flips true
+  // once this effect runs post-hydration, so the button stays disabled
+  // (and visibly so, see className below) for that window instead of
+  // looking clickable while doing nothing.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function reserveBetaPromoDiscount(): Promise<string | undefined> {
     try {
@@ -120,7 +131,11 @@ export default function UpgradeButton({
 
   return (
     <div>
-      <button onClick={subscribe} disabled={loading} className={className}>
+      <button
+        onClick={subscribe}
+        disabled={loading || !mounted}
+        className={`${className} disabled:opacity-50 disabled:cursor-not-allowed`}
+      >
         {loading ? t("opening") : label}
       </button>
       {error && <p className="text-sm text-stamp mt-2">{error}</p>}
