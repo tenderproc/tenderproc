@@ -143,7 +143,15 @@ export default function SupportChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    // Smaller footprint + closer-to-edge offset at narrow viewports/high
+    // zoom (max-sm), where three separate QA audit rounds independently
+    // found this fixed launcher overlapping body text and, worse, stealing
+    // clickable area from the Privacy Notice consent link on signup and
+    // the Pro plan's primary "Get started" CTA on pricing — the button's
+    // full w-14 h-14 square hit-area extends past the visible circle into
+    // its corners, so a smaller box meaningfully shrinks how much nearby
+    // content it can cover.
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-3">
       {open && (
         <div
           ref={panelRef}
@@ -265,7 +273,7 @@ export default function SupportChatWidget() {
         onClick={() => setOpen((prev) => !prev)}
         aria-label={open ? t("close") : t("bubbleLabel")}
         aria-expanded={open}
-        className="flex items-center justify-center w-14 h-14 rounded-full bg-accent text-white shadow-lg hover:bg-accentDim transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/40"
+        className="flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-accent text-white shadow-lg hover:bg-accentDim transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/40"
       >
         {open ? <CloseIcon /> : <ChatIcon />}
       </button>
