@@ -1,15 +1,11 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import Header from "@/components/Header";
 import OnboardingBanner from "@/components/OnboardingBanner";
 import SearchFilters from "@/components/SearchFilters";
-import TenderCard from "@/components/TenderCard";
 import PreferencesSidebar from "@/components/PreferencesSidebar";
-import OpportunitiesScores from "@/components/OpportunitiesScores";
-import MatchFilterGate from "@/components/MatchFilterGate";
-import { searchBelgianTenders } from "@/lib/ted";
-import { searchBosaTenders } from "@/lib/bosa";
-import { getExternalOpportunities } from "@/lib/externalOpportunities";
-import { sectorsToCpvPrefixes } from "@/lib/sectors";
+import OpportunitiesList from "@/components/OpportunitiesList";
+import OpportunitiesListSkeleton from "@/components/OpportunitiesListSkeleton";
 import { createClient } from "@/lib/supabase/server";
 import { getSavedCompanyProfile } from "@/lib/companyProfile";
 import { hasProfileSignal } from "@/lib/scoring";
@@ -59,18 +55,6 @@ export default async function OpportunitiesPage({
     savedSectors = tier === "FREE" ? saved.savedSectors.slice(0, FREE_SECTOR_LIMIT) : saved.savedSectors;
   }
 
-  // A manual CPV search overrides the saved sector default. The sidebar's
-  // language selection is exclusive-single-select (see PreferencesSidebar) —
-  // `null` means "All languages" (no filtering); a specific language both
-  // filters results to it (filterLanguageKeys, matched against TED's
-  // official-language field — see its doc in lib/ted.ts) and becomes the
-  // preferred display language (languageKeys).
-  const cpvPrefixes = !params.cpv && savedSectors.length > 0
-    ? sectorsToCpvPrefixes(savedSectors)
-    : undefined;
-  const languageKeys = savedLanguage ? [savedLanguage] : undefined;
-  const filterLanguageKeys = savedLanguage ? [savedLanguage] : undefined;
-
   // "/pricing" sells "Opportunities feed, all sectors" as a Pro/Premium
   // feature ("Opportunities feed for 1 sector" on Free) — an unfiltered feed
   // is the thing being paid for. Signup already requires picking >=1 sector
@@ -82,70 +66,6 @@ export default async function OpportunitiesPage({
   // default (no q/cpv) feed.
   const freeNoSectorSelected =
     tier === "FREE" && !params.q && !params.cpv && savedSectors.length === 0 && Boolean(user);
-
-  // TED, BOSA, and the three regional Wallonia/Flanders sources are fetched
-  // independently and merged here rather than behind one shared function,
-  // since they have three different freshness models: TED and BOSA are
-  // both live (fetched fresh every load), the regional sources are
-  // persisted (scraped weekly — see lib/externalOpportunities.ts). Each
-  // source's failure is independent (Promise.allSettled): if e.g. BOSA's
-  // API is briefly down, TED and regional results still render rather
-  // than the whole page erroring out.
-  const [tedResult, bosaResult, externalResult] = freeNoSectorSelected
-    ? [
-        { status: "fulfilled" as const, value: [] },
-        { status: "fulfilled" as const, value: [] },
-        { status: "fulfilled" as const, value: [] },
-      ]
-    : await Promise.allSettled([
-        searchBelgianTenders({
-          keyword: params.q,
-          cpv: params.cpv,
-          cpvPrefixes,
-          languageKeys,
-          filterLanguageKeys,
-          onlyOpenCalls: true,
-          limit: 50,
-        }),
-        searchBosaTenders({ keyword: params.q, limit: 50, onlyOpenCalls: true, filterLanguageKeys, cpvPrefixes }),
-        getExternalOpportunities(),
-      ]);
-
-  const loadErrors: string[] = [];
-  const tedTenders = tedResult.status === "fulfilled" ? tedResult.value : [];
-  if (tedResult.status === "rejected") {
-    loadErrors.push(tedResult.reason instanceof Error ? tedResult.reason.message : t("couldNotReachTed"));
-  }
-  const bosaTenders = bosaResult.status === "fulfilled" ? bosaResult.value : [];
-  if (bosaResult.status === "rejected") {
-    loadErrors.push(bosaResult.reason instanceof Error ? bosaResult.reason.message : "BOSA: could not load");
-  }
-  // Explicit-CPV search (params.cpv) can't match regional-source rows —
-  // they don't publish CPV codes (council minutes, not eForms notices).
-  // Excluding them for that specific search is correct, not a bug: a user
-  // searching a precise CPV code wants precise CPV matches.
-  let externalTenders = externalResult.status === "fulfilled" ? externalResult.value : [];
-  if (externalResult.status === "rejected") {
-    loadErrors.push(externalResult.reason instanceof Error ? externalResult.reason.message : "Regional sources: could not load");
-  }
-  if (params.cpv) {
-    externalTenders = [];
-  } else if (params.q) {
-    const q = params.q.toLowerCase();
-    externalTenders = externalTenders.filter(
-      (t) => t.title.toLowerCase().includes(q) || t.buyerName.toLowerCase().includes(q)
-    );
-  }
-  if (filterLanguageKeys?.length) {
-    externalTenders = externalTenders.filter((t) => t.titleLanguages.some((l) => filterLanguageKeys.includes(l)));
-  }
-
-  const tenders = [...tedTenders, ...bosaTenders, ...externalTenders].sort((a, b) => {
-    if (!a.publicationDate) return 1;
-    if (!b.publicationDate) return -1;
-    return b.publicationDate.localeCompare(a.publicationDate);
-  });
-  const loadError = loadErrors.length > 0 ? loadErrors.join(" — ") : null;
 
   return (
     <div>
@@ -177,33 +97,22 @@ export default async function OpportunitiesPage({
 
           <SearchFilters showMatchFilter={showMatchFilter} />
 
-          {loadError && (
-            <div className="border border-stamp/30 bg-stamp/5 rounded-doc p-4 text-sm text-stamp">
-              {t("loadError", { loadError })}
-            </div>
-          )}
-
-          {!loadError && freeNoSectorSelected && (
-            <div className="border border-line rounded-2xl p-8 text-center">
-              <p className="text-inkDim">{t("noSectorSelected")}</p>
-            </div>
-          )}
-
-          {!loadError && !freeNoSectorSelected && tenders.length === 0 && (
-            <div className="border border-line rounded-2xl p-8 text-center">
-              <p className="text-inkDim">{t("noResults")}</p>
-            </div>
-          )}
-
-          <OpportunitiesScores tenders={tenders} enabled={Boolean(user)} defaultFilter={showMatchFilter}>
-            <div>
-              {tenders.map((tender) => (
-                <MatchFilterGate key={tender.publicationNumber} publicationNumber={tender.publicationNumber}>
-                  <TenderCard tender={tender} />
-                </MatchFilterGate>
-              ))}
-            </div>
-          </OpportunitiesScores>
+          {/* TED, BOSA, and the regional sources are live external calls
+              (measured 1.5-2.5s+ combined, worse on a cold BOSA OAuth
+              handshake) — isolated in their own Suspense boundary so
+              everything above (header, sidebar, filters), which only needs
+              the fast Supabase auth/profile lookups, paints immediately
+              instead of waiting behind them too. */}
+          <Suspense fallback={<OpportunitiesListSkeleton />}>
+            <OpportunitiesList
+              params={params}
+              savedSectors={savedSectors}
+              savedLanguage={savedLanguage}
+              freeNoSectorSelected={freeNoSectorSelected}
+              showMatchFilter={showMatchFilter}
+              hasUser={Boolean(user)}
+            />
+          </Suspense>
         </div>
       </main>
     </div>
