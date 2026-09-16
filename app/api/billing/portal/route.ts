@@ -13,7 +13,7 @@ export async function GET() {
 
   const { data: sub } = await supabase
     .from("subscriptions")
-    .select("paddle_customer_id, paddle_subscription_id")
+    .select("paddle_customer_id")
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -25,10 +25,11 @@ export async function GET() {
   }
 
   try {
-    const session = await createCustomerPortalSession(
-      sub.paddle_customer_id,
-      sub.paddle_subscription_id ? [sub.paddle_subscription_id] : []
-    );
+    // Only the general overview URL is used below — subscription_ids would just
+    // buy us per-subscription deep links we don't consume, and Paddle's live API
+    // has been rejecting this account's subscription ID here with a bare 400 for
+    // reasons its error response doesn't explain. Omit it rather than chase that.
+    const session = await createCustomerPortalSession(sub.paddle_customer_id, []);
     return NextResponse.json({ portalUrl: session.urls.general.overview });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
