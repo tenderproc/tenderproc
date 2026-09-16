@@ -830,7 +830,7 @@
     "checkEmailPlanNote": "Once you confirm, you'll be taken straight to checkout for {plan}.",
     "backToLogin": "Back to login",
     "heading": "Create your account",
-    "signingUpFor": "You're signing up for {plan} — {price}/month",
+    "planLabel": "Signing up for",
     "subheading": "Tell us about your business — it powers the tenders you see and each tender's match score.",
     "email": "Email",
     "password": "Password",

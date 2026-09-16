@@ -830,7 +830,7 @@
     "checkEmailPlanNote": "Nach der Bestätigung geht es direkt weiter zur Kasse für {plan}.",
     "backToLogin": "Zurück zur Anmeldung",
     "heading": "Konto erstellen",
-    "signingUpFor": "Sie melden sich an für {plan} — {price}/Monat",
+    "planLabel": "Sie melden sich an für",
     "subheading": "Erzählen Sie uns von Ihrem Unternehmen — das bestimmt, welche Ausschreibungen Sie sehen, und die Übereinstimmungsbewertung jeder Ausschreibung.",
     "email": "E-Mail",
     "password": "Passwort",

@@ -27,8 +27,14 @@ export default function SignupPage() {
   const tAuthError = useTranslations("Errors.auth");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const plan = searchParams.get("plan");
-  const planDisplay = plan ? PLAN_DISPLAY[plan] : undefined;
+  // Preselects from ?plan=, but the dropdown below lets the user change
+  // their mind without leaving the form — an unrecognized/missing value
+  // falls back to the free tier, same as the old plan-is-absent behavior.
+  const [selectedPlan, setSelectedPlan] = useState(() => {
+    const initial = searchParams.get("plan");
+    return initial && PLAN_DISPLAY[initial] ? initial : "";
+  });
+  const planDisplay = selectedPlan ? PLAN_DISPLAY[selectedPlan] : undefined;
   // Set only by the /api/signup-fallback redirect — see that route for why:
   // it's the marker that the form's real onSubmit handler never attached
   // (a content blocker or failed chunk load broke hydration) and the
@@ -128,7 +134,7 @@ export default function SignupPage() {
     // back on /pricing?plan=... afterward, where PricingCards auto-opens
     // that tier's checkout (see autoOpenPlan), instead of losing the plan
     // choice and having to hunt for an upgrade button after confirming.
-    const redirectPath = planDisplay ? `/pricing?plan=${plan}` : "/opportunities";
+    const redirectPath = planDisplay ? `/pricing?plan=${selectedPlan}` : "/opportunities";
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -220,11 +226,25 @@ export default function SignupPage() {
             {t("heading")}
           </h1>
           <p className="text-sm text-inkDim mt-3 leading-relaxed">{t("subheading")}</p>
-          {planDisplay && (
-            <p className="inline-block mt-4 text-sm font-medium text-accent bg-accent/10 border border-accent/25 rounded-full px-3 py-1">
-              {t("signingUpFor", { plan: tPricing(planDisplay.nameKey), price: planDisplay.price })}
-            </p>
-          )}
+          <div className="inline-flex items-center gap-2 mt-4">
+            <label htmlFor="signup-plan" className="text-sm text-inkDim">
+              {t("planLabel")}
+            </label>
+            <select
+              id="signup-plan"
+              value={selectedPlan}
+              onChange={(e) => setSelectedPlan(e.target.value)}
+              className="text-sm font-medium text-accent bg-accent/10 border border-accent/25 rounded-full px-3 py-1 focus:outline-hidden focus:ring-2 focus:ring-accent/40"
+            >
+              <option value="">{tPricing("tiers.free.name")}</option>
+              {PRICING_TIERS.map((tier) => (
+                <option key={tier.key} value={tier.key}>
+                  {tPricing(`tiers.${tier.key}.name`)} — {tier.basePrice}
+                  {tPricing("perMonth")}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {hydrationFailed && (

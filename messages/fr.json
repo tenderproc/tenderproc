@@ -830,7 +830,7 @@
     "checkEmailPlanNote": "Une fois confirmé, vous serez dirigé directement vers le paiement pour {plan}.",
     "backToLogin": "Retour à la connexion",
     "heading": "Créez votre compte",
-    "signingUpFor": "Vous vous inscrivez pour {plan} — {price}/mois",
+    "planLabel": "Vous vous inscrivez pour",
     "subheading": "Parlez-nous de votre entreprise — cela détermine les marchés que vous voyez et le score de correspondance de chacun.",
     "email": "E-mail",
     "password": "Mot de passe",

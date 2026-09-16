@@ -830,7 +830,7 @@
     "checkEmailPlanNote": "Na bevestiging gaat u meteen door naar de afrekening voor {plan}.",
     "backToLogin": "Terug naar inloggen",
     "heading": "Maak uw account aan",
-    "signingUpFor": "U meldt u aan voor {plan} — {price}/maand",
+    "planLabel": "U meldt u aan voor",
     "subheading": "Vertel ons over uw bedrijf — dit bepaalt welke opdrachten u ziet en de matchscore van elke opdracht.",
     "email": "E-mail",
     "password": "Wachtwoord",
