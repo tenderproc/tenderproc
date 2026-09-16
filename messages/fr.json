@@ -1079,7 +1079,7 @@
   "Terms": {
     "metaTitle": "Conditions d'utilisation — TenderProc",
     "title": "Conditions d'utilisation",
-    "intro": "Les présentes conditions d’utilisation (les « <strong>Conditions</strong> ») régissent l’accès à TenderProc et son utilisation (le « <strong>Service</strong> »), exploité par <strong>{entityName}</strong>, immatriculée sous le numéro d’enregistrement commercial / fiscal {companyNumber} (« <strong>TenderProc</strong> », « nous »). En créant un compte ou en utilisant le Service, vous acceptez les présentes Conditions. Si vous n’êtes pas d’accord, n’utilisez pas le Service.",
+    "intro": "Les présentes conditions d’utilisation (les « <strong>Conditions</strong> ») régissent l’accès à TenderProc et son utilisation (le « <strong>Service</strong> »), exploité par <strong>{entityName}</strong>, numéro de TVA (Arabie saoudite) {companyNumber} (« <strong>TenderProc</strong> », « nous »). En créant un compte ou en utilisant le Service, vous acceptez les présentes Conditions. Si vous n’êtes pas d’accord, n’utilisez pas le Service.",
     "s1": {
       "h": "1. Qu'est-ce que TenderProc",
       "p1": "TenderProc est un service logiciel B2B qui aide les entreprises à découvrir, présélectionner et préparer des offres pour les marchés publics en Belgique. Il fait remonter les avis de marché issus de sources publiques, génère des scores de correspondance assistés par IA, des vérifications d’éligibilité et des projets de réponse, et fournit un espace de travail pour suivre les offres, de la présélection jusqu’au dépôt.",
@@ -1148,7 +1148,7 @@
     "intro": "Cette politique explique quelles données à caractère personnel TenderProc collecte, pourquoi, et quels droits vous avez sur celles-ci en vertu du Règlement général sur la protection des données de l’UE (RGPD) et du droit belge de la protection des données. Elle s’applique aux visiteurs de notre site web et aux utilisateurs de l’application TenderProc.",
     "s1": {
       "h": "1. Qui est responsable de vos données",
-      "p1": "Le responsable du traitement est <strong>{entityName}</strong>, numéro d’enregistrement commercial / fiscal {companyNumber}. Pour toute question concernant la présente politique ou pour exercer vos droits, contactez-nous à l’adresse <email>{emailAddress}</email>.",
+      "p1": "Le responsable du traitement est <strong>{entityName}</strong>, numéro de TVA (Arabie saoudite) {companyNumber}. Pour toute question concernant la présente politique ou pour exercer vos droits, contactez-nous à l’adresse <email>{emailAddress}</email>.",
       "p2": "Nous sommes établis en dehors de l’Union européenne, mais nous proposons le Service à des entreprises situées en Belgique et dans l’UE ; la présente politique, ainsi que le RGPD lui-même, s’applique donc à la manière dont nous traitons vos données (art. 3, § 2, du RGPD)."
     },
     "s2": {

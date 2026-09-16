@@ -17,9 +17,9 @@ export const LEGAL_ENTITY = {
    * that matters before relying on it.
    */
   address: "Khalid Ibn Yazid, Madinah, Kingdom of Saudi Arabia (KSA)",
-  /** Saudi commercial registration / tax number — labeled generically as
-   * "Commercial Registration / Tax Number" in page copy rather than
-   * asserting it's specifically a VAT number, since that wasn't confirmed. */
+  /** Saudi VAT number — confirmed by the owner (2026-09-16) to be the VAT
+   * registration number, not just a generic commercial registration number.
+   * Labeled as "VAT number (Saudi Arabia)" in page copy. */
   companyNumber: "3123756993100003",
   contactEmail: "contact@tenderproc.com",
   /** Chosen governing law for the Terms — note this is a non-EU company

@@ -1079,7 +1079,7 @@
   "Terms": {
     "metaTitle": "Terms of Service — TenderProc",
     "title": "Terms of Service",
-    "intro": "These Terms of Service (\"<strong>Terms</strong>\") govern access to and use of TenderProc (the \"<strong>Service</strong>\"), operated by <strong>{entityName}</strong>, commercial registration / tax number {companyNumber} (\"<strong>TenderProc</strong>\", \"we\", \"us\"). By creating an account or using the Service, you agree to these Terms. If you don’t agree, don’t use the Service.",
+    "intro": "These Terms of Service (\"<strong>Terms</strong>\") govern access to and use of TenderProc (the \"<strong>Service</strong>\"), operated by <strong>{entityName}</strong>, VAT number (Saudi Arabia) {companyNumber} (\"<strong>TenderProc</strong>\", \"we\", \"us\"). By creating an account or using the Service, you agree to these Terms. If you don’t agree, don’t use the Service.",
     "s1": {
       "h": "1. What TenderProc is",
       "p1": "TenderProc is a B2B software service that helps businesses discover, screen and prepare bids for public procurement tenders in Belgium. It surfaces tender notices from public sources, generates AI-assisted match scores, eligibility checks and draft bid responses, and provides a workspace to track bids from screening through submission.",
@@ -1148,7 +1148,7 @@
     "intro": "This notice explains what personal data TenderProc collects, why, and what rights you have over it under the EU General Data Protection Regulation (GDPR) and Belgian data protection law. It applies to visitors of our website and users of the TenderProc app.",
     "s1": {
       "h": "1. Who is responsible for your data",
-      "p1": "The data controller is <strong>{entityName}</strong>, commercial registration / tax number {companyNumber}. For any question about this notice or to exercise your rights, contact us at <email>{emailAddress}</email>.",
+      "p1": "The data controller is <strong>{entityName}</strong>, VAT number (Saudi Arabia) {companyNumber}. For any question about this notice or to exercise your rights, contact us at <email>{emailAddress}</email>.",
       "p2": "We’re established outside the European Union but offer the Service to businesses in Belgium and the EU, so this notice, and GDPR itself, still applies to how we handle your data (GDPR Art. 3(2))."
     },
     "s2": {

@@ -1079,7 +1079,7 @@
   "Terms": {
     "metaTitle": "Nutzungsbedingungen — TenderProc",
     "title": "Nutzungsbedingungen",
-    "intro": "Diese Nutzungsbedingungen (die \"<strong>Bedingungen</strong>\") regeln den Zugang zu und die Nutzung von TenderProc (der \"<strong>Dienst</strong>\"), betrieben von <strong>{entityName}</strong>, Handelsregister-/Steuernummer {companyNumber} (\"<strong>TenderProc</strong>\", \"wir\", \"uns\"). Durch das Erstellen eines Kontos oder die Nutzung des Dienstes stimmen Sie diesen Bedingungen zu. Wenn Sie nicht einverstanden sind, nutzen Sie den Dienst bitte nicht.",
+    "intro": "Diese Nutzungsbedingungen (die \"<strong>Bedingungen</strong>\") regeln den Zugang zu und die Nutzung von TenderProc (der \"<strong>Dienst</strong>\"), betrieben von <strong>{entityName}</strong>, USt-IdNr. (Saudi-Arabien) {companyNumber} (\"<strong>TenderProc</strong>\", \"wir\", \"uns\"). Durch das Erstellen eines Kontos oder die Nutzung des Dienstes stimmen Sie diesen Bedingungen zu. Wenn Sie nicht einverstanden sind, nutzen Sie den Dienst bitte nicht.",
     "s1": {
       "h": "1. Was TenderProc ist",
       "p1": "TenderProc ist ein B2B-Softwaredienst, der Unternehmen dabei unterstützt, öffentliche Ausschreibungen in Belgien zu finden, zu prüfen und Angebote dafür vorzubereiten. Der Dienst stellt Ausschreibungsbekanntmachungen aus öffentlichen Quellen zusammen, erzeugt KI-gestützte Match-Scores, Eignungsprüfungen und Angebotsentwürfe und bietet einen Arbeitsbereich, um Angebote von der Prüfung bis zur Einreichung zu verfolgen.",
@@ -1148,7 +1148,7 @@
     "intro": "Diese Erklärung beschreibt, welche personenbezogenen Daten TenderProc erhebt, warum, und welche Rechte Sie daran gemäß der EU-Datenschutz-Grundverordnung (DSGVO) und belgischem Datenschutzrecht haben. Sie gilt für Besucher unserer Website und Nutzer der TenderProc-App.",
     "s1": {
       "h": "1. Wer für Ihre Daten verantwortlich ist",
-      "p1": "Verantwortlicher ist <strong>{entityName}</strong>, Handelsregister-/Steuernummer {companyNumber}. Bei Fragen zu dieser Erklärung oder zur Ausübung Ihrer Rechte kontaktieren Sie uns unter <email>{emailAddress}</email>.",
+      "p1": "Verantwortlicher ist <strong>{entityName}</strong>, USt-IdNr. (Saudi-Arabien) {companyNumber}. Bei Fragen zu dieser Erklärung oder zur Ausübung Ihrer Rechte kontaktieren Sie uns unter <email>{emailAddress}</email>.",
       "p2": "Wir sind außerhalb der Europäischen Union niedergelassen, bieten den Dienst aber Unternehmen in Belgien und der EU an, sodass diese Erklärung und die DSGVO selbst dennoch für die Verarbeitung Ihrer Daten gelten (Art. 3 Abs. 2 DSGVO)."
     },
     "s2": {

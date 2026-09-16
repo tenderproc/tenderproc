@@ -1079,7 +1079,7 @@
   "Terms": {
     "metaTitle": "Gebruiksvoorwaarden — TenderProc",
     "title": "Gebruiksvoorwaarden",
-    "intro": "Deze gebruiksvoorwaarden (de \"<strong>Voorwaarden</strong>\") regelen de toegang tot en het gebruik van TenderProc (de \"<strong>Dienst</strong>\"), uitgebaat door <strong>{entityName}</strong>, ondernemingsnummer / fiscaal nummer {companyNumber} (\"<strong>TenderProc</strong>\", \"wij\", \"ons\"). Door een account aan te maken of de Dienst te gebruiken, aanvaardt u deze Voorwaarden. Gaat u niet akkoord, gebruik de Dienst dan niet.",
+    "intro": "Deze gebruiksvoorwaarden (de \"<strong>Voorwaarden</strong>\") regelen de toegang tot en het gebruik van TenderProc (de \"<strong>Dienst</strong>\"), uitgebaat door <strong>{entityName}</strong>, btw-nummer (Saoedi-Arabië) {companyNumber} (\"<strong>TenderProc</strong>\", \"wij\", \"ons\"). Door een account aan te maken of de Dienst te gebruiken, aanvaardt u deze Voorwaarden. Gaat u niet akkoord, gebruik de Dienst dan niet.",
     "s1": {
       "h": "1. Wat TenderProc is",
       "p1": "TenderProc is een B2B-softwaredienst die bedrijven helpt om overheidsopdrachten in België te ontdekken, te screenen en er offertes voor voor te bereiden. De Dienst haalt aankondigingen uit publieke bronnen naar boven, genereert AI-ondersteunde matchscores, geschiktheidscontroles en concept-offertes, en biedt een werkruimte om offertes op te volgen van screening tot indiening.",
@@ -1148,7 +1148,7 @@
     "intro": "Deze verklaring legt uit welke persoonsgegevens TenderProc verzamelt, waarom, en welke rechten u daarop hebt op grond van de Algemene Verordening Gegevensbescherming (AVG) van de EU en de Belgische gegevensbeschermingswetgeving. Ze is van toepassing op bezoekers van onze website en gebruikers van de TenderProc-app.",
     "s1": {
       "h": "1. Wie verantwoordelijk is voor uw gegevens",
-      "p1": "De verwerkingsverantwoordelijke is <strong>{entityName}</strong>, ondernemingsnummer / fiscaal nummer {companyNumber}. Voor vragen over deze verklaring of om uw rechten uit te oefenen, contacteer ons via <email>{emailAddress}</email>.",
+      "p1": "De verwerkingsverantwoordelijke is <strong>{entityName}</strong>, btw-nummer (Saoedi-Arabië) {companyNumber}. Voor vragen over deze verklaring of om uw rechten uit te oefenen, contacteer ons via <email>{emailAddress}</email>.",
       "p2": "Wij zijn gevestigd buiten de Europese Unie, maar bieden de Dienst aan bedrijven in België en de EU aan, waardoor deze verklaring en de AVG zelf toch van toepassing zijn op hoe wij uw gegevens verwerken (art. 3, lid 2, AVG)."
     },
     "s2": {
