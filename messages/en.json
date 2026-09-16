@@ -267,7 +267,6 @@
     "viewPricing": "View pricing"
   },
   "Opportunities": {
-    "eyebrow": "Sources: TED, BOSA, regional council records",
     "heading": "Opportunities",
     "description": "Belgian public tenders matched to your sectors, from TED, BOSA, and regional/municipal council sources.",
     "couldNotReachTed": "Couldn't reach TED.",

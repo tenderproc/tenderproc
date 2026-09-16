@@ -267,7 +267,6 @@
     "viewPricing": "Voir les tarifs"
   },
   "Opportunities": {
-    "eyebrow": "Sources : TED, BOSA, données communales régionales",
     "heading": "Opportunités",
     "description": "Marchés publics belges correspondant à vos secteurs, issus de TED, BOSA et de sources régionales/communales.",
     "couldNotReachTed": "Impossible de contacter TED.",

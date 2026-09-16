@@ -82,10 +82,7 @@ export default async function OpportunitiesPage({
 
         <div className="flex-1 min-w-0">
           <div className="mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-inkDim">
-              {t("eyebrow")}
-            </p>
-            <h1 className="font-display font-bold text-3xl text-ink mt-1 tracking-tight">
+            <h1 className="font-display font-bold text-3xl text-ink tracking-tight">
               {t("heading")}
             </h1>
             <p className="text-sm text-inkDim mt-2 max-w-xl leading-relaxed">
