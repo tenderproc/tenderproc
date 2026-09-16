@@ -3,6 +3,41 @@ import { LANGUAGES } from "./languages";
 
 const TED_SEARCH_URL = "https://api.ted.europa.eu/v3/notices/search";
 
+/**
+ * TED occasionally rate-limits (429) or blips (503) under normal load —
+ * both are transient, not a real outage. Retries up to twice with a short
+ * backoff (honoring Retry-After when TED sends one) before giving up, so a
+ * momentary throttle doesn't surface as a visible "couldn't load" error on
+ * every page load. Non-retryable statuses (4xx other than 429) return
+ * immediately.
+ */
+async function fetchTed(init: RequestInit, attempts = 3): Promise<Response> {
+  let res: Response;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    res = await fetch(TED_SEARCH_URL, init);
+    if (res.ok || (res.status !== 429 && res.status !== 503)) return res;
+    if (attempt < attempts - 1) {
+      const retryAfterSec = Number(res.headers.get("retry-after"));
+      const delayMs = Number.isFinite(retryAfterSec) && retryAfterSec > 0
+        ? retryAfterSec * 1000
+        : 400 * 2 ** attempt;
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+  return res!;
+}
+
+/**
+ * A 429/503 body is TED's raw nginx error page (`<html><head>...`), not
+ * something worth showing a user. Only pass through non-HTML bodies, so the
+ * "couldn't load tenders" banner never leaks a raw HTML document.
+ */
+function summarizeTedErrorBody(body: string): string {
+  const trimmed = body.trim();
+  if (!trimmed || trimmed.startsWith("<")) return "";
+  return trimmed.slice(0, 300);
+}
+
 // Fields requested from TED. Field names come from the eForms data model.
 // If TED changes field naming, check the live Swagger docs at
 // https://ted.europa.eu/api/documentation/index.html and update this list.
@@ -185,7 +220,7 @@ export async function searchBelgianTenders(
   const fetchLimit = needsOverfetch ? Math.max(displayLimit * 4, 100) : displayLimit;
   const titlePriority = buildTitlePriority(params.languageKeys);
 
-  const res = await fetch(TED_SEARCH_URL, {
+  const res = await fetchTed({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -209,7 +244,8 @@ export async function searchBelgianTenders(
 
   if (!res.ok) {
     const body = await res.text().catch(() => "");
-    throw new Error(`TED API error ${res.status}: ${body.slice(0, 300)}`);
+    const detail = summarizeTedErrorBody(body);
+    throw new Error(`TED API error ${res.status}${detail ? `: ${detail}` : ""}`);
   }
 
   const data = await res.json();
@@ -283,7 +319,7 @@ export async function getTenderById(
   languageKeys?: string[]
 ): Promise<TenderDetail | null> {
   const titlePriority = buildTitlePriority(languageKeys);
-  const res = await fetch(TED_SEARCH_URL, {
+  const res = await fetchTed({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -372,7 +408,7 @@ export async function searchAwardedTenders(
     ? Math.max(displayLimit * 4, 200)
     : displayLimit;
 
-  const res = await fetch(TED_SEARCH_URL, {
+  const res = await fetchTed({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -391,7 +427,8 @@ export async function searchAwardedTenders(
 
   if (!res.ok) {
     const body = await res.text().catch(() => "");
-    throw new Error(`TED API error ${res.status}: ${body.slice(0, 300)}`);
+    const detail = summarizeTedErrorBody(body);
+    throw new Error(`TED API error ${res.status}${detail ? `: ${detail}` : ""}`);
   }
 
   const data = await res.json();
@@ -580,14 +617,15 @@ export async function fetchHistoricalAwardsPage(
     body.iterationNextToken = params.iterationToken;
   }
 
-  const res = await fetch(TED_SEARCH_URL, {
+  const res = await fetchTed({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
   if (!res.ok) {
     const errBody = await res.text().catch(() => "");
-    throw new Error(`TED API error ${res.status}: ${errBody.slice(0, 300)}`);
+    const detail = summarizeTedErrorBody(errBody);
+    throw new Error(`TED API error ${res.status}${detail ? `: ${detail}` : ""}`);
   }
 
   const data = await res.json();
