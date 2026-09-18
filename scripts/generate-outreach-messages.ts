@@ -100,6 +100,11 @@ function firstName(contactName: string, lang: Language): string {
 // bureaucratic French/Dutch phrasing — truncate before dropping one into a
 // sentence, or a single title can run several lines and read as garbled
 // rather than personal.
+// Used only in the NL template's self-intro line (matching the real sent
+// message this template is based on) — EN/FR still use "[Your name]"/
+// "[Votre nom]" placeholders, left alone since only NL was asked for.
+const SENDER_FIRST_NAME = "Joost";
+
 function truncateTitle(title: string, maxLen = 90): string {
   const trimmed = title.trim();
   if (trimmed.length <= maxLen) return trimmed;
@@ -163,29 +168,33 @@ P.S. Si les marchés publics ne sont pas une priorité en ce moment, n'hésitez 
   }
 
   if (lang === "nl") {
+    // Informal "je/jullie" register (not "u") and a self-intro/no formal
+    // sign-off, matching the phrasing actually used in a real sent
+    // LinkedIn message (2026-09-18, to Maarten Vanhauwaert @ CRONOS
+    // PUBLIC SERVICES) rather than a stiffer letter-style draft. Uses
+    // "deadline", not "opleveringsdatum" — that real message used the
+    // latter, but it actually means a project's delivery/completion date,
+    // not a tender's bid-submission deadline, which is what this field is.
     const subject = `${d.hasOpenTender ? d.openTenderTitle : "Een kans"} voor ${d.companyName}`;
-    const email = `Beste ${d.firstNameText},
+    const email = `Hallo ${d.firstNameText},
 
-Proficiat met de opdracht bij ${d.mostRecentWinBuyer} (${d.mostRecentWinTitle}) — mooi gerealiseerd.
+Gefeliciteerd met jullie recente contract met ${d.mostRecentWinBuyer} (${d.mostRecentWinTitle}), goed gedaan!
 ${tenderClause
-  ? `\nIk zag dat ${d.openTenderTitle} momenteel loopt (deadline: ${d.openTenderDeadline}) en dat sluit goed aan bij het trackrecord van ${d.companyName} in de sector ${d.sector}.`
-  : `\nGezien het trackrecord van ${d.companyName} in de sector ${d.sector} denk ik dat er ook andere opdrachten interessant kunnen zijn.`}
+  ? `\nIk zag dat er momenteel een ander contract openstaat dat goed lijkt te passen bij het profiel van ${d.companyName}: ${d.openTenderTitle} (deadline: ${d.openTenderDeadline}).`
+  : `\nGezien het profiel van ${d.companyName} in de sector ${d.sector} denk ik dat er ook andere opdrachten interessant kunnen zijn.`}
 
-Ik ontwikkel TenderProc, een tool die Belgische overheidsopdrachten opvolgt — ook de opdrachten onder de drempel die TED en BOSA niet tonen — en die automatisch matcht met uw bedrijfsprofiel, zodat u er niet zelf naar hoeft te zoeken.
+Ik ben ${SENDER_FIRST_NAME}, de founder van TenderProc, een tool die Belgische aanbestedingsmogelijkheden — inclusief gemeentelijke contracten onder de drempel die niet onder TED en BOSA vallen — in kaart brengt en automatisch koppelt aan je bedrijf, zodat je er zelf niet meer naar hoeft te zoeken.
 
-Heeft u interesse om er even naar te kijken? Gratis uit te proberen via tenderproc.com.
+Probeer de tool gratis uit op tenderproc.com.
 
-Met vriendelijke groeten,
-[Uw naam]
-
-P.S. Als overheidsopdrachten momenteel geen prioriteit zijn, geen probleem — u mag dit bericht gerust negeren.`;
-    const linkedinNote = `Hallo ${d.firstNameText}, ik zag dat ${d.companyName} recent een opdracht binnenhaalde bij ${d.mostRecentWinBuyer}. Ik ontwikkel een tool die Belgische overheidsopdrachten automatisch opspoort, ook onder de drempel. Laten we connecteren.`;
+P.S. Als overheidsopdrachten momenteel geen prioriteit zijn, geen probleem, je mag dit bericht dan gerust negeren.`;
+    const linkedinNote = `Hallo ${d.firstNameText}, ik zag dat ${d.companyName} recent een opdracht binnenhaalde bij ${d.mostRecentWinBuyer}. Ik ontwikkel een tool die Belgische overheidsopdrachten automatisch opspoort, ook onder de drempel. Zullen we connecteren?`;
     const linkedinDm = `Bedankt om te connecteren! Even kort geschetst: ik bouwde TenderProc omdat bedrijven zoals ${d.companyName} vaak opdrachten onder de drempel misten — die verschijnen niet op TED of BOSA.${
-      tenderClause ? ` ${d.openTenderTitle} (deadline ${d.openTenderDeadline}) leek me een goede match voor u —` : ""
-    } ik laat u graag vrijblijvend zien hoe de matching werkt.`;
-    const bump = `Beste ${d.firstNameText}, ik stuur dit nog eens door voor het geval mijn vorig bericht ondergesneeuwd is geraakt.${
+      tenderClause ? ` ${d.openTenderTitle} (deadline ${d.openTenderDeadline}) leek me een goede match voor jou —` : ""
+    } ik laat je graag vrijblijvend zien hoe de matching werkt.`;
+    const bump = `Hallo ${d.firstNameText}, ik stuur dit nog eens door voor het geval mijn vorig bericht ondergesneeuwd is geraakt.${
       tenderClause ? ` ${d.openTenderTitle} sluit af op ${d.openTenderDeadline}, vandaar deze herinnering terwijl er nog tijd is.` : ""
-    } Ik stuur u graag meer kansen door voor ${d.companyName} indien nuttig.`;
+    } Ik stuur je graag meer kansen door voor ${d.companyName} indien nuttig.`;
     return { subject, email, linkedinNote, linkedinDm, bump };
   }
 
