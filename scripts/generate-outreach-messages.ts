@@ -12,6 +12,10 @@
 // Rows whose outreach_status is already something other than blank/"not
 // started" are skipped by default (pass --include-contacted to override),
 // so re-running after a partial outreach pass only regenerates fresh ones.
+//
+// Rows with no "language" set are SKIPPED, not guessed, unless you pass
+// --default-language explicitly — listed at the end of the output file so
+// you can fill them in and rerun.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { ScriptExit } from "./lib/scriptEnv";
@@ -26,7 +30,15 @@ function argValue(flag: string, fallback: string): string {
 const inPath = argValue("in", "outreach-list-semicolon.csv");
 const delimiter = argValue("delimiter", ";");
 const outPath = argValue("out", "outreach-messages.md");
-const defaultLanguage = argValue("default-language", "fr") as Language;
+// No default unless the user explicitly opts into one: guessing a
+// language for a company with no evidence either way is wrong about as
+// often as it's right (e.g. CRONOS PUBLIC SERVICES — buyer "Infrabel sa"
+// and win title "e-Market 894 - Senior System Administrator MQ" give no
+// FR/NL signal at all, so silently defaulting to French produced a
+// French message for a Flemish company). Rows with no language and no
+// --default-language flag are skipped, not guessed.
+const defaultLanguageArg = args.find((a) => a.startsWith("--default-language="));
+const defaultLanguage = defaultLanguageArg ? (defaultLanguageArg.slice("--default-language=".length) as Language) : null;
 const includeContacted = args.includes("--include-contacted");
 
 type Language = "en" | "fr" | "nl";
@@ -223,6 +235,7 @@ function main() {
   }
 
   const sections: string[] = [];
+  const needsLanguage: string[] = [];
   let skippedContacted = 0;
   let count = 0;
 
@@ -234,7 +247,15 @@ function main() {
     }
 
     const langRaw = (row.language ?? "").trim().toLowerCase() as Language;
-    const lang: Language = VALID_LANGUAGES.includes(langRaw) ? langRaw : defaultLanguage;
+    let lang: Language;
+    if (VALID_LANGUAGES.includes(langRaw)) {
+      lang = langRaw;
+    } else if (defaultLanguage) {
+      lang = defaultLanguage;
+    } else {
+      needsLanguage.push(row.company_name);
+      continue;
+    }
 
     const data: RowData = {
       companyName: row.company_name,
@@ -285,13 +306,20 @@ function main() {
     );
   }
 
+  const needsLanguageBlock = needsLanguage.length
+    ? `\n## Needs a language before a message can be generated (${needsLanguage.length})\n\nFill in the "language" column (en/fr/nl) for these in ${inPath} and rerun — skipped rather than guessed, since there's no reliable signal to guess from:\n\n${needsLanguage
+        .map((n) => `- ${n}`)
+        .join("\n")}\n\n---\n`
+    : "";
+
   const header = `# TenderProc outreach messages\n\nGenerated from ${inPath}. ${count} companies below${
     skippedContacted ? `, ${skippedContacted} already-contacted rows skipped (pass --include-contacted to regenerate them too)` : ""
-  }. Nothing here has been sent — review and copy-paste per company.\n\n---\n`;
+  }${needsLanguage.length ? `, ${needsLanguage.length} skipped for missing language (listed at the end)` : ""}. Nothing here has been sent — review and copy-paste per company.\n\n---\n`;
 
-  writeFileSync(outPath, header + sections.join("\n"), "utf8");
+  writeFileSync(outPath, header + sections.join("\n") + "\n" + needsLanguageBlock, "utf8");
   console.log(`Wrote ${count} companies' messages to ${outPath}.`);
   if (skippedContacted) console.log(`Skipped ${skippedContacted} rows already marked as contacted.`);
+  if (needsLanguage.length) console.log(`Skipped ${needsLanguage.length} rows with no resolvable language (listed at the end of the file) — fill in "language" and rerun.`);
 }
 
 try {
