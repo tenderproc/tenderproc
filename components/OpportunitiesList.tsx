@@ -7,6 +7,10 @@ import { searchBosaTenders } from "@/lib/bosa";
 import { getExternalOpportunities } from "@/lib/externalOpportunities";
 import { sectorsToCpvPrefixes } from "@/lib/sectors";
 
+// Same per-source cap TED/BOSA already use (limit: 50 below) — keeps a single
+// scoring request to a handful of parallel chunks instead of dozens.
+const MATCH_SCORE_LIMIT = 50;
+
 /**
  * The slow half of the Opportunities page: TED and BOSA are both live,
  * unpaginated-per-request external APIs (measured 1.5-2.5s+ each, BOSA
@@ -91,6 +95,16 @@ export default async function OpportunitiesList({
   });
   const loadError = loadErrors.length > 0 ? loadErrors.join(" — ") : null;
 
+  // TED and BOSA are already capped at 50 each, but the regional sources
+  // (lib/externalOpportunities.ts) aren't — merged, this can reach ~235
+  // tenders. Sending all of them to /api/opportunities/scores in one request
+  // means a burst of ~24 parallel Claude calls (10/chunk) that the "Filtering
+  // by match %…" state waits on as a single unit — slow, and one bad chunk
+  // stalls the rest. Score only the most recent MATCH_SCORE_LIMIT; the full
+  // list still renders as cards (MatchScoreSlot already renders nothing for
+  // an unscored tender), it's only the match-% filter/badge that's capped.
+  const scoredTenders = tenders.slice(0, MATCH_SCORE_LIMIT);
+
   return (
     <>
       {loadError && (
@@ -111,7 +125,7 @@ export default async function OpportunitiesList({
         </div>
       )}
 
-      <OpportunitiesScores tenders={tenders} enabled={hasUser} defaultFilter={showMatchFilter}>
+      <OpportunitiesScores tenders={scoredTenders} enabled={hasUser} defaultFilter={showMatchFilter}>
         <div>
           {tenders.map((tender) => (
             <MatchFilterGate key={tender.publicationNumber} publicationNumber={tender.publicationNumber}>
