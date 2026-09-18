@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { TenderNotice } from "./types";
 import { LEGAL_ENTITY } from "./legal/companyInfo";
+import { buildUnsubscribeUrl } from "./unsubscribe";
 
 function formatDate(d: string | null) {
   if (!d) return "no deadline listed";
@@ -24,6 +25,16 @@ function escapeHtml(s: string) {
   return s.replace(/[&<>"']/g, (c) => map[c]);
 }
 
+/** Footer line for the automated notification emails (digest, beta-feedback
+ * reminder) linking to the one-click unsubscribe route. Not used on
+ * transactional emails (contact form, support escalation, admin alerts),
+ * which aren't the kind of email CAN-SPAM/GDPR require an opt-out on. */
+function unsubscribeFooter(userId: string) {
+  return `<p style="font-size:11px;color:#aaa;margin-top:24px;border-top:1px solid #eee;padding-top:12px;">
+    <a href="${buildUnsubscribeUrl(userId)}" style="color:#aaa;">Unsubscribe from these emails</a>
+  </p>`;
+}
+
 /** One followed company's new match, for the digest email's "Companies you follow" section (app/api/cron/notify). */
 export interface CompanyFollowMatchEmailItem {
   companyName: string;
@@ -42,6 +53,7 @@ export interface CompanyFollowMatchEmailItem {
  */
 export async function sendNewTendersEmail(
   to: string,
+  userId: string,
   tenders: TenderNotice[],
   companyMatches: CompanyFollowMatchEmailItem[] = []
 ) {
@@ -99,6 +111,7 @@ export async function sendNewTendersEmail(
             : ""
         }
         <p style="font-size:12px;color:#888;margin-top:24px;">You can change your sectors any time in Settings${companyMatches.length > 0 ? ", and manage followed companies under Market → Following" : ""}.</p>
+        ${unsubscribeFooter(userId)}
       </div>
     `,
   });
@@ -155,7 +168,7 @@ export async function sendSupportChatEscalation(submission: SupportChatEscalatio
  * the actual feedback is captured in-app via BetaFeedbackModal (see
  * app/api/beta-feedback/*), not through this email. Sent once per milestone
  * by app/api/cron/beta-feedback-emails. */
-export async function sendBetaFeedbackReminderEmail(to: string, milestone: 7 | 30 | 90) {
+export async function sendBetaFeedbackReminderEmail(to: string, userId: string, milestone: 7 | 30 | 90) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.tenderproc.com";
@@ -179,6 +192,7 @@ export async function sendBetaFeedbackReminderEmail(to: string, milestone: 7 | 3
           </a>
         </p>
         <p style="font-size:12px;color:#888;">A short prompt will be waiting for you next time you open TenderProc.</p>
+        ${unsubscribeFooter(userId)}
       </div>
     `,
   });

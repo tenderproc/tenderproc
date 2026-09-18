@@ -47,11 +47,20 @@ export async function GET(req: NextRequest) {
   }
   const { data: profileLanguages, error: profilesError } = await supabase
     .from("profiles")
-    .select("id, language");
+    .select("id, language, email_notifications_enabled");
   if (profilesError) {
     return NextResponse.json({ error: profilesError.message }, { status: 500 });
   }
   const languageByUserId = new Map((profileLanguages ?? []).map((p) => [p.id as string, p.language as string | null]));
+  // Users who clicked the unsubscribe link (lib/unsubscribe.ts) — bookkeeping
+  // below (notified_tenders, emailed_at) still runs for them so a future
+  // resubscribe doesn't dump everything they missed in one email, but the
+  // send itself is skipped.
+  const unsubscribedUserIds = new Set(
+    (profileLanguages ?? [])
+      .filter((p) => p.email_notifications_enabled === false)
+      .map((p) => p.id as string)
+  );
   const profiles = (companies ?? []).map((c) => ({
     id: c.user_id as string,
     sectors: (c.sector_keys as string[] | null) ?? [],
@@ -124,12 +133,12 @@ export async function GET(req: NextRequest) {
       // matches) *before* recording the dedup rows below — if the send
       // throws, we don't want to have already marked these as
       // notified/emailed, or they'd never be retried on the next run.
-      if (tendersToEmail.length > 0 || companyMatches.length > 0) {
+      if ((tendersToEmail.length > 0 || companyMatches.length > 0) && !unsubscribedUserIds.has(userId)) {
         const { data: userData, error: userError } = await supabase.auth.admin.getUserById(userId);
         if (userError) throw new Error(userError.message);
         const email = userData.user?.email;
         if (email) {
-          await sendNewTendersEmail(email, tendersToEmail, companyMatches);
+          await sendNewTendersEmail(email, userId, tendersToEmail, companyMatches);
           emailsSent++;
         }
       }

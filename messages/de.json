@@ -923,7 +923,8 @@
     "saving": "Wird gespeichert…",
     "filtering": "Ergebnisse werden aktualisiert…",
     "sectorLimitFree": "Der kostenlose Plan ist auf {limit} Branche beschränkt.",
-    "sectorLimitUpgrade": "Upgraden für alle Branchen"
+    "sectorLimitUpgrade": "Upgraden für alle Branchen",
+    "emailNotifications": "Per E-Mail über neue Ausschreibungen informieren"
   },
   "Enums": {
     "matchLabel": {

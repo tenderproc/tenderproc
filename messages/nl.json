@@ -923,7 +923,8 @@
     "saving": "Bezig met opslaan…",
     "filtering": "Resultaten worden bijgewerkt…",
     "sectorLimitFree": "Het gratis plan is beperkt tot {limit} sector.",
-    "sectorLimitUpgrade": "Upgrade voor alle sectoren"
+    "sectorLimitUpgrade": "Upgrade voor alle sectoren",
+    "emailNotifications": "E-mail me over nieuwe aanbestedingen"
   },
   "Enums": {
     "matchLabel": {

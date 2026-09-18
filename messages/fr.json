@@ -923,7 +923,8 @@
     "saving": "Enregistrement…",
     "filtering": "Mise à jour des résultats…",
     "sectorLimitFree": "Le forfait gratuit est limité à {limit} secteur.",
-    "sectorLimitUpgrade": "Passez à un forfait supérieur pour tous les secteurs"
+    "sectorLimitUpgrade": "Passez à un forfait supérieur pour tous les secteurs",
+    "emailNotifications": "M'informer par email des nouveaux marchés"
   },
   "Enums": {
     "matchLabel": {

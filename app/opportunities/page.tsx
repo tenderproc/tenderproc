@@ -28,15 +28,21 @@ export default async function OpportunitiesPage({
 
   let savedSectors: string[] = [];
   let savedLanguage: string | null = null;
+  let savedEmailNotificationsEnabled = true;
   let showMatchFilter = false;
   let showOnboarding = false;
   let tier: "FREE" | "PRO" | "PREMIUM" = "FREE";
   if (user) {
-    const [saved, { data: subRow }] = await Promise.all([
+    const [saved, { data: subRow }, { data: notificationsProfile }] = await Promise.all([
       getSavedCompanyProfile(supabase, user.id),
       supabase.from("subscriptions").select(SUBSCRIPTION_COLUMNS).eq("user_id", user.id).maybeSingle(),
+      // Not folded into getSavedCompanyProfile: that fetch's return shape
+      // feeds the match-scoring cache's profileHash (see its comment), and
+      // this toggle has nothing to do with matching.
+      supabase.from("profiles").select("email_notifications_enabled").eq("id", user.id).maybeSingle(),
     ]);
     savedLanguage = saved.savedLanguage;
+    savedEmailNotificationsEnabled = notificationsProfile?.email_notifications_enabled ?? true;
     showMatchFilter = hasProfileSignal(saved.profile);
     // Deliberately narrower than showMatchFilter/hasProfileSignal above:
     // signup already requires picking >=1 sector, so hasProfileSignal's
@@ -76,6 +82,7 @@ export default async function OpportunitiesPage({
             userId={user.id}
             initialSectors={savedSectors}
             initialLanguage={savedLanguage}
+            initialEmailNotificationsEnabled={savedEmailNotificationsEnabled}
             sectorLimit={tier === "FREE" ? FREE_SECTOR_LIMIT : null}
           />
         )}

@@ -11,11 +11,16 @@ export default function PreferencesSidebar({
   userId,
   initialSectors,
   initialLanguage,
+  initialEmailNotificationsEnabled,
   sectorLimit,
 }: {
   userId: string;
   initialSectors: string[];
   initialLanguage: string | null;
+  /** profiles.email_notifications_enabled — off after the user clicks the
+   * unsubscribe link in a digest/reminder email (lib/unsubscribe.ts). This
+   * toggle is how they turn it back on. */
+  initialEmailNotificationsEnabled: boolean;
   /** Free plan's sector cap ("/pricing": "Opportunities feed for 1 sector"),
    * or null for unlimited (Pro/Premium). The server page already applies
    * this to what's actually queried — this only keeps the checkboxes from
@@ -28,6 +33,7 @@ export default function PreferencesSidebar({
   const router = useRouter();
   const [sectors, setSectors] = useState(initialSectors);
   const [language, setLanguage] = useState<string | null>(initialLanguage);
+  const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(initialEmailNotificationsEnabled);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isRefreshing, startRefresh] = useTransition();
@@ -102,6 +108,21 @@ export default function PreferencesSidebar({
   }, [sectors, language]);
 
   const atSectorLimit = sectorLimit !== null && sectors.length >= sectorLimit;
+
+  // Separate from the sectors/language effect above: this doesn't affect
+  // Opportunities matching, so it shouldn't trigger that effect's
+  // router.refresh() (which re-fetches TED/BOSA/regional sources).
+  async function toggleEmailNotifications(enabled: boolean) {
+    setEmailNotificationsEnabled(enabled);
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("profiles")
+      .upsert({ id: userId, email_notifications_enabled: enabled, updated_at: new Date().toISOString() });
+    if (error) {
+      setEmailNotificationsEnabled(!enabled);
+      setError(error.message);
+    }
+  }
 
   function toggleSector(key: string) {
     setSectors((prev) => {
@@ -200,6 +221,18 @@ export default function PreferencesSidebar({
           ))}
         </div>
       </details>
+
+      <div className="mt-4 pt-3 border-t border-line">
+        <label className="flex items-center gap-2 text-[13px] leading-snug text-ink cursor-pointer">
+          <input
+            type="checkbox"
+            className="accent-accent h-3.5 w-3.5 shrink-0"
+            checked={emailNotificationsEnabled}
+            onChange={(e) => toggleEmailNotifications(e.target.checked)}
+          />
+          {t("emailNotifications")}
+        </label>
+      </div>
 
       <p className="text-xs text-inkDim mt-3 h-4">
         {saving

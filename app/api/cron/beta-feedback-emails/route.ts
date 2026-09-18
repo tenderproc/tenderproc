@@ -35,6 +35,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Users who clicked the unsubscribe link (lib/unsubscribe.ts).
+  const { data: optedOutProfiles, error: profilesError } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("email_notifications_enabled", false);
+  if (profilesError) {
+    return NextResponse.json({ error: profilesError.message }, { status: 500 });
+  }
+  const unsubscribedUserIds = new Set((optedOutProfiles ?? []).map((p) => p.id as string));
+
   const now = Date.now();
   let emailsSent = 0;
   const errors: string[] = [];
@@ -47,7 +57,7 @@ export async function GET(req: NextRequest) {
     for (const milestone of FEEDBACK_MILESTONES) {
       const sentAtCol = SENT_AT_COLUMN[milestone];
       const alreadySent = Boolean(row[sentAtCol as keyof typeof row]);
-      if (daysSince < milestone || alreadySent) continue;
+      if (daysSince < milestone || alreadySent || unsubscribedUserIds.has(row.user_id as string)) continue;
 
       try {
         const { data: userData, error: userError } = await supabase.auth.admin.getUserById(row.user_id as string);
@@ -55,7 +65,7 @@ export async function GET(req: NextRequest) {
         const email = userData.user?.email;
         if (!email) throw new Error("no email on file");
 
-        await sendBetaFeedbackReminderEmail(email, milestone);
+        await sendBetaFeedbackReminderEmail(email, row.user_id as string, milestone);
         const { error: stampError } = await supabase
           .from("beta_promo_redemptions")
           .update({ [sentAtCol]: new Date().toISOString() })
