@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { SECTORS } from "@/lib/sectors";
 import { isFreeEmailDomain } from "@/lib/freeEmailDomains";
 import { stripHtmlTags } from "@/lib/sanitize";
+import { sendFreeTierSignupAlert } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -75,6 +76,17 @@ export async function POST(req: NextRequest) {
   });
   if (companyError) {
     console.error("signup-profile: failed to seed companies row (non-fatal)", companyError);
+  }
+
+  if (isFreeTier === true && typeof email === "string") {
+    // Awaited (not fire-and-forget): a serverless function can be frozen
+    // right after the response is sent, which would kill an unawaited send
+    // before Resend's request completes.
+    try {
+      await sendFreeTierSignupAlert(email, cleanCompanyName);
+    } catch (err) {
+      console.error("signup-profile: failed to send free tier signup alert (non-fatal)", err);
+    }
   }
 
   return NextResponse.json({ ok: true });

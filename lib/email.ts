@@ -233,6 +233,33 @@ export async function sendAdminAlertEmail(subject: string, bodyLines: string[]) 
   }
 }
 
+/** Internal notification sent when someone completes free-tier signup (see
+ * app/api/signup-profile). Best-effort: a signup should never fail because
+ * this alert had trouble, so callers should not await-throw on it. */
+export async function sendFreeTierSignupAlert(email: string, companyName: string) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const to = process.env.FREE_SIGNUP_NOTIFY_EMAIL || "joost.derudder@tenderproc.com";
+
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    subject: `[TenderProc] New free tier signup — ${companyName || email}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;">
+        <p style="text-transform:uppercase;letter-spacing:0.1em;font-size:11px;color:#888;">TenderProc signup alert</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        ${companyName ? `<p><strong>Company:</strong> ${escapeHtml(companyName)}</p>` : ""}
+        <p style="font-size:12px;color:#888;">Signed up on the free tier.</p>
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
 export interface ContactFormSubmission {
   name: string;
   email: string;
