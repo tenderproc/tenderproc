@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SECTORS } from "@/lib/sectors";
 import { LANGUAGES } from "@/lib/languages";
@@ -171,9 +172,9 @@ export default function PreferencesSidebar({
         {sectorLimit !== null && (
           <p className="text-[11px] text-inkDim mt-2">
             {t("sectorLimitFree", { limit: sectorLimit })}{" "}
-            <a href="/pricing" className="underline hover:text-ink transition-colors">
+            <Link href="/pricing" className="underline hover:text-ink transition-colors">
               {t("sectorLimitUpgrade")}
-            </a>
+            </Link>
           </p>
         )}
       </details>
