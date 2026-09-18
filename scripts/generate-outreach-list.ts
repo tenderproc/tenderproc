@@ -91,10 +91,15 @@ interface KboMatch {
 
 // ---------- Helpers ----------
 
+// Semicolon-delimited, not comma: Excel on a Dutch/Belgian Windows locale
+// uses ";" as its CSV list separator, so double-clicking a comma-delimited
+// file dumps every row into column A instead of splitting it. Commas
+// within a field (e.g. "IT, software & telecom") no longer need quoting
+// as a result, but still get quoted for clarity alongside real delimiters.
 function csvEscape(value: string | number | null | undefined): string {
   if (value === null || value === undefined) return "";
   const s = String(value);
-  if (/[",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  if (/[;",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
   return s;
 }
 
@@ -326,6 +331,7 @@ async function main() {
     "open_tender_3_deadline",
     "open_tender_3_url",
     "linkedin_search_url",
+    "language", // fill in en/fr/nl per company (blank defaults to fr in generate-outreach-messages.ts)
     "contact_name",
     "contact_email",
     "contact_linkedin",
@@ -333,7 +339,7 @@ async function main() {
     "notes",
   ];
 
-  const lines = [header.join(",")];
+  const lines = [header.join(";")];
 
   for (const group of sortedGroups) {
     const match = kboMatches.get(group.normalizedName)!;
@@ -371,13 +377,14 @@ async function main() {
       csvEscape(matchedTenders[2]?.deadline ?? ""),
       csvEscape(matchedTenders[2]?.url ?? ""),
       csvEscape(linkedInSearchUrl(companyName)),
+      "", // language: fill in en/fr/nl
       "",
       "",
       "",
       "not started",
       csvEscape(match.confidence === "possible" ? "KBO match is a best guess — verify before outreach" : ""),
     ];
-    lines.push(row.join(","));
+    lines.push(row.join(";"));
   }
 
   writeFileSync(outPath, lines.join("\n"), "utf8");
