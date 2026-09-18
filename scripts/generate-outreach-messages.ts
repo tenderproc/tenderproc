@@ -151,29 +151,29 @@ P.S. Si les marchés publics ne sont pas une priorité en ce moment, n'hésitez 
   }
 
   if (lang === "nl") {
-    const subject = `${d.hasOpenTender ? d.openTenderTitle : "Een kans"} — voor ${d.companyName}`;
+    const subject = `${d.hasOpenTender ? d.openTenderTitle : "Een kans"} voor ${d.companyName}`;
     const email = `Beste ${d.firstNameText},
 
-Proficiat met uw recente opdracht bij ${d.mostRecentWinBuyer} (${d.mostRecentWinTitle}) — mooie opdracht.
+Proficiat met de opdracht bij ${d.mostRecentWinBuyer} (${d.mostRecentWinTitle}) — mooi gerealiseerd.
 ${tenderClause
-  ? `\nIk zag dat ${d.openTenderTitle} momenteel openstaat (deadline: ${d.openTenderDeadline}) en dat lijkt goed aan te sluiten bij het trackrecord van ${d.companyName} in de sector ${d.sector}.`
-  : `\nGezien het profiel van ${d.companyName} in de sector ${d.sector}, denk ik dat er nog andere opdrachten interessant kunnen zijn.`}
+  ? `\nIk zag dat ${d.openTenderTitle} momenteel loopt (deadline: ${d.openTenderDeadline}) en dat sluit goed aan bij het trackrecord van ${d.companyName} in de sector ${d.sector}.`
+  : `\nGezien het trackrecord van ${d.companyName} in de sector ${d.sector} denk ik dat er ook andere opdrachten interessant kunnen zijn.`}
 
-Ik bouw TenderProc — een tool die Belgische overheidsopdrachten opvolgt, inclusief opdrachten onder de drempel die TED en BOSA niet dekken, en deze automatisch matcht met uw bedrijf, zodat u er niet zelf naar hoeft te zoeken.
+Ik ontwikkel TenderProc, een tool die Belgische overheidsopdrachten opvolgt — ook de opdrachten onder de drempel die TED en BOSA niet tonen — en die automatisch matcht met uw bedrijfsprofiel, zodat u er niet zelf naar hoeft te zoeken.
 
-Interesse om even te kijken? Gratis uit te proberen: tenderproc.com
+Heeft u interesse om er even naar te kijken? Gratis uit te proberen via tenderproc.com.
 
 Met vriendelijke groeten,
 [Uw naam]
 
-P.S. Als overheidsopdrachten momenteel geen prioriteit zijn, geen probleem — negeer dit gerust.`;
-    const linkedinNote = `Hallo ${d.firstNameText}, ik zag dat ${d.companyName} onlangs een opdracht won bij ${d.mostRecentWinBuyer}. Ik bouw een tool die Belgische overheidsopdrachten automatisch opspoort, ook onder de drempel. Laten we connecteren.`;
-    const linkedinDm = `Bedankt om te connecteren! Even kort: ik ontwikkelde TenderProc omdat bedrijven zoals ${d.companyName} vaak opdrachten onder de drempel misten, die niet op TED/BOSA verschijnen.${
-      tenderClause ? ` ${d.openTenderTitle} (deadline ${d.openTenderDeadline}) leek me een goede match —` : ""
-    } ik toon u graag vrijblijvend hoe de matching werkt.`;
-    const bump = `Beste ${d.firstNameText}, ik stuur dit even opnieuw voor het geval mijn vorig bericht ondergesneeuwd raakte.${
+P.S. Als overheidsopdrachten momenteel geen prioriteit zijn, geen probleem — u mag dit bericht gerust negeren.`;
+    const linkedinNote = `Hallo ${d.firstNameText}, ik zag dat ${d.companyName} recent een opdracht binnenhaalde bij ${d.mostRecentWinBuyer}. Ik ontwikkel een tool die Belgische overheidsopdrachten automatisch opspoort, ook onder de drempel. Laten we connecteren.`;
+    const linkedinDm = `Bedankt om te connecteren! Even kort geschetst: ik bouwde TenderProc omdat bedrijven zoals ${d.companyName} vaak opdrachten onder de drempel misten — die verschijnen niet op TED of BOSA.${
+      tenderClause ? ` ${d.openTenderTitle} (deadline ${d.openTenderDeadline}) leek me een goede match voor u —` : ""
+    } ik laat u graag vrijblijvend zien hoe de matching werkt.`;
+    const bump = `Beste ${d.firstNameText}, ik stuur dit nog eens door voor het geval mijn vorig bericht ondergesneeuwd is geraakt.${
       tenderClause ? ` ${d.openTenderTitle} sluit af op ${d.openTenderDeadline}, vandaar deze herinnering terwijl er nog tijd is.` : ""
-    } Ik stuur graag meer opportuniteiten door voor ${d.companyName} als dat nuttig is.`;
+    } Ik stuur u graag meer kansen door voor ${d.companyName} indien nuttig.`;
     return { subject, email, linkedinNote, linkedinDm, bump };
   }
 
