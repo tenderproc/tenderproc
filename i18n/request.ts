@@ -1,11 +1,19 @@
-import { cookies } from "next/headers";
+import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { DEFAULT_LOCALE, LOCALE_COOKIE, isLocale } from "@/lib/locales";
+import { routing } from "./routing";
 
-export default getRequestConfig(async () => {
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get(LOCALE_COOKIE)?.value;
-  const locale = isLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE;
+/**
+ * Resolves the locale from the URL's `[locale]` segment (set up by the
+ * next-intl middleware composed into proxy.ts), NOT from a cookie.
+ *
+ * This used to read a `locale` cookie via `cookies()` from `next/headers`,
+ * which opted every route that renders a translation into full per-request
+ * dynamic rendering. `requestLocale` is a plain route param, so pages without
+ * their own per-request dynamism can be statically prerendered per locale.
+ */
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 
   return {
     locale,

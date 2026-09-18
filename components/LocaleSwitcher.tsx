@@ -1,17 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/locales";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import FlagIcon from "@/components/FlagIcon";
 
 export default function LocaleSwitcher() {
   const t = useTranslations("LocaleSwitcher");
   const locale = useLocale() as Locale;
   const router = useRouter();
+  // Locale-aware: this is the pathname *without* the locale prefix, so it can
+  // be handed straight back to router.replace() with a different locale.
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
-  const [pending, setPending] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Escape should dismiss the open dropdown and return focus to the toggle,
@@ -30,17 +35,19 @@ export default function LocaleSwitcher() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  async function selectLocale(next: Locale) {
+  // Locale is part of the URL now (see i18n/routing.ts) rather than a cookie,
+  // so switching it is a navigation to the same page under the other locale's
+  // prefix — next-intl's router adds/strips the prefix per `as-needed`, so
+  // English lands back on the un-prefixed URL. Dynamic segments (e.g.
+  // /bids/[bidId]) have to be passed through `params`, and the query string is
+  // preserved so filters/plan selections survive the switch.
+  function selectLocale(next: Locale) {
     setOpen(false);
     if (next === locale) return;
-    setPending(true);
-    await fetch("/api/locale", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ locale: next }),
+    const query = Object.fromEntries(searchParams.entries());
+    startTransition(() => {
+      router.replace({ pathname, query }, { locale: next });
     });
-    router.refresh();
-    setPending(false);
   }
 
   return (
@@ -52,7 +59,7 @@ export default function LocaleSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        disabled={pending}
+        disabled={isPending}
         className="flex items-center gap-1 hover:text-ink transition-colors disabled:opacity-50"
       >
         <FlagIcon locale={locale} />

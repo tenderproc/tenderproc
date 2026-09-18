@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { SECTORS } from "@/lib/sectors";
 import { MARKET_SHARE_WINDOW_OPTIONS } from "@/lib/marketShare/window";

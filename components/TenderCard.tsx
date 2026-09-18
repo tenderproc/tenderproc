@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { TenderNotice } from "@/lib/types";
 import { INTL_LOCALE, type Locale } from "@/lib/locales";

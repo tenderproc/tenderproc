@@ -2,8 +2,6 @@ export const LOCALES = ["en", "nl", "fr", "de"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
-export const LOCALE_COOKIE = "locale";
-
 export const LOCALE_META: Record<Locale, { label: string }> = {
   en: { label: "English" },
   nl: { label: "Nederlands" },
@@ -33,15 +31,3 @@ export const LOCALE_ENGLISH_NAME: Record<Locale, string> = {
   fr: "French",
   de: "German",
 };
-
-/** Picks the best-matching supported locale from an Accept-Language header value. */
-export function pickLocaleFromAcceptLanguage(header: string | null): Locale {
-  if (!header) return DEFAULT_LOCALE;
-  const preferred = header
-    .split(",")
-    .map((part) => part.trim().split(";")[0]?.slice(0, 2).toLowerCase());
-  for (const lang of preferred) {
-    if (isLocale(lang)) return lang;
-  }
-  return DEFAULT_LOCALE;
-}

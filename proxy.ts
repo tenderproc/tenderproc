@@ -1,27 +1,43 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
-import { LOCALE_COOKIE, isLocale, pickLocaleFromAcceptLanguage } from "@/lib/locales";
+import createIntlMiddleware from "next-intl/middleware";
+import { DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/locales";
+import { routing } from "@/i18n/routing";
+
+// Locale lives in the URL now (see i18n/routing.ts), not in a `locale` cookie,
+// so the first-visit Accept-Language sniffing + cookie persistence that used
+// to live here is gone — next-intl's own middleware does locale detection and
+// rewrites "/pricing" → "/en/pricing" / "/fr/pricing" → "/fr/pricing" into the
+// app/[locale] tree. Next.js only supports one proxy/middleware file, so the
+// two are composed here.
+const intlMiddleware = createIntlMiddleware(routing);
+
+/** Splits "/fr/pricing" into { locale: "fr", pathname: "/pricing" }. With
+ * `localePrefix: "as-needed"` the default locale carries no prefix, so
+ * "/pricing" yields { locale: "en", pathname: "/pricing" } — which is exactly
+ * what the auth checks below already expected before this migration, so every
+ * `pathname.startsWith("/…")` test keeps working unchanged under a prefix. */
+function splitLocale(pathname: string): { locale: Locale; pathname: string } {
+  const [, maybeLocale, ...rest] = pathname.split("/");
+  if (isLocale(maybeLocale)) {
+    return { locale: maybeLocale, pathname: "/" + rest.join("/") };
+  }
+  return { locale: DEFAULT_LOCALE, pathname };
+}
+
+/** Builds an internal redirect target that keeps the visitor's locale, mirroring
+ * what `localePrefix: "as-needed"` produces: no prefix for the default locale,
+ * "/<locale>/…" for the others. (This file is middleware, not a Server
+ * Component, so it can't use the locale-aware `redirect` from i18n/navigation.) */
+function localizedPath(pathname: string, locale: Locale): string {
+  return locale === DEFAULT_LOCALE ? pathname : `/${locale}${pathname}`;
+}
 
 export async function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  let response = NextResponse.next({ request: req });
-
-  // First visit (no locale cookie yet): pick a default from Accept-Language so
-  // the very first render is already in the visitor's language, then persist
-  // it — the flag switcher (POST /api/locale) is what changes it afterwards.
-  // Applied via withLocaleCookie() at every return point below, since the
-  // Supabase client's setAll() reassigns `response` and the redirect branches
-  // return a fresh NextResponse that wouldn't otherwise carry it.
-  const localeToPersist = isLocale(req.cookies.get(LOCALE_COOKIE)?.value)
-    ? null
-    : pickLocaleFromAcceptLanguage(req.headers.get("accept-language"));
-  function withLocaleCookie(res: NextResponse) {
-    if (localeToPersist) {
-      res.cookies.set(LOCALE_COOKIE, localeToPersist, { path: "/", maxAge: 60 * 60 * 24 * 365 });
-    }
-    return res;
-  }
+  // API routes live outside the [locale] segment — they must never be
+  // locale-prefixed or rewritten, they only need the auth gate below.
+  const isApiRoute = req.nextUrl.pathname.startsWith("/api/");
+  const { locale, pathname } = splitLocale(req.nextUrl.pathname);
 
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/signup");
   const isPublic =
@@ -41,7 +57,7 @@ export async function proxy(req: NextRequest) {
     pathname.startsWith("/contact") ||
     pathname.startsWith("/api/contact") ||
     // Tender detail pages are meant as shareable direct links (see the
-    // "PublicTenderDetail" i18n namespace and app/tenders/[id]/page.tsx,
+    // "PublicTenderDetail" i18n namespace and app/[locale]/tenders/[id]/page.tsx,
     // which already branches its data-fetching on `if (user)` and never
     // fetches profile/match-score data for anonymous visitors). Writes
     // (AddToWorkflowButton, UploadAnalyzer's /api/analyze) independently
@@ -67,16 +83,14 @@ export async function proxy(req: NextRequest) {
     // before any session exists. Read-only public KBO register data (see
     // supabase-kbo-companies-migration.sql), no user data exposed.
     pathname.startsWith("/api/company-search") ||
-    // Native <form> fallback target for /signup (see app/signup/page.tsx):
+    // Native <form> fallback target for /signup (see app/[locale]/signup/page.tsx):
     // only reached when the page's client JS never hydrated, so there's no
     // session cookie to check — gating it here would 401 the exact visitor
     // it exists to help, hiding the "your browser blocked part of this
     // page" banner it's supposed to show instead.
     pathname.startsWith("/api/signup-fallback") ||
-    // The locale switcher must work pre-auth too (e.g. from /pricing).
-    pathname.startsWith("/api/locale") ||
-    // BetaFeedbackModal (mounted site-wide in app/layout.tsx) polls this on
-    // every page for every visitor, signed in or not — it does its own
+    // BetaFeedbackModal (mounted site-wide in app/[locale]/layout.tsx) polls
+    // this on every page for every visitor, signed in or not — it does its own
     // supabase.auth.getUser() check and returns { due: null } for anonymous
     // callers, so it doesn't need the middleware's session gate too. Left
     // out of the public list, every signed-out page view would 401 here
@@ -88,8 +102,8 @@ export async function proxy(req: NextRequest) {
   // 404 instead of being redirected to /login. Without this, any garbage URL
   // returns a 200 "log in" page, which is both confusing (looks like the
   // path exists) and bad for SEO (soft-404s are indexable). Keep this in
-  // sync with app/'s top-level route directories (/tenders is deliberately
-  // excluded — see isPublic above).
+  // sync with app/[locale]'s top-level route directories (/tenders is
+  // deliberately excluded — see isPublic above).
   const PROTECTED_PAGE_PREFIXES = [
     "/admin",
     "/bids",
@@ -107,6 +121,12 @@ export async function proxy(req: NextRequest) {
     (prefix) => pathname === prefix || pathname.startsWith(prefix + "/")
   );
 
+  // Cookies Supabase wants to write back (a refreshed session). Collected
+  // rather than written onto a response here, because the response we
+  // ultimately return isn't built until after the auth decision — see
+  // finalize() below.
+  const authCookies: Array<{ name: string; value: string; options?: object }> = [];
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -116,15 +136,31 @@ export async function proxy(req: NextRequest) {
           return req.cookies.getAll();
         },
         setAll(cookiesToSet) {
+          // Mutating req.cookies is what makes a refreshed session visible to
+          // the render downstream: NextRequest's cookies are backed by the
+          // request's `Cookie` header, and next-intl's rewrite forwards
+          // `new Headers(request.headers)` upstream (see its middleware
+          // source), so this has to happen *before* intlMiddleware runs.
           cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value));
-          response = NextResponse.next({ request: req });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
+          authCookies.push(...cookiesToSet);
         },
       },
     }
   );
+
+  /** Produces the response to return. With no argument, the request is allowed
+   * through and next-intl gets to resolve/rewrite the locale (or issue its own
+   * redirect, e.g. "/" → "/fr" for a French visitor). With an argument (a
+   * /login redirect, or the 401 JSON), that response wins — there's nothing to
+   * locale-rewrite on a URL that's about to change anyway. Either way any
+   * refreshed Supabase session cookie is written onto it. */
+  function finalize(res?: NextResponse) {
+    const out = res ?? (isApiRoute ? NextResponse.next({ request: req }) : intlMiddleware(req));
+    for (const { name, value, options } of authCookies) {
+      out.cookies.set(name, value, options);
+    }
+    return out;
+  }
 
   // Always call getUser() (not getSession()) in middleware — it revalidates
   // the token against Supabase instead of trusting a possibly-stale cookie.
@@ -136,7 +172,7 @@ export async function proxy(req: NextRequest) {
   // fetches, so a client-side <Link> click silently goes nowhere with no
   // error shown (this is what broke click-through into /my-tenders/[id]).
   // Every protected page and API route already re-validates the session
-  // itself server-side (see e.g. app/my-tenders/page.tsx's own
+  // itself server-side (see e.g. app/[locale]/my-tenders/page.tsx's own
   // `if (!user) redirect(...)`), so it's safe to fail open here on a
   // genuine infra error and let that independent check decide instead of
   // 503ing the whole app on a hiccup that has nothing to do with auth.
@@ -154,7 +190,7 @@ export async function proxy(req: NextRequest) {
     }
   }
   if (authCheckFailed) {
-    return withLocaleCookie(response);
+    return finalize();
   }
 
   if (!user && !isPublic) {
@@ -165,7 +201,7 @@ export async function proxy(req: NextRequest) {
     // client-side handling keyed off a 401 status). Page routes still get
     // the redirect so a browser navigation lands on the login form.
     if (pathname.startsWith("/api/")) {
-      return withLocaleCookie(
+      return finalize(
         NextResponse.json({ error: "Not authenticated.", code: "notAuthenticated" }, { status: 401 })
       );
     }
@@ -173,30 +209,37 @@ export async function proxy(req: NextRequest) {
       // Not a route this app actually serves — let it fall through
       // unauthenticated so Next.js's own routing returns a real 404 instead
       // of a misleading "log in" page.
-      return withLocaleCookie(response);
+      return finalize();
     }
     const url = req.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = localizedPath("/login", locale);
+    // Deliberately the *un-prefixed* path: /login hands it to the
+    // locale-aware router from i18n/navigation, which re-applies the
+    // visitor's prefix itself.
     url.searchParams.set("next", pathname);
-    return withLocaleCookie(NextResponse.redirect(url));
+    return finalize(NextResponse.redirect(url));
   }
 
   if (user && isAuthPage) {
     const url = req.nextUrl.clone();
-    url.pathname = "/opportunities";
+    url.pathname = localizedPath("/opportunities", locale);
     url.search = "";
-    return withLocaleCookie(NextResponse.redirect(url));
+    return finalize(NextResponse.redirect(url));
   }
 
-  return withLocaleCookie(response);
+  return finalize();
 }
 
 export const config = {
   // Also excludes any path with a file extension (e.g. /tenderproc-logo.svg,
   // a future /favicon.ico) — public/ static assets have no session cookie
-  // and no need for the locale-cookie/auth logic below, so without this
+  // and no need for the locale-routing/auth logic above, so without this
   // they'd otherwise get redirected to /login like a real protected route.
   // Confirmed safe against real app routes: TED publication-number ids
   // (used in /tenders/[id]) use hyphens, never dots (e.g. "769741-2025").
-  matcher: ["/((?!_next/static|_next/image|.*\\..*).*)"],
+  // This is a superset of next-intl's recommended matcher (which also skips
+  // /api and /_vercel): /api has to stay matched here because the auth gate
+  // above is what serves the 401 JSON contract for unauthenticated API calls,
+  // and it's excluded from locale rewriting inside the handler instead.
+  matcher: ["/((?!_next/static|_next/image|_vercel|.*\\..*).*)"],
 };

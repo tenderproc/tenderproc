@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+// Locale-aware: usePathname() here strips the locale prefix, so the
+// `pathname === tab.href` comparisons below keep matching under /fr, /nl, /de.
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 export const TABS = [

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import UpgradeButton from "./UpgradeButton";
 import { getPaddleClient } from "@/lib/paddleClient";
