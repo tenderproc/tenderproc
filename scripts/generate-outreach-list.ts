@@ -19,6 +19,7 @@
 
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { ScriptExit, loadEnvFile, requireEnv } from "./lib/scriptEnv";
+import { guessLanguage } from "./lib/guessLanguage";
 import { SECTORS, sectorsToCpvPrefixes } from "../lib/sectors";
 import { normalizeCompanyName } from "../lib/companies/normalize";
 import { searchBelgianTenders } from "../lib/ted";
@@ -377,7 +378,11 @@ async function main() {
       csvEscape(matchedTenders[2]?.deadline ?? ""),
       csvEscape(matchedTenders[2]?.url ?? ""),
       csvEscape(linkedInSearchUrl(companyName)),
-      "", // language: fill in en/fr/nl
+      csvEscape(
+        guessLanguage(
+          [companyName, mostRecentWin.contracting_authority, mostRecentWin.raw_title ?? "", ...matchedTenders.flatMap((t) => [t.title, t.buyerName ?? ""])].join(" ")
+        )
+      ), // best-effort NL/FR guess from buyer/title vocabulary; blank means ambiguous, verify manually
       "",
       "",
       "",
